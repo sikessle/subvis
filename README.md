@@ -12,8 +12,9 @@ We strive to use the Google C++ Style Guide: http://google-styleguide.googlecode
 
 # Requirements
 
+- Tested only for Ubuntu 14.04 LTS
 - Qt 5.4 ?
-- 
+- OpenGL (mesa-common-dev, libglu1-mesa-dev)
 
 
 # Build
