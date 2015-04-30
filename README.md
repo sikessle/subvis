@@ -10,7 +10,7 @@ https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow
 
 We strive to use the Google C++ Style Guide: http://google-styleguide.googlecode.com/svn/trunk/cppguide.html
 
-For formatting we use Qt Creator with the Ubuntu package astyle.
+For formatting we use astyle with a project specific .astylerc option file.
 
 # Requirements
 
