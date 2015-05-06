@@ -8,9 +8,19 @@ https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow
 
 # Style Guide
 
-We strive to use the Google C++ Style Guide: http://google-styleguide.googlecode.com/svn/trunk/cppguide.html
-
 For formatting we use astyle with a project specific .astylerc option file.
+
+## Variables
+
+Lower case with underscore to separate words: my_member_variable
+
+## Classes
+
+Capitalize first letter, separate with underscore: Subdivison_algorithm.
+
+## Functions
+
+Lower case with underscore to separate words:check_that_value();
 
 # Requirements
 
