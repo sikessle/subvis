@@ -1,2 +1,9 @@
+# OS X files
 .DS_Store
+
+# Editor backup files
+*~
+*.swp
+*.swo
+
 
