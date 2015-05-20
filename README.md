@@ -6,6 +6,13 @@ This file provides some information about the workflow, environment requirements
 
 https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow
 
+# Project Structure
+
+The project consists of the following main folders:
+
+- **doc** Documentation of source code, software engineering decisions and diagrams, intermediate reports and the final paper of the project.
+- **src** The sources (i.e. C++) of the project.
+
 # Style Guide
 
 For formatting we use astyle with a project specific .astylerc option file.
