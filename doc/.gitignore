@@ -1,0 +1,12 @@
+# Mac
+.DS_Store
+
+# LaTeX
+*.aux
+*.lof
+*.log
+*.lot
+*.out
+*.synctex.gz
+*.toc
+subdivision.pdf
