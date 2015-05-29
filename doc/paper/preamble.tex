@@ -1,0 +1,86 @@
+
+% ---------- Encoding and Language ----------
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\usepackage{ngerman}
+\usepackage[ngerman]{babel}
+\usepackage[babel,german=quotes]{csquotes}
+
+% ---------- Abbildungen ----------
+\usepackage{graphicx}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{a4}
+\usepackage{caption}
+
+% ---------- Schriften ----------
+\usepackage[onehalfspacing]{setspace}
+
+% ---------- Math ----------
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% ---------- Listings ----------
+\usepackage{listings}
+\definecolor{javared}{rgb}{0.6,0,0} % for strings
+\definecolor{javagreen}{rgb}{0.25,0.5,0.35} % comments
+\definecolor{javapurple}{rgb}{0.5,0,0.35} % keywords
+\definecolor{javadocblue}{rgb}{0.25,0.35,0.75} % javadoc
+
+% global listing settings
+\lstdefinestyle{myNumbers} {
+	numbers=left,
+	numberstyle=\tiny\color{black},
+	stepnumber=1,
+	numbersep=5pt
+}
+\lstdefinestyle{myFrame} {
+	backgroundcolor=\color{white},
+	frame=lines
+}
+\lstdefinestyle{myStyle} {
+	tabsize=2,
+	basicstyle=\ttfamily\small,
+	breaklines=true,
+	prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+	breakautoindent=true,
+	showtabs=false,
+    showspaces=false,
+    showstringspaces=false,
+}
+
+% Java Style
+\lstdefinestyle{myJavaStyle} {
+	language=java,
+ 	keywordstyle=\color{javapurple}\bfseries,
+   	stringstyle=\color{javared},   
+   	commentstyle=\color{javagreen},
+    morecomment=[s][\color{javadocblue}]{/**}{*/},
+    style = myStyle,
+    style = myFrame,
+    style = myNumbers
+}
+
+% C Style
+\lstdefinestyle{myCStyle} {
+	language=c,
+ 	keywordstyle=\color{blue}\bfseries,
+   	stringstyle=\color{gray},   
+   	commentstyle=\color{green},
+   	style = myStyle,
+    style = myFrame,
+    style = myNumbers
+} 
+
+% ---------- Misc ----------
+\usepackage[printonlyused]{acronym}
+\usepackage[linktoc=all, hidelinks]{hyperref}
+
+% ---------- Bibliography ----------
+\usepackage{bibgerm}
+
+
+\renewcaptionname{ngerman}\figureautorefname{Abb.}
+\captionsetup[table]{belowskip=8pt}

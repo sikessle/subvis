@@ -1,35 +1,19 @@
-\documentclass[11pt,a4paper,bibtotocnumbered]{scrreprt}		                                   
+\documentclass[
+	11pt,
+	a4paper,
+	bibtotocnumbered
+	]{scrreprt}		                                   
 
-\usepackage{graphicx}
-\usepackage[dvipsnames]{xcolor}
-\usepackage{a4}
-\usepackage[onehalfspacing]{setspace}
-\usepackage[ngerman]{babel}
-\usepackage[utf8]{inputenc}
-\usepackage{amsmath}
-\usepackage{caption}
-\usepackage{listings}
-\usepackage[babel,german=quotes]{csquotes}
-\usepackage[printonlyused]{acronym}
-\usepackage[linktoc=all, hidelinks]{hyperref}
-
-\renewcaptionname{ngerman}\figureautorefname{Abb.}
-
-\captionsetup[table]{belowskip=8pt}
-
-
-
-
-
+\include{preamble}
 
 \begin{document}
 
 
 
 % ============================ FRONT MATTER
-\pagenumbering{roman}
+\pagenumbering{Roman}
 \begin{singlespace}
-\include{cover}
+\include{content/cover}
 \setcounter{page}{1}
 \end{singlespace}
 
@@ -37,49 +21,33 @@
 \listoffigures
 \listoftables
 
-\chapter*{Abkürzungsverzeichnis} 
-
-\begin{acronym}[LAENGE]
-\acro{ACM}{Association for Computing Machinery}
-\end{acronym}
+\include{content/abbreviations}
 
 \cleardoublepage
 % ============================ ENDE FRONT MATTER
 
 
-
-% ============================ HAUPTTEIL THESIS
+% ============================ HAUPTTEIL
 \pagenumbering{arabic}
 
-% ============================ CHAPTER
-\chapter{Einführung} 
 
-sdf
- 
+% ============================ CHAPTER
+
+\include{content/introduction}
+\include{content/grundlagen}
+\include{content/fazit}
+
 % ============================ ENDE HAUPTTEIL
 
-
-
-
-
-
-
 % ============================ LITERATURVERZEICHNIS
+
 \begin{singlespace}
-\begin{thebibliography}{9}
-
-\bibitem{lamport94}
-  Leslie Lamport,
-  \emph{\LaTeX: a document preparation system},
-  Addison Wesley, Massachusetts,
-  2nd edition,
-  1994.
-
-\end{thebibliography}
+\bibliographystyle{alpha}
+\bibliography{bibtex}
 \end{singlespace}
+
 % ============================ ENDE LITERATURVERZEICHNIS
 
 
 
 \end{document}
-
