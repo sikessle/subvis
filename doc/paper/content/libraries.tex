@@ -1,0 +1,60 @@
+\chapter{Bibliotheken}
+
+// TODO Übersicht
+
+
+
+\section{OpenMesh und OpenFlipper}
+
+OpenMesh wird von der \acs{RWTH} Aachen entwickelt und steht unter der \acs{LGPL} v3 Lizenz ("with exception"). OpenMesh stellt eine effizente Datenstruktur für polygonale Meshes bereit.
+
+Darauf aufbauend arbeitet das flexible pluginbasierte Framework OpenFlipper, mit dem geometrische Objekte modelliert und verarbeitet werden können. Intern verwendet es OpenMesh. Für die grafische Oberfläche wird QT verwendet.
+
+\subsection{Datenstrukturen und Algorithmen}
+
+OpenMesh implementiert eine Datenstruktur für polygonale Meshes. Es sind sogar bereits Unterteilungsalgorithmen implementiert, die auf dieser Datenstruktur arbeiten.
+
+\begin{enumerate}
+\item Uniform subdivision
+\begin{itemize}
+	\item Loop
+	\item SQRT3
+	\item Modified Butterfly
+	\item Interpolationg SQRT3 LG
+	\item Composite
+	\item Catmull Clark
+\end{itemize}
+\item Adaptive subdivision
+\begin{itemize}
+	\item Adaptive Composite
+\end{itemize}
+\item Simple subdivision
+\begin{itemize}
+	\item Longest Edge
+\end{itemize}
+\end{enumerate}
+
+unterstützte Datenformate: off, obj, ply
+
+// TODO
+
+
+\section{Surface Mesh}
+
+// TODO
+
+
+\section{OpenSubdiv}
+
+Bibliothek für schnelles (<3ms) interaktives Rendering von Gitternetzen. Dabei wird mittel paralleler GPU-Berechnung gearbeitet und die Daten intern zwecks Optimierung umgewandelt. Leider wird momentan nur Catmull-Clark unterstützt. Für unsere Zwecke eher nicht geeignet.
+// TODO
+
+
+\section{CGoGN}
+
+// TODO
+
+
+\section{\acf{CGAL}}
+
+// TODO
