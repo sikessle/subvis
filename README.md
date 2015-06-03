@@ -33,7 +33,9 @@ Lower case with underscore to separate words:check_that_value();
 
 - Tested only for Ubuntu 14.04 LTS
 - Qt 5.4
-- OpenGL (mesa-common-dev, libglu1-mesa-dev)
+- OpenGL 
+    - mesa-common-dev 10.1.3-0ubuntu0.4
+    - libglu1-mesa-dev: 9.0.2-0
 - libQGLViewer 2.6.1
 
 
