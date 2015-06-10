@@ -1,0 +1,10 @@
+# Compile only
+g++ -c main.cpp -I/usr/local/include/surface_mesh/
+
+# Link
+g++ -o main main.o -lsurface_mesh
+
+
+# One liner
+g++ main.cpp -o main -I/usr/local/include/surface_mesh/ -lsurface_mesh
+
