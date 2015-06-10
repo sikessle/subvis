@@ -8,3 +8,10 @@ g++ -o main main.o -lsurface_mesh
 # One liner
 g++ main.cpp -o main -I/usr/local/include/surface_mesh/ -lsurface_mesh
 
+
+# Known Errors:
+"error while loading shared libraries cannot open shared object file no such file or directory"
+
+# Solution:
+sudo ldconfig -v
+

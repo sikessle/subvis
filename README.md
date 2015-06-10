@@ -37,6 +37,7 @@ Lower case with underscore to separate words:check_that_value();
     - mesa-common-dev 10.1.3-0ubuntu0.4
     - libglu1-mesa-dev: 9.0.2-0
 - libQGLViewer 2.6.1
+- surface_mesh 1.0
 
 
 # Build
