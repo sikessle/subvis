@@ -47,7 +47,7 @@ Lower case with underscore to separate words:check_that_value();
 
 # Build
 
-1. `qmake SubVis.pro -r -spec linux-g++ CONFIG+=debug`
+1. `qmake SubVis.pro -r -spec linux-g++ CONFIG+=ordered,debug`
 2. `make doc` for documentation
 2. `make` for build
 3. `make clean` to cleanup
