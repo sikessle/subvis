@@ -14,5 +14,8 @@ doc
 moc_*.cpp
 qrc_*.cpp
 ui_*.h
-
 *.log
+
+# Generated Makefiles
+Makefile
+
