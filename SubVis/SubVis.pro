@@ -26,6 +26,8 @@ OBJECTS_DIR = $${BUILD_DIRECTORY}
 MOC_DIR = $${BUILD_DIRECTORY}
 RCC_DIR = $${BUILD_DIRECTORY}
 
+# Add astylerc
+DISTFILES = .astylerc
 
 
 # Main App
