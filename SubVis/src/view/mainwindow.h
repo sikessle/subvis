@@ -1,13 +1,17 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef SUBVIS_VIEW_MAINWINDOW_H
+#define SUBVIS_VIEW_MAINWINDOW_H
 
 #include <QMainWindow>
 
+namespace SubVis {
+namespace View {
+
 namespace Ui {
-    class MainWindow;
+class MainWindow;
 }
 
-class MainWindow : public QMainWindow {
+class MainWindow : public QMainWindow
+{
     Q_OBJECT
 
 public:
@@ -18,4 +22,7 @@ private:
     Ui::MainWindow *ui;
 };
 
-#endif // MAINWINDOW_H
+
+} // namespace View
+} // namespace SubVis
+#endif // SUBVIS_VIEW_MAINWINDOW_H

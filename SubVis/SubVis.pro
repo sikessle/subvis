@@ -37,7 +37,7 @@ TEMPLATE = app
 
 
 SOURCES += src/main.cpp\
-        src/view/mainwindow.cpp
+           src/view/mainwindow.cpp
 
 HEADERS  += src/view/mainwindow.h
 
