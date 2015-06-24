@@ -10,8 +10,12 @@ https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow
 
 The project consists of the following main folders:
 
-- **doc** Documentation of source code, software engineering decisions and diagrams, intermediate reports and the final paper of the project.
-- **src** The sources (i.e. C++) of the project.
+- **doc** Software engineering decisions and diagrams, intermediate reports and the final paper of the project.
+- **SubVis** The sources (i.e. C++) of the project. Also includes the generated documentation etc.
+
+# Documentation
+
+Should be inlined with **DoxyGen**.
 
 # Style Guide
 
@@ -32,7 +36,7 @@ Lower case with underscore to separate words:check_that_value();
 # Requirements
 
 - Tested only for Ubuntu 14.04 LTS
-- Qt 5.4
+- Qt 5.4.1
 - OpenGL 
     - mesa-common-dev 10.1.3-0ubuntu0.4
     - libglu1-mesa-dev: 9.0.2-0
@@ -42,6 +46,8 @@ Lower case with underscore to separate words:check_that_value();
 
 # Build
 
-1. 
-2. 
+1. `qmake SubVis.pro -r -spec linux-g++ CONFIG+=debug`
+2. `make doc` for documentation
+2. `make` for build
+3. `make clean` to cleanup
 
