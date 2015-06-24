@@ -33,12 +33,13 @@ RCC_DIR = $${BUILD_DIRECTORY}
 TARGET = SubVis
 TEMPLATE = app
 
+
 SOURCES += src/main.cpp\
-        src/mainwindow.cpp
+        src/view/mainwindow.cpp
 
-HEADERS  += src/mainwindow.h
+HEADERS  += src/view/mainwindow.h
 
-FORMS    += src/mainwindow.ui
+FORMS    += src/view/mainwindow.ui
 
 
 
