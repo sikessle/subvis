@@ -1,5 +1,6 @@
 #include "view/mainwindow.h"
 #include "surface_mesh/Surface_mesh.h"
+
 #include <QApplication>
 
 int main(int argc, char *argv[])

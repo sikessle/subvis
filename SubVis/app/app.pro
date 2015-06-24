@@ -1,4 +1,4 @@
-QT       += core gui widgets
+QT       += core gui widgets opengl xml
 
 CONFIG   += debug
 
@@ -8,9 +8,20 @@ OBJECTS_DIR = ../build
 MOC_DIR = ../build
 RCC_DIR = ../build
 
+# Extra clean up commands
+extraclean.commands = rm -rf ../doc ../build
+clean.depends = extraclean
+QMAKE_EXTRA_TARGETS += clean extraclean
+
+
 # Add astylerc
 DISTFILES = .astylerc
 
+# Target for documentation
+doc.target = doc
+doc.commands = doxygen doxygen.conf
+doc.depends = $(SOURCES) doxygen.conf
+QMAKE_EXTRA_TARGETS += doc
 
 # Main App
 
@@ -18,7 +29,10 @@ TARGET = SubVis
 TEMPLATE = app
 
 # Libraries
-LIBS += -L"../lib/surface_mesh" -lsurface_mesh
+LIBS += -L"../lib/surface_mesh" \
+        -L"../lib/QGLViewer" \
+        -lsurface_mesh \
+        -lQGLViewer
 
 SOURCES += main.cpp \
            view/mainwindow.cpp

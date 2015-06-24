@@ -1,4 +1,4 @@
 # Library files
 *.a
 *.so
-
+*.so.*

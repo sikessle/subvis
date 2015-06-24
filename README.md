@@ -10,8 +10,13 @@ Create a local branch per new feature. If feature is working merge to develop br
 
 The project consists of the following main folders:
 
-- **doc** Software engineering decisions and diagrams, intermediate reports and the final paper of the project.
-- **SubVis** The sources (i.e. C++) of the project. Also includes the generated documentation etc.
+- **dev-doc** Software engineering decisions and diagrams, intermediate reports and the final paper of the project.
+- **SubVis** The sources (i.e. C++) of the project. Also includes the generated documentation etc. Subdirectories:
+  - **app**: Main project
+  - **lib**: 3rd party libraries
+  - **build**: Creates on build, binaries
+  - **test**: Unit tests
+  - **doc**: Doxygen doc, created by Make
 
 # Documentation
 
@@ -47,8 +52,9 @@ Lower case with underscore to separate words:check_that_value();
 
 # Build
 
-1. `qmake SubVis.pro -r -spec linux-g++ CONFIG+=ordered,debug`
+1. `qmake SubVis.pro -r -spec linux-g++`
 2. `make doc` for documentation
-2. `make` for build
-3. `make clean` to cleanup
+3. `make` for build
+4. `make clean` to cleanup app builds
+5. `make distclean` to cleanup app builds and library builds
 
