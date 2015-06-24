@@ -4,7 +4,7 @@ This file provides some information about the workflow, environment requirements
 
 # Branching/Git-Workflow
 
-https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow
+Create a local branch per new feature. If feature is working merge to develop branch. Master branch contains only released versions, like beta, vX.Y etc.
 
 # Project Structure
 
