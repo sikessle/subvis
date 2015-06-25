@@ -34,6 +34,10 @@ LIBS += -L"../lib/surface_mesh" \
         -lsurface_mesh \
         -lQGLViewer
 
+INCLUDEPATH += "../lib"
+
+# SOURCES
+
 SOURCES += main.cpp \
            view/mainwindow.cpp
 
