@@ -8,5 +8,6 @@ extradistclean.commands = rm -rf QGLViewer/libQGLViewer.a \
                         surface_mesh/*.a
 
 distclean.depends = extradistclean
-QMAKE_EXTRA_TARGETS += distclean extradistclean
+# add doc as dummy
+QMAKE_EXTRA_TARGETS += distclean extradistclean doc
 

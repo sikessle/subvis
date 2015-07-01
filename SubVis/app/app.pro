@@ -8,6 +8,8 @@ OBJECTS_DIR = ../build
 MOC_DIR = ../build
 RCC_DIR = ../build
 
+# UI files generated from Qt
+UI_DIR = view/ui-gen/
 
 
 # Main App
@@ -42,8 +44,9 @@ QMAKE_EXTRA_TARGETS += clean extraclean
 DISTFILES = .astylerc
 
 # Target for documentation
-doc.commands = doxygen doxygen.conf
+doc.target = doc
 doc.depends = $(SOURCES) doxygen.conf
+doc.commands = doxygen doxygen.conf
 QMAKE_EXTRA_TARGETS += doc
 
 

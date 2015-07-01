@@ -14,9 +14,8 @@ The project consists of the following main folders:
 - **SubVis** The sources (i.e. C++) of the project. Also includes the generated documentation etc. Subdirectories:
   - **app**: Main project
   - **lib**: 3rd party libraries
-  - **build**: Creates on build, binaries
+  - **build**: Created on build, binaries, Doxygen doc(created by Make)
   - **test**: Unit tests
-  - **doc**: Doxygen doc, created by Make
 
 # Documentation
 
@@ -53,8 +52,8 @@ Lower case with underscore to separate words:check_that_value();
 # Build
 
 1. `qmake SubVis.pro -r -spec linux-g++`
-2. `make doc` for documentation
+2. `make doc` for documentation 
 3. `make` for build
 4. `make clean` to cleanup app builds
-5. `make distclean` to cleanup app builds and library builds
+5. `make distclean` to cleanup app builds and static library files (*.a)
 
