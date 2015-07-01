@@ -33,7 +33,7 @@ FORMS    += view/mainwindow.ui
 
 
 # Extra clean up commands
-extraclean.commands = rm -rf ../doc ../build
+extraclean.commands = rm -rf ../build
 clean.depends = extraclean
 QMAKE_EXTRA_TARGETS += clean extraclean
 
@@ -42,7 +42,8 @@ QMAKE_EXTRA_TARGETS += clean extraclean
 DISTFILES = .astylerc
 
 # Target for documentation
-doc.target = doc
 doc.commands = doxygen doxygen.conf
 doc.depends = $(SOURCES) doxygen.conf
 QMAKE_EXTRA_TARGETS += doc
+
+

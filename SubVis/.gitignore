@@ -1,9 +1,6 @@
 # Build path
 build
 
-# Doxygen documentation
-doc
-
 # System specific pro file
 *.pro.user
 

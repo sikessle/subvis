@@ -4,11 +4,9 @@ SUBDIRS = surface_mesh \
 
 
 # Extra clean up commands
-extradistclean.commands = rm -rf lib/QGLViewer/.moc/* \
-                        lib/QGLViewer/.obj/* \
-                        lib/QGLViewer/libQGLViewer.a \
-                        lib/surface_mesh/*.a \
-                        lib/surface_mesh/*.o
+extradistclean.commands = rm -rf QGLViewer/libQGLViewer.a \
+                        surface_mesh/*.a
 
 distclean.depends = extradistclean
 QMAKE_EXTRA_TARGETS += distclean extradistclean
+
