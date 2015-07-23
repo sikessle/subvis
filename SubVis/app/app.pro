@@ -26,9 +26,13 @@ INCLUDEPATH += "../lib"
 
 # SOURCES
 SOURCES += main.cpp \
-           view/mainwindow.cpp
+           view/mainwindow.cpp \
+           algo/sd_catmull.cpp \
+    algo/utils.cpp
 
-HEADERS  += view/mainwindow.h
+HEADERS  += view/mainwindow.h \
+            algo/sd_catmull.h \
+    algo/utils.h
 
 FORMS    += view/mainwindow.ui
 
