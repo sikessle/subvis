@@ -9,4 +9,6 @@
 *.out
 *.synctex.gz
 *.toc
+*.bbl
+*.blg
 subdivision.pdf
