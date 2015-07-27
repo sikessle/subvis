@@ -8,6 +8,9 @@
 \usepackage[ngerman]{babel}
 \usepackage[babel,german=quotes]{csquotes}
 
+% ---------- Maskierung von URLs und Dateipfaden ----------
+\usepackage[hyphens]{url}
+
 % ---------- Abbildungen ----------
 \usepackage{graphicx}
 \usepackage[dvipsnames]{xcolor}
@@ -64,8 +67,8 @@
 }
 
 % C Style
-\lstdefinestyle{myCStyle} {
-	language=c,
+\lstdefinestyle{myCppStyle} {
+	language=C++,
  	keywordstyle=\color{blue}\bfseries,
    	stringstyle=\color{gray},   
    	commentstyle=\color{green},
