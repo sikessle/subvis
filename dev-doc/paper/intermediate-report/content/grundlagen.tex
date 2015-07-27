@@ -6,7 +6,7 @@
 Subdivison Algorithmen erzeugen aus einem Ausgangspolygonnetz eine glatte Fläche.
 Die glatte Zielfläche ist dabei der Grenzwert eines unendlichen, rekursiven Verfeinerungsschemas.
 Abbildung~\ref{fig:sd} visualisiert die Anwendung eines Subdivison Algorithmus auf eine Kurve und auf eine Fläche.
-Man erkennt deutlich, dass die Unterteilung nach mehrfacher Anwendung gegen die glatte Zielfläche/Zielkurve konvergiert.
+Nach mehrfacher Anwendung der Unterteilung konvergiert die Kurve oder Fläche gegen die glatte Zielkurve bzw. Zielflähe.
 \begin{figure}[h]
   \caption{Subdivison Algorithmus - Kurve und Fläche}
   \centering
@@ -19,9 +19,9 @@ Subdivision Algorithmen kann man anhand ihrer Eigenschaften Kategorisieren.
 Ein Unterscheidungskriterium betriefft die Art und Weiße, wie unterteilt wird.
 Man unterscheidet dabei zwischen \emph{Primal} und \emph{Dual}.
 \begin{description}
- \item[Primal] Eine Strategie ist es, die Oberfläche zu unterteilen ("face slit").
- Diese Methode ist für Dreiecksnetze und für Vierecksnetze in Abbildung~\ref{fig:sd_primal} dargestellt.
- \item[Dual] Es ist auch möglich Eckpunkte in mehrere Eckpunkte aufzusplitten ("vertex split").
+ \item[Primal] Bei dieser Strategie wird die Oberfläche unterteilt ("face slit").
+ Abbildung~\ref{fig:sd_primal} stellt diese Methode für ein Dreicksnetz und ein Vierecksnetz dar.
+ \item[Dual] Auf der anderen Seite ist es möglich Eckpunkte in mehrere Eckpunkte aufzusplitten ("vertex split").
  Diese Methode ist in Abbildung~\ref{fig:sd_dual} abgebildet.
 \end{description}
 \begin{figure}[h]
@@ -39,18 +39,18 @@ Man unterscheidet dabei zwischen \emph{Primal} und \emph{Dual}.
   \label{fig:sd_dual}
 \end{figure}
 
-Ein weiteres wesentliches Merkmal ist, ob Kontrollpunkte interpoliert werden sollen oder ob dies nicht notwendig ist. 
+Ein weiteres wesentliches Merkmal ist, ob Kontrollpunkte interpoliert werden oder nicht. 
 \begin{description}
  \item[Approximation] Kontrollpunkte werden nicht interpoliert.
  \item[Interpolation] Kontrollpunkte werden interpoliert.
 \end{description}
 
-Die Tabelle~\ref{tab:sd_comp} zeigt in jeder Kategorie einen Subdivison Algorithmus.
-Zu jedem Algorithmus ist noch die "Glattheit" der Oberfläche angegeben (C-Stetigkeit).
+Tabelle~\ref{tab:sd_comp} listet die bekanntesten Subdivison Algorithmen auf und ordnet diese den Kategorien zu.
+Zu jedem Algorithmus ist zusätzlich die "Glattheit" der Oberfläche angegeben (C-Stetigkeit).
+Dies kann auch als Maß über die Qualität des Subdivision Algorithmus fungieren.
 \begin{table}[h]
 \caption{Subdivison Zoo}
 \center
-%\begin{tabular}{l|p{1.5cm}|p{1.5cm}|p{4.5cm}}
 \begin{tabular}{l|c|c|c}
 \toprule
 \multicolumn{3}{c|}{\textbf{Primal}} & \textbf{Dual}\\
@@ -64,17 +64,6 @@ Zu jedem Algorithmus ist noch die "Glattheit" der Oberfläche angegeben (C-Steti
 \label{tab:sd_comp}
 \end{table}
 
-
-\section{Auswahl der Subdivison Algorithmen}
-
-Ziel des Projektes ist es folgende Algorithmen zu implementieren:
-\begin{itemize}
-	\item Catmull-Clark
-	\item Loop
-	\item Doo-Sabin
-	\item Butterfly
-\end{itemize}
-
 Abbildung~\ref{fig:sd_comp} Vergleicht die 4 unterschiedlichen Subdivison Algorithmen.
 Man erkennt deutlich den interpolierenden Subdivison Algorithmus (Butterfly),
 da dieser durch die harten Interpolationsbedingungen im Vergleich zu den approximierenden Algorithmen viel welligere ist.
@@ -85,3 +74,15 @@ da dieser durch die harten Interpolationsbedingungen im Vergleich zu den approxi
   \\Quelle: \cite{Standford.24.07.2015}
   \label{fig:sd_comp}
 \end{figure}
+
+\section{Auswahl der Subdivison Algorithmen}
+
+Für das Projekt sollen folgende Algorithmen implementiert werden:
+\begin{itemize}
+	\item Catmull-Clark
+	\item Loop
+	\item Doo-Sabin
+	\item Butterfly
+\end{itemize}
+
+

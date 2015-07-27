@@ -1,11 +1,10 @@
 \chapter{Tools und Bibliotheken}
 
-In diesem Kapitel werden Bibliotheken und Programme untersucht, die für das Projekt nützliche Funktionen bereitstellen und
-in wieweit diese hilfreich sind. 
+In diesem Kapitel werden Bibliotheken und Programme untersucht, die für das Projekt verwendet werden können. 
  
 \section{Subdivision Algorithmen und Datenstrukturen}
 
-Im Bereich Subdivison Algorithmen gibt es schon viele mächtige Bibliotheken und Datenstrukturen.
+Im Bereich Subdivison Algorithmen gibt es viele bereits implementierte Datenstrukturen und Algorithmen.
 Gesucht wird eine einfache Datenstruktur, um polygonale Netze verarbeiten zu können.
 Im Allgemeinen besteht solch eine Datenstruktur aus Ecken (Vertices), Kanten (Edges) und Flächen (Faces).
 Zusätzlich muss noch die Beziehung zwischen den Objekten abgespeichert werden.
@@ -13,9 +12,11 @@ Zusätzlich muss noch die Beziehung zwischen den Objekten abgespeichert werden.
 \subsection{OpenMesh}
 
 OpenMesh wird von der \acs{RWTH} Aachen entwickelt und stellt eine mächtige Datenstruktur für polygonale Netze bereit.
-Es steht unter der \acs{LGPL} v3 Lizenz ("with exception") und kann für unseren Fall somit problemlos verwendet werden.
+Es steht unter der \acs{LGPL} v3 Lizenz ("with exception") und kann somit problemlos verwendet werden.
 
-OpenMesh implementiert eine Datenstruktur für polygonale Meshes. Darüber hinaus sind sogar bereits einige Subdivision Algorithmen implementiert, die auf der OpenMesh Datenstruktur arbeiten können. Zum Funktionsumfang gehören folgende Algorithmen.
+OpenMesh implementiert eine Datenstruktur für polygonale Meshes.
+Darüber hinaus sind bereits einige Subdivision Algorithmen implementiert, die auf der OpenMesh Datenstruktur arbeiten können.
+Zum Funktionsumfang gehören folgende Algorithmen.
 \begin{enumerate}
 \item Uniform subdivision
 \begin{itemize}
@@ -47,8 +48,8 @@ Jede Kante (Edge) referenziert also folgende Objekte:
 \end{itemize}
 
 Halfedge bedeutet nun, dass eine Kante in 2 Halbkanten (Halfedge) aufgeteilt wird. Jede Halbkante hat nur eine Richtung.
-Zwei Ecken A und B sind nun also über 2 Halbkanten (1. Halkante von A nach B und 2. Halbkante con B nach A) miteinander verbunden.
-Dies bringt den Vorteil, dass man über die Kanten einer Fläche sehr einfach iterieren kann, man muss dazu lediglich den Halbkanten folgen.
+Zwei Ecken A und B sind also über 2 Halbkanten (erste Halkante von A nach B und zweite Halbkante von B nach A) miteinander verbunden.
+Dies bringt den Vorteil, dass man über die Kanten einer Fläche sehr einfach iterieren kann. Man muss dazu lediglich den Halbkanten folgen.
 
 
 \subsubsection*{OpenFlipper}
@@ -56,8 +57,8 @@ Dies bringt den Vorteil, dass man über die Kanten einer Fläche sehr einfach it
 Aufbauend auf OpenMesh wurde von der \acs{RWTH} Aachen zusätzlich das flexible pluginbasierte Framework OpenFlipper enwickelt.
 Damit können geometrische Objekte modelliert und verarbeitet werden. Intern wird auf die Datenstrukur OpenMesh zurückgegriffen.
 Für die grafische Oberfläche wird QT verwendet.
-Mit OpenFlipper kann man über die Oberfläche Netze erstellen und über die Oberfläche die in OpenMesh implementierten Subdivision Algorithmen anwenden.
-Abbildung~\ref{fig:openflipper} zeigt die Benutzeroberfläche von OpenFlipper
+Mit OpenFlipper kann man über die Oberfläche Netze erstellen und die in OpenMesh implementierten Subdivision Algorithmen anwenden.
+Abbildung~\ref{fig:openflipper} zeigt die Benutzeroberfläche von OpenFlipper.
 \begin{figure}[h]
   \caption{OpenFlipper}
   \centering
@@ -70,8 +71,8 @@ Abbildung~\ref{fig:openflipper} zeigt die Benutzeroberfläche von OpenFlipper
 \subsection{Surface Mesh}
 
 Surface Mesh ist eine einfache und effizente Datenstruktur um polygonale Netze beschreiben zu können.
-Die Datenstruktur wurde alse einfachere Alternative zu OpenMesh von der Bielefeld Graphics \& Geometry Group entwickelt.
-Die Datenstruktur soll vergleichsweise einfacher zu benutzen sein und eine bessere Performance und einen geringeren Speicherverbrauch mitbringen.
+Die Datenstruktur wurde alse einfachere Alternative zu OpenMesh von der Bielefeld Graphics\&Geometry Group entwickelt.
+Die Datenstruktur soll einfach zu benutzen sein und eine bessere Performance und geringeren Speicherverbrauch mitbringen.
 Analog zu OpenMesh implementiert Surface Mesh eine halfedge Datenstruktur.
 Die Verbindungsinformation der Kanten werden also in einem Paar aus zwei gerichteten Halbkanten gespeichert.
 Abbildung~\ref{fig:sm_halfedge} visualisiert den Zusammenhang der Halbkanten und Ecken.
@@ -85,7 +86,7 @@ Abbildung~\ref{fig:sm_halfedge} visualisiert den Zusammenhang der Halbkanten und
 
 Da Surface Mesh auch als Halfedge Datenstruktur implementiert ist, kann ähnlich effizient zu OpenMesh über die Kanten iteriert werden.
 Listing~\ref{lst:sm_iterate} zeigt einige Basisoperiation, die möglich sind.
-Die Variablen sind in Abbildung~\ref{fig:sm_halfedge} gleich benannt. \cite{OpenGP.24.07.2015}
+Die Operationen aus Listing~\ref{lst:sm_iterate} sind zum besseren Verständnis in Abbildung~\ref{fig:sm_halfedge} gekennzeichnet. \cite{OpenGP.24.07.2015}
 
 \begin{lstlisting}[style=myCppStyle, caption=Surface Mesh - Iterieren über Kanten einer Fläche, label=lst:sm_iterate]
 Surface_mesh::Halfedge h;
@@ -97,12 +98,12 @@ Surface_mesh::Vertex   v0 = mesh.from_vertex_handle(h);
 Surface_mesh::Vertex   v1 = mesh.to_vertex_handle(h);
 \end{lstlisting}
 
-Um das Netz zu verändern oder zu editieren unterstützt die Datenstruktur high-level Operationen um die Topology zu verändern.
-Die Datenstuktur kann mit \emph{Edge Collapse}, \emph{Edge Split} und \emph{Edge Flip} das Netz ändern.
+Um das Netz zu verändern oder zu editieren unterstützt die Datenstruktur high-level Operationen zum Verändern der Topologie.
+Mit \emph{Edge Collapse}, \emph{Edge Split} und \emph{Edge Flip} kann das Netz geändert werden.
 Die Operationen sind in Abbildung~\ref{fig:sm_topology} dargestellt. \cite{OpenGP.24.07.2015}
 
 \begin{figure}[h]
-  \caption{Surface Mesh - High-level Operationen zum Ändern der Topology}
+  \caption{Surface Mesh - High-level Operationen zum Ändern der Topologie}
   \centering
   \includegraphics[width=0.8\textwidth]{content/media/sm_topology-changes}
   \label{fig:sm_topology}
@@ -113,7 +114,7 @@ Die Operationen sind in Abbildung~\ref{fig:sm_topology} dargestellt. \cite{OpenG
 OpenSubdiv wird von Pixar entwickelt und ist eine mächtige Bibliothek, die Subdivision Algorithmen und Datenstrukturen implementiert.
 Die Bibliothek ist optimiert auf Performance und unterstützt paralleles Rechnen auf CPU und GPU.
 Primär wird die Bibliothek von Pixar zum erstellen von animierten Filmen verwendet.
-OpenSubdiv ist lizensiert unter der Apache License und darf somit frei für kommerzielle und nicht kommerzielle Nutzung.
+OpenSubdiv ist lizensiert unter der Apache License und darf somit frei für kommerzielle und nicht kommerzielle Projekt genutzt werden.
 
 \begin{figure}[h]
   \caption{Pixar OpenSubdiv Architektur}
@@ -123,8 +124,8 @@ OpenSubdiv ist lizensiert unter der Apache License und darf somit frei für komm
   \label{fig:pixar_opensubdiv}
 \end{figure}
 
-Abbildung~\ref{fig:pixar_opensubdiv} zeigt einen Überblick über die OpenSubdiv Bibliothek.
-Die Bibliothek besteht insgesamt aus den 4 Schichten \ac{Sdc}, \ac{Vtr}, \ac{Far} und \ac{Osd}.
+Abbildung~\ref{fig:pixar_opensubdiv} zeigt den Aufbau der OpenSubdiv Bibliothek.
+Sie besteht insgesamt aus den 4 Schichten \ac{Sdc}, \ac{Vtr}, \ac{Far} und \ac{Osd}.
 \cite{Pixar.27.07.2015}
 
 \begin{description}
@@ -132,21 +133,22 @@ Die Bibliothek besteht insgesamt aus den 4 Schichten \ac{Sdc}, \ac{Vtr}, \ac{Far
  Dazu gehören Typen, Optionen und Eigenschaften für die konkreten Subdivision Algorithmen.
  \item[\acs{Vtr}] beinhaltet Klassen, die das Netz für effiziente Verfeinerung in einer Zwischenrepresentation darstellen.
  Diese Schicht ist nur für den internen Gebrauch gedacht.
- \item[\acs{Far}] ist die zentrale Schnittstelle um Netze mit Subdivision Algorithmen zu verarbeiten.
+ \item[\acs{Far}] ist die zentrale Schnittstelle, um Netze mit Subdivision Algorithmen zu verarbeiten.
  \item[\acs{Osd}] beinhaltet geräteabhängigen Code, um Objekte aus der Schicht \acs{Far} auch in unterschiedlichen Backends wie
  \acs{CUDA} oder OpenCL ausführbar zu machen.
 \end{description}
 
-Von OpenSubdiv werden die Subdivision Algorithmen \emph{Catmull-Clar}, \emph{Loop} und \emph{Bilinear} unterstützt. \cite{Pixar.27.07.2015}
+Von OpenSubdiv werden die Subdivision Algorithmen \emph{Catmull-Clark}, \emph{Loop} und \emph{Bilinear} unterstützt. \cite{Pixar.27.07.2015}
 
 \subsection{CGoGN}
 
 CGoGN ist eine Geometric Modeling C++ Bibliothek und implementiert eine Datenstruktur für n-dimensionale Netze als Combinatorial Maps.
 Diese Implementierung unterscheidet sich zu den halfedge Datenstrukteren von OpenMesh und Surface Mesh deutlich.
-Diese sind zwar alle effizient, haben jedoch Probleme mit Objekten von unterschiedlichen Dimensionen umzugehen.
-Aus Entwicklersicht bedeutet dass, das für jeden Problemfall die spezielle Datenstruktur gelernt werden muss.
-All diese Strukturen lassen sich jedoch mit Combinatorial Maps beschreiben.
-Diesen Ansatz geht CGoGN. Als Subdivision Algorithmus ist Catmull-Clark bereits implementiert. \cite{CGoGN.27.07.2015}
+Diese sind zwar alle effizient, haben jedoch Probleme beim Umgang mit Objekten von unterschiedlichen Dimensionen.
+Für jeden Problemfall muss die spezielle Datenstruktur verwendet werden.
+All diese Strukturen lassen sich jedoch auf Combinatorial Maps zurückführen.
+Diesen allgemeineren Ansatz geht CGoGN.
+CGoGN implementiert bereits den Subdivision Algorithmus Catmull-Clark. \cite{CGoGN.27.07.2015}
 
 \subsection{\acf{CGAL}}
 
@@ -155,7 +157,7 @@ Neben Subdivision Algorithmen werden auch eine Reihe anderer Themengebiete abged
 Für die Representation von Netzen gibt es bei \acs{CGAL} mehrere Möglichkeiten.
 
 \begin{description}
- \item[Surface Mesh] Zum einen implementiert \acs{CGAL} dir bereits vorgestellte Datenstruktur Surface Mesh.
+ \item[Surface Mesh] Zum einen implementiert \acs{CGAL} die bereits vorgestellte Datenstruktur Surface Mesh.
  \item[3D Polyhedral Surface] Neben Surface Mesh kann auch die von \acs{CGAL} entwickelte halfedge Datenstruktur Polyhedral verwendet werden.
 \end{description}
 
