@@ -1,28 +1,28 @@
-\chapter{Subdivison Tools und Bibliotheken}
+\chapter{Tools und Bibliotheken}
+
+In diesem Kapitel werden Bibliotheken und Programme untersucht, die für das Projekt nützliche Funktionen bereitstellen und
+in wieweit diese hilfreich sind. 
+ 
+\section{Subdivision Algorithmen und Datenstrukturen}
 
 Im Bereich Subdivison Algorithmen gibt es schon viele mächtige Bibliotheken und Datenstrukturen.
-Für das Team-Projekt bietet es sich an, diese zu evaluieren und passende Basisfunktionen wiederzuverwenden.
-Dieses Kapitel vergleicht die gängigen C++-Bibliotheken und Datenstrukturen.
 Gesucht wird eine einfache Datenstruktur, um polygonale Netze verarbeiten zu können.
-Im Allgemeinen besteht solch eine Datenstruktur aus Ecken (Verteices), Kanten (Edges) und Flächen (Faces).
-Zusätzlich muss noch die Beziehung zwischen den Objekten hinterlegt werden.
+Im Allgemeinen besteht solch eine Datenstruktur aus Ecken (Vertices), Kanten (Edges) und Flächen (Faces).
+Zusätzlich muss noch die Beziehung zwischen den Objekten abgespeichert werden.
 
-
-\section{OpenMesh}
+\subsection{OpenMesh}
 
 OpenMesh wird von der \acs{RWTH} Aachen entwickelt und stellt eine mächtige Datenstruktur für polygonale Netze bereit.
 Es steht unter der \acs{LGPL} v3 Lizenz ("with exception") und kann für unseren Fall somit problemlos verwendet werden.
-
-\subsection{Datenstrukturen und Algorithmen}
 
 OpenMesh implementiert eine Datenstruktur für polygonale Meshes. Darüber hinaus sind sogar bereits einige Subdivision Algorithmen implementiert, die auf der OpenMesh Datenstruktur arbeiten können. Zum Funktionsumfang gehören folgende Algorithmen.
 \begin{enumerate}
 \item Uniform subdivision
 \begin{itemize}
 	\item Loop
-	\item SQRT3
+	\item Sqrt3
 	\item Modified Butterfly
-	\item Interpolationg SQRT3 LG
+	\item Interpolating Sqrt3
 	\item Composite
 	\item Catmull Clark
 \end{itemize}
@@ -50,7 +50,8 @@ Halfedge bedeutet nun, dass eine Kante in 2 Halbkanten (Halfedge) aufgeteilt wir
 Zwei Ecken A und B sind nun also über 2 Halbkanten (1. Halkante von A nach B und 2. Halbkante con B nach A) miteinander verbunden.
 Dies bringt den Vorteil, dass man über die Kanten einer Fläche sehr einfach iterieren kann, man muss dazu lediglich den Halbkanten folgen.
 
-\subsection{OpenFlipper}
+
+\subsubsection*{OpenFlipper}
 
 Aufbauend auf OpenMesh wurde von der \acs{RWTH} Aachen zusätzlich das flexible pluginbasierte Framework OpenFlipper enwickelt.
 Damit können geometrische Objekte modelliert und verarbeitet werden. Intern wird auf die Datenstrukur OpenMesh zurückgegriffen.
@@ -66,7 +67,7 @@ Abbildung~\ref{fig:openflipper} zeigt die Benutzeroberfläche von OpenFlipper
 \end{figure}
 
 
-\section{Surface Mesh}
+\subsection{Surface Mesh}
 
 Surface Mesh ist eine einfache und effizente Datenstruktur um polygonale Netze beschreiben zu können.
 Die Datenstruktur wurde alse einfachere Alternative zu OpenMesh von der Bielefeld Graphics \& Geometry Group entwickelt.
@@ -107,7 +108,7 @@ Die Operationen sind in Abbildung~\ref{fig:sm_topology} dargestellt. \cite{OpenG
   \label{fig:sm_topology}
 \end{figure}
 
-\section{OpenSubdiv}
+\subsection{OpenSubdiv}
 
 OpenSubdiv wird von Pixar entwickelt und ist eine mächtige Bibliothek, die Subdivision Algorithmen und Datenstrukturen implementiert.
 Die Bibliothek ist optimiert auf Performance und unterstützt paralleles Rechnen auf CPU und GPU.
@@ -138,18 +139,51 @@ Die Bibliothek besteht insgesamt aus den 4 Schichten \ac{Sdc}, \ac{Vtr}, \ac{Far
 
 Von OpenSubdiv werden die Subdivision Algorithmen \emph{Catmull-Clar}, \emph{Loop} und \emph{Bilinear} unterstützt. \cite{Pixar.27.07.2015}
 
-\section{CGoGN}
+\subsection{CGoGN}
+
+CGoGN ist eine Geometric Modeling C++ Bibliothek und implementiert eine Datenstruktur für n-dimensionale Netze als Combinatorial Maps.
+Diese Implementierung unterscheidet sich zu den halfedge Datenstrukteren von OpenMesh und Surface Mesh deutlich.
+Diese sind zwar alle effizient, haben jedoch Probleme mit Objekten von unterschiedlichen Dimensionen umzugehen.
+Aus Entwicklersicht bedeutet dass, das für jeden Problemfall die spezielle Datenstruktur gelernt werden muss.
+All diese Strukturen lassen sich jedoch mit Combinatorial Maps beschreiben.
+Diesen Ansatz geht CGoGN. Als Subdivision Algorithmus ist Catmull-Clark bereits implementiert. \cite{CGoGN.27.07.2015}
+
+\subsection{\acf{CGAL}}
+
+\ac{CGAL} ist ein mächtiges Softwareprojekt mit einer Vielzahl an Datenstrukturen und Algorithmen.
+Neben Subdivision Algorithmen werden auch eine Reihe anderer Themengebiete abgedeckt (Voronoi Diagramme, Convex Hull Algorithms, Spatial Searching ...).
+Für die Representation von Netzen gibt es bei \acs{CGAL} mehrere Möglichkeiten.
+
+\begin{description}
+ \item[Surface Mesh] Zum einen implementiert \acs{CGAL} dir bereits vorgestellte Datenstruktur Surface Mesh.
+ \item[3D Polyhedral Surface] Neben Surface Mesh kann auch die von \acs{CGAL} entwickelte halfedge Datenstruktur Polyhedral verwendet werden.
+\end{description}
+
+\acs{CGAL} ist sehr mächtig und komplex. Die Bibliothek ist sogar in den meisten Paketquellen der Linux Distributionen enthalten (Ubuntu ...)
+und kann darüber sehr leicht installiert werden.
+Es sind auch bereits die Subdivision Algorithmen \emph{Catmull-Clark}, \emph{Doo-Sabin}, \emph{Loop} und \emph{Sqrt3} implementiert. \cite{CGAL.27.07.2015}
+
+\subsection{Vergleich}
 
 // TODO
-\cite{ieee:wpan}
 
-\section{\acf{CGAL}}
+\section{Rendering}
+
+Im folgenden Unterkapitel werden Bibliotheken oder Programme untersucht, die polygonale Meshes rendern
+und in wieweit diese Funktionen übernommen werden können. 
+
+\subsection{BezierView}
+
+BezierView (kurz bview) ist ein einfaches Programm zum rendern von Bezier Parches, rationalen Bezier Patches und polygonalen meshes.
+\cite{Peters.bview.27.07.2015}
+// TODO
+
+\section{Grafische Oberfläche}
+
+\subsection{QT}
 
 // TODO
 
+\subsection{libQGLViewer}
 
-\section{Sonstige Tools}
-
-
-\subsection{BViewer}
-
+// TODO
