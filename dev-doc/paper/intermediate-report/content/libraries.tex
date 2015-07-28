@@ -6,6 +6,7 @@ In diesem Kapitel werden Bibliotheken und Programme untersucht, die für das Pro
 
 Im Bereich Subdivison Algorithmen gibt es viele bereits implementierte Datenstrukturen und Algorithmen.
 Gesucht wird eine einfache Datenstruktur, um polygonale Netze verarbeiten zu können.
+Diese sollte so wenig Overhead wie möglich mitbringen.
 Im Allgemeinen besteht solch eine Datenstruktur aus Ecken (Vertices), Kanten (Edges) und Flächen (Faces).
 Zusätzlich muss noch die Beziehung zwischen den Objekten abgespeichert werden.
 
@@ -71,7 +72,7 @@ Abbildung~\ref{fig:openflipper} zeigt die Benutzeroberfläche von OpenFlipper.
 \subsection{Surface Mesh}
 
 Surface Mesh ist eine einfache und effizente Datenstruktur um polygonale Netze beschreiben zu können.
-Die Datenstruktur wurde alse einfachere Alternative zu OpenMesh von der Bielefeld Graphics\&Geometry Group entwickelt.
+Die Datenstruktur wurde alse einfachere Alternative zu OpenMesh von der Bielefeld Graphics \& Geometry Group entwickelt.
 Die Datenstruktur soll einfach zu benutzen sein und eine bessere Performance und geringeren Speicherverbrauch mitbringen.
 Analog zu OpenMesh implementiert Surface Mesh eine halfedge Datenstruktur.
 Die Verbindungsinformation der Kanten werden also in einem Paar aus zwei gerichteten Halbkanten gespeichert.
@@ -167,7 +168,46 @@ Es sind auch bereits die Subdivision Algorithmen \emph{Catmull-Clark}, \emph{Doo
 
 \subsection{Vergleich}
 
-// TODO
+Tabelle~\ref{tab:sd_bib} gibt einen Überblick über die Vorgestellten Bibliotheken listet auf, welche der ausgewählten Subdivision Algorithmen
+(Catmull-Clark, Loop, Butterfly und Doo-Sabin) bereits implementiert sind.
+
+\begin{table}[h]
+\caption{Vergleich der Subdivision Bibliotheken}
+\center
+\begin{tabular}{|l|c|c|}
+\toprule
+\textbf{Bibliothek} & \textbf{Datenstruktur} & \textbf{Subdivision}\\
+\midrule
+\textbf{OpenMesh} & halfedge & Catmull-Clark, Loop, Butterfly\\
+\textbf{Surface Mesh} & halfedge & keine\\
+\textbf{OpenSubdiv} & halfedge & Catmull-Clark, Loop\\
+\textbf{CGoGN} & combinatorial maps & Catmull-Clark\\
+\textbf{\acs{CGAL}} & halfedge & Catmull-Clark, Loop, Doo-Sabin\\
+\bottomrule
+\end{tabular}
+\label{tab:sd_bib}
+\end{table}
+
+Mit Außnahme von Surface Mesh, das wirklich nur die Mesh-Datenstruktur mit elementaren Algorithmen implementiert, sind bei den anderen Bibliotheken bereits
+einige Subdivision Algorithmen implementiert.
+Bei Verwendung von OpenMesh oder CGAL könnte man sich viel Arbeit, da dort schon fast alle gewünschten Algorithmen implementiert sind.
+Ziel dieses Projektes ist jedoch eine einfache und schnelle Implementiertung der Algorithmen.
+Surface Mesh selbst besteht nur aus wenigen Dateien und ist die schlankste Bibliothek von allen vorgestellten.
+Abbildung~\ref{fig:surface_mesh_cmp} zeigt die Ergebnisse eines Benchmark-Vergleichs für die unterschiedlichen Datenstrukturen.
+In dem Diagramm werden die Zeiten relativ zu Surface Mesh angegeben.
+
+\begin{figure}[h]
+  \caption{Design, Implementierung und Evaluierung von Surface mesh}
+  \centering
+  \includegraphics[width=1.0\textwidth]{content/media/surface_mesh_cmp}
+  \\Quelle: \cite{Sieger.}
+  \label{fig:surface_mesh_cmp}
+\end{figure}
+
+Man erkennt deurlich, dass die Datenstrukturen von \acs{CGAL} und OpenMesh vergleichsweiße langsam sind.
+Da Surface Mesh sehr kompakt ist (es besteht nur aus sehr wenigen C++ und H-Dateien) und in dem Benchmark
+auch sehr gute Ergnisse liefert, fällt die Wahl auf Surface Mesh.
+
 
 \section{Rendering}
 
