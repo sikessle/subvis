@@ -89,7 +89,7 @@ Da Surface Mesh auch als Halfedge Datenstruktur implementiert ist, kann ähnlich
 Listing~\ref{lst:sm_iterate} zeigt einige Basisoperiation, die möglich sind.
 Die Operationen aus Listing~\ref{lst:sm_iterate} sind zum besseren Verständnis in Abbildung~\ref{fig:sm_halfedge} gekennzeichnet. \cite{OpenGP.24.07.2015}
 
-\begin{lstlisting}[style=myCppStyle, caption=Surface Mesh - Iterieren über Kanten einer Fläche, label=lst:sm_iterate]
+\begin{lstlisting}[style=myCppStyle, caption=Surface Mesh - Basisoperationen, label=lst:sm_iterate]
 Surface_mesh::Halfedge h;
 Surface_mesh::Halfedge h0 = mesh.next_halfedge_handle(h);
 Surface_mesh::Halfedge h1 = mesh.prev_halfedge_handle(h);
