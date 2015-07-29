@@ -1,8 +1,10 @@
 
 % ---------- Encoding and Language ----------
 
+\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 
+\usepackage{ngerman}
 \usepackage[ngerman]{babel}
 \usepackage[babel,german=quotes]{csquotes}
 
