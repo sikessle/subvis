@@ -169,19 +169,17 @@ Es sind auch bereits die Subdivision Algorithmen \emph{Catmull-Clark}, \emph{Doo
 \autoref{tab:sd_bib} gibt einen Überblick über die Vorgestellten Bibliotheken listet auf, welche der ausgewählten Subdivision Algorithmen
 (Catmull-Clark, Loop, Butterfly und Doo-Sabin) bereits implementiert sind.
 
-\begin{table}[h]
+\begin{table}
 \caption{Vergleich der Subdivision Bibliotheken}
 \center
-\begin{tabular}{|l|c|c|}
-\toprule
+\begin{tabular}{l|c|c}
 \textbf{Bibliothek} & \textbf{Datenstruktur} & \textbf{Subdivision}\\
-\midrule
+\hline
 \textbf{OpenMesh} & halfedge & Catmull-Clark, Loop, Butterfly\\
 \textbf{Surface\_mesh} & halfedge & keine\\
 \textbf{OpenSubdiv} & halfedge & Catmull-Clark, Loop\\
 \textbf{CGoGN} & combinatorial maps & Catmull-Clark\\
 \textbf{\acs{CGAL}} & halfedge & Catmull-Clark, Loop, Doo-Sabin\\
-\bottomrule
 \end{tabular}
 \label{tab:sd_bib}
 \end{table}
