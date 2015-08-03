@@ -18,8 +18,18 @@ namespace Algo {
  * @brief compute_face_point A face point is the average of all the points of the face
  * @param face_point computed face point (result)
  * @param face
+ * @param mesh
  */
 static void compute_face_point(surface_mesh::Point& face_point, const surface_mesh::Surface_mesh::Face& face, const surface_mesh::Surface_mesh& mesh);
+
+/**
+ * @brief compute_edge_point An edge point is the the average of the two control points on either side of the edge,
+ *                           and the face-points of the touching faces
+ * @param edge_point computed edge point (result)
+ * @param edge
+ * @param mesh
+ */
+static void compute_edge_point(surface_mesh::Point& edge_point, const surface_mesh::Surface_mesh::Edge& edge, const surface_mesh::Surface_mesh& mesh);
 
 // ===============[ public implementation ]===============
 
@@ -63,9 +73,7 @@ void sd_catmull(surface_mesh::Surface_mesh& mesh) {
 
 void compute_face_point(surface_mesh::Point& face_point, const surface_mesh::Surface_mesh::Face& face, const surface_mesh::Surface_mesh& mesh) {
     // init result with zero
-    face_point[0] = 0;
-    face_point[1] = 0;
-    face_point[2] = 0;
+    face_point = surface_mesh::Point(0);
     // get (pre-defined) property storing vertex positions
     surface_mesh::Surface_mesh::Vertex_property<surface_mesh::Point> points = mesh.get_vertex_property<surface_mesh::Point>("v:point");
     // declare and initialize circulators
@@ -79,6 +87,14 @@ void compute_face_point(surface_mesh::Point& face_point, const surface_mesh::Sur
         ++i;
     } while (++vc != vc_end);
     face_point /= i;
+}
+
+void compute_edge_point(surface_mesh::Point& edge_point, const surface_mesh::Surface_mesh::Edge& edge, const surface_mesh::Surface_mesh& mesh) {
+    // init result with zero
+    edge_point = surface_mesh::Point(0);
+    // TODO
+
+
 }
 
 

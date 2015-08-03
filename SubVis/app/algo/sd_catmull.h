@@ -1,13 +1,13 @@
 /**
  *
- * \brief Implementation of the catmull-clark subdivision algorithm.
+ * @brief Implementation of the catmull-clark subdivision algorithm.
  *
  * 1. create face point for each face
  * 2. create edge point for each edge
  * 3. update vertex point coordinates
  * (http://rosettacode.org/wiki/Catmull%E2%80%93Clark_subdivision_surface)
  *
- * \author Felix Born
+ * @author Felix Born
  *
  */
 

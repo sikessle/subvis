@@ -23,9 +23,9 @@ const std::string kRootPathToObjFiles = "./../../SubVis/objs/";
 // ===============[ public prototypes ]===============
 
 /**
- * \brief utils_q_debug_mesh Print basic information (Vertices, Edges and Faces) of mesh with QDebug.
- * \param mesh
- * \param title
+ * @brief utils_q_debug_mesh Print basic information (Vertices, Edges and Faces) of mesh with QDebug.
+ * @param mesh
+ * @param title
  */
 void utils_q_debug_mesh(const surface_mesh::Surface_mesh& mesh, const QString &title);
 
