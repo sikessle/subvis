@@ -86,7 +86,8 @@ void compute_face_point(surface_mesh::Point& face_point, const surface_mesh::Sur
         face_point += points[*vc];
         ++i;
     } while (++vc != vc_end);
-    face_point /= i;
+    if (i != 0)
+        face_point /= i;
 }
 
 void compute_edge_point(surface_mesh::Point& edge_point, const surface_mesh::Surface_mesh::Edge& edge, const surface_mesh::Surface_mesh& mesh) {
