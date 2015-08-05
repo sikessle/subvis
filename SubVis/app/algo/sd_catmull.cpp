@@ -38,22 +38,20 @@ void SubdivCatmull::subdivide(int steps) {
     // loop over all faces
     for (fit = mesh_.faces_begin(); fit != mesh_.faces_end(); ++fit)
     {
-        // TODO
-        surface_mesh::Point face_point;
-        this->compute_face_point(face_point, *fit);
+        this->compute_face_point(*fit);
+        //this->compute_edge_point();
+        // TODO update vertices
     }
-
-    // TODO edge points
-    //this->compute_edge_point();
-    // TODO update
 }
 
-void SubdivCatmull::compute_face_point(surface_mesh::Point& face_point, const surface_mesh::Surface_mesh::Face& face) {
+
+void SubdivCatmull::compute_face_point(const surface_mesh::Surface_mesh::Face& face) {
     // init result with zero
-    face_point = surface_mesh::Point(0);
+    surface_mesh::Point face_point = surface_mesh::Point(0);
     // get (pre-defined) property storing vertex positions
     surface_mesh::Surface_mesh::Vertex_property<surface_mesh::Point> v_points = mesh_.get_vertex_property<surface_mesh::Point>(kSurfMeshPropVertexPoint);
     surface_mesh::Surface_mesh::Face_property<surface_mesh::Point> f_points = mesh_.get_face_property<surface_mesh::Point>(kSurfMeshPropFacePoint);
+    surface_mesh::Surface_mesh::Face_property<bool> f_points_is_set = mesh_.get_face_property<bool>(kSurfMeshPropIsFacePointSet);
     // declare and initialize circulators
     surface_mesh::Surface_mesh::Vertex_around_face_circulator vc, vc_end;
     vc = mesh_.vertices(face);
@@ -68,15 +66,18 @@ void SubdivCatmull::compute_face_point(surface_mesh::Point& face_point, const su
         face_point /= i;
     // add new face point to mesh
     f_points[face] = face_point;
+    f_points_is_set[face] = true;
 }
 
-void SubdivCatmull::compute_edge_point(surface_mesh::Point& edge_point, const surface_mesh::Surface_mesh::Edge& edge) {
+void SubdivCatmull::compute_edge_point(const surface_mesh::Surface_mesh::Edge& edge) {
     // init result with zero
-    edge_point = surface_mesh::Point(0);
+    surface_mesh::Point edge_point = surface_mesh::Point(0);
     // get properties
     surface_mesh::Surface_mesh::Vertex_property<surface_mesh::Point> v_points = mesh_.get_vertex_property<surface_mesh::Point>(kSurfMeshPropVertexPoint);
     surface_mesh::Surface_mesh::Face_property<surface_mesh::Point> f_points = mesh_.get_face_property<surface_mesh::Point>(kSurfMeshPropFacePoint);
     surface_mesh::Surface_mesh::Edge_property<surface_mesh::Point> e_points = mesh_.get_edge_property<surface_mesh::Point>(kSurfMeshPropEdgePoint);
+    surface_mesh::Surface_mesh::Face_property<bool> f_points_is_set = mesh_.get_face_property<bool>(kSurfMeshPropIsFacePointSet);
+    surface_mesh::Surface_mesh::Edge_property<bool> e_points_is_set = mesh_.get_edge_property<bool>(kSurfMeshPropIsEdgePointSet);
     // get all coordinates
     surface_mesh::Surface_mesh::Vertex edge_vertex0, edge_vertex1;
     surface_mesh::Surface_mesh::Face edge_face0, edge_face1;
@@ -84,10 +85,17 @@ void SubdivCatmull::compute_edge_point(surface_mesh::Point& edge_point, const su
     edge_vertex1 = mesh_.vertex(edge, 1);
     edge_face0 = mesh_.face(edge, 0);
     edge_face1 = mesh_.face(edge, 1);
+    // check if face point is not computed yet
+    if (!f_points_is_set[edge_face0])
+        this->compute_face_point(edge_face0);
+    if (!f_points_is_set[edge_face1])
+        this->compute_face_point(edge_face1);
+    // compute edge point
     edge_point += v_points[edge_vertex0] + v_points[edge_vertex1] + f_points[edge_face0] + f_points[edge_face1];
     edge_point /= 4;
     // store edge_point as property
     e_points[edge] = edge_point;
+    e_points_is_set[edge] = true;
 }
 
 } // namespace Algo

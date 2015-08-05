@@ -31,19 +31,14 @@ private:
     /**
      * @brief compute_face_point A face point is the average of all the points of the face.
      *                           The Face Point is stored as surface mesh property of every face
-     * @param face_point computed face point (result)
-     * @param face
      */
-    void compute_face_point(surface_mesh::Point& face_point, const surface_mesh::Surface_mesh::Face& face);
+    void compute_face_point(const surface_mesh::Surface_mesh::Face& face);
 
     /**
      * @brief compute_edge_point An edge point is the the average of the two control points on either side of the edge,
      *                           and the face-points of the touching faces
-     * @param edge_point computed edge point (result)
-     * @param edge
-     * @param mesh
      */
-    void compute_edge_point(surface_mesh::Point& edge_point, const surface_mesh::Surface_mesh::Edge& edge);
+    void compute_edge_point(const surface_mesh::Surface_mesh::Edge& edge);
 
 public:
     SubdivCatmull (surface_mesh::Surface_mesh mesh) : mesh_(mesh) {
@@ -52,6 +47,10 @@ public:
         mesh_.add_edge_property<surface_mesh::Point>(kSurfMeshPropEdgePoint);
         mesh_.add_vertex_property<surface_mesh::Point>(kSurfMeshPropVertexPointUpdated);
         // (vertex point property with key kSurfMeshPropVertexPoint is maintained by default)
+
+        // to avoid multiple computation of same points
+        mesh_.add_face_property<bool>(kSurfMeshPropIsFacePointSet);
+        mesh_.add_face_property<bool>(kSurfMeshPropIsEdgePointSet);
     }
 
     void subdivide(int steps);
