@@ -40,6 +40,21 @@ private:
      */
     void compute_edge_point(const surface_mesh::Surface_mesh::Edge& edge);
 
+
+    /**
+     * @brief compute_new_vertex_point Compute the new vertex coordinates: (Q/n) + (2R/n) + (S(n-3)/n)
+     *  n - valence
+     *  Q - average of the surrounding face points
+     *  R - average of all surround edge midpoints
+     *  S - old control point
+     *  The result is stored as property in the mesh (kSurfMeshPropVertexPointUpdated)
+     * @param vertex old vertex
+     */
+    void compute_new_vertex_point(const surface_mesh::Surface_mesh::Vertex& vertex);
+
+    unsigned int compute_vertex_valence(const surface_mesh::Surface_mesh::Vertex& vertex);
+    void compute_avg_face_points(surface_mesh::Point& avg_face_points, const surface_mesh::Surface_mesh::Vertex& vertex);
+
 public:
     SubdivCatmull (surface_mesh::Surface_mesh mesh) : mesh_(mesh) {
         // add properties that are necessary for catmull clark
