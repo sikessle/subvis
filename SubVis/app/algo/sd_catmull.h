@@ -52,13 +52,13 @@ private:
      */
     void compute_new_vertex_point(const surface_mesh::Surface_mesh::Vertex& vertex);
 
-    unsigned int compute_vertex_valence(const surface_mesh::Surface_mesh::Vertex& vertex);
+    unsigned int vertex_valence(const surface_mesh::Surface_mesh::Vertex& vertex);
 
-    void compute_avg_face_points(surface_mesh::Point& avg_face_points, const surface_mesh::Surface_mesh::Vertex& vertex);
+    void avg_face_points(surface_mesh::Point& avg_face_points, const surface_mesh::Surface_mesh::Vertex& vertex);
 
-    void compute_avg_mid_edges(surface_mesh::Point& avg_mid_edges, const surface_mesh::Surface_mesh::Vertex& vertex);
+    void avg_mid_edges(surface_mesh::Point& avg_mid_edges, const surface_mesh::Surface_mesh::Vertex& vertex);
 
-    void compute_mid_edge(surface_mesh::Point& mid_edge, const surface_mesh::Surface_mesh::Edge &edge);
+    void mid_edge(surface_mesh::Point& mid_edge, const surface_mesh::Surface_mesh::Edge &edge);
 
 public:
     SubdivCatmull (surface_mesh::Surface_mesh mesh) : mesh_(mesh) {
