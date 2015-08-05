@@ -8,65 +8,54 @@
 
 #include "sd_catmull.h"
 #include "utils.h"
-#include "types.h"
 
 namespace SubVis {
 namespace Algo {
 
 // ===============[ private prototypes ]===============
 
-/**
- * @brief compute_face_point A face point is the average of all the points of the face
- * @param face_point computed face point (result)
- * @param face
- * @param mesh
- */
-static void compute_face_point(surface_mesh::Point& face_point, const surface_mesh::Surface_mesh::Face& face, const surface_mesh::Surface_mesh& mesh);
-
-/**
- * @brief compute_edge_point An edge point is the the average of the two control points on either side of the edge,
- *                           and the face-points of the touching faces
- * @param edge_point computed edge point (result)
- * @param edge
- * @param mesh
- */
-static void compute_edge_point(surface_mesh::Point& edge_point, const surface_mesh::Surface_mesh::Edge& edge, const surface_mesh::Surface_mesh& mesh);
 
 // ===============[ public implementation ]===============
 
 void test_surface_mesh_read() {
     surface_mesh::Surface_mesh mesh;
     std::string path = kRootPathToObjFiles + kObjDemoFilesString[kCube];
+    // read mesh and print basic info to stdout
     surface_mesh::read_mesh(mesh, path);
     utils_q_debug_mesh(mesh, QString("Cube Mesh"));
-    sd_catmull(mesh);
+    // compute subdivision
+    SubdivCatmull sd_catmull(mesh);
+    sd_catmull.subdivide(1);
 }
 
 
-void sd_catmull(surface_mesh::Surface_mesh& mesh) {
+// ===============[ class implementation ]===============
+
+void SubdivCatmull::subdivide(int steps) {
+    // TODO implement steps
     // instantiate iterator
     surface_mesh::Surface_mesh::Face_iterator fit;
     // loop over all faces
-    for (fit = mesh.faces_begin(); fit != mesh.faces_end(); ++fit)
+    for (fit = mesh_.faces_begin(); fit != mesh_.faces_end(); ++fit)
     {
         // TODO subdivision
         surface_mesh::Point face_point;
-        compute_face_point(face_point, *fit, mesh);
+        this->compute_face_point(face_point, *fit);
 
-        // TODO ...
+        // TODO edge points
+
+        // TODO update
     }
 }
 
-// ===============[ private implementation ]===============
-
-void compute_face_point(surface_mesh::Point& face_point, const surface_mesh::Surface_mesh::Face& face, const surface_mesh::Surface_mesh& mesh) {
+void SubdivCatmull::compute_face_point(surface_mesh::Point& face_point, const surface_mesh::Surface_mesh::Face& face) {
     // init result with zero
     face_point = surface_mesh::Point(0);
     // get (pre-defined) property storing vertex positions
-    surface_mesh::Surface_mesh::Vertex_property<surface_mesh::Point> points = mesh.get_vertex_property<surface_mesh::Point>(kSurfMeshPropVertexPoint);
+    surface_mesh::Surface_mesh::Vertex_property<surface_mesh::Point> points = mesh_.get_vertex_property<surface_mesh::Point>(kSurfMeshPropVertexPoint);
     // declare and initialize circulators
     surface_mesh::Surface_mesh::Vertex_around_face_circulator vc, vc_end;
-    vc = mesh.vertices(face);
+    vc = mesh_.vertices(face);
     vc_end = vc;
     int i = 0;
     // loop over all incident vertices
@@ -76,16 +65,18 @@ void compute_face_point(surface_mesh::Point& face_point, const surface_mesh::Sur
     } while (++vc != vc_end);
     if (i != 0)
         face_point /= i;
+    // add new face point to mesh
+    //
+
 }
 
-void compute_edge_point(surface_mesh::Point& edge_point, const surface_mesh::Surface_mesh::Edge& edge, const surface_mesh::Surface_mesh& mesh) {
+void SubdivCatmull::compute_edge_point(surface_mesh::Point& edge_point, const surface_mesh::Surface_mesh::Edge& edge) {
     // init result with zero
     edge_point = surface_mesh::Point(0);
     // TODO
 
 
 }
-
 
 } // namespace Algo
 } // namespace SubVis
