@@ -34,8 +34,7 @@ void SubdivCatmull::subdivide(int steps) {
     // instantiate iterator
     surface_mesh::Surface_mesh::Face_iterator fit;
     // loop over all faces
-    for (fit = mesh_.faces_begin(); fit != mesh_.faces_end(); ++fit)
-    {
+    for (fit = mesh_.faces_begin(); fit != mesh_.faces_end(); ++fit) {
         this->compute_face_point(*fit);
         // loop over all edges of the face *fit
         surface_mesh::Surface_mesh::Halfedge_around_face_circulator hc, hc_end;
@@ -45,9 +44,15 @@ void SubdivCatmull::subdivide(int steps) {
             // TODO check if edge point already computed
             this->compute_edge_point(mesh_.edge(*hc));
         } while(++hc != hc_end);
-
-        // TODO update vertices
     }
+    // update all vertices
+    surface_mesh::Surface_mesh::Vertex_iterator vit;
+    // loop over all faces
+    for (vit = mesh_.vertices_begin(); vit != mesh_.vertices_end(); ++vit) {
+        this->compute_new_vertex_point(*vit);
+    }
+
+    // TODO replace faces with new faces (quad and triangle)
 }
 
 void SubdivCatmull::compute_face_point(const surface_mesh::Surface_mesh::Face& face) {
@@ -104,10 +109,21 @@ void SubdivCatmull::compute_edge_point(const surface_mesh::Surface_mesh::Edge& e
 }
 
 void SubdivCatmull::compute_new_vertex_point(const surface_mesh::Surface_mesh::Vertex& vertex) {
+    surface_mesh::Surface_mesh::Vertex_property<surface_mesh::Point> v_points = mesh_.get_vertex_property<surface_mesh::Point>(kSurfMeshPropVertexPoint);
+    surface_mesh::Surface_mesh::Vertex_property<surface_mesh::Point> v_points_updated = mesh_.get_vertex_property<surface_mesh::Point>(kSurfMeshPropVertexPointUpdated);
+    // compute new vertex point: (Q/n) + (2R/n) + (S(n-3)/n)
+    surface_mesh::Point new_vertex_point, q, r, s;
     unsigned int vertex_valence = this->compute_vertex_valence(vertex);
-    // TODO (Q/n) + (2R/n) + (S(n-3)/n)
-
+    // average of the surrounding face points
+    this->compute_avg_face_points(q, vertex);
+    // average of all surround edge midpoints
+    this->compute_avg_mid_edges(r, vertex);
+    // old control point
+    s = v_points[vertex];
+    // compute new vertex point
+    new_vertex_point = (q/vertex_valence) + (2*r/vertex_valence) + (s*(vertex_valence-3)/vertex_valence);
     // store result in kSurfMeshPropVertexPointUpdated
+    v_points_updated[vertex] = new_vertex_point;
 }
 
 unsigned int SubdivCatmull::compute_vertex_valence(const surface_mesh::Surface_mesh::Vertex& vertex) {
@@ -138,7 +154,18 @@ void SubdivCatmull::compute_avg_face_points(surface_mesh::Point& avg_face_points
 
 void SubdivCatmull::compute_avg_mid_edges(surface_mesh::Point& avg_mid_edges, const surface_mesh::Surface_mesh::Vertex& vertex) {
     avg_mid_edges = surface_mesh::Point(0);
-
+    surface_mesh::Surface_mesh::Halfedge_around_vertex_circulator hc, hc_end;
+    hc = mesh_.halfedges(vertex);
+    hc_end = hc;
+    int i = 0;
+    surface_mesh::Point mid_edge;
+    do {
+        this->compute_mid_edge(mid_edge, mesh_.edge(*hc));
+        avg_mid_edges += mid_edge;
+        ++i;
+    } while(++hc != hc_end);
+    if (i != 0)
+        avg_mid_edges /= i;
 }
 
 void SubdivCatmull::compute_mid_edge(surface_mesh::Point& mid_edge, const surface_mesh::Surface_mesh::Edge& edge) {
