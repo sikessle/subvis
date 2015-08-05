@@ -50,7 +50,7 @@ public:
 
         // to avoid multiple computation of same points
         mesh_.add_face_property<bool>(kSurfMeshPropIsFacePointSet);
-        mesh_.add_face_property<bool>(kSurfMeshPropIsEdgePointSet);
+        mesh_.add_edge_property<bool>(kSurfMeshPropIsEdgePointSet);
     }
 
     void subdivide(int steps);

@@ -99,9 +99,7 @@ void SubdivCatmull::compute_edge_point(const surface_mesh::Surface_mesh::Edge& e
     edge_point /= 4;
     // store edge_point as property
     e_points[edge] = edge_point;
-    qDebug() << e_points[edge][0] << e_points[edge][1]<<e_points[edge][2] << endl;
-    // TODO why runtime error ???
-    //e_points_is_set[edge] = true;
+    e_points_is_set[edge] = true;
 }
 
 } // namespace Algo
