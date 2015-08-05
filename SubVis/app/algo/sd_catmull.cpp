@@ -14,7 +14,6 @@ namespace Algo {
 
 // ===============[ private prototypes ]===============
 
-
 // ===============[ public implementation ]===============
 
 void test_surface_mesh_read() {
@@ -28,7 +27,6 @@ void test_surface_mesh_read() {
     sd_catmull.subdivide(1);
 }
 
-
 // ===============[ class implementation ]===============
 
 void SubdivCatmull::subdivide(int steps) {
@@ -39,11 +37,17 @@ void SubdivCatmull::subdivide(int steps) {
     for (fit = mesh_.faces_begin(); fit != mesh_.faces_end(); ++fit)
     {
         this->compute_face_point(*fit);
-        //this->compute_edge_point();
+        // loop over all edges of the face *fit
+        surface_mesh::Surface_mesh::Halfedge_around_face_circulator hc, hc_end;
+        hc = mesh_.halfedges(*fit);
+        hc_end = hc;
+        do {
+            this->compute_edge_point(mesh_.edge(*hc));
+        } while(++hc != hc_end);
+
         // TODO update vertices
     }
 }
-
 
 void SubdivCatmull::compute_face_point(const surface_mesh::Surface_mesh::Face& face) {
     // init result with zero
@@ -95,7 +99,9 @@ void SubdivCatmull::compute_edge_point(const surface_mesh::Surface_mesh::Edge& e
     edge_point /= 4;
     // store edge_point as property
     e_points[edge] = edge_point;
-    e_points_is_set[edge] = true;
+    qDebug() << e_points[edge][0] << e_points[edge][1]<<e_points[edge][2] << endl;
+    // TODO why runtime error ???
+    //e_points_is_set[edge] = true;
 }
 
 } // namespace Algo
