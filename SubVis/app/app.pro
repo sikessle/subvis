@@ -32,7 +32,8 @@ SOURCES += main.cpp \
 
 HEADERS  += view/mainwindow.h \
             algo/sd_catmull.h \
-    algo/utils.h
+    algo/utils.h \
+    algo/types.h
 
 FORMS    += view/mainwindow.ui
 

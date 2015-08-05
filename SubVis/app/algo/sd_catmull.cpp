@@ -8,6 +8,7 @@
 
 #include "sd_catmull.h"
 #include "utils.h"
+#include "types.h"
 
 namespace SubVis {
 namespace Algo {
@@ -62,7 +63,7 @@ void compute_face_point(surface_mesh::Point& face_point, const surface_mesh::Sur
     // init result with zero
     face_point = surface_mesh::Point(0);
     // get (pre-defined) property storing vertex positions
-    surface_mesh::Surface_mesh::Vertex_property<surface_mesh::Point> points = mesh.get_vertex_property<surface_mesh::Point>("v:point");
+    surface_mesh::Surface_mesh::Vertex_property<surface_mesh::Point> points = mesh.get_vertex_property<surface_mesh::Point>(kSurfMeshPropVertexPoint);
     // declare and initialize circulators
     surface_mesh::Surface_mesh::Vertex_around_face_circulator vc, vc_end;
     vc = mesh.vertices(face);
