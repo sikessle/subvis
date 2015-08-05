@@ -22,8 +22,6 @@ namespace Algo {
 
 // ===============[ public prototypes ]===============
 
-void test_surface_mesh();
-
 void test_surface_mesh_read();
 
 void sd_catmull(surface_mesh::Surface_mesh& mesh);

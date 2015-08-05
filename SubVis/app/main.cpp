@@ -16,8 +16,8 @@ int main(int argc, char *argv[])
     SubVis::View::MainWindow w;
     w.show();
 
-    //SubVis::Algo::test_surface_mesh();
-    //SubVis::Algo::test_surface_mesh_read();
+    // only for testing
+    SubVis::Algo::test_surface_mesh_read();
 
     return a.exec();
 }
