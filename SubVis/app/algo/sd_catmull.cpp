@@ -96,7 +96,7 @@ void SubdivCatmull::compute_edge_point(const surface_mesh::Surface_mesh::Edge& e
     if (!f_points_is_set[edge_face1])
         this->compute_face_point(edge_face1);
     // compute edge point
-    edge_point += v_points[edge_vertex0] + v_points[edge_vertex1] + f_points[edge_face0] + f_points[edge_face1];
+    edge_point = v_points[edge_vertex0] + v_points[edge_vertex1] + f_points[edge_face0] + f_points[edge_face1];
     edge_point /= 4;
     // store edge_point as property
     e_points[edge] = edge_point;
@@ -136,6 +136,19 @@ void SubdivCatmull::compute_avg_face_points(surface_mesh::Point& avg_face_points
         avg_face_points /= i;
 }
 
+void SubdivCatmull::compute_avg_mid_edges(surface_mesh::Point& avg_mid_edges, const surface_mesh::Surface_mesh::Vertex& vertex) {
+    avg_mid_edges = surface_mesh::Point(0);
+
+}
+
+void SubdivCatmull::compute_mid_edge(surface_mesh::Point& mid_edge, const surface_mesh::Surface_mesh::Edge& edge) {
+    surface_mesh::Surface_mesh::Vertex_property<surface_mesh::Point> v_points = mesh_.get_vertex_property<surface_mesh::Point>(kSurfMeshPropVertexPoint);
+    surface_mesh::Surface_mesh::Vertex edge_vertex0, edge_vertex1;
+    edge_vertex0 = mesh_.vertex(edge, 0);
+    edge_vertex1 = mesh_.vertex(edge, 1);
+    mid_edge = v_points[edge_vertex0] + v_points[edge_vertex1];
+    mid_edge /= 2;
+}
 
 } // namespace Algo
 } // namespace SubVis
