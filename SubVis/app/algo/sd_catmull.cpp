@@ -45,7 +45,7 @@ void test_surface_mesh_read() {
 void sd_catmull(surface_mesh::Surface_mesh& mesh) {
     // instantiate iterator
     surface_mesh::Surface_mesh::Face_iterator fit;
-    // loop over all vertices
+    // loop over all faces
     for (fit = mesh.faces_begin(); fit != mesh.faces_end(); ++fit)
     {
         // TODO subdivision
