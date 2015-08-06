@@ -118,6 +118,22 @@ void SubdivCatmull::compute_new_vertex_point(const surface_mesh::Surface_mesh::V
 }
 
 void SubdivCatmull::compute_new_faces(surface_mesh::Surface_mesh& result_mesh, const surface_mesh::Surface_mesh::Face& face) {
+    surface_mesh::Surface_mesh::Vertex_around_face_circulator vc, vc_end;
+    vc = mesh_.vertices(face);
+    vc_end = vc;
+
+    int i = 0;
+    do {
+        // TODO create new faces
+        ++i;
+    } while (++vc != vc_end);
+    if (i == 3) { // triangle face
+        ;
+    } else if (i == 4) { // quad face
+        ;
+    } else { // error
+        return;
+    }
     // TODO
 }
 
