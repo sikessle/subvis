@@ -28,6 +28,14 @@ class SubdivCatmull {
 private:
     surface_mesh::Surface_mesh mesh_;
 
+    surface_mesh::Surface_mesh::Vertex_property<surface_mesh::Point> v_points_;
+    surface_mesh::Surface_mesh::Face_property<surface_mesh::Point> f_points_;
+    surface_mesh::Surface_mesh::Edge_property<surface_mesh::Point> e_points_;
+    surface_mesh::Surface_mesh::Vertex_property<surface_mesh::Point> v_points_updated_;
+
+    surface_mesh::Surface_mesh::Face_property<bool> f_points_is_set_;
+    surface_mesh::Surface_mesh::Edge_property<bool> e_points_is_set_;
+
     /**
      * @brief compute_face_point A face point is the average of all the points of the face.
      *                           The Face Point is stored as surface mesh property of every face
@@ -52,6 +60,8 @@ private:
      */
     void compute_new_vertex_point(const surface_mesh::Surface_mesh::Vertex& vertex);
 
+    void compute_new_faces(surface_mesh::Surface_mesh& result_mesh, const surface_mesh::Surface_mesh::Face& face);
+
     unsigned int vertex_valence(const surface_mesh::Surface_mesh::Vertex& vertex);
 
     void avg_face_points(surface_mesh::Point& avg_face_points, const surface_mesh::Surface_mesh::Vertex& vertex);
@@ -71,6 +81,14 @@ public:
         // to avoid multiple computation of same points
         mesh_.add_face_property<bool>(kSurfMeshPropIsFacePointSet);
         mesh_.add_edge_property<bool>(kSurfMeshPropIsEdgePointSet);
+
+        // init properties
+        v_points_ = mesh_.get_vertex_property<surface_mesh::Point>(kSurfMeshPropVertexPoint);
+        f_points_ = mesh_.get_face_property<surface_mesh::Point>(kSurfMeshPropFacePoint);
+        e_points_ = mesh_.get_edge_property<surface_mesh::Point>(kSurfMeshPropEdgePoint);
+        v_points_updated_ = mesh_.get_vertex_property<surface_mesh::Point>(kSurfMeshPropVertexPointUpdated);
+        f_points_is_set_ = mesh_.get_face_property<bool>(kSurfMeshPropIsFacePointSet);
+        e_points_is_set_ = mesh_.get_edge_property<bool>(kSurfMeshPropIsEdgePointSet);
     }
 
     void subdivide(int steps);
