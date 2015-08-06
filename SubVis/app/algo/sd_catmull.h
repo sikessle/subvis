@@ -70,18 +70,21 @@ private:
 
     void mid_edge(surface_mesh::Point& mid_edge, const surface_mesh::Surface_mesh::Edge &edge);
 
-public:
-    SubdivCatmull (surface_mesh::Surface_mesh mesh) : mesh_(mesh) {
+    void add_mesh_properties(surface_mesh::Surface_mesh& mesh) {
         // add properties that are necessary for catmull clark
-        mesh_.add_face_property<surface_mesh::Point>(kSurfMeshPropFacePoint);
-        mesh_.add_edge_property<surface_mesh::Point>(kSurfMeshPropEdgePoint);
-        mesh_.add_vertex_property<surface_mesh::Point>(kSurfMeshPropVertexPointUpdated);
+        mesh.add_face_property<surface_mesh::Point>(kSurfMeshPropFacePoint);
+        mesh.add_edge_property<surface_mesh::Point>(kSurfMeshPropEdgePoint);
+        mesh.add_vertex_property<surface_mesh::Point>(kSurfMeshPropVertexPointUpdated);
         // (vertex point property with key kSurfMeshPropVertexPoint is maintained by default)
 
         // to avoid multiple computation of same points
-        mesh_.add_face_property<bool>(kSurfMeshPropIsFacePointSet);
-        mesh_.add_edge_property<bool>(kSurfMeshPropIsEdgePointSet);
+        mesh.add_face_property<bool>(kSurfMeshPropIsFacePointSet);
+        mesh.add_edge_property<bool>(kSurfMeshPropIsEdgePointSet);
+    }
 
+public:
+    SubdivCatmull (surface_mesh::Surface_mesh mesh) : mesh_(mesh) {
+        this->add_mesh_properties(mesh_);
         // init properties
         v_points_ = mesh_.get_vertex_property<surface_mesh::Point>(kSurfMeshPropVertexPoint);
         f_points_ = mesh_.get_face_property<surface_mesh::Point>(kSurfMeshPropFacePoint);
