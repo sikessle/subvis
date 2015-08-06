@@ -104,7 +104,7 @@ void SubdivCatmull::compute_edge_point(const surface_mesh::Surface_mesh::Edge& e
 void SubdivCatmull::compute_new_vertex_point(const surface_mesh::Surface_mesh::Vertex& vertex) {
     // compute new vertex point: (Q/n) + (2R/n) + (S(n-3)/n)
     surface_mesh::Point new_vertex_point, q, r, s;
-    unsigned int vertex_valence = this->vertex_valence(vertex);
+    unsigned int vertex_valence = mesh_.valence(vertex);
     // average of the surrounding face points
     this->avg_face_points(q, vertex);
     // average of all surround edge midpoints
@@ -135,17 +135,6 @@ void SubdivCatmull::compute_new_faces(surface_mesh::Surface_mesh& result_mesh, c
         return;
     }
     // TODO
-}
-
-unsigned int SubdivCatmull::vertex_valence(const surface_mesh::Surface_mesh::Vertex& vertex) {
-    unsigned int vertex_valence = 0;
-    surface_mesh::Surface_mesh::Vertex_around_vertex_circulator vc, vc_end;
-    vc = mesh_.vertices(vertex);
-    vc_end = vc;
-    do {
-        ++vertex_valence;
-    } while (++vc != vc_end);
-    return vertex_valence;
 }
 
 void SubdivCatmull::avg_face_points(surface_mesh::Point& avg_face_points, const surface_mesh::Surface_mesh::Vertex& vertex) {

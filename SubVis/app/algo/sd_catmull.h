@@ -62,8 +62,6 @@ private:
 
     void compute_new_faces(surface_mesh::Surface_mesh& result_mesh, const surface_mesh::Surface_mesh::Face& face);
 
-    unsigned int vertex_valence(const surface_mesh::Surface_mesh::Vertex& vertex);
-
     void avg_face_points(surface_mesh::Point& avg_face_points, const surface_mesh::Surface_mesh::Vertex& vertex);
 
     void avg_mid_edges(surface_mesh::Point& avg_mid_edges, const surface_mesh::Surface_mesh::Vertex& vertex);
