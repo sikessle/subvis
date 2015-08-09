@@ -33,9 +33,6 @@ private:
     surface_mesh::Surface_mesh::Edge_property<surface_mesh::Point> e_points_;
     surface_mesh::Surface_mesh::Vertex_property<surface_mesh::Point> v_points_updated_;
 
-    surface_mesh::Surface_mesh::Face_property<bool> f_points_is_set_;
-    surface_mesh::Surface_mesh::Edge_property<bool> e_points_is_set_;
-
     /**
      * @brief compute_face_point A face point is the average of all the points of the face.
      *                           The Face Point is stored as surface mesh property of every face
