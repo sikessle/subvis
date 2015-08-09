@@ -48,9 +48,12 @@ void SubdivCatmull::subdivide(int steps) {
         this->compute_new_vertex_point(*vit);
     }
     // TODO replace faces with new faces (quad and triangle)
+    surface_mesh::Surface_mesh subdivision_mesh;
+    this->add_mesh_properties(subdivision_mesh);
     for (fit = mesh_.faces_begin(); fit != mesh_.faces_end(); ++fit) {
-
+        this->compute_new_faces(subdivision_mesh, *fit);
     }
+    // TODO process result mesh (subdivision mesh)
 }
 
 void SubdivCatmull::compute_face_point(const surface_mesh::Surface_mesh::Face& face) {
@@ -110,23 +113,41 @@ void SubdivCatmull::compute_new_vertex_point(const surface_mesh::Surface_mesh::V
 }
 
 void SubdivCatmull::compute_new_faces(surface_mesh::Surface_mesh& result_mesh, const surface_mesh::Surface_mesh::Face& face) {
-    surface_mesh::Surface_mesh::Vertex_around_face_circulator vc, vc_end;
-    vc = mesh_.vertices(face);
-    vc_end = vc;
-
+    // init halfedge circulator
+    surface_mesh::Surface_mesh::Halfedge_around_face_circulator hc, hc_end;
+    hc = mesh_.halfedges(face);
+    hc_end = hc;
+    // add vertices to new mesh
+    const int kArraySize = 4;
+    surface_mesh::Surface_mesh::Vertex v_index_list[kArraySize];
+    surface_mesh::Surface_mesh::Vertex e_index_list[kArraySize];
+    surface_mesh::Surface_mesh::Vertex f_index = result_mesh.add_vertex(f_points_[face]);
+    surface_mesh::Point v_tmp, e_tmp;
     int i = 0;
     do {
-        // TODO create new faces
-        ++i;
-    } while (++vc != vc_end);
+        if (i < kArraySize) { // check if in array bounds
+            v_tmp = v_points_updated_[mesh_.from_vertex(*hc)];
+            e_tmp = e_points_[mesh_.edge(*hc)];
+            v_index_list[i] = result_mesh.add_vertex(v_tmp);
+            e_index_list[i] = result_mesh.add_vertex(e_tmp);
+        }
+        ++i; // increment to compute face valence
+    } while (++hc != hc_end);
+    // create new face from quad or triangle face
     if (i == 3) { // triangle face
-        ;
+        result_mesh.add_quad(v_index_list[0], e_index_list[0], f_index, e_index_list[2]);
+        result_mesh.add_quad(v_index_list[1], e_index_list[1], f_index, e_index_list[0]);
+        result_mesh.add_quad(v_index_list[2], e_index_list[2], f_index, e_index_list[1]);
     } else if (i == 4) { // quad face
-        ;
+        result_mesh.add_quad(v_index_list[0], e_index_list[0], f_index, e_index_list[3]);
+        result_mesh.add_quad(v_index_list[1], e_index_list[1], f_index, e_index_list[0]);
+        result_mesh.add_quad(v_index_list[2], e_index_list[2], f_index, e_index_list[1]);
+        result_mesh.add_quad(v_index_list[3], e_index_list[3], f_index, e_index_list[2]);
     } else { // error
-        return;
+        throw new std::string("Invalid mesh topology: " + i);
     }
     // TODO
+    utils_debug_mesh(result_mesh, "Subdivision Mesh");
 }
 
 void SubdivCatmull::avg_face_points(surface_mesh::Point& avg_face_points, const surface_mesh::Surface_mesh::Vertex& vertex) {
