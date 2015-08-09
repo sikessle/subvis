@@ -45,6 +45,7 @@ private:
     /**
      * @brief compute_edge_point An edge point is the the average of the two control points on either side of the edge,
      *                           and the face-points of the touching faces
+     *                           - all face points have to be computed before usage!
      */
     void compute_edge_point(const surface_mesh::Surface_mesh::Edge& edge);
 
@@ -74,10 +75,6 @@ private:
         mesh.add_edge_property<surface_mesh::Point>(kSurfMeshPropEdgePoint);
         mesh.add_vertex_property<surface_mesh::Point>(kSurfMeshPropVertexPointUpdated);
         // (vertex point property with key kSurfMeshPropVertexPoint is maintained by default)
-
-        // to avoid multiple computation of same points
-        mesh.add_face_property<bool>(kSurfMeshPropIsFacePointSet);
-        mesh.add_edge_property<bool>(kSurfMeshPropIsEdgePointSet);
     }
 
 public:
@@ -88,8 +85,6 @@ public:
         f_points_ = mesh_.get_face_property<surface_mesh::Point>(kSurfMeshPropFacePoint);
         e_points_ = mesh_.get_edge_property<surface_mesh::Point>(kSurfMeshPropEdgePoint);
         v_points_updated_ = mesh_.get_vertex_property<surface_mesh::Point>(kSurfMeshPropVertexPointUpdated);
-        f_points_is_set_ = mesh_.get_face_property<bool>(kSurfMeshPropIsFacePointSet);
-        e_points_is_set_ = mesh_.get_edge_property<bool>(kSurfMeshPropIsEdgePointSet);
     }
 
     void subdivide(int steps);

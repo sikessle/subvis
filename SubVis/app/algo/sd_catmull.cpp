@@ -21,7 +21,7 @@ void test_surface_mesh_read() {
     std::string path = kRootPathToObjFiles + kObjDemoFilesString[kCube];
     // read mesh and print basic info to stdout
     surface_mesh::read_mesh(mesh, path);
-    utils_q_debug_mesh(mesh, QString("Cube Mesh"));
+    utils_debug_mesh(mesh, QString("Cube Mesh"));
     // compute subdivision
     SubdivCatmull sd_catmull(mesh);
     sd_catmull.subdivide(1);
@@ -33,24 +33,20 @@ void SubdivCatmull::subdivide(int steps) {
     // TODO implement steps
     // instantiate iterator
     surface_mesh::Surface_mesh::Face_iterator fit;
-    // loop over all faces
+    surface_mesh::Surface_mesh::Edge_iterator eit;
+    surface_mesh::Surface_mesh::Vertex_iterator vit;
+    // loop over all faces and compute face points
     for (fit = mesh_.faces_begin(); fit != mesh_.faces_end(); ++fit) {
         this->compute_face_point(*fit);
-        // loop over all edges of the face *fit
-        surface_mesh::Surface_mesh::Halfedge_around_face_circulator hc, hc_end;
-        hc = mesh_.halfedges(*fit);
-        hc_end = hc;
-        do {
-            // TODO check if edge point already computed
-            this->compute_edge_point(mesh_.edge(*hc));
-        } while(++hc != hc_end);
+    }
+    // loop over all edges and compute edge points
+    for (eit = mesh_.edges_begin(); eit != mesh_.edges_end(); ++eit) {
+        this->compute_edge_point(*eit);
     }
     // update all vertices
-    surface_mesh::Surface_mesh::Vertex_iterator vit;
     for (vit = mesh_.vertices_begin(); vit != mesh_.vertices_end(); ++vit) {
         this->compute_new_vertex_point(*vit);
     }
-
     // TODO replace faces with new faces (quad and triangle)
     for (fit = mesh_.faces_begin(); fit != mesh_.faces_end(); ++fit) {
 
@@ -74,7 +70,7 @@ void SubdivCatmull::compute_face_point(const surface_mesh::Surface_mesh::Face& f
         face_point /= i;
     // add new face point to mesh
     f_points_[face] = face_point;
-    f_points_is_set_[face] = true;
+    utils_debug_point(face_point, "Face Point");
 }
 
 void SubdivCatmull::compute_edge_point(const surface_mesh::Surface_mesh::Edge& edge) {
@@ -88,17 +84,12 @@ void SubdivCatmull::compute_edge_point(const surface_mesh::Surface_mesh::Edge& e
     edge_vertex1 = mesh_.vertex(edge, 1);
     edge_face0 = mesh_.face(edge, 0);
     edge_face1 = mesh_.face(edge, 1);
-    // check if face point is not computed yet
-    if (!f_points_is_set_[edge_face0])
-        this->compute_face_point(edge_face0);
-    if (!f_points_is_set_[edge_face1])
-        this->compute_face_point(edge_face1);
     // compute edge point
     edge_point = v_points_[edge_vertex0] + v_points_[edge_vertex1] + f_points_[edge_face0] + f_points_[edge_face1];
     edge_point /= 4;
     // store edge_point as property
     e_points_[edge] = edge_point;
-    e_points_is_set_[edge] = true;
+    utils_debug_point(edge_point, "Edge Point");
 }
 
 void SubdivCatmull::compute_new_vertex_point(const surface_mesh::Surface_mesh::Vertex& vertex) {
@@ -115,6 +106,7 @@ void SubdivCatmull::compute_new_vertex_point(const surface_mesh::Surface_mesh::V
     new_vertex_point = (q/vertex_valence) + (2*r/vertex_valence) + (s*(vertex_valence-3)/vertex_valence);
     // store result in kSurfMeshPropVertexPointUpdated
     v_points_updated_[vertex] = new_vertex_point;
+    utils_debug_point(new_vertex_point, "New Vertex Point");
 }
 
 void SubdivCatmull::compute_new_faces(surface_mesh::Surface_mesh& result_mesh, const surface_mesh::Surface_mesh::Face& face) {

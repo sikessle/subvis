@@ -20,13 +20,11 @@ const std::string kSurfMeshPropVertexPointUpdated = "v:point_updated";
  * @brief kSurfMeshPropFacePoint key to access surface mesh property that stores the face point coordinates
  */
 const std::string kSurfMeshPropFacePoint = "f:point";
-const std::string kSurfMeshPropIsFacePointSet = "f:point_is_set";
 
 /**
  * @brief kSurfMeshPropEdgePoint key to access surface mesh property that stores the edge point coordinates
  */
 const std::string kSurfMeshPropEdgePoint = "e:point";
-const std::string kSurfMeshPropIsEdgePointSet = "e:point_is_set";
 
 } // namespace Algo
 } // namespace SubVis
