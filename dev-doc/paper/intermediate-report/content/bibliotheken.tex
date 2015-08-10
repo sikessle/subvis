@@ -12,8 +12,8 @@ Zusätzlich muss noch die Beziehung zwischen den Objekten abgespeichert werden.
 
 \subsection{OpenMesh}
 
-OpenMesh wird von der \acs{RWTH} Aachen entwickelt und stellt eine mächtige Datenstruktur für Polygonnetze bereit.
-Es steht unter der \acs{LGPL} v3 Lizenz (\enquote{with exception}) und kann somit problemlos verwendet werden.
+OpenMesh wird von der \ac{RWTH} Aachen entwickelt und stellt eine mächtige Datenstruktur für Polygonnetze bereit.
+Es steht unter der \ac{LGPL} v3 Lizenz (\enquote{with exception}) und kann somit problemlos verwendet werden.
 
 OpenMesh implementiert eine Datenstruktur für Polygonnetze.
 Darüber hinaus sind bereits einige Unterteilungsalgorithmen implementiert, die auf der OpenMesh Datenstruktur arbeiten können.
@@ -59,7 +59,7 @@ Dies bringt den Vorteil, dass man über die Kanten einer Fläche sehr einfach it
 
 \subsubsection{OpenFlipper}
 
-Aufbauend auf OpenMesh wurde von der \acs{RWTH} Aachen zusätzlich das flexible Plugin-basierte Framework OpenFlipper enwickelt.
+Aufbauend auf OpenMesh wurde von der \ac{RWTH} Aachen zusätzlich das flexible Plugin-basierte Framework OpenFlipper enwickelt.
 Damit können geometrische Objekte modelliert und verarbeitet werden. Intern wird auf die Datenstrukur OpenMesh zurückgegriffen.
 Für die grafische Oberfläche wird QT verwendet.
 Mit OpenFlipper kann man über die Oberfläche Netze erstellen und die in OpenMesh implementierten Subdivision Algorithmen anwenden.
@@ -115,6 +115,8 @@ Die Operationen sind in \autoref{fig:sm_topology} dargestellt.
   \label{fig:sm_topology}
 \end{figure}
 
+Die Bibliothekt steht unter der \emph{GNU Library General Public License}, was eine problemlose Verwendung in diesem Projekt ermöglicht.
+
 \subsection{OpenSubdiv}
 
 OpenSubdiv wird von Pixar entwickelt und ist eine mächtige Bibliothek, die Unterteilungsalgorithmen und Datenstrukturen implementiert.
@@ -133,13 +135,13 @@ OpenSubdiv ist lizensiert unter der Apache License und darf somit frei für komm
 Sie besteht insgesamt aus den 4 Schichten \ac{Sdc}, \ac{Vtr}, \ac{Far} und \ac{Osd} \cite{Pixar.27.07.2015}.
 
 \begin{description}
- \item[\acs{Sdc}] ist die unterste Schicht in der Architektur und implementiert die Unterteilungsdetails.
+ \item[\ac{Sdc}] ist die unterste Schicht in der Architektur und implementiert die Unterteilungsdetails.
  Dazu gehören Typen, Optionen und Eigenschaften für die konkreten Unterteilungsalgorithmen.
- \item[\acs{Vtr}] beinhaltet Klassen, die das Netz für effiziente Verfeinerung in einer Zwischenrepräsentation darstellen.
+ \item[\ac{Vtr}] beinhaltet Klassen, die das Netz für effiziente Verfeinerung in einer Zwischenrepräsentation darstellen.
  Diese Schicht ist nur für den internen Gebrauch gedacht.
- \item[\acs{Far}] ist die zentrale Schnittstelle, um Polygonnetze mit Unterteilungsalgorithmen zu verarbeiten.
- \item[\acs{Osd}] beinhaltet geräteabhängigen Code, um Objekte aus der Schicht \acs{Far} auch in unterschiedlichen Backends wie
- \acs{CUDA} oder OpenCL ausführbar zu machen.
+ \item[\ac{Far}] ist die zentrale Schnittstelle, um Polygonnetze mit Unterteilungsalgorithmen zu verarbeiten.
+ \item[\ac{Osd}] beinhaltet geräteabhängigen Code, um Objekte aus der Schicht \ac{Far} auch in unterschiedlichen Backends wie
+ \ac{CUDA} oder OpenCL ausführbar zu machen.
 \end{description}
 
 Von OpenSubdiv werden die Unterteilungsalgorithmen \emph{Catmull-Clark}, \emph{Loop} und \emph{Bilinear} unterstützt \cite{Pixar.27.07.2015}. 
@@ -147,7 +149,7 @@ Von OpenSubdiv werden die Unterteilungsalgorithmen \emph{Catmull-Clark}, \emph{L
 \subsection{CGoGN}
 
 CGoGN ist eine Geometric Modeling C++ Bibliothek und implementiert eine Datenstruktur für n-dimensionale Netze als Combinatorial Maps.
-Diese Implementierung unterscheidet sich zu den halfedge Datenstrukteren von OpenMesh und Surface\_mesh deutlich.
+Diese Implementierung unterscheidet sich zu den Halfedge Datenstrukteren von OpenMesh und Surface\_mesh deutlich.
 Diese sind zwar alle effizient, haben jedoch Probleme beim Umgang mit Objekten von unterschiedlichen Dimensionen.
 Für jeden Problemfall muss die spezielle Datenstruktur verwendet werden.
 All diese Strukturen lassen sich jedoch auf Combinatorial Maps zurückführen.
@@ -158,14 +160,14 @@ CGoGN implementiert bereits den Unterteilungsalgorithmus Catmull-Clark \cite{CGo
 
 \ac{CGAL} ist ein mächtiges Softwareprojekt mit einer Vielzahl an Datenstrukturen und Algorithmen.
 Neben Unterteilungsalgorithmen werden auch eine Reihe anderer Themengebiete abgedeckt (Voronoi Diagramme, Convex Hull Algorithms, Spatial Searching ...).
-Für die Repräsentation von Netzen gibt es bei \acs{CGAL} mehrere Möglichkeiten.
+Für die Repräsentation von Netzen gibt es bei \ac{CGAL} mehrere Möglichkeiten.
 
 \begin{description}
- \item[Surface\_mesh] Zum einen implementiert \acs{CGAL} die bereits vorgestellte Datenstruktur Surface\_mesh.
- \item[3D Polyhedral Surface] Neben Surface\_mesh kann auch die von \acs{CGAL} entwickelte halfedge Datenstruktur Polyhedral verwendet werden.
+ \item[Surface\_mesh] Zum einen implementiert \ac{CGAL} die bereits vorgestellte Datenstruktur Surface\_mesh.
+ \item[3D Polyhedral Surface] Neben Surface\_mesh kann auch die von \ac{CGAL} entwickelte Halfedge Datenstruktur Polyhedral verwendet werden.
 \end{description}
 
-\acs{CGAL} ist sehr mächtig und komplex. Die Bibliothek ist sogar in den meisten Paketquellen der Linux Distributionen enthalten (z. B. Ubuntu)
+\ac{CGAL} ist sehr mächtig und komplex. Die Bibliothek ist sogar in den meisten Paketquellen der Linux Distributionen enthalten (z. B. Ubuntu)
 und kann darüber sehr leicht installiert werden.
 Es sind auch bereits die Unterteilungsalgorithmen \emph{Catmull-Clark}, \emph{Doo-Sabin}, \emph{Loop} und \emph{Sqrt3} implementiert \cite{CGAL.27.07.2015}.
 
@@ -180,11 +182,11 @@ Es sind auch bereits die Unterteilungsalgorithmen \emph{Catmull-Clark}, \emph{Do
 \begin{tabular}{l|c|c}
 \textbf{Bibliothek} & \textbf{Datenstruktur} & \textbf{Unterteilungsalgorithmen}\\
 \hline
-\textbf{OpenMesh} & halfedge & Catmull-Clark, Loop, Butterfly\\
-\textbf{Surface\_mesh} & halfedge & keine\\
-\textbf{OpenSubdiv} & halfedge & Catmull-Clark, Loop\\
+\textbf{OpenMesh} & Halfedge & Catmull-Clark, Loop, Butterfly\\
+\textbf{Surface\_mesh} & Halfedge & keine\\
+\textbf{OpenSubdiv} & Halfedge & Catmull-Clark, Loop\\
 \textbf{CGoGN} & combinatorial maps & Catmull-Clark\\
-\textbf{\acs{CGAL}} & halfedge & Catmull-Clark, Loop, Doo-Sabin\\
+\textbf{\ac{CGAL}} & Halfedge & Catmull-Clark, Loop, Doo-Sabin\\
 \end{tabular}
 \label{tab:sd_bib}
 \end{table}
@@ -204,31 +206,107 @@ In dem Diagramm werden die Zeiten relativ zu Surface\_mesh angegeben.
   \label{fig:surface_mesh_cmp}
 \end{figure}
 
-Man erkennt deutlich, dass die Datenstrukturen von \acs{CGAL} und OpenMesh vergleichsweise langsam sind.
+Man erkennt deutlich, dass die Datenstrukturen von \ac{CGAL} und OpenMesh vergleichsweise langsam sind.
 Da Surface\_mesh sehr kompakt ist (es besteht nur aus sehr wenigen C++ und H-Dateien) und in dem Benchmark auch sehr gute Ergebnisse liefert, fällt die Wahl auf Surface\_mesh.
 
 
 \section{Rendering}
 
-Im folgenden Unterkapitel werden Bibliotheken oder Programme untersucht, die Polygonnetze rendern und in wie weit diese Funktionen übernommen werden können. 
+Im folgenden Unterkapitel werden Bibliotheken oder Programme untersucht, die Polygonnetze rendern und inwieweit diese Funktionen übernommen werden können. 
 
 \subsection{BezierView}
 
 BezierView (kurz bview) ist ein einfaches Programm zum Rendern von Bézier Patches, rationalen Bézier Patches und Polygonnetzen \cite{Peters.bview.27.07.2015}.
+
 // TODO
 
 HIER MUSS noch mindestens eine subsection folgen (nur eine Unterüberschrift macht keinen Sinn!)
 
 \section{Grafische Oberfläche}
 
-\subsection{QT}
+In diesem Abschnitt werden die Bibliotheken, die für die Darstellung nötig sind vorgestellt.
 
-// TODO
+\subsection{Qt}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.6\textwidth]{content/media/qt_signal}
+  \caption{Signal-Slots Konzept von Qt \cite{Qt}}
+  \label{fig:qt_signal}
+\end{figure}
+
+Qt ist eine C++ basierte Bibliothek zur Entwicklung von grafischen Anwendungen \cite{Qt}. 
+Der Vorteil von Qt besteht darin, dass die Anwendungen auf den verschiedenen Betriebssystemen annähernd nativ aussehen, in dem wann immer möglich, die nativen Widgets verwendet werden.
+Eine Besonderheit von Qt ist das Signals-Slots Konzept (vgl. \autoref{fig:qt_signal}). 
+Dieses kann als eine Art Beobachter-Entwurfsmuster betrachtet werden.
+Dabei entspricht ein Signal einem \emph{notify} und ein Slot einem \emph{Beobachter}. 
+Mittels einer \emph{connect} Funktion wird die Verbindung zwischen den Komponenten (n:m) hergestellt.
+Zur Definition von Signalen und Slots werden Makros verwendet, die vom \ac{moc} in standardkonformen C++ Code umgewandelt werden.
+Qt wird unter der \ac{LGPL} verteilt.
 
 \subsection{libQGLViewer}
 
-// TODO
+Die Bibliothek bietet einige grundlegende Funktionen zur Erstellung von 3D OpenGL Betrachtern mit C++ \cite{libQGLViewer}.
+Sie bietet unter anderem folgende Funktionen bzw. erleichtert deren Erstellung:
 
-\section{Entwicklungsumgebung}
+\begin{itemize}
+\item Mit der Maus verschiebbare Kamera
+\item Weltkoordinatensystem
+\item Verschiebung von Koordinatensystem und Objekten
+\item Frame-Animation
+\item Objektselektion mit der Maus
+\item Screenshots
+\item Tastaturkürzel und Maus-Bindings
+\end{itemize}
 
-// TODO
+Die Software ist unter der \ac{GPL} frei verfügbar.
+
+\subsection{OpenGL}
+
+Die API-Spezifikation OpenGL beschreibt einige hundert Befehle zur Programmierung von Grafikkarten.
+Basierend auf einem Zustandsautomaten ermöglicht OpenGL es, bei einem Draw-Call lediglich die veränderten Parameter mitzugeben.
+Somit müssen gleichbleibende Parameter nicht redundant angegeben werden, was auch die Performance erhöht.
+Die OpenGL-Befehle folgen einem konsistenten Namensschema, an dem sich einige Informationen ablesen lassen. So bezeichnet z. B. glVertex3fv() einen OpenGL-Befehl (gl), der einen Eckpunkt definiert (Vertex) und drei (3) float (f) Argumente als Zeiger (v) bekommt.
+OpenGL ist frei von jeglichen Lizenzen.
+
+\section{IDE}
+
+In Bezug auf Qt und C++ bietet sich die IDE \emph{Qt Creator} \cite{QtCreator} an. 
+Diese bietet alle gewohnten Funktionen einer IDE wie Syntaxhervorhebung, Autovervollständigung, GUI-Designer, Debugger und Git-Integration.
+Insbesondere der GUI-Designer nimmt viel Arbeit ab, da so einiges an Boilerplate-Code automatisch erzeugt werden kann.
+
+Projekte werden in sog. \emph{.pro} Dateien konfiguriert. 
+Diese Datei ist plattformunabhängig und relativ schlank gehalten. 
+Erst bei Ausführung durch qmake wird eine plattformspezifisches Makefile generiert, welches dann mittels Make ausgeführt werden kann.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
