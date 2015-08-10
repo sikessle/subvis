@@ -1,10 +1,28 @@
 \chapter{Einführung}
 
-Unterteilung beschreibt das Verfahren, aus einem Ausgangspolygonnetz eine glatte Fläche zu erzeugen.
-Dadurch lassen sich durch ein Kontrollnetz Flächen beliebiger Form beschreiben.
+Mittels eines Polygonnetzes lassen sich Flächen verschiedener Formen beschreiben. 
+Meist wird ein sog. Kontrollnetz verwendet, welches von einem Modellierer erstellt wird.
+Dieses wird dann durch computergestützte Verarbeitung verfeinert, um eine glatte Fläche zu erzeugen.
+Hierbei stellt sich die Herausforderung, mit möglichst wenigen Polygonen im Kontrollnetz eine glatte Oberfläche erzeugen zu können.
+Denn ein kleines Kontrollnetz spart Speicherplatz und senkt die Komplexität bei Änderungen im Netz.
+Ein häufig in der Computergrafik-Branche verwendeter Ansatz zur Berechnung eines glatten Netzes ausgehend von einem Kontrollnetz stellen Unterteilungsalgorithmen dar.
+Rein subjektiv betrachtet liefern diese optisch meist sehr ansprechende Ergebnisse.
+Hier soll insbesondere der Algorithmus von Catmull-Clark erwähnt werden, welcher häufig von Pixar verwendet wird (siehe \autoref{fig:subdiv_einleitung}).
 
-Das Ziel dieses Projekts ist es ein Programm zu entwickeln, welches ausgewählte Unterteilungsalgorithmen implementiert.
-Es soll ein beliebiges Kontrollnetz geladen und editiert werden können.
-Das Programm soll die Fläche rendern und die Unterteilungsalgorithmen auf das Kontrollnetz anwenden können.
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{content/media/sd_einleitung.jpg}
+  \caption{Anwendung von Catmull-Clark \cite{niessner2012feature}}
+  \label{fig:subdiv_einleitung}
+\end{figure}
 
-Dieses Dokument definiert die Anforderungen an das Programm und evaluiert verschiedene Bibliotheken und Datenstrukturen, die später für das Projekt verwendet werden sollen.
+
+Das Projekt \emph{SubVis} setzt sich zum Ziel ein Programm zu entwickeln, welches einige Unterteilungsalgorithmen visualisiert. 
+Dabei soll einerseits das Kontrollnetz (Polygonnetz) als auch die durch Anwendung von Unterteilungsalgorithmen entstehende Limesfläche dargestellt werden.
+Dies dient dazu, die Vielzahl an Algorithmen an einem Ort zu bündeln und über eine schlanke, übersichtliche Anwendung zu Verfügung zu stellen.
+Hiervon sollen insbesondere Studenten und andere interessierte Personen profitieren, die sich mit der Thematik auseinandersetzen möchten.
+Der modulare Aufbau und eine gute Dokumentation sollen nachfolgenden Projekten (Abschlussarbeiten, Teamprojekte, etc.) die Möglichkeit geben, die Anwendung weiter zu entwickeln bzw. zu erweitern.
+
+Es wird nachfolgend eine kurze Einführung in die Thematik gegeben, gefolgt von der Evaluierung verschiedener Tools und Bibliotheken. 
+Danach folgt eine Beschreibung des geplanten Programms \emph{SubVis}.
+Abschließend wird der bisherige Projektverlauf und ein Ausblick für das kommende Semester dargelegt.

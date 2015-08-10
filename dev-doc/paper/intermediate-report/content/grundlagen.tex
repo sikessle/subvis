@@ -9,9 +9,9 @@ Die glatte Zielfläche ist dabei der Grenzwert eines unendlichen, rekursiven Ver
 Nach mehrfacher Anwendung der Unterteilung konvergiert die Kurve oder Fläche gegen die glatte Zielkurve bzw. Zielfläche.
 
 \begin{figure}
-  \caption{Unterteilungsalgorithmus - Kurve und Fläche \cite{Standford.24.07.2015}}
   \centering
   \includegraphics[width=0.8\textwidth]{content/media/sd.png}
+  \caption{Unterteilungsalgorithmus - Kurve und Fläche \cite{Standford.24.07.2015}}
   \label{fig:sd}
 \end{figure}
 
@@ -27,16 +27,16 @@ Man unterscheidet dabei zwischen \emph{Primal} und \emph{Dual}.
 
 \end{description}
 \begin{figure}
-  \caption{Primal (face split) \cite{Standford.24.07.2015}}
   \centering
   \includegraphics[width=0.7\textwidth]{content/media/sd_primal}
+  \caption{Primal (face split) \cite{Standford.24.07.2015}}
   \label{fig:sd_primal}
 \end{figure}
 
 \begin{figure}
-  \caption{Dual (vertex split) \cite{Standford.24.07.2015}}
   \centering
   \includegraphics[width=0.7\textwidth]{content/media/sd_dual}
+  \caption{Dual (vertex split) \cite{Standford.24.07.2015}}
   \label{fig:sd_dual}
 \end{figure}
 
@@ -50,9 +50,11 @@ Ein weiteres wesentliches Merkmal ist, ob Kontrollpunkte interpoliert werden ode
 Zu jedem Algorithmus ist zusätzlich die \enquote{Glattheit} der Oberfläche angegeben (C-Stetigkeit).
 Dies kann auch als Maß über die Qualität des Unterteilungsalgorithmus fungieren.
 
+
 \begin{table}
-\caption{Unterteilungsalgorithmen Übersicht}
 \center
+\caption{Unterteilungsalgorithmen Übersicht}
+\label{tab:sd_comp}
 \begin{tabular}{l|c|c|c}
 & \multicolumn{2}{c|}{\textbf{Primal}} & \textbf{Dual}\\
 \hline
@@ -61,7 +63,6 @@ Dies kann auch als Maß über die Qualität des Unterteilungsalgorithmus fungier
 \textbf{Approximation} & Loop \((C^2)\) & Catmull-Clark \((C^2)\) & Doo-Sabin \((C^1)\) \\
 \textbf{Interpolation} & Butterfly \((C^1)\) & Kobbelt \((C^1)\) & Biquartic \((C^2)\) \\
 \end{tabular}
-\label{tab:sd_comp}
 \end{table}
 
 \autoref{fig:sd_comp} Vergleicht die vier unterschiedlichen Unterteilungsalgorithmen Catmull-Clark, Loop, Doo-Sabin und Butterfly.
@@ -69,9 +70,9 @@ Man erkennt deutlich den interpolierenden Unterteilungsalgorithmus (Butterfly),
 da dieser durch die harten Interpolationsbedingungen im Vergleich zu den approximierenden Algorithmen viel \enquote{welliger} ist.
 
 \begin{figure}
-  \caption{Vergleich der Unterteilungsalgorithmen \cite{Standford.24.07.2015}}
   \centering
   \includegraphics[width=0.9\textwidth]{content/media/sd_overview.png}
+  \caption{Vergleich der Unterteilungsalgorithmen \cite{Standford.24.07.2015}}
   \label{fig:sd_comp}
 \end{figure}
 

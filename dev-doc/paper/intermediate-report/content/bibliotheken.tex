@@ -17,7 +17,8 @@ Es steht unter der \acs{LGPL} v3 Lizenz (\enquote{with exception}) und kann somi
 
 OpenMesh implementiert eine Datenstruktur für Polygonnetze.
 Darüber hinaus sind bereits einige Subdivision Algorithmen implementiert, die auf der OpenMesh Datenstruktur arbeiten können.
-Zum Funktionsumfang gehören folgende Algorithmen.
+Zum Funktionsumfang gehören folgende Algorithmen:
+
 \begin{enumerate}
 \item Uniform subdivision
 \begin{itemize}
@@ -40,8 +41,10 @@ Zum Funktionsumfang gehören folgende Algorithmen.
 
 OpenMesh implementiert eine \emph{halfedge} Datenstruktur.
 Diese \emph{edge-based} Datenstrukturen speichern die Information über die Verbindungen zwischen Eckpunkten (Vertices) in den Kanten (Edges), während
-\emph{face-based} Datenstrukturen die Verbindungsinformation zwischen den Eckpunkten und Nachbarn in den Flächen (Face) speichern.\\
+\emph{face-based} Datenstrukturen die Verbindungsinformation zwischen den Eckpunkten und Nachbarn in den Flächen (Face) speichern.
+
 Jede Kante (Edge) referenziert also folgende Objekte:
+
 \begin{itemize}
 	\item 2 Eckpunkte (Vertices)
 	\item eine Fläche (Face)
@@ -60,34 +63,35 @@ Damit können geometrische Objekte modelliert und verarbeitet werden. Intern wir
 Für die grafische Oberfläche wird QT verwendet.
 Mit OpenFlipper kann man über die Oberfläche Netze erstellen und die in OpenMesh implementierten Subdivision Algorithmen anwenden.
 \autoref{fig:openflipper} zeigt die Benutzeroberfläche von OpenFlipper.
+
 \begin{figure}
-  \caption{OpenFlipper}
   \centering
   \includegraphics[width=0.8\textwidth]{content/media/openflipper_cube}
   \includegraphics[width=0.8\textwidth]{content/media/openflipper_loop}
+  \caption{OpenFlipper}
   \label{fig:openflipper}
 \end{figure}
 
 
 \subsection{Surface\_mesh}
 
-Surface\_mesh ist eine einfache und effizente Datenstruktur um Polygonnetze beschreiben zu können.
-Die Datenstruktur wurde alse einfachere Alternative zu OpenMesh von der Bielefeld Graphics \& Geometry Group entwickelt.
+Surface\_mesh \cite{Sieger.} ist eine einfache und effizente Datenstruktur um Polygonnetze beschreiben zu können.
+Die Datenstruktur wurde als einfachere Alternative zu OpenMesh von der Bielefeld Graphics \& Geometry Group entwickelt.
 Die Datenstruktur soll einfach zu benutzen sein und eine bessere Performance und geringeren Speicherverbrauch mitbringen.
 Analog zu OpenMesh implementiert Surface\_mesh eine halfedge Datenstruktur.
 Die Verbindungsinformation der Kanten werden also in einem Paar aus zwei gerichteten Halbkanten gespeichert.
 \autoref{fig:sm_halfedge} visualisiert den Zusammenhang der Halbkanten und Ecken.
 
 \begin{figure}
-  \caption{Surface\_mesh - Halfedge Verbindungen}
   \centering
   \includegraphics[width=0.3\textwidth]{content/media/sm_connectivity-queries}
+  \caption{Surface\_mesh - Halfedge Verbindungen \cite{OpenGP.24.07.2015}}
   \label{fig:sm_halfedge}
 \end{figure}
 
 Da Surface\_mesh auch als Halfedge Datenstruktur implementiert ist, kann ähnlich effizient zu OpenMesh über die Kanten iteriert werden.
 \autoref{lst:sm_iterate} zeigt einige Basisoperiation, die möglich sind.
-Die Operationen aus Listing~\ref{lst:sm_iterate} sind zum besseren Verständnis in \autoref{fig:sm_halfedge} gekennzeichnet \cite{OpenGP.24.07.2015}. 
+Die Operationen aus Listing~\ref{lst:sm_iterate} sind zum besseren Verständnis in \autoref{fig:sm_halfedge} gekennzeichnet. 
 
 \begin{lstlisting}[style=myCppStyle, caption=Surface\_mesh - Basisoperationen, label=lst:sm_iterate]
 Surface_mesh::Halfedge h;
@@ -101,12 +105,12 @@ Surface_mesh::Vertex   v1 = mesh.to_vertex_handle(h);
 
 Um das Netz zu verändern oder zu editieren unterstützt die Datenstruktur high-level Operationen zum Verändern der Topologie.
 Mit \emph{Edge Collapse}, \emph{Edge Split} und \emph{Edge Flip} kann das Netz geändert werden.
-Die Operationen sind in \autoref{fig:sm_topology} dargestellt \cite{OpenGP.24.07.2015}. 
+Die Operationen sind in \autoref{fig:sm_topology} dargestellt. 
 
 \begin{figure}
-  \caption{Surface\_mesh - High-level Operationen zum Ändern der Topologie}
-  \centering
+    \centering
   \includegraphics[width=0.8\textwidth]{content/media/sm_topology-changes}
+  \caption{Surface\_mesh - High-level Operationen zum Ändern der Topologie \cite{OpenGP.24.07.2015}}
   \label{fig:sm_topology}
 \end{figure}
 
@@ -118,9 +122,9 @@ Primär wird die Bibliothek von Pixar zum erstellen von animierten Filmen verwen
 OpenSubdiv ist lizensiert unter der Apache License und darf somit frei für kommerzielle und nicht kommerzielle Projekt genutzt werden.
 
 \begin{figure}
-  \caption{Pixar OpenSubdiv Architektur \cite{Pixar.27.07.2015}}
   \centering
   \includegraphics[width=0.9\textwidth]{content/media/pixar_opensubdiv}
+  \caption{Pixar OpenSubdiv Architektur \cite{Pixar.27.07.2015}}
   \label{fig:pixar_opensubdiv}
 \end{figure}
 
@@ -153,7 +157,7 @@ CGoGN implementiert bereits den Subdivision Algorithmus Catmull-Clark \cite{CGoG
 
 \ac{CGAL} ist ein mächtiges Softwareprojekt mit einer Vielzahl an Datenstrukturen und Algorithmen.
 Neben Subdivision Algorithmen werden auch eine Reihe anderer Themengebiete abgedeckt (Voronoi Diagramme, Convex Hull Algorithms, Spatial Searching ...).
-Für die Representation von Netzen gibt es bei \acs{CGAL} mehrere Möglichkeiten.
+Für die Repräsentation von Netzen gibt es bei \acs{CGAL} mehrere Möglichkeiten.
 
 \begin{description}
  \item[Surface\_mesh] Zum einen implementiert \acs{CGAL} die bereits vorgestellte Datenstruktur Surface\_mesh.
@@ -166,12 +170,12 @@ Es sind auch bereits die Subdivision Algorithmen \emph{Catmull-Clark}, \emph{Doo
 
 \subsection{Vergleich}
 
-\autoref{tab:sd_bib} gibt einen Überblick über die Vorgestellten Bibliotheken listet auf, welche der ausgewählten Subdivision Algorithmen
+\autoref{tab:sd_bib} gibt einen Überblick über die vorgestellten Bibliotheken und listet auf, welche der ausgewählten Unterteilungsalgorithmen
 (Catmull-Clark, Loop, Butterfly und Doo-Sabin) bereits implementiert sind.
 
 \begin{table}
-\caption{Vergleich der Subdivision Bibliotheken}
 \center
+\caption{Vergleich der Subdivision Bibliotheken}
 \begin{tabular}{l|c|c}
 \textbf{Bibliothek} & \textbf{Datenstruktur} & \textbf{Subdivision}\\
 \hline
@@ -184,7 +188,7 @@ Es sind auch bereits die Subdivision Algorithmen \emph{Catmull-Clark}, \emph{Doo
 \label{tab:sd_bib}
 \end{table}
 
-Mit Außnahme von Surface\_mesh, das wirklich nur die Polygonnetz-Datenstruktur mit elementaren Algorithmen implementiert, sind bei den anderen Bibliotheken bereits
+Mit Ausnahme von Surface\_mesh, das wirklich nur die Polygonnetz-Datenstruktur mit elementaren Algorithmen implementiert, sind bei den anderen Bibliotheken bereits
 einige Subdivision Algorithmen implementiert.
 Bei Verwendung von OpenMesh oder CGAL könnte man sich viel Arbeit, da dort schon fast alle gewünschten Algorithmen implementiert sind.
 Ziel dieses Projektes ist jedoch eine einfache und schnelle Implementiertung der Algorithmen.
@@ -193,9 +197,9 @@ Surface\_mesh selbst besteht nur aus wenigen Dateien und ist die schlankste Bibl
 In dem Diagramm werden die Zeiten relativ zu Surface\_mesh angegeben.
 
 \begin{figure}
-  \caption{Design, Implementierung und Evaluierung von Surface\_mesh \cite{Sieger.}}
   \centering
   \includegraphics[width=1.0\textwidth]{content/media/surface_mesh_cmp}
+   \caption{Benchmarks mit Surface\_mesh \cite{Sieger.}}
   \label{fig:surface_mesh_cmp}
 \end{figure}
 
