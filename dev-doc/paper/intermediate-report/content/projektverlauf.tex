@@ -1,0 +1,78 @@
+\chapter{Projektverlauf}
+
+\section{Bisherige Ergebnisse}
+
+Im ersten Semester lag der Schwerpunkt darin, einen Überblick über die theoretischen Grundlagen zu erhalten. 
+Hierzu gehören die Unterteilungsalgorithmen und die Darstellung der Kontrollnetze.
+Ein weiter wichtiger Punkt war die Evaluierung von Bibliotheken, die bereits Algorithmen und vor allem Datenstrukturen implementieren. 
+Als Ergebnis wurde die Datenstruktur Surface\_mesh als am geeignetsten bewertet.
+
+Des Weiteren wurde die Architektur entworfen und in einem UML-Diagramm festgehalten.
+Außerdem entstand eine einheitliche Entwicklungsumgebung basierend auf Qt und dem Qt Creator unter Ubuntu.
+Diese enthält die nötigen Build-Dateien, Verzeichnisse, Bibliotheken und Git-Konfigurationen.
+Jedes Teammitglied besitzt somit eine einheitliche, funktionierende Entwicklungsumgebung.
+Zusätzlich wurde eine Dokumentationslösung auf Quelltextebene mittels Doxygen implementiert.
+
+\section{Planung für kommendes Semester}
+
+Im kommenden Semester liegt der Fokus auf der Implementierung der einzelnen Komponenten des Programms.
+Das Ergebnis umfasst das spezifizierte Programm \enquote{SubVis} und eine schriftliche Ausarbeitung, die den Aufbau und die Umsetzung beschreibt und begründet.
+Diese enthält zusätzlich eine Dokumentation die eine Top-Down-Ansicht liefert. 
+Implementierungsdetails werden im Quellcode mittels Doxygen dokumentiert.
+
+\subsection{Aufgabenverteilung}
+
+\begin{table}
+\caption{Aufgabenverteilung unter den Teammitgliedern}
+\center
+\begin{tabular}{c|c}
+Arbeitspaket & Teammitglied\\
+\hline
+Architektur, Oberfläche, Entwicklungsumgebung & Simon Kessler \\
+Rendering und Darstellung & Tobias Keh \\
+Unterteilungsalgorithmen & Felix Born \\
+\end{tabular}
+\label{tab:aufgabenverteilung}
+\end{table}
+
+Für die Entwicklung werden die Themen und Aufgaben unter den Teammitgliedern in drei Arbeitspakete aufgeteilt.
+
+\begin{description}
+\item[Architektur, Oberfläche, Entwicklungsumgebung] Hierzu gehört die Oberfläche, Bedienung, Architektur inkl. Plugin-System und die Spezifikation einer Entwicklungsumgebung.
+\item[Rendering und Darstellung] In diesem Arbeitspaket soll die Berechnung und Darstellung der Kontrollnetze und deren Limesfläche implementiert werden.
+\item[Unterteilungsalgorithmen] Umfasst die Implementierung der vorgegebenen Unterteilungsalgorithmen.
+\end{description}
+
+\autoref{tab:aufgabenverteilung} zeigt die geplante Aufgabenverteilung für kommendes Semester.
+Die Zuteilung der Arbeitspakete stellt lediglich einen Startzustand dar. 
+Um jedem Teammitglied Einblicke in alle Aspekte zu ermöglichen und so auch den größten Lerneffekt zu erzielen, werden Teilaufgaben der Arbeitspakete ausgetauscht.
+Der unterschiedliche Arbeitsaufwand wird kompensiert, in dem nach Fertigstellung eines Arbeitspaketes die entsprechende Person bei den anderen Arbeitspaketen weiter entwickelt.
+
+\subsection{Zeitplan}
+
+In den verbleibenden Semesterferien sollen die folgenden Arbeitsschritte durchgeführt werden.
+Dabei wird nicht eine endgültige Implementierung angestrebt, sondern eine funktionsfähige prototypische Implementierung, die im kommenden Semester weiter optimiert und ergänzt wird.
+
+\begin{itemize}
+\item Architektur und Komponenten
+\item GUI
+\item IO-Funktionalität
+\item Plugin-System
+\item Affine Transformationen
+\item Unterteilungsalgorithmen
+\item Rendering des Kontrollnetzes
+\item Beleuchtungsmodi des Rendering
+\end{itemize}
+
+
+\section{Rückblick}
+
+Da für alle Beteiligten der Umgang mit C++ und insbesondere Computergrafik ein neues Themengebiet darstellt, war ein ausführlicher theoretischer Einstieg in das Thema notwendig. 
+Hierbei hat sich die Unterstützung durch Herrn Prof. Dr. Georg Umlauf und Pascal Laube als sehr hilfreich erweisen.
+In den Projektbesprechungen wurden technische Details geklärt und der theoretische Hintergrund erläutert.
+Erst durch Verstehen der Details bezüglich der Unterteilungsalgorithmen, des Renderings und der Anwendbarkeit der Unterteilungsalgorithmen auf verschiedene Kontrollnetze konnten die Tools und Bibliotheken entsprechend evaluiert werden.
+
+Während des Semesters wurden lediglich für sehr kurze Zeiträume und eng eingegrenzte Themengebiete die Aufgaben zwischen den Teammitgliedern verteilt.
+Dadurch wurde sichergestellt, dass eine gemeinsame Wissensbasis entsteht, um späteren Missverständnissen vorzubeugen.
+Dies hat sich als hilfreich erwiesen und ermöglicht es nun an verschiedenen Teilmodulen der Anwendung parallel zu arbeiten.
+
