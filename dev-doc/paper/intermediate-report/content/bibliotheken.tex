@@ -218,15 +218,23 @@ Im folgenden Unterkapitel werden Bibliotheken oder Programme untersucht, die Pol
 
 BezierView (kurz bview) ist ein einfaches Programm zum Rendern von Bézier Patches, rationalen Bézier Patches und Polygonnetzen \cite{Peters.bview.27.07.2015}.
 
-// TODO
+TODO
 
-HIER MUSS noch mindestens eine subsection folgen (nur eine Unterüberschrift macht keinen Sinn!)
+\subsection{OpenGL}
+
+TODO: hier sollte man noch die Renderfunktionen erklären, wie man z.B. ein Netz rendert etc!!
+
+Die API-Spezifikation OpenGL beschreibt einige hundert Befehle zur Programmierung von Grafikkarten.
+Basierend auf einem Zustandsautomaten ermöglicht OpenGL es, bei einem Draw-Call lediglich die veränderten Parameter mitzugeben.
+Somit müssen gleichbleibende Parameter nicht redundant angegeben werden, was auch die Performance erhöht.
+Die OpenGL-Befehle folgen einem konsistenten Namensschema, an dem sich einige Informationen ablesen lassen. So bezeichnet z. B. glVertex3fv() einen OpenGL-Befehl (gl), der einen Eckpunkt definiert (Vertex) und drei (3) float (f) Argumente als Zeiger (v) bekommt.
+OpenGL ist frei von jeglichen Lizenzen.
 
 \section{Grafische Oberfläche}
 
 In diesem Abschnitt werden die Bibliotheken, die für die Darstellung nötig sind vorgestellt.
 
-\subsection{Qt}
+\subsection{Qt} % im finalen Bericht (2. Semester) noch ausbauen!
 
 \begin{figure}
   \centering
@@ -244,7 +252,7 @@ Mittels einer \emph{connect} Funktion wird die Verbindung zwischen den Komponent
 Zur Definition von Signalen und Slots werden Makros verwendet, die vom \ac{moc} in standardkonformen C++ Code umgewandelt werden.
 Qt wird unter der \ac{LGPL} verteilt.
 
-\subsection{libQGLViewer}
+\subsection{libQGLViewer} % im finalen Bericht (2. Semester) noch ausbauen!
 
 Die Bibliothek bietet einige grundlegende Funktionen zur Erstellung von 3D OpenGL Betrachtern mit C++ \cite{libQGLViewer}.
 Sie bietet unter anderem folgende Funktionen bzw. erleichtert deren Erstellung:
@@ -261,15 +269,7 @@ Sie bietet unter anderem folgende Funktionen bzw. erleichtert deren Erstellung:
 
 Die Software ist unter der \ac{GPL} frei verfügbar.
 
-\subsection{OpenGL}
-
-Die API-Spezifikation OpenGL beschreibt einige hundert Befehle zur Programmierung von Grafikkarten.
-Basierend auf einem Zustandsautomaten ermöglicht OpenGL es, bei einem Draw-Call lediglich die veränderten Parameter mitzugeben.
-Somit müssen gleichbleibende Parameter nicht redundant angegeben werden, was auch die Performance erhöht.
-Die OpenGL-Befehle folgen einem konsistenten Namensschema, an dem sich einige Informationen ablesen lassen. So bezeichnet z. B. glVertex3fv() einen OpenGL-Befehl (gl), der einen Eckpunkt definiert (Vertex) und drei (3) float (f) Argumente als Zeiger (v) bekommt.
-OpenGL ist frei von jeglichen Lizenzen.
-
-\section{IDE}
+\section{IDE} % im finalen Bericht (2. Semester) noch ausbauen!
 
 In Bezug auf Qt und C++ bietet sich die IDE \emph{Qt Creator} \cite{QtCreator} an. 
 Diese bietet alle gewohnten Funktionen einer IDE wie Syntaxhervorhebung, Autovervollständigung, GUI-Designer, Debugger und Git-Integration.
@@ -277,7 +277,7 @@ Insbesondere der GUI-Designer nimmt viel Arbeit ab, da so einiges an Boilerplate
 
 Projekte werden in sog. \emph{.pro} Dateien konfiguriert. 
 Diese Datei ist plattformunabhängig und relativ schlank gehalten. 
-Erst bei Ausführung durch qmake wird eine plattformspezifisches Makefile generiert, welches dann mittels Make ausgeführt werden kann.
+Erst bei Ausführung durch qmake wird ein plattformspezifisches Makefile generiert, welches dann mittels Make ausgeführt werden kann.
 
 
 
