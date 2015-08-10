@@ -39,26 +39,27 @@ Zum Funktionsumfang gehören folgende Algorithmen:
 \end{itemize}
 \end{enumerate}
 
-OpenMesh implementiert eine \emph{halfedge} Datenstruktur.
-Diese \emph{edge-based} Datenstrukturen speichern die Information über die Verbindungen zwischen Eckpunkten (Vertices) in den Kanten (Edges), während
-\emph{face-based} Datenstrukturen die Verbindungsinformation zwischen den Eckpunkten und Nachbarn in den Flächen (Face) speichern.
+OpenMesh implementiert eine \emph{Halfedge} Datenstruktur.
+Diese \emph{kantenbasierte} Datenstrukturen speichern die Information über die Verbindungen zwischen Eckpunkten in den Kanten, während
+\emph{flächenbasierte} Datenstrukturen die Verbindungsinformation zwischen den Eckpunkten und Nachbarn in den Flächen speichern.
 
-Jede Kante (Edge) referenziert also folgende Objekte:
+Jede Kante referenziert also folgende Objekte:
 
 \begin{itemize}
-	\item 2 Eckpunkte (Vertices)
-	\item eine Fläche (Face)
-	\item die nächsten zwei Kanten (Edges) der Fläche
+	\item zwei Eckpunkte
+	\item eine Fläche
+	\item die nächsten zwei Kanten der Fläche
 \end{itemize}
 
-Halfedge bedeutet nun, dass eine Kante in 2 Halbkanten (Halfedge) aufgeteilt wird. Jede Halbkante hat nur eine Richtung.
+Halfedge bedeutet nun, dass eine Kante in 2 Halbkanten (Halfedge) aufgeteilt wird. 
+Jede Halbkante hat nur eine Richtung.
 Zwei Ecken A und B sind also über 2 Halbkanten (erste Halkante von A nach B und zweite Halbkante von B nach A) miteinander verbunden.
 Dies bringt den Vorteil, dass man über die Kanten einer Fläche sehr einfach iterieren kann. Man muss dazu lediglich den Halbkanten folgen.
 
 
 \subsubsection{OpenFlipper}
 
-Aufbauend auf OpenMesh wurde von der \acs{RWTH} Aachen zusätzlich das flexible pluginbasierte Framework OpenFlipper enwickelt.
+Aufbauend auf OpenMesh wurde von der \acs{RWTH} Aachen zusätzlich das flexible Plugin-basierte Framework OpenFlipper enwickelt.
 Damit können geometrische Objekte modelliert und verarbeitet werden. Intern wird auf die Datenstrukur OpenMesh zurückgegriffen.
 Für die grafische Oberfläche wird QT verwendet.
 Mit OpenFlipper kann man über die Oberfläche Netze erstellen und die in OpenMesh implementierten Subdivision Algorithmen anwenden.
@@ -78,7 +79,7 @@ Mit OpenFlipper kann man über die Oberfläche Netze erstellen und die in OpenMe
 Surface\_mesh \cite{Sieger.} ist eine einfache und effizente Datenstruktur um Polygonnetze beschreiben zu können.
 Die Datenstruktur wurde als einfachere Alternative zu OpenMesh von der Bielefeld Graphics \& Geometry Group entwickelt.
 Die Datenstruktur soll einfach zu benutzen sein und eine bessere Performance und geringeren Speicherverbrauch mitbringen.
-Analog zu OpenMesh implementiert Surface\_mesh eine halfedge Datenstruktur.
+Analog zu OpenMesh implementiert Surface\_mesh eine Halfedge Datenstruktur.
 Die Verbindungsinformation der Kanten werden also in einem Paar aus zwei gerichteten Halbkanten gespeichert.
 \autoref{fig:sm_halfedge} visualisiert den Zusammenhang der Halbkanten und Ecken.
 
@@ -90,7 +91,7 @@ Die Verbindungsinformation der Kanten werden also in einem Paar aus zwei gericht
 \end{figure}
 
 Da Surface\_mesh auch als Halfedge Datenstruktur implementiert ist, kann ähnlich effizient zu OpenMesh über die Kanten iteriert werden.
-\autoref{lst:sm_iterate} zeigt einige Basisoperiation, die möglich sind.
+\autoref{lst:sm_iterate} zeigt einige Basisoperationen die möglich sind.
 Die Operationen aus Listing~\ref{lst:sm_iterate} sind zum besseren Verständnis in \autoref{fig:sm_halfedge} gekennzeichnet. 
 
 \begin{lstlisting}[style=myCppStyle, caption=Surface\_mesh - Basisoperationen, label=lst:sm_iterate]
@@ -132,7 +133,7 @@ OpenSubdiv ist lizensiert unter der Apache License und darf somit frei für komm
 Sie besteht insgesamt aus den 4 Schichten \ac{Sdc}, \ac{Vtr}, \ac{Far} und \ac{Osd} \cite{Pixar.27.07.2015}.
 
 \begin{description}
- \item[\acs{Sdc}] ist der unterste Layer in der Architektur und implementiert die konkreten Subdivision Details.
+ \item[\acs{Sdc}] ist die unterste Schicht in der Architektur und implementiert die konkreten Subdivision Details.
  Dazu gehören Typen, Optionen und Eigenschaften für die konkreten Subdivision Algorithmen.
  \item[\acs{Vtr}] beinhaltet Klassen, die das Netz für effiziente Verfeinerung in einer Zwischenrepresentation darstellen.
  Diese Schicht ist nur für den internen Gebrauch gedacht.
@@ -151,12 +152,12 @@ Diese sind zwar alle effizient, haben jedoch Probleme beim Umgang mit Objekten v
 Für jeden Problemfall muss die spezielle Datenstruktur verwendet werden.
 All diese Strukturen lassen sich jedoch auf Combinatorial Maps zurückführen.
 Diesen allgemeineren Ansatz geht CGoGN.
-CGoGN implementiert bereits den Subdivision Algorithmus Catmull-Clark \cite{CGoGN.27.07.2015}. 
+CGoGN implementiert bereits den Unterteilungsalgorithmus Catmull-Clark \cite{CGoGN.27.07.2015}. 
 
 \subsection{CGAL}
 
 \ac{CGAL} ist ein mächtiges Softwareprojekt mit einer Vielzahl an Datenstrukturen und Algorithmen.
-Neben Subdivision Algorithmen werden auch eine Reihe anderer Themengebiete abgedeckt (Voronoi Diagramme, Convex Hull Algorithms, Spatial Searching ...).
+Neben Unterteilungsalgorithmen werden auch eine Reihe anderer Themengebiete abgedeckt (Voronoi Diagramme, Convex Hull Algorithms, Spatial Searching ...).
 Für die Repräsentation von Netzen gibt es bei \acs{CGAL} mehrere Möglichkeiten.
 
 \begin{description}
@@ -164,9 +165,9 @@ Für die Repräsentation von Netzen gibt es bei \acs{CGAL} mehrere Möglichkeite
  \item[3D Polyhedral Surface] Neben Surface\_mesh kann auch die von \acs{CGAL} entwickelte halfedge Datenstruktur Polyhedral verwendet werden.
 \end{description}
 
-\acs{CGAL} ist sehr mächtig und komplex. Die Bibliothek ist sogar in den meisten Paketquellen der Linux Distributionen enthalten (Ubuntu ...)
+\acs{CGAL} ist sehr mächtig und komplex. Die Bibliothek ist sogar in den meisten Paketquellen der Linux Distributionen enthalten (z. B. Ubuntu)
 und kann darüber sehr leicht installiert werden.
-Es sind auch bereits die Subdivision Algorithmen \emph{Catmull-Clark}, \emph{Doo-Sabin}, \emph{Loop} und \emph{Sqrt3} implementiert \cite{CGAL.27.07.2015}.
+Es sind auch bereits die Unterteilungsalgorithmen \emph{Catmull-Clark}, \emph{Doo-Sabin}, \emph{Loop} und \emph{Sqrt3} implementiert \cite{CGAL.27.07.2015}.
 
 \subsection{Vergleich}
 
@@ -175,9 +176,9 @@ Es sind auch bereits die Subdivision Algorithmen \emph{Catmull-Clark}, \emph{Doo
 
 \begin{table}
 \center
-\caption{Vergleich der Subdivision Bibliotheken}
+\caption{Vergleich der Unterteilungsalgorithmus Bibliotheken}
 \begin{tabular}{l|c|c}
-\textbf{Bibliothek} & \textbf{Datenstruktur} & \textbf{Subdivision}\\
+\textbf{Bibliothek} & \textbf{Datenstruktur} & \textbf{Unterteilungsalgorithmen}\\
 \hline
 \textbf{OpenMesh} & halfedge & Catmull-Clark, Loop, Butterfly\\
 \textbf{Surface\_mesh} & halfedge & keine\\
@@ -189,10 +190,10 @@ Es sind auch bereits die Subdivision Algorithmen \emph{Catmull-Clark}, \emph{Doo
 \end{table}
 
 Mit Ausnahme von Surface\_mesh, das wirklich nur die Polygonnetz-Datenstruktur mit elementaren Algorithmen implementiert, sind bei den anderen Bibliotheken bereits
-einige Subdivision Algorithmen implementiert.
+einige Unterteilungsalgorithmen implementiert.
 Bei Verwendung von OpenMesh oder CGAL könnte man sich viel Arbeit, da dort schon fast alle gewünschten Algorithmen implementiert sind.
-Ziel dieses Projektes ist jedoch eine einfache und schnelle Implementiertung der Algorithmen.
-Surface\_mesh selbst besteht nur aus wenigen Dateien und ist die schlankste Bibliothek von allen vorgestellten.
+Ziel dieses Projektes ist jedoch eine einfache und schnelle Implementierung der Algorithmen.
+Surface\_mesh selbst besteht nur aus wenigen Dateien und ist die schlankeste Bibliothek von allen vorgestellten.
 \autoref{fig:surface_mesh_cmp} zeigt die Ergebnisse eines Benchmark-Vergleichs für die unterschiedlichen Datenstrukturen.
 In dem Diagramm werden die Zeiten relativ zu Surface\_mesh angegeben.
 
@@ -203,15 +204,13 @@ In dem Diagramm werden die Zeiten relativ zu Surface\_mesh angegeben.
   \label{fig:surface_mesh_cmp}
 \end{figure}
 
-Man erkennt deurlich, dass die Datenstrukturen von \acs{CGAL} und OpenMesh vergleichsweiße langsam sind.
-Da Surface\_mesh sehr kompakt ist (es besteht nur aus sehr wenigen C++ und H-Dateien) und in dem Benchmark
-auch sehr gute Ergnisse liefert, fällt die Wahl auf Surface\_mesh.
+Man erkennt deutlich, dass die Datenstrukturen von \acs{CGAL} und OpenMesh vergleichsweise langsam sind.
+Da Surface\_mesh sehr kompakt ist (es besteht nur aus sehr wenigen C++ und H-Dateien) und in dem Benchmark auch sehr gute Ergebnisse liefert, fällt die Wahl auf Surface\_mesh.
 
 
 \section{Rendering}
 
-Im folgenden Unterkapitel werden Bibliotheken oder Programme untersucht, die Polygonnetze rendern
-und in wieweit diese Funktionen übernommen werden können. 
+Im folgenden Unterkapitel werden Bibliotheken oder Programme untersucht, die Polygonnetze rendern und in wie weit diese Funktionen übernommen werden können. 
 
 \subsection{BezierView}
 
