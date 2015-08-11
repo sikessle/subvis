@@ -16,6 +16,7 @@ The project consists of the following main folders:
   - **lib**: 3rd party libraries
   - **build**: Created on build, binaries, Doxygen doc(created by Make)
   - **test**: Unit tests
+  - **objs**: Object files with 3D models to test
 
 # Documentation
 
@@ -42,12 +43,11 @@ Lower case with underscore to separate words:check_that_value();
 - Tested only for Ubuntu 14.04 LTS with:
 - Qt 5.4.1
 - OpenGL 
-    - mesa-common-dev 10.1.3-0ubuntu0.4
-    - libglu1-mesa-dev: 9.0.2-0
+  - mesa-common-dev 10.1.3-0ubuntu0.4
+  - libglu1-mesa-dev: 9.0.2-0
 - libQGLViewer 2.6.1
 - surface_mesh 1.0
 - doxygen 1.8.6
-
 
 # Build
 
@@ -56,4 +56,3 @@ Lower case with underscore to separate words:check_that_value();
 3. `make` for build
 4. `make clean` to cleanup app builds
 5. `make distclean` to cleanup app builds and static library files (*.a)
-

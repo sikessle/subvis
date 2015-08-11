@@ -111,7 +111,7 @@ Die Operationen sind in \autoref{fig:sm_topology} dargestellt.
 \begin{figure}
     \centering
   \includegraphics[width=0.8\textwidth]{content/media/sm_topology-changes}
-  \caption{Surface\_mesh - High-level Operationen zum Ändern der Topologie \cite{OpenGP.24.07.2015}}
+  \caption{Surface\_mesh - high-level Operationen zum Ändern der Topologie \cite{OpenGP.24.07.2015}}
   \label{fig:sm_topology}
 \end{figure}
 
@@ -232,7 +232,7 @@ OpenGL ist frei von jeglichen Lizenzen.
 
 \section{Grafische Oberfläche}
 
-In diesem Abschnitt werden die Bibliotheken, die für die Darstellung nötig sind vorgestellt.
+In diesem Abschnitt werden die Bibliotheken, die für die Darstellung nötig sind, vorgestellt.
 
 \subsection{Qt} % im finalen Bericht (2. Semester) noch ausbauen!
 
@@ -279,7 +279,14 @@ Projekte werden in sog. \emph{.pro} Dateien konfiguriert.
 Diese Datei ist plattformunabhängig und relativ schlank gehalten. 
 Erst bei Ausführung durch qmake wird ein plattformspezifisches Makefile generiert, welches dann mittels Make ausgeführt werden kann.
 
+\section{Dokumentation} % im finalen Bericht (2. Semester) noch ausbauen!
 
+Im Bereich C++ ist Doxygen \cite{Doxygen} eine weit verbreitete Quellcodedokumentationslösung.
+Prinzipiell ähnelt es JavaDoc, in dem Quellcode direkt mittels spezielle annotierten Kommentaren versehen wird.
+Diese Annotationen werden dann mittels Transformation in ein Ausgabeformat (z. B. HTML oder PDF) überführt.
+Der Vorteil liegt darin, dass so die Dokumentation sehr nahe und eng mit dem Quellcode verbunden ist, was die Aktualität der Dokumentation begünstigt.
+Qt Creator bietet Syntaxhervorhebung für die speziellen Kommentare und erleichtert so die Verwendung.
+Doxygen steht unter der \ac{GPL}.
 
 
 
