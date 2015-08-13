@@ -26,6 +26,14 @@ const std::string kSurfMeshPropFacePoint = "f:point";
  */
 const std::string kSurfMeshPropEdgePoint = "e:point";
 
+/**
+ * @brief kSurfMeshPropVertexIndexSubMesh index of the corresponding vertex in the new result mesh (subdivided mesh)
+ * This is necessary to map vertices from origin mesh to subdivided mesh.
+ */
+const std::string kSurfMeshPropVertexIndexSubMeshV = "v:subdivision_mesh_vertex_index";
+const std::string kSurfMeshPropVertexIndexSubMeshE = "e:subdivision_mesh_vertex_index";
+const std::string kSurfMeshPropVertexIndexSubMeshF = "ff:subdivision_mesh_vertex_index";
+
 } // namespace Algo
 } // namespace SubVis
 

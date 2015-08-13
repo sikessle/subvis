@@ -33,6 +33,11 @@ private:
     surface_mesh::Surface_mesh::Edge_property<surface_mesh::Point> e_points_;
     surface_mesh::Surface_mesh::Vertex_property<surface_mesh::Point> v_points_updated_;
 
+    // vertex index properties to map from origin mesh to subdivision mesh
+    surface_mesh::Surface_mesh::Vertex_property<surface_mesh::Surface_mesh::Vertex> v_index_sub_mesh_v_prop_;
+    surface_mesh::Surface_mesh::Edge_property<surface_mesh::Surface_mesh::Vertex> v_index_sub_mesh_e_prop_;
+    surface_mesh::Surface_mesh::Face_property<surface_mesh::Surface_mesh::Vertex> v_index_sub_mesh_f_prop_;
+
     /**
      * @brief compute_face_point A face point is the average of all the points of the face.
      *                           The Face Point is stored as surface mesh property of every face
@@ -72,19 +77,40 @@ private:
         mesh.add_edge_property<surface_mesh::Point>(kSurfMeshPropEdgePoint);
         mesh.add_vertex_property<surface_mesh::Point>(kSurfMeshPropVertexPointUpdated);
         // (vertex point property with key kSurfMeshPropVertexPoint is maintained by default)
+
+        // index properties
+        mesh.add_vertex_property<surface_mesh::Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshV);
+        mesh.add_edge_property<surface_mesh::Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshE);
+        mesh.add_face_property<surface_mesh::Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshF);
+    }
+
+    void init_mesh_members() {
+        v_points_ = mesh_.get_vertex_property<surface_mesh::Point>(kSurfMeshPropVertexPoint);
+        f_points_ = mesh_.get_face_property<surface_mesh::Point>(kSurfMeshPropFacePoint);
+        e_points_ = mesh_.get_edge_property<surface_mesh::Point>(kSurfMeshPropEdgePoint);
+        v_points_updated_ = mesh_.get_vertex_property<surface_mesh::Point>(kSurfMeshPropVertexPointUpdated);
+
+        v_index_sub_mesh_v_prop_ = mesh_.get_vertex_property<surface_mesh::Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshV);
+        v_index_sub_mesh_e_prop_ = mesh_.get_edge_property<surface_mesh::Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshE);
+        v_index_sub_mesh_f_prop_ = mesh_.get_face_property<surface_mesh::Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshF);
     }
 
 public:
     SubdivCatmull (surface_mesh::Surface_mesh mesh) : mesh_(mesh) {
         this->add_mesh_properties(mesh_);
-        // init properties
-        v_points_ = mesh_.get_vertex_property<surface_mesh::Point>(kSurfMeshPropVertexPoint);
-        f_points_ = mesh_.get_face_property<surface_mesh::Point>(kSurfMeshPropFacePoint);
-        e_points_ = mesh_.get_edge_property<surface_mesh::Point>(kSurfMeshPropEdgePoint);
-        v_points_updated_ = mesh_.get_vertex_property<surface_mesh::Point>(kSurfMeshPropVertexPointUpdated);
+        this->init_mesh_members();
     }
 
-    void subdivide(int steps);
+    void subdivide();
+    void subdivide(unsigned char steps);
+
+    /**
+     * @brief get_subdivision_mesh get the result mesh after calling subdivision
+     * @return The subdivided mesh (result of subdivide() method)
+     */
+    surface_mesh::Surface_mesh get_subdivision_mesh() {
+        return mesh_;
+    }
 };
 
 

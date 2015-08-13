@@ -24,13 +24,15 @@ void test_surface_mesh_read() {
     utils_debug_mesh(mesh, QString("Cube Mesh"));
     // compute subdivision
     SubdivCatmull sd_catmull(mesh);
-    sd_catmull.subdivide(1);
+    sd_catmull.subdivide();
+    surface_mesh::Surface_mesh subdivision_mesh = sd_catmull.get_subdivision_mesh();
+    // Do something with the subdivision_mesh
 }
 
 // ===============[ class implementation ]===============
 
-void SubdivCatmull::subdivide(int steps) {
-    // TODO implement steps
+void SubdivCatmull::subdivide() {
+    surface_mesh::Surface_mesh subdivision_mesh;
     // instantiate iterator
     surface_mesh::Surface_mesh::Face_iterator fit;
     surface_mesh::Surface_mesh::Edge_iterator eit;
@@ -38,22 +40,35 @@ void SubdivCatmull::subdivide(int steps) {
     // loop over all faces and compute face points
     for (fit = mesh_.faces_begin(); fit != mesh_.faces_end(); ++fit) {
         this->compute_face_point(*fit);
+        v_index_sub_mesh_f_prop_[*fit] = subdivision_mesh.add_vertex(f_points_[*fit]);
     }
     // loop over all edges and compute edge points
     for (eit = mesh_.edges_begin(); eit != mesh_.edges_end(); ++eit) {
         this->compute_edge_point(*eit);
+        v_index_sub_mesh_e_prop_[*eit] = subdivision_mesh.add_vertex(e_points_[*eit]);
     }
     // update all vertices
     for (vit = mesh_.vertices_begin(); vit != mesh_.vertices_end(); ++vit) {
         this->compute_new_vertex_point(*vit);
+        v_index_sub_mesh_v_prop_[*vit] = subdivision_mesh.add_vertex(v_points_updated_[*vit]);
     }
-    // TODO replace faces with new faces (quad and triangle)
-    surface_mesh::Surface_mesh subdivision_mesh;
-    this->add_mesh_properties(subdivision_mesh);
+    // create faces in new mesh
     for (fit = mesh_.faces_begin(); fit != mesh_.faces_end(); ++fit) {
         this->compute_new_faces(subdivision_mesh, *fit);
     }
-    // TODO process result mesh (subdivision mesh)
+    // copy result to mesh attribute
+    mesh_ = subdivision_mesh;
+    utils_debug_mesh(subdivision_mesh, "Subdivision Mesh");
+}
+
+void SubdivCatmull::subdivide(unsigned char steps) {
+    // TODO implement steps
+    for (unsigned char i = 0; i < steps; ++i) {
+        this->subdivide();
+        // update properties
+        this->add_mesh_properties(mesh_);
+        this->init_mesh_members();
+    }
 }
 
 void SubdivCatmull::compute_face_point(const surface_mesh::Surface_mesh::Face& face) {
@@ -121,19 +136,15 @@ void SubdivCatmull::compute_new_faces(surface_mesh::Surface_mesh& result_mesh, c
     const int kArraySize = 4;
     surface_mesh::Surface_mesh::Vertex v_index_list[kArraySize];
     surface_mesh::Surface_mesh::Vertex e_index_list[kArraySize];
-    surface_mesh::Surface_mesh::Vertex f_index = result_mesh.add_vertex(f_points_[face]);
-    surface_mesh::Point v_tmp, e_tmp;
     int i = 0;
     do {
         if (i < kArraySize) { // check if in array bounds
-            v_tmp = v_points_updated_[mesh_.from_vertex(*hc)];
-            e_tmp = e_points_[mesh_.edge(*hc)];
-            v_index_list[i] = result_mesh.add_vertex(v_tmp);
-            e_index_list[i] = result_mesh.add_vertex(e_tmp);
+            v_index_list[i] = v_index_sub_mesh_v_prop_[mesh_.from_vertex(*hc)];
+            e_index_list[i] = v_index_sub_mesh_e_prop_[mesh_.edge(*hc)];
         }
         ++i; // increment to compute face valence
     } while (++hc != hc_end);
-    // create new face from quad or triangle face
+    const surface_mesh::Surface_mesh::Vertex f_index = v_index_sub_mesh_f_prop_[face];
     if (i == 3) { // triangle face
         result_mesh.add_quad(v_index_list[0], e_index_list[0], f_index, e_index_list[2]);
         result_mesh.add_quad(v_index_list[1], e_index_list[1], f_index, e_index_list[0]);
@@ -147,7 +158,6 @@ void SubdivCatmull::compute_new_faces(surface_mesh::Surface_mesh& result_mesh, c
         throw new std::string("Invalid mesh topology: " + i);
     }
     // TODO
-    utils_debug_mesh(result_mesh, "Subdivision Mesh");
 }
 
 void SubdivCatmull::avg_face_points(surface_mesh::Point& avg_face_points, const surface_mesh::Surface_mesh::Vertex& vertex) {
