@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>SubVis</string>
+   <string>SubVis - Subdivison Visualizer</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -24,13 +24,13 @@
    <property name="enabled">
     <bool>true</bool>
    </property>
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
      <widget class="QSplitter" name="splitter">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <widget class="QTabWidget" name="render_tabs">
+      <widget class="QTabWidget" name="tabs_rendering">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>1</horstretch>
@@ -38,23 +38,13 @@
         </sizepolicy>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>-1</number>
        </property>
        <property name="movable">
         <bool>true</bool>
        </property>
-       <widget class="QWidget" name="tab_mesh">
-        <attribute name="title">
-         <string>Mesh</string>
-        </attribute>
-       </widget>
-       <widget class="QWidget" name="tab_plugin">
-        <attribute name="title">
-         <string>Plugin rendered</string>
-        </attribute>
-       </widget>
       </widget>
-      <widget class="QTabWidget" name="plugin_tabs">
+      <widget class="QTabWidget" name="tabs_plugins">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>0</horstretch>
@@ -82,12 +72,12 @@
        <property name="tabBarAutoHide">
         <bool>false</bool>
        </property>
-       <widget class="QWidget" name="tab_subdivison">
+       <widget class="QWidget" name="tab_plugin_subdivison">
         <attribute name="title">
          <string>Subdivison</string>
         </attribute>
        </widget>
-       <widget class="QWidget" name="tab_other">
+       <widget class="QWidget" name="tab_plugin_other">
         <attribute name="title">
          <string>Other</string>
         </attribute>
