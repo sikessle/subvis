@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>media/splash.png</file>
+        <file>media/subivs-logo.png</file>
+        <file>media/subvis-icon.png</file>
+    </qresource>
+</RCC>

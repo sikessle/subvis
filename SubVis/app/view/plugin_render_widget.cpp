@@ -1,11 +1,11 @@
 #include "view/plugin_render_widget.h"
-#include "QGLViewer/qglviewer.h"
 
 namespace SubVis {
 namespace View {
 
-PluginRenderWidget::PluginRenderWidget() : QGLViewer()
+PluginRenderWidget::PluginRenderWidget(QWidget *parent) : RenderWidget(parent)
 {
+
 }
 
 void PluginRenderWidget::draw()

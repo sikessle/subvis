@@ -1,16 +1,15 @@
 #ifndef SUBVIS_VIEW_MESH_RENDER_WIDGET_H
 #define SUBVIS_VIEW_MESH_RENDER_WIDGET_H
 
-#include "QWidget"
-#include "QGLViewer/qglviewer.h"
+#include "view/render_widget.h"
 
 namespace SubVis {
 namespace View {
 
-class MeshRenderWidget : public QGLViewer
+class MeshRenderWidget : public RenderWidget
 {
 public:
-    MeshRenderWidget();
+    MeshRenderWidget(QWidget *parent);
 
 protected:
     virtual void draw();

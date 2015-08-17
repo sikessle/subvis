@@ -1,11 +1,11 @@
 #include "view/mesh_render_widget.h"
-#include "QGLViewer/qglviewer.h"
 
 namespace SubVis {
 namespace View {
 
-MeshRenderWidget::MeshRenderWidget() : QGLViewer()
+MeshRenderWidget::MeshRenderWidget(QWidget *parent) : RenderWidget(parent)
 {
+
 }
 
 void MeshRenderWidget::draw()

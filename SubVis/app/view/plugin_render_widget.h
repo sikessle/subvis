@@ -1,16 +1,15 @@
 #ifndef SUBVIS_VIEW_PLUGIN_RENDER_WIDGET_H
 #define SUBVIS_VIEW_PLUGIN_RENDER_WIDGET_H
 
-#include "QWidget"
-#include "QGLViewer/qglviewer.h"
+#include "view/render_widget.h"
 
 namespace SubVis {
 namespace View {
 
-class PluginRenderWidget : public QGLViewer
+class PluginRenderWidget : public RenderWidget
 {
 public:
-    PluginRenderWidget();
+    PluginRenderWidget(QWidget *parent);
 
 protected:
     virtual void draw();
@@ -18,5 +17,4 @@ protected:
 
 } // namespace View
 } // namespace SubVis
-
 #endif // SUBVIS_VIEW_PLUGIN_RENDER_WIDGET_H

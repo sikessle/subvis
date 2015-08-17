@@ -14,8 +14,8 @@
    <string>SubVis - Subdivison Visualizer</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>../../media/subvis-icon.png</normaloff>../../media/subvis-icon.png</iconset>
+   <iconset resource="../media.qrc">
+    <normaloff>:/media/subvis-icon.png</normaloff>:/media/subvis-icon.png</iconset>
   </property>
   <property name="dockOptions">
    <set>QMainWindow::AnimatedDocks</set>
@@ -117,7 +117,14 @@
     <string>Save</string>
    </property>
   </action>
+  <action name="action_quit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../media.qrc"/>
+ </resources>
  <connections/>
 </ui>
