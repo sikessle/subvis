@@ -29,17 +29,17 @@ SOURCES += main.cpp \
            view/mainwindow.cpp \
            algo/sd_catmull.cpp \
            algo/utils.cpp \
-    view/mesh_render_widget.cpp \
-    view/plugin_render_widget.cpp \
-    view/render_widget.cpp
+    view/viewer_widget.cpp \
+    view/viewer_plugin_widget.cpp \
+    view/viewer_mesh_widget.cpp
 
 HEADERS  += view/mainwindow.h \
             algo/sd_catmull.h \
             algo/utils.h \
             algo/types.h \
-    view/mesh_render_widget.h \
-    view/plugin_render_widget.h \
-    view/render_widget.h
+    view/viewer_widget.h \
+    view/viewer_plugin_widget.h \
+    view/viewer_mesh_widget.h
 
 FORMS    += view/mainwindow.ui
 

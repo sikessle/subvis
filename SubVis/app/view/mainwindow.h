@@ -4,8 +4,8 @@
 #include "QMainWindow"
 #include "QLabel"
 #include "QString"
-#include "view/mesh_render_widget.h"
-#include "view/plugin_render_widget.h"
+#include "view/viewer_mesh_widget.h"
+#include "view/viewer_plugin_widget.h"
 
 namespace SubVis {
 namespace View {
@@ -26,15 +26,15 @@ private:
     Ui::MainWindow *ui;
 
     const QString STATUS_TEXT {"Version: Alpha - HTWG Konstanz"};
-    const QString TAB_RENDER_MESH_TEXT {"Mesh"};
-    const QString TAB_RENDER_PLUGIN_TEXT {"Plugin specific"};
+    const QString TAB_VIEWER_MESH_TEXT {"Mesh"};
+    const QString TAB_VIEWER_PLUGIN_TEXT {"Plugin specific"};
 
     QLabel *status_label;
-    MeshRenderWidget *mesh_render_widget;
-    PluginRenderWidget *plugin_render_widget;
+    ViewerMeshWidget *viewer_mesh_widget;
+    ViewerPluginWidget *viewer_plugin_widget;
 
     void setup_status_bar();
-    void setup_render_tabs();
+    void setup_viewer_tabs();
     void setup_plugin_tabs();
 };
 

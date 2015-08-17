@@ -1,14 +1,14 @@
-#include "view/mesh_render_widget.h"
+#include "view/viewer_mesh_widget.h"
 
 namespace SubVis {
 namespace View {
 
-MeshRenderWidget::MeshRenderWidget(QWidget *parent) : RenderWidget(parent)
+ViewerMeshWidget::ViewerMeshWidget(QWidget *parent) : ViewerWidget(parent)
 {
 
 }
 
-void MeshRenderWidget::draw()
+void ViewerMeshWidget::draw()
 {
     // OpenGL
     const float nbSteps = 200.0;

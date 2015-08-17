@@ -1,8 +1,8 @@
 #include "QLabel"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "view/mesh_render_widget.h"
-#include "view/plugin_render_widget.h"
+#include "view/viewer_mesh_widget.h"
+#include "view/viewer_plugin_widget.h"
 
 namespace SubVis {
 namespace View {
@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     setup_status_bar();
-    setup_render_tabs();
+    setup_viewer_tabs();
     setup_plugin_tabs();
 }
 
@@ -27,13 +27,13 @@ void MainWindow::setup_status_bar()
     ui->statusbar->setStyleSheet("QStatusBar::item { border: 0; }");
 }
 
-void MainWindow::setup_render_tabs()
+void MainWindow::setup_viewer_tabs()
 {
-    mesh_render_widget = new MeshRenderWidget(ui->tabs_rendering);
-    ui->tabs_rendering->addTab(mesh_render_widget, TAB_RENDER_MESH_TEXT);
+    viewer_mesh_widget = new ViewerMeshWidget(ui->tabs_viewer);
+    ui->tabs_viewer->addTab(viewer_mesh_widget, TAB_VIEWER_MESH_TEXT);
 
-    plugin_render_widget = new PluginRenderWidget(ui->tabs_rendering);
-    ui->tabs_rendering->addTab(plugin_render_widget, TAB_RENDER_PLUGIN_TEXT);
+    viewer_plugin_widget = new ViewerPluginWidget(ui->tabs_viewer);
+    ui->tabs_viewer->addTab(viewer_plugin_widget, TAB_VIEWER_PLUGIN_TEXT);
 }
 
 void MainWindow::setup_plugin_tabs()
