@@ -1,23 +1,13 @@
-
-// ===============[ includes ]===============
-
 #include <QApplication>
-
-#include "QGLViewer/qglviewer.h"
-
+#include <QStyleFactory>
 #include "view/mainwindow.h"
-#include "algo/sd_catmull.h"
-
-// ===============[ main routine ]===============
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    SubVis::View::MainWindow w;
-    w.show();
+    QApplication app(argc, argv);
+    SubVis::View::MainWindow main_window;
 
-    // only for testing
-    SubVis::Algo::test_surface_mesh_read();
+    main_window.show();
 
-    return a.exec();
+    return app.exec();
 }

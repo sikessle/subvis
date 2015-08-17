@@ -2,6 +2,8 @@
 #define SUBVIS_VIEW_MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QLabel>
+#include <QString>
 
 namespace SubVis {
 namespace View {
@@ -20,6 +22,9 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QLabel *status_label;
+    const QString status_text {"HTWG Konstanz"};
+    void setup_status_bar();
 };
 
 

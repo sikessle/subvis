@@ -1,6 +1,6 @@
 QT       += core gui widgets opengl xml
 
-CONFIG   += debug
+CONFIG   += debug c++11
 
 # Build output settings
 DESTDIR = ../build
