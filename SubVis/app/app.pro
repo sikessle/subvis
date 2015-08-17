@@ -28,12 +28,12 @@ INCLUDEPATH += "../lib"
 SOURCES += main.cpp \
            view/mainwindow.cpp \
            algo/sd_catmull.cpp \
-    algo/utils.cpp
+           algo/utils.cpp
 
 HEADERS  += view/mainwindow.h \
             algo/sd_catmull.h \
-    algo/utils.h \
-    algo/types.h
+            algo/utils.h \
+            algo/types.h
 
 FORMS    += view/mainwindow.ui
 
