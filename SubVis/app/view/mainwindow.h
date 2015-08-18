@@ -25,7 +25,7 @@ public:
 private:
     Ui::MainWindow *ui;
 
-    const QString STATUS_TEXT {"Version: Alpha - HTWG Konstanz"};
+    const QString STATUS_TEXT {"Build: " __DATE__ " " __TIME__};
     const QString TAB_VIEWER_MESH_TEXT {"Mesh"};
     const QString TAB_VIEWER_PLUGIN_TEXT {"Plugin specific"};
 
