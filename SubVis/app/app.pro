@@ -31,7 +31,8 @@ SOURCES += main.cpp \
            algo/utils.cpp \
     view/viewer_widget.cpp \
     view/viewer_plugin_widget.cpp \
-    view/viewer_mesh_widget.cpp
+    view/viewer_mesh_widget.cpp \
+    subvisapp.cpp
 
 HEADERS  += view/mainwindow.h \
             algo/sd_catmull.h \
@@ -39,7 +40,8 @@ HEADERS  += view/mainwindow.h \
             algo/types.h \
     view/viewer_widget.h \
     view/viewer_plugin_widget.h \
-    view/viewer_mesh_widget.h
+    view/viewer_mesh_widget.h \
+    subvisapp.h
 
 FORMS    += view/mainwindow.ui
 
