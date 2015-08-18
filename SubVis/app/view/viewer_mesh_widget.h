@@ -12,7 +12,7 @@ public:
     ViewerMeshWidget(QWidget *parent);
 
 protected:
-    virtual void draw();
+    void draw();
 };
 
 } // namespace View

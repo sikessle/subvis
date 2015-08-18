@@ -12,7 +12,7 @@ public:
     ViewerPluginWidget(QWidget *parent);
 
 protected:
-    virtual void draw();
+    void draw();
 };
 
 } // namespace View
