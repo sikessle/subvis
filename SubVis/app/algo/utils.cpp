@@ -1,12 +1,12 @@
 
 // ===============[ includes ]===============
 
-#include <QDebug>
+#include "QDebug"
 
 #include "surface_mesh/Surface_mesh.h"
 #include "surface_mesh/IO.h"
 
-#include "utils.h"
+#include "algo/utils.h"
 
 
 namespace SubVis {

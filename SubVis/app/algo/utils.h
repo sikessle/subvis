@@ -1,5 +1,5 @@
-#ifndef UTILS
-#define UTILS
+#ifndef SUBVIS_ALGO_UTILS_H
+#define SUBVIS_ALGO_UTILS_H
 
 // ===============[ includes ]===============
 
@@ -34,5 +34,5 @@ void utils_debug_point(const surface_mesh::Point point, const QString& title);
 } // namespace Algo
 } // namespace SubVis
 
-#endif // UTILS
+#endif // SUBVIS_ALGO_UTILS_H
 

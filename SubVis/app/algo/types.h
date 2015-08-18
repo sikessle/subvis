@@ -1,5 +1,5 @@
-#ifndef TYPES_H
-#define TYPES_H
+#ifndef SUBVIS_ALGO_TYPES_H
+#define SUBVIS_ALGO_TYPES_H
 
 #include <string>
 
@@ -37,4 +37,4 @@ const std::string kSurfMeshPropVertexIndexSubMeshF = "ff:subdivision_mesh_vertex
 } // namespace Algo
 } // namespace SubVis
 
-#endif // TYPES_H
+#endif // SUBVIS_ALGO_TYPES_H
