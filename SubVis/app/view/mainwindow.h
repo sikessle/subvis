@@ -1,9 +1,9 @@
 #ifndef SUBVIS_VIEW_MAINWINDOW_H
 #define SUBVIS_VIEW_MAINWINDOW_H
 
-#include "QMainWindow"
-#include "QLabel"
-#include "QString"
+#include <QMainWindow>
+#include <QLabel>
+#include <QString>
 #include "view/viewer_mesh_widget.h"
 #include "view/viewer_plugin_widget.h"
 

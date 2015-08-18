@@ -1,6 +1,6 @@
-#include "QLabel"
-#include "mainwindow.h"
+#include <QLabel>
 #include "ui_mainwindow.h"
+#include "view/mainwindow.h"
 #include "view/viewer_mesh_widget.h"
 #include "view/viewer_plugin_widget.h"
 

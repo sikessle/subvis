@@ -10,6 +10,10 @@ class ViewerWidget : public QGLViewer
 {
 public:
     ViewerWidget(QWidget *parent);
+
+protected:
+    // must be implemented by subclass
+    virtual void draw() = 0;
 };
 
 } // namespace View

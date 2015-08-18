@@ -1,7 +1,6 @@
-#include <thread>
-#include "QApplication"
-#include "QPixmap"
-#include "QSplashScreen"
+#include <QApplication>
+#include <QPixmap>
+#include <QSplashScreen>
 #include "view/mainwindow.h"
 
 int main(int argc, char *argv[])
