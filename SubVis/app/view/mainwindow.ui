@@ -105,27 +105,44 @@
    </attribute>
    <addaction name="action_load"/>
    <addaction name="action_save"/>
+   <addaction name="action_snapshot"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_load">
    <property name="icon">
-    <iconset theme="document-open"/>
+    <iconset theme="document-open">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Load</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
   </action>
   <action name="action_save">
    <property name="icon">
-    <iconset theme="document-save"/>
+    <iconset theme="document-save">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Save</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
   </action>
-  <action name="action_quit">
+  <action name="action_snapshot">
+   <property name="icon">
+    <iconset theme="camera"/>
+   </property>
    <property name="text">
-    <string>Quit</string>
+    <string>Snapshot</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+M</string>
    </property>
   </action>
  </widget>
