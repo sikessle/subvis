@@ -4,10 +4,10 @@ Mittels eines Polygonnetzes lassen sich Flächen verschiedener Formen beschreibe
 Meist wird ein sog. Kontrollnetz verwendet, welches von einem Modellierer erstellt wird.
 Dieses wird dann durch computergestützte Verarbeitung verfeinert, um eine glatte Fläche zu erzeugen.
 Hierbei stellt sich die Herausforderung, mit möglichst wenigen Polygonen im Kontrollnetz eine glatte Oberfläche erzeugen zu können.
-Denn ein kleines Kontrollnetz spart Speicherplatz und senkt die Komplexität bei Änderungen im Netz.
-Ein häufig in der Computergrafik-Branche verwendeter Ansatz zur Berechnung eines glatten Netzes, ausgehend von einem Kontrollnetz, ist die Anwendung von Unterteilungsalgorithmen.
-Rein subjektiv betrachtet liefern diese optisch meist sehr ansprechende Ergebnisse.
-Hier soll insbesondere der Algorithmus von Catmull-Clark erwähnt werden, welcher häufig von Pixar verwendet wird (siehe \autoref{fig:subdiv_einleitung}).
+Ein kleines Kontrollnetz spart Speicherplatz und senkt die Komplexität bei Änderungen im Netz.
+Ein in der Computergrafik häufig verwendeter Ansatz zur Berechnung von glatten Oberflächen aus einem Kontrollnetz, ist die Anwendung von Unterteilungsalgorithmen.
+Hier soll insbesondere der Algorithmus von Catmull-Clark erwähnt werden.
+Pixar verwendet diesen für die Entwicklung von animierten Filmen (siehe \autoref{fig:subdiv_einleitung}).
 
 \begin{figure}
   \centering
@@ -17,7 +17,7 @@ Hier soll insbesondere der Algorithmus von Catmull-Clark erwähnt werden, welche
 \end{figure}
 
 
-Das Projekt \emph{SubVis} setzt sich zum Ziel ein Programm zu entwickeln, welches einige Unterteilungsalgorithmen visualisiert. 
+Das Projekt \emph{SubVis} setzt sich zum Ziel ein Programm zu entwickeln, das einige Unterteilungsalgorithmen implementiert und visualisiert. 
 Dabei soll einerseits das Kontrollnetz (Polygonnetz) als auch die durch Anwendung von Unterteilungsalgorithmen entstehende Limesfläche dargestellt werden.
 Dies dient dazu, die Vielzahl an Algorithmen an einem Ort zu bündeln und über eine schlanke, übersichtliche Anwendung zu Verfügung zu stellen.
 Hiervon sollen insbesondere Studenten und andere interessierte Personen profitieren, die sich mit der Thematik auseinandersetzen möchten.
