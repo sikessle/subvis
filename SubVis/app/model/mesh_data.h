@@ -9,7 +9,7 @@
 namespace SubVis {
 
 /**
- * @brief Must NEVER swap its encapsulated mesh_data object, as other
+ * @brief Must NEVER swap its encapsulated mesh object, as other
  * modules may rely on it. If it is swapped out, some modules may hold
  * an invalid reference to an old object.
  */
@@ -26,7 +26,7 @@ public:
     bool persist(std::string &filename) const;
 
 private:
-    std::unique_ptr<surface_mesh::Surface_mesh> mesh_data;
+    std::unique_ptr<surface_mesh::Surface_mesh> mesh_object;
 
 signals:
 

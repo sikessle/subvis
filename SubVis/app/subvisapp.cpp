@@ -18,6 +18,7 @@ int SubVisApp::run(int argc, char *argv[])
     auto splash = create_show_splash(app);
 
     mainwindow.show();
+    // wire together model, view and controller layers
 
     if (splash) {
         splash->finish(&mainwindow);

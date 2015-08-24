@@ -2,19 +2,19 @@
 
 namespace SubVis {
 
-MeshData::MeshData() : mesh_data(new surface_mesh::Surface_mesh)
+MeshData::MeshData() : mesh_object(new surface_mesh::Surface_mesh)
 {
 
 }
 
 surface_mesh::Surface_mesh& MeshData::mesh()
 {
-    return *mesh_data.get();
+    return *mesh_object.get();
 }
 
 bool MeshData::empty() const
 {
-    return mesh_data->empty();
+    return mesh_object->empty();
 }
 
 bool MeshData::load(std::string &filename)
@@ -23,7 +23,7 @@ bool MeshData::load(std::string &filename)
         return false;
     }
     // only clear mesh to keep reference to it in other modules alive.
-    mesh_data->clear();
+    mesh_object->clear();
     //mesh_data->load()
     return false;
 }
