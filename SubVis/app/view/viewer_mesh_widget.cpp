@@ -1,7 +1,6 @@
 #include "view/viewer_mesh_widget.h"
 
 namespace SubVis {
-namespace View {
 
 ViewerMeshWidget::ViewerMeshWidget(QWidget *parent) : ViewerWidget(parent)
 {
@@ -32,6 +31,5 @@ void ViewerMeshWidget::draw()
     glEnd();
 }
 
-} // namespace View
 } // namespace SubVis
 

@@ -2,7 +2,6 @@
 #include "view/mainwindow.h"
 #include "subvisapp.h"
 
-using namespace std;
 
 namespace SubVis {
 
@@ -14,7 +13,7 @@ SubVisApp::SubVisApp()
 int SubVisApp::run(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    View::MainWindow mainwindow;
+    MainWindow mainwindow;
 
     auto splash = create_show_splash(app);
 
@@ -27,7 +26,7 @@ int SubVisApp::run(int argc, char *argv[])
     return app.exec();
 }
 
-unique_ptr<QSplashScreen> SubVisApp::create_show_splash(const QApplication &app)
+std::unique_ptr<QSplashScreen> SubVisApp::create_show_splash(const QApplication &app)
 {
     QPixmap splash_image(":/media/splash.png");
 
@@ -36,7 +35,7 @@ unique_ptr<QSplashScreen> SubVisApp::create_show_splash(const QApplication &app)
         return nullptr;
     }
 
-    unique_ptr<QSplashScreen> splash(new QSplashScreen(splash_image));
+    std::unique_ptr<QSplashScreen> splash(new QSplashScreen(splash_image));
 
     splash->show();
     app.processEvents();

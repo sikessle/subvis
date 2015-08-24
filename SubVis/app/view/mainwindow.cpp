@@ -5,7 +5,6 @@
 #include "view/viewer_plugin_widget.h"
 
 namespace SubVis {
-namespace View {
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -46,5 +45,4 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-} // namespace View
 } // namespace SubVis

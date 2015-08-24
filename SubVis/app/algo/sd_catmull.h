@@ -11,15 +11,14 @@
  *
  */
 
-#ifndef SUBVIS_ALGO_SD_CATMULL_H
-#define SUBVIS_ALGO_SD_CATMULL_H
+#ifndef SUBVIS_SD_CATMULL_H
+#define SUBVIS_SD_CATMULL_H
 
 // ===============[ includes ]===============
 #include "surface_mesh/Surface_mesh.h"
 #include "algo/types.h"
 
 namespace SubVis {
-namespace Algo {
 
 // ===============[ public prototypes ]===============
 
@@ -117,8 +116,6 @@ public:
 
 void test_surface_mesh_read();
 
-} // namespace Algo
 } // namespace SubVis
-
-#endif // SUBVIS_ALGO_SD_CATMULL_H
+#endif // SUBVIS_SD_CATMULL_H
 

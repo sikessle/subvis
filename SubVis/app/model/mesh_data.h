@@ -1,16 +1,12 @@
-#ifndef SUBVIS_MODEL_MESHMODEL_H
-#define SUBVIS_MODEL_MESHMODEL_H
+#ifndef SUBVIS_MESH_DATA_H
+#define SUBVIS_MESH_DATA_H
 
 #include <string>
 #include <memory>
 #include <QObject>
 #include "surface_mesh/Surface_mesh.h"
 
-using namespace surface_mesh;
-using namespace std;
-
 namespace SubVis {
-namespace Model {
 
 /**
  * @brief Must NEVER swap its encapsulated mesh_data object, as other
@@ -24,17 +20,19 @@ class MeshData : public QObject
 public:
     MeshData();
 
-    Surface_mesh& mesh();
+    surface_mesh::Surface_mesh& mesh();
     bool empty() const;
-    bool load(string &filename);
-    bool persist(string &filename) const;
+    bool load(std::string &filename);
+    bool persist(std::string &filename) const;
 
 private:
-    unique_ptr<Surface_mesh> mesh_data;
+    std::unique_ptr<surface_mesh::Surface_mesh> mesh_data;
+
+signals:
+
+public slots:
+
 };
 
-} // namespace Model
 } // namespace SubVis
-
-
-#endif // SUBVIS_MODEL_MESHMODEL_H
+#endif // SUBVIS_MESH_DATA_H

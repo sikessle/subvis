@@ -1,7 +1,7 @@
 
 // ===============[ includes ]===============
 
-#include "QDebug"
+#include <QDebug>
 
 #include "surface_mesh/Surface_mesh.h"
 #include "surface_mesh/IO.h"
@@ -10,7 +10,6 @@
 
 
 namespace SubVis {
-namespace Algo {
 
 // ===============[ public implementation ]===============
 
@@ -28,5 +27,4 @@ void utils_debug_point(const surface_mesh::Point point, const QString& title) {
 // ===============[ private implementation ]===============
 
 
-} // namespace Algo
 } // namespace SubVis

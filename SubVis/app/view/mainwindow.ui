@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SubVis::View::MainWindow</class>
- <widget class="QMainWindow" name="SubVis::View::MainWindow">
+ <class>SubVis::MainWindow</class>
+ <widget class="QMainWindow" name="SubVis::MainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -136,7 +136,9 @@
   </action>
   <action name="action_snapshot">
    <property name="icon">
-    <iconset theme="camera"/>
+    <iconset theme="camera">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Snapshot</string>

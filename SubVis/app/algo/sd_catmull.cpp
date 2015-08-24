@@ -1,7 +1,7 @@
 
 // ===============[ includes ]===============
 
-#include "QDebug"
+#include <QDebug>
 
 #include "surface_mesh/Surface_mesh.h"
 #include "surface_mesh/IO.h"
@@ -10,7 +10,6 @@
 #include "algo/utils.h"
 
 namespace SubVis {
-namespace Algo {
 
 // ===============[ private prototypes ]===============
 
@@ -198,5 +197,4 @@ void SubdivCatmull::mid_edge(surface_mesh::Point& mid_edge, const surface_mesh::
     mid_edge /= 2;
 }
 
-} // namespace Algo
 } // namespace SubVis

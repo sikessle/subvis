@@ -1,10 +1,9 @@
-#ifndef SUBVIS_ALGO_TYPES_H
-#define SUBVIS_ALGO_TYPES_H
+#ifndef SUBVIS_TYPES_H
+#define SUBVIS_TYPES_H
 
 #include <string>
 
 namespace SubVis {
-namespace Algo {
 
 /**
  * @brief kSurfMeshPropVertexPoint key to access surface mesh property that stores the vertex coordinates
@@ -34,7 +33,6 @@ const std::string kSurfMeshPropVertexIndexSubMeshV = "v:subdivision_mesh_vertex_
 const std::string kSurfMeshPropVertexIndexSubMeshE = "e:subdivision_mesh_vertex_index";
 const std::string kSurfMeshPropVertexIndexSubMeshF = "ff:subdivision_mesh_vertex_index";
 
-} // namespace Algo
 } // namespace SubVis
 
-#endif // SUBVIS_ALGO_TYPES_H
+#endif // SUBVIS_TYPES_H

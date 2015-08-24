@@ -1,10 +1,9 @@
-#ifndef SUBVIS_VIEW_VIEWER_WIDGET_H
-#define SUBVIS_VIEW_VIEWER_WIDGET_H
+#ifndef SUBVIS_VIEWER_WIDGET_H
+#define SUBVIS_VIEWER_WIDGET_H
 
 #include "QGLViewer/qglviewer.h"
 
 namespace SubVis {
-namespace View {
 
 class ViewerWidget : public QGLViewer
 {
@@ -16,6 +15,5 @@ protected:
     virtual void draw() = 0;
 };
 
-} // namespace View
 } // namespace SubVis
-#endif // SUBVIS_VIEW_VIEWER_WIDGET_H
+#endif // SUBVIS_VIEWER_WIDGET_H

@@ -1,14 +1,13 @@
 #include "mesh_data.h"
 
 namespace SubVis {
-namespace Model {
 
-MeshData::MeshData() : mesh_data(new Surface_mesh)
+MeshData::MeshData() : mesh_data(new surface_mesh::Surface_mesh)
 {
 
 }
 
-Surface_mesh& MeshData::mesh()
+surface_mesh::Surface_mesh& MeshData::mesh()
 {
     return *mesh_data.get();
 }
@@ -18,7 +17,7 @@ bool MeshData::empty() const
     return mesh_data->empty();
 }
 
-bool MeshData::load(string &filename)
+bool MeshData::load(std::string &filename)
 {
     if (filename.empty()) {
         return false;
@@ -29,7 +28,7 @@ bool MeshData::load(string &filename)
     return false;
 }
 
-bool MeshData::persist(string &filename) const
+bool MeshData::persist(std::string &filename) const
 {
     if (filename.empty()) {
         return false;
@@ -37,6 +36,5 @@ bool MeshData::persist(string &filename) const
     return false;
 }
 
-} // namespace Model
 } // namespace SubVis
 

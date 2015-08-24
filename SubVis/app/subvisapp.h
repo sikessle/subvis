@@ -5,8 +5,6 @@
 #include <QSplashScreen>
 #include <QApplication>
 
-using namespace std;
-
 namespace SubVis {
 
 class SubVisApp
@@ -16,7 +14,7 @@ public:
     int run(int argc, char *argv[]);
 
 private:
-    unique_ptr<QSplashScreen> create_show_splash(const QApplication &app);
+    std::unique_ptr<QSplashScreen> create_show_splash(const QApplication &app);
 };
 
 } // namespace SubVis

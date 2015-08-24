@@ -1,17 +1,22 @@
-#ifndef IOCONTROLLER_H
-#define IOCONTROLLER_H
+#ifndef SUBIVS_IO_CONTROLLER_H
+#define SUBIVS_IO_CONTROLLER_H
 
 #include <QObject>
+
+namespace SubVis {
 
 class IOController : public QObject
 {
     Q_OBJECT
+
 public:
-    explicit IOController(QObject *parent = 0);
+    IOController();
 
 signals:
 
 public slots:
+
 };
 
-#endif // IOCONTROLLER_H
+} // namespace SubVis
+#endif // SUBIVS_IO_CONTROLLER_H
