@@ -1,6 +1,8 @@
 #include <QPixmap>
 #include "view/mainwindow.h"
 #include "subvisapp.h"
+#include "model/mesh_data.h"
+#include "controller/io_controller.h"
 
 
 namespace SubVis {
@@ -18,7 +20,13 @@ int SubVisApp::run(int argc, char *argv[])
     auto splash = create_show_splash(app);
 
     mainwindow.show();
+
     // wire together model, view and controller layers
+    MeshData mesh_data;
+    IOController io_controller(mesh_data);
+    QObject::connect(&mesh_data, SIGNAL(updated()),
+                     &io_controller, SLOT(mesh_updated()));
+    // TODO add view component
 
     if (splash) {
         splash->finish(&mainwindow);

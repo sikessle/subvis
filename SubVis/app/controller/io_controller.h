@@ -11,17 +11,17 @@ class IOController : public QObject
     Q_OBJECT
 
 public:
-    IOController(SubVis::MeshData mesh);
+    IOController(MeshData &mesh);
     bool load_mesh(std::string &filename);
     bool persist_mesh(std::string &filename) const;
 
 private:
-    SubVis::MeshData &mesh_model;
+    MeshData &mesh_model;
 
 signals:
 
 public slots:
-
+   void mesh_updated();
 };
 
 } // namespace SubVis

@@ -21,6 +21,10 @@ public:
     MeshData();
 
     surface_mesh::Surface_mesh& mesh();
+    /**
+     * @brief Should be called if the mesh was modified.
+     */
+    void set_updated();
     bool empty() const;
     bool load(std::string &filename);
     bool persist(std::string &filename) const;
@@ -29,6 +33,7 @@ private:
     std::unique_ptr<surface_mesh::Surface_mesh> mesh_object;
 
 signals:
+    void updated();
 
 public slots:
 

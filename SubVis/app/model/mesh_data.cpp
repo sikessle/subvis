@@ -17,6 +17,11 @@ bool MeshData::empty() const
     return mesh_object->empty();
 }
 
+void MeshData::set_updated()
+{
+    emit updated();
+}
+
 bool MeshData::load(std::string &filename)
 {
     if (filename.empty()) {
