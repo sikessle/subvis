@@ -34,7 +34,7 @@ public:
     bool persist(string &filename) const;
 
 private:
-    unique_ptr<surface_mesh::Surface_mesh> mesh_object;
+    unique_ptr<surface_mesh::Surface_mesh> mesh_object{new Surface_mesh};
 
 signals:
     void updated();

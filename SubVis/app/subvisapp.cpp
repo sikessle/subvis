@@ -7,6 +7,10 @@
 
 namespace SubVis {
 
+using std::string;
+using std::cerr;
+using std::endl;
+
 SubVisApp::SubVisApp()
 {
 
@@ -42,7 +46,7 @@ unique_ptr<QSplashScreen> SubVisApp::create_show_splash(const QApplication &app)
     QPixmap splash_image(":/media/splash.png");
 
     if (splash_image.isNull()) {
-        std::cerr << "Failed to load splash screen image" << std::endl;
+        cerr << "Failed to load splash screen image" << endl;
         return nullptr;
     }
 

@@ -2,9 +2,8 @@
 
 namespace SubVis {
 
-MeshData::MeshData() : mesh_object(new Surface_mesh)
+MeshData::MeshData()
 {
-
 }
 
 Surface_mesh& MeshData::mesh()
@@ -30,6 +29,10 @@ bool MeshData::load(string &filename)
     // only clear mesh to keep reference to it in other modules alive.
     mesh_object->clear();
     //mesh_data->load()
+
+    emit updated();
+
+    // if not successfull
     return false;
 }
 
