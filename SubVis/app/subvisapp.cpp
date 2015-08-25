@@ -1,6 +1,6 @@
 #include <QPixmap>
-#include "view/mainwindow.h"
 #include "subvisapp.h"
+#include "view/mainwindow.h"
 #include "model/mesh_data.h"
 #include "controller/io_controller.h"
 
@@ -19,14 +19,16 @@ int SubVisApp::run(int argc, char *argv[])
 
     auto splash = create_show_splash(app);
 
-    mainwindow.show();
-
     // wire together model, view and controller layers
     MeshData mesh_data;
     IOController io_controller(mesh_data);
+
     QObject::connect(&mesh_data, SIGNAL(updated()),
                      &io_controller, SLOT(mesh_updated()));
+
     // TODO add view component
+
+    mainwindow.show();
 
     if (splash) {
         splash->finish(&mainwindow);
@@ -35,7 +37,7 @@ int SubVisApp::run(int argc, char *argv[])
     return app.exec();
 }
 
-std::unique_ptr<QSplashScreen> SubVisApp::create_show_splash(const QApplication &app)
+unique_ptr<QSplashScreen> SubVisApp::create_show_splash(const QApplication &app)
 {
     QPixmap splash_image(":/media/splash.png");
 
@@ -44,7 +46,7 @@ std::unique_ptr<QSplashScreen> SubVisApp::create_show_splash(const QApplication 
         return nullptr;
     }
 
-    std::unique_ptr<QSplashScreen> splash(new QSplashScreen(splash_image));
+    unique_ptr<QSplashScreen> splash(new QSplashScreen(splash_image));
 
     splash->show();
     app.processEvents();

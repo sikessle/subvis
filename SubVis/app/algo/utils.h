@@ -4,8 +4,13 @@
 // ===============[ includes ]===============
 
 #include <string>
+#include "surface_mesh/Surface_mesh.h"
 
 namespace SubVis {
+
+using std::string;
+using surface_mesh::Surface_mesh;
+using surface_mesh::Point;
 
 // ===============[ const ]===============
 
@@ -15,9 +20,9 @@ enum ObjDemoFiles {
     kMonsterFrog,
     kTetra
 };
-const std::string kObjDemoFilesString[4] = {"bigguy.obj", "cube.obj", "monsterfrog.obj", "tetra.obj"};
+const string kObjDemoFilesString[4] = {"bigguy.obj", "cube.obj", "monsterfrog.obj", "tetra.obj"};
 
-const std::string kRootPathToObjFiles = "./../../SubVis/objs/";
+const string kRootPathToObjFiles = "./../../SubVis/objs/";
 
 // ===============[ public prototypes ]===============
 
@@ -26,9 +31,9 @@ const std::string kRootPathToObjFiles = "./../../SubVis/objs/";
  * @param mesh
  * @param title
  */
-void utils_debug_mesh(const surface_mesh::Surface_mesh& mesh, const QString &title);
+void utils_debug_mesh(const Surface_mesh& mesh, const QString &title);
 
-void utils_debug_point(const surface_mesh::Point point, const QString& title);
+void utils_debug_point(const Point point, const QString& title);
 
 } // namespace SubVis
 #endif // SUBVIS_UTILS_H

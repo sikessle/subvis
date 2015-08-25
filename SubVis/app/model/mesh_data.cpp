@@ -2,12 +2,12 @@
 
 namespace SubVis {
 
-MeshData::MeshData() : mesh_object(new surface_mesh::Surface_mesh)
+MeshData::MeshData() : mesh_object(new Surface_mesh)
 {
 
 }
 
-surface_mesh::Surface_mesh& MeshData::mesh()
+Surface_mesh& MeshData::mesh()
 {
     return *mesh_object.get();
 }
@@ -22,7 +22,7 @@ void MeshData::set_updated()
     emit updated();
 }
 
-bool MeshData::load(std::string &filename)
+bool MeshData::load(string &filename)
 {
     if (filename.empty()) {
         return false;
@@ -33,7 +33,7 @@ bool MeshData::load(std::string &filename)
     return false;
 }
 
-bool MeshData::persist(std::string &filename) const
+bool MeshData::persist(string &filename) const
 {
     if (filename.empty()) {
         return false;

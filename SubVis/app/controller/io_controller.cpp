@@ -7,12 +7,12 @@ IOController::IOController(MeshData &mesh) : mesh_model(mesh)
 
 }
 
-bool IOController::load_mesh(std::string &filename)
+bool IOController::load_mesh(string &filename)
 {
     return mesh_model.load(filename);
 }
 
-bool IOController::persist_mesh(std::string &filename) const
+bool IOController::persist_mesh(string &filename) const
 {
     return mesh_model.persist(filename);
 }

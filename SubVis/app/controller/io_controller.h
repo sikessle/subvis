@@ -6,14 +6,16 @@
 
 namespace SubVis {
 
+using std::string;
+
 class IOController : public QObject
 {
     Q_OBJECT
 
 public:
     IOController(MeshData &mesh);
-    bool load_mesh(std::string &filename);
-    bool persist_mesh(std::string &filename) const;
+    bool load_mesh(string &filename);
+    bool persist_mesh(string &filename) const;
 
 private:
     MeshData &mesh_model;
