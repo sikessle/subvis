@@ -6,6 +6,11 @@ MeshData::MeshData()
 {
 }
 
+MeshData::MeshData(const MeshData &src)
+{
+
+}
+
 Surface_mesh& MeshData::mesh()
 {
     return *mesh_object.get();

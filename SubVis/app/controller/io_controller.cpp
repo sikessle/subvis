@@ -2,6 +2,7 @@
 
 namespace SubVis {
 
+// can't use braces-init due to compiler bug
 IOController::IOController(MeshData &mesh) : mesh_model(mesh)
 {
 
@@ -19,7 +20,7 @@ bool IOController::persist_mesh(string &filename) const
 
 void IOController::mesh_updated()
 {
-
+    // escalate to view
 }
 
 } // namespace SubVis

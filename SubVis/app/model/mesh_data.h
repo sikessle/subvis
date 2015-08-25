@@ -23,6 +23,7 @@ class MeshData : public QObject
 
 public:
     MeshData();
+    MeshData(const MeshData &m);
 
     Surface_mesh& mesh();
     /**

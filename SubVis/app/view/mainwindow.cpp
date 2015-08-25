@@ -7,8 +7,8 @@
 namespace SubVis {
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    QMainWindow{parent},
+    ui{new Ui::MainWindow}
 {
     ui->setupUi(this);
 
@@ -28,10 +28,10 @@ void MainWindow::setup_status_bar()
 
 void MainWindow::setup_viewer_tabs()
 {
-    viewer_mesh_widget = new ViewerMeshWidget(ui->tabs_viewer);
+    viewer_mesh_widget = new ViewerMeshWidget{ui->tabs_viewer};
     ui->tabs_viewer->addTab(viewer_mesh_widget, TAB_VIEWER_MESH_TEXT);
 
-    viewer_plugin_widget = new ViewerPluginWidget(ui->tabs_viewer);
+    viewer_plugin_widget = new ViewerPluginWidget{ui->tabs_viewer};
     ui->tabs_viewer->addTab(viewer_plugin_widget, TAB_VIEWER_PLUGIN_TEXT);
 }
 

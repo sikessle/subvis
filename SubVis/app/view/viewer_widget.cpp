@@ -2,7 +2,7 @@
 
 namespace SubVis {
 
-ViewerWidget::ViewerWidget(QWidget *parent) : QGLViewer(parent)
+ViewerWidget::ViewerWidget(QWidget *parent) : QGLViewer{parent}
 {
 }
 

@@ -2,7 +2,7 @@
 
 namespace SubVis {
 
-ViewerPluginWidget::ViewerPluginWidget(QWidget *parent) : ViewerWidget(parent)
+ViewerPluginWidget::ViewerPluginWidget(QWidget *parent) : ViewerWidget{parent}
 {
 
 }
