@@ -2,12 +2,12 @@
 
 namespace SubVis {
 
-ViewerPluginWidget::ViewerPluginWidget(QWidget *parent) : ViewerWidget{parent}
+ViewerPluginWidget::ViewerPluginWidget(QWidget *parent, DrawController &draw_ctrl)
+    : ViewerWidget{parent, draw_ctrl}
 {
-
 }
 
-void ViewerPluginWidget::draw()
+void ViewerPluginWidget::draw_mesh(Surface_mesh &mesh)
 {
 
 }

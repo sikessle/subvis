@@ -6,6 +6,7 @@
 #include <QString>
 #include "view/viewer_mesh_widget.h"
 #include "view/viewer_plugin_widget.h"
+#include "controller/draw_controller.h"
 
 namespace SubVis {
 
@@ -18,22 +19,23 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    MainWindow(DrawController &draw_controller);
     ~MainWindow();
 
 private:
     Ui::MainWindow *ui;
 
-    const QString STATUS_TEXT {"Build: " __DATE__ " " __TIME__};
-    const QString TAB_VIEWER_MESH_TEXT {"Mesh"};
-    const QString TAB_VIEWER_PLUGIN_TEXT {"Plugin specific"};
+    const QString kStatusText {"Build: " __DATE__ " " __TIME__};
+    const QString kTabViewerMeshText {"Mesh"};
+    const QString kTabViewerPluginText {"Plugin specific"};
 
+    // memory managed by Qt's parent-relationship (ui)
     QLabel *status_label;
     ViewerMeshWidget *viewer_mesh_widget;
     ViewerPluginWidget *viewer_plugin_widget;
 
     void setup_status_bar();
-    void setup_viewer_tabs();
+    void setup_viewer_tabs(DrawController &draw_controller);
     void setup_plugin_tabs();
 };
 

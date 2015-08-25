@@ -2,12 +2,13 @@
 
 namespace SubVis {
 
-ViewerMeshWidget::ViewerMeshWidget(QWidget *parent) : ViewerWidget{parent}
+ViewerMeshWidget::ViewerMeshWidget(QWidget *parent, DrawController &draw_ctrl)
+    : ViewerWidget{parent, draw_ctrl}
 {
 
 }
 
-void ViewerMeshWidget::draw()
+void ViewerMeshWidget::draw_mesh(Surface_mesh &mesh)
 {
     // OpenGL
     const float nbSteps = 200.0;

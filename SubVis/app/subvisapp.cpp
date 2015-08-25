@@ -3,6 +3,7 @@
 #include "view/mainwindow.h"
 #include "model/mesh_data.h"
 #include "controller/io_controller.h"
+#include "controller/draw_controller.h"
 
 
 namespace SubVis {
@@ -19,18 +20,18 @@ SubVisApp::SubVisApp()
 int SubVisApp::run(int argc, char *argv[])
 {
     QApplication app{argc, argv};
-    MainWindow mainwindow;
 
     auto splash = create_show_splash(app);
 
-    // wire together model, view and controller layers
+    // Model layer
     MeshData mesh_data;
+
+    // Controller layer
     IOController io_controller{mesh_data};
+    DrawController draw_controller{mesh_data};
 
-    QObject::connect(&mesh_data, SIGNAL(updated()),
-                     &io_controller, SLOT(mesh_updated()));
-
-    // TODO add view component
+    // View layer
+    MainWindow mainwindow{draw_controller};
 
     mainwindow.show();
 

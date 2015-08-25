@@ -2,17 +2,30 @@
 #define SUBVIS_VIEWER_WIDGET_H
 
 #include "QGLViewer/qglviewer.h"
+#include "surface_mesh/Surface_mesh.h"
+#include "controller/draw_controller.h"
 
 namespace SubVis {
 
+using surface_mesh::Surface_mesh;
+
 class ViewerWidget : public QGLViewer
 {
+    Q_OBJECT
+
 public:
-    ViewerWidget(QWidget *parent);
+    ViewerWidget(QWidget *parent, DrawController &draw_ctrl);
 
 protected:
-    // must be implemented by subclass
-    virtual void draw() = 0;
+    virtual void draw_mesh(Surface_mesh &mesh) = 0;
+
+private:
+    void draw();
+
+    DrawController &draw_controller;
+
+public slots:
+    void redraw_required();
 };
 
 } // namespace SubVis

@@ -2,28 +2,21 @@
 #define SUBIVS_IO_CONTROLLER_H
 
 #include <QObject>
-#include "model/mesh_data.h"
+#include "controller/controller.h"
 
 namespace SubVis {
 
 using std::string;
 
-class IOController : public QObject
+class IOController : public Controller
 {
     Q_OBJECT
 
 public:
     IOController(MeshData &mesh);
+
     bool load_mesh(string &filename);
     bool persist_mesh(string &filename) const;
-
-private:
-    MeshData &mesh_model;
-
-signals:
-
-public slots:
-   void mesh_updated();
 };
 
 } // namespace SubVis

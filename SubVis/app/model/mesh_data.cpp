@@ -6,11 +6,6 @@ MeshData::MeshData()
 {
 }
 
-MeshData::MeshData(const MeshData &src)
-{
-
-}
-
 Surface_mesh& MeshData::mesh()
 {
     return *mesh_object.get();
@@ -46,6 +41,7 @@ bool MeshData::persist(string &filename) const
     if (filename.empty()) {
         return false;
     }
+    mesh_object->garbage_collection();
     return false;
 }
 

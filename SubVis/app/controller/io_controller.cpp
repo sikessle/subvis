@@ -2,25 +2,19 @@
 
 namespace SubVis {
 
-// can't use braces-init due to compiler bug
-IOController::IOController(MeshData &mesh) : mesh_model(mesh)
+IOController::IOController(MeshData &mesh) : Controller{mesh}
 {
 
 }
 
 bool IOController::load_mesh(string &filename)
 {
-    return mesh_model.load(filename);
+    return mesh_data.load(filename);
 }
 
 bool IOController::persist_mesh(string &filename) const
 {
-    return mesh_model.persist(filename);
-}
-
-void IOController::mesh_updated()
-{
-    // escalate to view
+    return mesh_data.persist(filename);
 }
 
 } // namespace SubVis
