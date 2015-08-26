@@ -32,7 +32,7 @@ const ::std::string kSurfMeshPropEdgePoint = "e:point";
  */
 const ::std::string kSurfMeshPropVertexIndexSubMeshV = "v:subdivision_mesh_vertex_index";
 const ::std::string kSurfMeshPropVertexIndexSubMeshE = "e:subdivision_mesh_vertex_index";
-const ::std::string kSurfMeshPropVertexIndexSubMeshF = "ff:subdivision_mesh_vertex_index";
+const ::std::string kSurfMeshPropVertexIndexSubMeshF = "f:subdivision_mesh_vertex_index";
 
 } // namespace algo
 } // namespace SubVis
