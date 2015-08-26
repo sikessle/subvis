@@ -9,14 +9,16 @@ namespace SubVis {
 
 using std::unique_ptr;
 
-class SubVisApp
+class SubVisApp : protected QApplication
 {
+    Q_OBJECT
+
 public:
-    SubVisApp();
-    int run(int argc, char *argv[]);
+    SubVisApp(int argc, char *argv[]);
+    int run();
 
 private:
-    unique_ptr<QSplashScreen> create_show_splash(const QApplication &app);
+    unique_ptr<QSplashScreen> create_show_splash();
 };
 
 } // namespace SubVis

@@ -4,7 +4,7 @@ int main(int argc, char *argv[])
 {
     using SubVis::SubVisApp;
 
-    SubVisApp subvis_app;
+    SubVisApp subvis_app{argc, argv};
 
-    return subvis_app.run(argc, argv);
+    return subvis_app.run();
 }

@@ -12,16 +12,13 @@ using std::string;
 using std::cerr;
 using std::endl;
 
-SubVisApp::SubVisApp()
+SubVisApp::SubVisApp(int argc, char *argv[]) : QApplication(argc, argv)
 {
-
 }
 
-int SubVisApp::run(int argc, char *argv[])
+int SubVisApp::run()
 {
-    QApplication app{argc, argv};
-
-    auto splash = create_show_splash(app);
+    auto splash = create_show_splash();
 
     // Model layer
     MeshData mesh_data;
@@ -32,7 +29,6 @@ int SubVisApp::run(int argc, char *argv[])
 
     // View layer
     MainWindow mainwindow{draw_controller, io_controller};
-    // TODO: add io_controller and connect with dialogs
 
     // Signals
     QObject::connect(&mesh_data, SIGNAL(updated()),
@@ -44,10 +40,10 @@ int SubVisApp::run(int argc, char *argv[])
         splash->finish(&mainwindow);
     }
 
-    return app.exec();
+    return exec();
 }
 
-unique_ptr<QSplashScreen> SubVisApp::create_show_splash(const QApplication &app)
+unique_ptr<QSplashScreen> SubVisApp::create_show_splash()
 {
     QPixmap splash_image{":/media/splash.png"};
 
@@ -59,7 +55,7 @@ unique_ptr<QSplashScreen> SubVisApp::create_show_splash(const QApplication &app)
     unique_ptr<QSplashScreen> splash{new QSplashScreen{splash_image}};
 
     splash->show();
-    app.processEvents();
+    processEvents();
 
     return splash;
 }
