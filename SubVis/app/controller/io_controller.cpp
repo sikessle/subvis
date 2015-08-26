@@ -7,14 +7,19 @@ IOController::IOController(MeshData &mesh) : Controller{mesh}
 
 }
 
-bool IOController::load_mesh(string &filename)
+bool IOController::load_mesh(const string &filename)
 {
     return mesh_data.load(filename);
 }
 
-bool IOController::persist_mesh(string &filename) const
+bool IOController::persist_mesh(const string &filename) const
 {
     return mesh_data.persist(filename);
+}
+
+const string &IOController::load_supported_formats() const
+{
+    return kLoadSupportedFormats;
 }
 
 } // namespace SubVis

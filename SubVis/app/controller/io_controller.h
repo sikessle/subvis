@@ -15,8 +15,12 @@ class IOController : public Controller
 public:
     IOController(MeshData &mesh);
 
-    bool load_mesh(string &filename);
-    bool persist_mesh(string &filename) const;
+    bool load_mesh(const string &filename);
+    bool persist_mesh(const string &filename) const;
+    const string &load_supported_formats() const;
+
+private:
+    const string kLoadSupportedFormats = "*.obj *.off *.stl";
 };
 
 } // namespace SubVis

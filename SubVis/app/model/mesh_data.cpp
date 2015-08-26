@@ -21,28 +21,31 @@ void MeshData::set_updated()
     emit updated();
 }
 
-bool MeshData::load(string &filename)
+bool MeshData::load(const string &filename)
 {
     if (filename.empty()) {
         return false;
     }
+
     // only clear mesh to keep reference to it in other modules alive.
     mesh_object->clear();
-    //mesh_data->load()
+
+    bool success = mesh_object->read(filename);
 
     emit updated();
 
-    // if not successfull
-    return false;
+    return success;
 }
 
-bool MeshData::persist(string &filename) const
+bool MeshData::persist(const string &filename) const
 {
     if (filename.empty()) {
         return false;
     }
+
     mesh_object->garbage_collection();
-    return false;
+
+    return mesh_object->write(filename);
 }
 
 } // namespace SubVis

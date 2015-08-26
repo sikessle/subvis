@@ -30,8 +30,8 @@ public:
      */
     void set_updated();
     bool empty() const;
-    bool load(string &filename);
-    bool persist(string &filename) const;
+    bool load(const string &filename);
+    bool persist(const string &filename) const;
 
 private:
     unique_ptr<surface_mesh::Surface_mesh> mesh_object{new Surface_mesh};

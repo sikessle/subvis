@@ -31,7 +31,7 @@ int SubVisApp::run(int argc, char *argv[])
     DrawController draw_controller{mesh_data};
 
     // View layer
-    MainWindow mainwindow{draw_controller};
+    MainWindow mainwindow{draw_controller, io_controller};
     // TODO: add io_controller and connect with dialogs
 
     // Signals
