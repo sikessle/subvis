@@ -15,7 +15,7 @@ namespace SubVis {
 
 // ===============[ public implementation ]===============
 
-void test_surface_mesh_read() {
+void test_catmull() {
     Surface_mesh mesh;
     string path = kRootPathToObjFiles + kObjDemoFilesString[kCube];
     // read mesh and print basic info to stdout
