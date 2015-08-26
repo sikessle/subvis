@@ -1,11 +1,13 @@
 #include <QLabel>
 #include <QFileDialog>
+#include <QMessageBox>
 #include "ui_mainwindow.h"
 #include "view/mainwindow.h"
 
 namespace SubVis {
 
 using std::string;
+using std::stringstream;
 
 MainWindow::MainWindow(DrawController &draw_controller, IOController &io_ctrl) :
     QMainWindow{0}, ui{new Ui::MainWindow}, io_controller(io_ctrl)
@@ -58,9 +60,11 @@ void MainWindow::load_dialog()
                                             QDir::home().absolutePath(), file_filter)};
 
     if (!fn.isNull()) {
-        string filename = fn.toStdString();
-        // TODO show error dialog on failure
-        io_controller.load_mesh(filename);
+        const string filename = fn.toStdString();
+        if (!io_controller.load_mesh(filename)) {
+            QString msg = "Failed to load file " + fn;
+            QMessageBox::warning(this, "Error", msg);
+        }
     }
 }
 
@@ -71,9 +75,11 @@ void MainWindow::save_dialog()
                                             QDir::home().absolutePath(), file_filter)};
 
     if (!fn.isNull()) {
-        string filename = fn.toStdString();
-        // TODO show error dialog on failure
-        io_controller.persist_mesh(filename);
+        const string filename = fn.toStdString();
+        if (!io_controller.persist_mesh(filename)) {
+            QString msg = "Failed to save to file " + fn;
+            QMessageBox::warning(this, "Error", msg);
+        }
     }
 }
 
