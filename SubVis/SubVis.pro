@@ -1,6 +1,6 @@
 TEMPLATE = subdirs
 
-SUBDIRS = app lib
+SUBDIRS = app lib plugins/subdivison
 
 app.depends = lib
 

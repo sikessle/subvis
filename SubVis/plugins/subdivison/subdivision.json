@@ -1,0 +1,6 @@
+{
+    "id":         "de.htwg.ios.subvis.plugin.subdivision",
+    "name":       "Subdivision Algorithms",
+    "version":    "0.1",
+    "authors":    "Felix Born, Simon Kessler, Tobias Keh"
+}

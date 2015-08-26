@@ -32,11 +32,11 @@ SOURCES += main.cpp \
     view/viewer_widget.cpp \
     view/viewer_plugin_widget.cpp \
     view/viewer_mesh_widget.cpp \
-    subvisapp.cpp \
     model/mesh_data.cpp \
     controller/io_controller.cpp \
     controller/draw_controller.cpp \
-    controller/controller.cpp
+    controller/controller.cpp \
+    subvis_app.cpp
 
 HEADERS  += view/mainwindow.h \
             algo/sd_catmull.h \
@@ -45,11 +45,12 @@ HEADERS  += view/mainwindow.h \
     view/viewer_widget.h \
     view/viewer_plugin_widget.h \
     view/viewer_mesh_widget.h \
-    subvisapp.h \
     model/mesh_data.h \
     controller/io_controller.h \
     controller/draw_controller.h \
-    controller/controller.h
+    controller/controller.h \
+    subvis_plugin.h \
+    subvis_app.h
 
 FORMS    += view/mainwindow.ui
 
