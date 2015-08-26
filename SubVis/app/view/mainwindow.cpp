@@ -47,6 +47,8 @@ void MainWindow::setup_toolbar()
 {
     QObject::connect(ui->action_load, SIGNAL(triggered(bool)), this, SLOT(load_dialog()));
     QObject::connect(ui->action_save, SIGNAL(triggered(bool)), this, SLOT(save_dialog()));
+    QObject::connect(ui->action_snapshot, SIGNAL(triggered(bool)),
+                     ui->tab_viewer_mesh, SLOT(saveSnapshot(bool)));
 }
 
 void MainWindow::load_dialog()
@@ -57,6 +59,7 @@ void MainWindow::load_dialog()
 
     if (!fn.isNull()) {
         string filename = fn.toStdString();
+        // TODO show error dialog on failure
         io_controller.load_mesh(filename);
     }
 }
@@ -69,6 +72,7 @@ void MainWindow::save_dialog()
 
     if (!fn.isNull()) {
         string filename = fn.toStdString();
+        // TODO show error dialog on failure
         io_controller.persist_mesh(filename);
     }
 }
