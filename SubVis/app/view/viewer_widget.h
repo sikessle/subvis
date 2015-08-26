@@ -20,9 +20,9 @@ protected:
     virtual void draw_mesh(Surface_mesh &mesh) = 0;
 
 private:
-    void draw();
-
     DrawController &draw_controller;
+
+    void draw();
 
 public slots:
     void redraw_required();

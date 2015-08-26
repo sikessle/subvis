@@ -32,6 +32,7 @@ int SubVisApp::run(int argc, char *argv[])
 
     // View layer
     MainWindow mainwindow{draw_controller};
+    // TODO: add io_controller and connect with dialogs
 
     mainwindow.show();
 

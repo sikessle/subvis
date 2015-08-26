@@ -25,6 +25,7 @@ void MainWindow::setup_status_bar()
 
 void MainWindow::setup_viewer_tabs(DrawController &draw_controller)
 {
+    // TODO: MOVE THAT TO THE DESIGNER!!!!!!!!!!!!!
     viewer_mesh_widget = new ViewerMeshWidget{ui->tabs_viewer, draw_controller};
     ui->tabs_viewer->addTab(viewer_mesh_widget, kTabViewerMeshText);
 
