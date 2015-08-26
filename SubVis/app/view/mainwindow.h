@@ -8,6 +8,7 @@
 #include "view/viewer_plugin_widget.h"
 #include "controller/draw_controller.h"
 #include "controller/io_controller.h"
+#include "plugin_manager.h"
 
 namespace SubVis {
 
@@ -20,8 +21,11 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(DrawController &draw_controller, IOController &io_ctrl);
+    MainWindow(DrawController &draw_controller,
+               IOController &io_ctrl);
     ~MainWindow();
+
+    void load_plugin_guis(PluginManager &plugin_manager);
 
 private:
     Ui::MainWindow *ui;
@@ -34,7 +38,6 @@ private:
 
     void setup_status_bar();
     void setup_viewer_tabs(DrawController &draw_controller);
-    void setup_plugin_tabs();
     void setup_toolbar();
 
 public slots:

@@ -1,7 +1,8 @@
 TEMPLATE        = lib
 CONFIG         += plugin c++11
 QT             += widgets
-INCLUDEPATH    += ../../app
+INCLUDEPATH    += ../../app \
+                  ../../lib
 TARGET          = $$qtLibraryTarget(subdivision)
 
 

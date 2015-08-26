@@ -20,7 +20,6 @@ public:
 
 private:
     unique_ptr<QSplashScreen> create_show_splash();
-    PluginManager plugin_manager {"plugins"};
 };
 
 } // namespace SubVis

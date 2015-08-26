@@ -3,9 +3,14 @@
 
 namespace SubVis {
 
-PluginManager::PluginManager(const string &plugins_dir)
-    : plugins_directory{plugins_dir}
+PluginManager::PluginManager(const string &plugins_dir, DrawController &draw_ctrl)
+    : plugins_directory{plugins_dir}, draw_controller(draw_ctrl)
 {
+}
+
+unordered_map<string, PluginInfo> &PluginManager::list_plugins()
+{
+    return plugins;
 }
 
 bool PluginManager::load_plugins()
@@ -48,10 +53,14 @@ void PluginManager::check_and_add_plugin(QObject *plugin, QPluginLoader &plugin_
         return;
     }
 
-    const string key {plugin_loader.metaData().value("MetaData").toObject()
-                .value("id").toString().toStdString()};
+    subvis_plugin->set_draw_controller(&draw_controller);
 
-    plugins[key] = unique_ptr<SubVisPlugin>{subvis_plugin};
+    const string id {plugin_loader.metaData().value("MetaData").toObject()
+                .value("id").toString().toStdString()};
+    const string name {plugin_loader.metaData().value("MetaData").toObject()
+                .value("name").toString().toStdString()};
+
+    plugins[id] = {name, unique_ptr<SubVisPlugin>{subvis_plugin}};
 }
 
 } // namespace SubVis

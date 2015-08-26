@@ -74,7 +74,7 @@
         <enum>QTabWidget::Rounded</enum>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>-1</number>
        </property>
        <property name="movable">
         <bool>true</bool>
@@ -82,16 +82,6 @@
        <property name="tabBarAutoHide">
         <bool>false</bool>
        </property>
-       <widget class="QWidget" name="tab_plugin_subdivison">
-        <attribute name="title">
-         <string>Subdivison</string>
-        </attribute>
-       </widget>
-       <widget class="QWidget" name="tab_plugin_other">
-        <attribute name="title">
-         <string>Other</string>
-        </attribute>
-       </widget>
       </widget>
      </widget>
     </item>

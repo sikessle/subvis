@@ -7,16 +7,18 @@
 namespace SubVis {
 
 using std::string;
-using std::stringstream;
+using std::get;
 
-MainWindow::MainWindow(DrawController &draw_controller, IOController &io_ctrl) :
-    QMainWindow{0}, ui{new Ui::MainWindow}, io_controller(io_ctrl)
+MainWindow::MainWindow(DrawController &draw_controller,
+                       IOController &io_ctrl)
+    : QMainWindow{0},
+      ui{new Ui::MainWindow},
+      io_controller(io_ctrl)
 {
     ui->setupUi(this);
 
     setup_status_bar();
     setup_viewer_tabs(draw_controller);
-    setup_plugin_tabs();
     setup_toolbar();
 }
 
@@ -40,9 +42,14 @@ void MainWindow::setup_viewer_tabs(DrawController &draw_controller)
                      ui->tab_viewer_plugin, SLOT(enforce_redraw()));
 }
 
-void MainWindow::setup_plugin_tabs()
-{
-
+void MainWindow::load_plugin_guis(PluginManager &plugin_manager)
+{   
+    for (const auto &it : plugin_manager.list_plugins()) {
+        const auto &info = it.second;
+        QWidget *plugin_container = new QWidget(this);
+        ui->tabs_plugins->addTab(plugin_container, QString::fromStdString(info.name));
+        info.plugin->create_gui(plugin_container);
+    }
 }
 
 void MainWindow::setup_toolbar()

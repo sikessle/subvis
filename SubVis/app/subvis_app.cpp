@@ -34,9 +34,11 @@ int SubVisApp::run()
                      &mainwindow, SIGNAL(mesh_updated()));
 
     // Plugins
+    PluginManager plugin_manager {"plugins", draw_controller};
     if (!plugin_manager.load_plugins()) {
         cerr << "Failed to load plugins." << endl;
     }
+    mainwindow.load_plugin_guis(plugin_manager);
 
     mainwindow.show();
 

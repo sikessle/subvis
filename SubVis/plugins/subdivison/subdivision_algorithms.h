@@ -7,8 +7,8 @@
 
 namespace SubdivisonPlugin {
 
-using namespace SubVis;
-using std::string;
+using SubVis::SubVisPlugin;
+using SubVis::DrawController;
 
 class SubdivisonAlgorithms : public QObject, SubVisPlugin
 {
@@ -18,7 +18,12 @@ class SubdivisonAlgorithms : public QObject, SubVisPlugin
     Q_INTERFACES(SubVis::SubVisPlugin)
 
 public:
-     string echo() override;
+     void set_draw_controller(DrawController *draw_ctrl) override;
+     void draw_opengl() override;
+     void create_gui(QWidget *parent) override;
+
+private:
+     DrawController *draw_controller{nullptr};
 };
 
 } // namespace SubdivisonPlugin

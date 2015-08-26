@@ -4,12 +4,13 @@ namespace SubVis {
 
 ViewerMeshWidget::ViewerMeshWidget(QWidget *parent) : ViewerWidget{parent}
 {
-
 }
 
 void ViewerMeshWidget::draw_mesh(Surface_mesh &mesh)
 {
-    // OpenGL
+    // TODO: do our own mesh based rendering here.
+
+    // placeholder demo code:
     const float nbSteps = 200.0;
 
     glBegin(GL_QUAD_STRIP);
