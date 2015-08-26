@@ -46,21 +46,30 @@ void MainWindow::setup_plugin_tabs()
 void MainWindow::setup_toolbar()
 {
     QObject::connect(ui->action_load, SIGNAL(triggered(bool)), this, SLOT(load_dialog()));
+    QObject::connect(ui->action_save, SIGNAL(triggered(bool)), this, SLOT(save_dialog()));
 }
 
 void MainWindow::load_dialog()
 {
-    QFileDialog dialog{this};
+    QString file_filter{QString::fromStdString(io_controller.load_file_formats())};
+    QString fn{QFileDialog::getOpenFileName(this, kLoadDialogCaption,
+                                            QDir::home().absolutePath(), file_filter)};
 
-    QString file_filter{QString::fromStdString(io_controller.load_supported_formats())};
-    dialog.setFileMode(QFileDialog::FileMode::ExistingFile);
-    dialog.setNameFilter(file_filter);
-    dialog.setViewMode(QFileDialog::Detail);
-    dialog.setDirectory(QDir::home());
-
-    if (dialog.exec()) {
-        string filename = dialog.selectedFiles().at(0).toStdString();
+    if (!fn.isNull()) {
+        string filename = fn.toStdString();
         io_controller.load_mesh(filename);
+    }
+}
+
+void MainWindow::save_dialog()
+{
+    QString file_filter{QString::fromStdString(io_controller.persist_file_formats())};
+    QString fn{QFileDialog::getSaveFileName(this, kSaveDialogCaption,
+                                            QDir::home().absolutePath(), file_filter)};
+
+    if (!fn.isNull()) {
+        string filename = fn.toStdString();
+        io_controller.persist_mesh(filename);
     }
 }
 

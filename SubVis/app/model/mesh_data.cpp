@@ -48,5 +48,15 @@ bool MeshData::persist(const string &filename) const
     return mesh_object->write(filename);
 }
 
+const string &MeshData::load_file_formats() const
+{
+    return kLoadFileFormats;
+}
+
+const string &MeshData::persist_file_formats() const
+{
+    return kPersistFileFormats;
+}
+
 } // namespace SubVis
 

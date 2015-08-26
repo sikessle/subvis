@@ -27,6 +27,8 @@ private:
     Ui::MainWindow *ui;
     IOController &io_controller;
     const QString kStatusText {"Build: " __DATE__ " " __TIME__};
+    const QString kSaveDialogCaption {"Save model file"};
+    const QString kLoadDialogCaption {"Load model file"};
     // memory managed by Qt's parent-relationship (ui)
     QLabel *status_label;
 
@@ -37,6 +39,7 @@ private:
 
 public slots:
     void load_dialog();
+    void save_dialog();
 
 signals:
     void mesh_updated();

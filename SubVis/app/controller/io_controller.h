@@ -17,10 +17,8 @@ public:
 
     bool load_mesh(const string &filename);
     bool persist_mesh(const string &filename) const;
-    const string &load_supported_formats() const;
-
-private:
-    const string kLoadSupportedFormats = "*.obj *.off *.stl";
+    const string &load_file_formats() const;
+    const string &persist_file_formats() const;
 };
 
 } // namespace SubVis
