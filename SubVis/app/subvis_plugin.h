@@ -7,6 +7,8 @@
 
 namespace SubVis {
 
+using surface_mesh::Surface_mesh;
+
 /**
  * @brief Interface for plugins
  */
@@ -16,7 +18,7 @@ class SubVisPlugin
 
 public:
     virtual ~SubVisPlugin() {}
-    virtual void set_draw_controller(DrawController *draw_ctrl) = 0;
+    virtual void set_draw_controller(const DrawController *draw_ctrl) = 0;
     virtual void draw_opengl() = 0;
     virtual void create_gui(QWidget *parent) = 0;
 };

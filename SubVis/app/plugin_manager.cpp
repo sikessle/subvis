@@ -3,24 +3,24 @@
 
 namespace SubVis {
 
-PluginManager::PluginManager(const string &plugins_dir, DrawController &draw_ctrl)
-    : plugins_directory{plugins_dir}, draw_controller(draw_ctrl)
+PluginManager::PluginManager(const QString &plugins_dir)
+    : plugins_directory{plugins_dir}
 {
 }
 
-unordered_map<string, PluginInfo> &PluginManager::list_plugins()
+const map<QString, PluginInfo> &PluginManager::list_plugins() const
 {
     return plugins;
 }
 
-bool PluginManager::load_plugins()
+bool PluginManager::load_plugins(DrawController &draw_controller)
 {
     QDir plugins_dir(qApp->applicationDirPath());
     switch_to_plugin_dir(plugins_dir);
 
     foreach (QString filename, plugins_dir.entryList(QDir::Files)) {
         QPluginLoader plugin_loader(plugins_dir.absoluteFilePath(filename));
-        check_and_add_plugin(plugin_loader.instance(), plugin_loader);
+        check_and_add_plugin(plugin_loader.instance(), plugin_loader, draw_controller);
     }
     return true;
 }
@@ -38,10 +38,12 @@ void PluginManager::switch_to_plugin_dir(QDir &dir)
     }
 #endif
 
-    dir.cd(QString::fromStdString(plugins_directory));
+    dir.cd(plugins_directory);
 }
 
-void PluginManager::check_and_add_plugin(QObject *plugin, QPluginLoader &plugin_loader)
+void PluginManager::check_and_add_plugin(QObject *plugin,
+                                         QPluginLoader &plugin_loader,
+                                         DrawController &draw_controller)
 {
     if (!plugin) {
         return;
@@ -55,10 +57,10 @@ void PluginManager::check_and_add_plugin(QObject *plugin, QPluginLoader &plugin_
 
     subvis_plugin->set_draw_controller(&draw_controller);
 
-    const string id {plugin_loader.metaData().value("MetaData").toObject()
-                .value("id").toString().toStdString()};
-    const string name {plugin_loader.metaData().value("MetaData").toObject()
-                .value("name").toString().toStdString()};
+    const QString id {plugin_loader.metaData().value("MetaData").toObject()
+                .value("id").toString()};
+    const QString name {plugin_loader.metaData().value("MetaData").toObject()
+                .value("name").toString()};
 
     plugins[id] = {name, unique_ptr<SubVisPlugin>{subvis_plugin}};
 }

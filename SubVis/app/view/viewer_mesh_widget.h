@@ -5,15 +5,13 @@
 
 namespace SubVis {
 
-using surface_mesh::Surface_mesh;
-
 class ViewerMeshWidget : public ViewerWidget
 {
 public:
     ViewerMeshWidget(QWidget *parent = 0);
 
 protected:
-    void draw_mesh(Surface_mesh &mesh);
+    void draw() override;
 };
 
 

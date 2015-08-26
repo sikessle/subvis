@@ -6,7 +6,7 @@ MeshData::MeshData()
 {
 }
 
-Surface_mesh& MeshData::mesh()
+Surface_mesh& MeshData::mesh() const
 {
     return *mesh_object.get();
 }

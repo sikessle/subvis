@@ -19,12 +19,10 @@ public:
     void set_draw_controller(DrawController *draw_ctrl);
 
 protected:
-    virtual void draw_mesh(Surface_mesh &mesh) = 0;
+    virtual void draw() = 0;
 
-private:
+protected:
     DrawController *draw_controller{nullptr};
-
-    void draw();
 
 public slots:
     void enforce_redraw();

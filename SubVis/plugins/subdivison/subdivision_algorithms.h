@@ -18,12 +18,12 @@ class SubdivisonAlgorithms : public QObject, SubVisPlugin
     Q_INTERFACES(SubVis::SubVisPlugin)
 
 public:
-     void set_draw_controller(DrawController *draw_ctrl) override;
+     void set_draw_controller(const DrawController *draw_ctrl) override;
      void draw_opengl() override;
      void create_gui(QWidget *parent) override;
 
 private:
-     DrawController *draw_controller{nullptr};
+     const DrawController *draw_controller{nullptr};
 };
 
 } // namespace SubdivisonPlugin

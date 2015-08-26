@@ -2,7 +2,7 @@
 #define SUBVIS_PLUGIN_MANAGER_H
 
 #include <memory>
-#include <unordered_map>
+#include <map>
 #include <vector>
 #include <QPluginLoader>
 #include <QDir>
@@ -12,36 +12,36 @@
 namespace SubVis {
 
 using std::unique_ptr;
-using std::unordered_map;
-using std::string;
+using std::map;
 using std::vector;
 
 struct PluginInfo
 {
-    string name;
+    QString name;
     unique_ptr<SubVisPlugin> plugin;
 };
 
 class PluginManager
 {
 public:
-    PluginManager(const string &plugins_dir, DrawController &draw_ctrl);
+    PluginManager(const QString &plugins_dir);
 
-    bool load_plugins();
+    bool load_plugins(DrawController &draw_controller);
     /**
      * @brief Lists all loaded plugins: id->(name, plugin)
      * @return
      */
-    unordered_map<string, PluginInfo> &list_plugins();
+    const map<QString, PluginInfo> &list_plugins() const;
 
 private:
-    unordered_map<string, PluginInfo> plugins;
-    string key_active_plugin;
-    string plugins_directory;
-    DrawController &draw_controller;
+    map<QString, PluginInfo> plugins;
+    QString key_active_plugin;
+    QString plugins_directory;
 
     void switch_to_plugin_dir(QDir &dir);
-    void check_and_add_plugin(QObject *plugin, QPluginLoader &plugin_loader);
+    void check_and_add_plugin(QObject *plugin,
+                              QPluginLoader &plugin_loader,
+                              DrawController &draw_controller);
 };
 
 } // namespace SubVis

@@ -4,7 +4,7 @@
 
 namespace SubdivisonPlugin {
 
-void SubdivisonAlgorithms::set_draw_controller(DrawController *draw_ctrl)
+void SubdivisonAlgorithms::set_draw_controller(const DrawController *draw_ctrl)
 {
     draw_controller = draw_ctrl;
 }

@@ -26,19 +26,21 @@ int SubVisApp::run()
     IOController io_controller{mesh_data};
     DrawController draw_controller{mesh_data};
 
+    // Plugins
+    PluginManager plugin_manager {"plugins"};
+    if (!plugin_manager.load_plugins(draw_controller)) {
+        cerr << "Failed to load plugins." << endl;
+    }
+
     // View layer
-    MainWindow mainwindow{draw_controller, io_controller};
+    MainWindow mainwindow{draw_controller, io_controller, plugin_manager};
 
     // Signals
     QObject::connect(&mesh_data, SIGNAL(updated()),
                      &mainwindow, SIGNAL(mesh_updated()));
 
     // Plugins
-    PluginManager plugin_manager {"plugins", draw_controller};
-    if (!plugin_manager.load_plugins()) {
-        cerr << "Failed to load plugins." << endl;
-    }
-    mainwindow.load_plugin_guis(plugin_manager);
+    mainwindow.create_plugin_guis();
 
     mainwindow.show();
 

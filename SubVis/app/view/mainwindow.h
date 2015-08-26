@@ -22,14 +22,16 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(DrawController &draw_controller,
-               IOController &io_ctrl);
+               IOController &io_ctrl,
+               PluginManager &plugin_mngr);
     ~MainWindow();
 
-    void load_plugin_guis(PluginManager &plugin_manager);
+    void create_plugin_guis();
 
 private:
     Ui::MainWindow *ui;
     IOController &io_controller;
+    PluginManager &plugin_manager;
     const QString kStatusText {"Build: " __DATE__ " " __TIME__};
     const QString kSaveDialogCaption {"Save model file"};
     const QString kLoadDialogCaption {"Load model file"};
@@ -43,6 +45,7 @@ private:
 public slots:
     void load_dialog();
     void save_dialog();
+    void plugin_tab_changed(int current);
 
 signals:
     void mesh_updated();

@@ -7,13 +7,14 @@
 namespace SubVis {
 
 using std::string;
-using std::get;
 
 MainWindow::MainWindow(DrawController &draw_controller,
-                       IOController &io_ctrl)
+                       IOController &io_ctrl,
+                       PluginManager &plugin_mngr)
     : QMainWindow{0},
       ui{new Ui::MainWindow},
-      io_controller(io_ctrl)
+      io_controller(io_ctrl),
+      plugin_manager(plugin_mngr)
 {
     ui->setupUi(this);
 
@@ -42,14 +43,29 @@ void MainWindow::setup_viewer_tabs(DrawController &draw_controller)
                      ui->tab_viewer_plugin, SLOT(enforce_redraw()));
 }
 
-void MainWindow::load_plugin_guis(PluginManager &plugin_manager)
+void MainWindow::create_plugin_guis()
 {   
     for (const auto &it : plugin_manager.list_plugins()) {
         const auto &info = it.second;
         QWidget *plugin_container = new QWidget(this);
-        ui->tabs_plugins->addTab(plugin_container, QString::fromStdString(info.name));
+        ui->tabs_plugins->addTab(plugin_container, info.name);
         info.plugin->create_gui(plugin_container);
+        QObject::connect(ui->tabs_plugins, SIGNAL(currentChanged(int)),
+                         this, SLOT(plugin_tab_changed(int)));
     }
+    plugin_tab_changed(0);
+}
+
+void MainWindow::plugin_tab_changed(int current)
+{
+    auto it = plugin_manager.list_plugins().begin();
+
+    for (int i = 0; i < current; i++)
+    {
+        it++;
+    }
+    ui->tab_viewer_plugin->set_drawing_plugin(it->second.plugin.get());
+    ui->tabs_viewer->setTabText(1, it->second.name);
 }
 
 void MainWindow::setup_toolbar()

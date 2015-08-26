@@ -24,7 +24,7 @@ class MeshData : public QObject
 public:
     MeshData();
 
-    Surface_mesh& mesh();
+    Surface_mesh& mesh() const;
     /**
      * @brief Should be called if the mesh was modified.
      */
