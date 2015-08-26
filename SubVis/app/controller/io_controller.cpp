@@ -2,29 +2,29 @@
 
 namespace SubVis {
 
-IOController::IOController(MeshData &mesh) : Controller{mesh}
+IOController::IOController(MeshData& mesh_data) : Controller{mesh_data}
 {
 
 }
 
-bool IOController::load_mesh(const string &filename)
+bool IOController::load_mesh(const string& filename)
 {
-    return mesh_data.load(filename);
+    return mesh_data_.load(filename);
 }
 
-bool IOController::persist_mesh(const string &filename) const
+bool IOController::persist_mesh(const string& filename) const
 {
-    return mesh_data.persist(filename);
+    return mesh_data_.persist(filename);
 }
 
-const string &IOController::load_file_formats() const
+const string& IOController::load_file_formats() const
 {
-    return mesh_data.load_file_formats();
+    return mesh_data_.load_file_formats();
 }
 
-const string &IOController::persist_file_formats() const
+const string& IOController::persist_file_formats() const
 {
-    return mesh_data.persist_file_formats();
+    return mesh_data_.persist_file_formats();
 }
 
 } // namespace SubVis

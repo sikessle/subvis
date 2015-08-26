@@ -4,6 +4,7 @@
 #include <memory>
 #include <QSplashScreen>
 #include <QApplication>
+
 #include "plugin_manager.h"
 
 namespace SubVis {
@@ -15,7 +16,7 @@ class SubVisApp : protected QApplication
     Q_OBJECT
 
 public:
-    SubVisApp(int argc, char *argv[]);
+    SubVisApp(int argc, char* argv[]);
     int run();
 
 private:

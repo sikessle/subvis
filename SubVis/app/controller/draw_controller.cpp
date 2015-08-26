@@ -2,13 +2,13 @@
 
 namespace SubVis {
 
-DrawController::DrawController(MeshData &mesh) : Controller{mesh}
+DrawController::DrawController(MeshData& mesh_data) : Controller{mesh_data}
 {
 }
 
-Surface_mesh &DrawController::mesh() const
+Surface_mesh& DrawController::mesh() const
 {
-    return mesh_data.mesh();
+    return mesh_data_.mesh();
 }
 
 } // namespace SubVis

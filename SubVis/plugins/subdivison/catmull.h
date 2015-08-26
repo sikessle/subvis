@@ -11,22 +11,20 @@
  *
  */
 
-#ifndef SUBVIS_SD_CATMULL_H
-#define SUBVIS_SD_CATMULL_H
+#ifndef SUBDIVISONPLUGIN_CATMULL_H
+#define SUBDIVISONPLUGIN_CATMULL_H
 
-// ===============[ includes ]===============
 #include "surface_mesh/Surface_mesh.h"
-#include "algo/types.h"
 
-namespace SubVis {
+#include "types.h"
+
+namespace SubdivisonPlugin {
 
 using surface_mesh::Surface_mesh;
 using surface_mesh::Point;
 
-
-// ===============[ public prototypes ]===============
-
-class SubdivCatmull {
+class Catmull
+{
 private:
     Surface_mesh mesh_;
 
@@ -98,7 +96,7 @@ private:
     }
 
 public:
-    SubdivCatmull (Surface_mesh mesh) : mesh_(mesh) {
+    Catmull(Surface_mesh mesh) : mesh_(mesh) {
         this->add_mesh_properties(mesh_);
         this->init_mesh_members();
     }
@@ -115,11 +113,8 @@ public:
     }
 };
 
-
-// ===============[ public prototypes ]===============
-
 void test_surface_mesh_read();
 
-} // namespace SubVis
-#endif // SUBVIS_SD_CATMULL_H
+} // namespace SubdivisonPlugin
+#endif // SUBDIVISONPLUGIN_CATMULL_H
 

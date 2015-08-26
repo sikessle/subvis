@@ -30,13 +30,13 @@ public:
      */
     void set_updated();
     bool empty() const;
-    bool load(const string &filename);
-    bool persist(const string &filename) const;
-    const string &load_file_formats() const;
-    const string &persist_file_formats() const;
+    bool load(const string& filename);
+    bool persist(const string& filename) const;
+    const string& load_file_formats() const;
+    const string& persist_file_formats() const;
 
 private:
-    unique_ptr<surface_mesh::Surface_mesh> mesh_object{new Surface_mesh};
+    unique_ptr<surface_mesh::Surface_mesh> mesh_object_{new Surface_mesh};
     const string kLoadFileFormats {"*.obj *.off *.stl"};
     const string kPersistFileFormats {"*.off"};
 

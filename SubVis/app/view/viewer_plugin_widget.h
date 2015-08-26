@@ -11,16 +11,16 @@ class ViewerPluginWidget : public ViewerWidget
     Q_OBJECT
 
 public:
-    ViewerPluginWidget(QWidget *parent = 0);
+    ViewerPluginWidget(QWidget* parent = 0);
 
 protected:
     void draw() override;
 
 private:
-    SubVisPlugin *drawing_plugin{nullptr};
+    SubVisPlugin* drawing_plugin_{nullptr};
 
 public slots:
-    void set_drawing_plugin(SubVisPlugin *plugin);
+    void set_drawing_plugin(SubVisPlugin* plugin);
 };
 
 } // namespace SubVis

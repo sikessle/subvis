@@ -1,19 +1,11 @@
-
-// ===============[ includes ]===============
-
 #include <QDebug>
-
 #include "surface_mesh/Surface_mesh.h"
 #include "surface_mesh/IO.h"
 
-#include "algo/sd_catmull.h"
-#include "algo/utils.h"
+#include "catmull.h"
+#include "utils.h"
 
-namespace SubVis {
-
-// ===============[ private prototypes ]===============
-
-// ===============[ public implementation ]===============
+namespace SubdivisonPlugin {
 
 void test_surface_mesh_read() {
     Surface_mesh mesh;
@@ -22,15 +14,14 @@ void test_surface_mesh_read() {
     read_mesh(mesh, path);
     utils_debug_mesh(mesh, QString("Cube Mesh"));
     // compute subdivision
-    SubdivCatmull sd_catmull(mesh);
+    Catmull sd_catmull(mesh);
     sd_catmull.subdivide();
     Surface_mesh subdivision_mesh = sd_catmull.get_subdivision_mesh();
     // Do something with the subdivision_mesh
 }
 
-// ===============[ class implementation ]===============
-
-void SubdivCatmull::subdivide() {
+void Catmull::subdivide()
+{
     Surface_mesh subdivision_mesh;
     // instantiate iterator
     Surface_mesh::Face_iterator fit;
@@ -60,7 +51,8 @@ void SubdivCatmull::subdivide() {
     utils_debug_mesh(subdivision_mesh, "Subdivision Mesh");
 }
 
-void SubdivCatmull::subdivide(unsigned char steps) {
+void Catmull::subdivide(unsigned char steps)
+{
     // TODO implement steps
     for (unsigned char i = 0; i < steps; ++i) {
         this->subdivide();
@@ -70,7 +62,8 @@ void SubdivCatmull::subdivide(unsigned char steps) {
     }
 }
 
-void SubdivCatmull::compute_face_point(const Surface_mesh::Face& face) {
+void Catmull::compute_face_point(const Surface_mesh::Face& face)
+{
     // init result with zero
     Point face_point = Point(0);
     // declare and initialize circulators
@@ -90,7 +83,8 @@ void SubdivCatmull::compute_face_point(const Surface_mesh::Face& face) {
     utils_debug_point(face_point, "Face Point");
 }
 
-void SubdivCatmull::compute_edge_point(const Surface_mesh::Edge& edge) {
+void Catmull::compute_edge_point(const Surface_mesh::Edge& edge)
+{
     // init result with zero
     Point edge_point = Point(0);
     // get properties
@@ -109,7 +103,8 @@ void SubdivCatmull::compute_edge_point(const Surface_mesh::Edge& edge) {
     utils_debug_point(edge_point, "Edge Point");
 }
 
-void SubdivCatmull::compute_new_vertex_point(const Surface_mesh::Vertex& vertex) {
+void Catmull::compute_new_vertex_point(const Surface_mesh::Vertex& vertex)
+{
     // compute new vertex point: (Q/n) + (2R/n) + (S(n-3)/n)
     Point new_vertex_point, q, r, s;
     unsigned int vertex_valence = mesh_.valence(vertex);
@@ -126,7 +121,8 @@ void SubdivCatmull::compute_new_vertex_point(const Surface_mesh::Vertex& vertex)
     utils_debug_point(new_vertex_point, "New Vertex Point");
 }
 
-void SubdivCatmull::compute_new_faces(Surface_mesh& result_mesh, const Surface_mesh::Face& face) {
+void Catmull::compute_new_faces(Surface_mesh& result_mesh, const Surface_mesh::Face& face)
+{
     // init halfedge circulator
     Surface_mesh::Halfedge_around_face_circulator hc, hc_end;
     hc = mesh_.halfedges(face);
@@ -159,7 +155,8 @@ void SubdivCatmull::compute_new_faces(Surface_mesh& result_mesh, const Surface_m
     // TODO
 }
 
-void SubdivCatmull::avg_face_points(Point& avg_face_points, const Surface_mesh::Vertex& vertex) {
+void Catmull::avg_face_points(Point& avg_face_points, const Surface_mesh::Vertex& vertex)
+{
     avg_face_points = Point(0);
     Surface_mesh::Face_around_vertex_circulator fc, fc_end;
     fc = mesh_.faces(vertex);
@@ -173,7 +170,8 @@ void SubdivCatmull::avg_face_points(Point& avg_face_points, const Surface_mesh::
         avg_face_points /= i;
 }
 
-void SubdivCatmull::avg_mid_edges(Point& avg_mid_edges, const Surface_mesh::Vertex& vertex) {
+void Catmull::avg_mid_edges(Point& avg_mid_edges, const Surface_mesh::Vertex& vertex)
+{
     avg_mid_edges = Point(0);
     Surface_mesh::Halfedge_around_vertex_circulator hc, hc_end;
     hc = mesh_.halfedges(vertex);
@@ -189,7 +187,8 @@ void SubdivCatmull::avg_mid_edges(Point& avg_mid_edges, const Surface_mesh::Vert
         avg_mid_edges /= i;
 }
 
-void SubdivCatmull::mid_edge(Point& mid_edge, const Surface_mesh::Edge& edge) {
+void Catmull::mid_edge(Point& mid_edge, const Surface_mesh::Edge& edge)
+{
     Surface_mesh::Vertex edge_vertex0, edge_vertex1;
     edge_vertex0 = mesh_.vertex(edge, 0);
     edge_vertex1 = mesh_.vertex(edge, 1);
@@ -197,4 +196,4 @@ void SubdivCatmull::mid_edge(Point& mid_edge, const Surface_mesh::Edge& edge) {
     mid_edge /= 2;
 }
 
-} // namespace SubVis
+} // namespace SubdivisonPlugin

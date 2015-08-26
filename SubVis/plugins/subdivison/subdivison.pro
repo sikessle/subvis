@@ -12,11 +12,14 @@ OBJECTS_DIR = ../../build/plugins/
 MOC_DIR = ../../build/plugins/
 RCC_DIR = ../../build/plugins/
 
-HEADERS         = \
-    subdivision_algorithms.h
-SOURCES         = \
-    subdivision_algorithms.cpp
+HEADERS = subdivision_algorithms.h \
+    utils.h \
+    types.h \
+    catmull.h
 
-DISTFILES += \
-    subdivision.json
+SOURCES = subdivision_algorithms.cpp \
+    utils.cpp \
+    catmull.cpp
+
+DISTFILES += subdivision.json
 

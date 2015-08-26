@@ -26,9 +26,7 @@ INCLUDEPATH += "../lib"
 
 # SOURCES
 SOURCES += main.cpp \
-           view/mainwindow.cpp \
-           algo/sd_catmull.cpp \
-           algo/utils.cpp \
+    view/mainwindow.cpp \
     view/viewer_widget.cpp \
     view/viewer_plugin_widget.cpp \
     view/viewer_mesh_widget.cpp \
@@ -40,9 +38,6 @@ SOURCES += main.cpp \
     plugin_manager.cpp
 
 HEADERS  += view/mainwindow.h \
-            algo/sd_catmull.h \
-            algo/utils.h \
-            algo/types.h \
     view/viewer_widget.h \
     view/viewer_plugin_widget.h \
     view/viewer_mesh_widget.h \

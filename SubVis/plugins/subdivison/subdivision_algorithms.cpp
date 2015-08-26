@@ -1,12 +1,13 @@
 #include <GL/gl.h>
 #include <QLabel>
+
 #include "subdivision_algorithms.h"
 
 namespace SubdivisonPlugin {
 
-void SubdivisonAlgorithms::set_draw_controller(const DrawController *draw_ctrl)
+void SubdivisonAlgorithms::set_draw_controller(const DrawController* draw_controller)
 {
-    draw_controller = draw_ctrl;
+    draw_controller_ = draw_controller;
 }
 
 void SubdivisonAlgorithms::draw_opengl()
@@ -35,11 +36,12 @@ void SubdivisonAlgorithms::draw_opengl()
     glEnd();
 }
 
-void SubdivisonAlgorithms::create_gui(QWidget *parent)
+void SubdivisonAlgorithms::create_gui(QWidget* parent)
 {
     // create own gui components
-    QLabel *label = new QLabel{parent};
+    QLabel* label = new QLabel{parent};
     label->setText("My Plugin Interface");
+    // SIGNALS etc... operating on draw_controller.mesh
 }
 
 } // namespace SubdivisonPlugin

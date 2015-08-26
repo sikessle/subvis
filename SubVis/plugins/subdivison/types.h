@@ -1,9 +1,9 @@
-#ifndef SUBVIS_TYPES_H
-#define SUBVIS_TYPES_H
+#ifndef SUBDIVISONPLUGIN_TYPES_H
+#define SUBDIVISONPLUGIN_TYPES_H
 
 #include <string>
 
-namespace SubVis {
+namespace SubdivisonPlugin {
 
 using std::string;
 
@@ -35,6 +35,6 @@ const string kSurfMeshPropVertexIndexSubMeshV = "v:subdivision_mesh_vertex_index
 const string kSurfMeshPropVertexIndexSubMeshE = "e:subdivision_mesh_vertex_index";
 const string kSurfMeshPropVertexIndexSubMeshF = "ff:subdivision_mesh_vertex_index";
 
-} // namespace SubVis
+} // namespace SubdivisonPlugin
 
-#endif // SUBVIS_TYPES_H
+#endif // SUBDIVISONPLUGIN_TYPES_H

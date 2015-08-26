@@ -8,7 +8,7 @@ namespace SubVis {
 class ViewerMeshWidget : public ViewerWidget
 {
 public:
-    ViewerMeshWidget(QWidget *parent = 0);
+    ViewerMeshWidget(QWidget* parent = 0);
 
 protected:
     void draw() override;

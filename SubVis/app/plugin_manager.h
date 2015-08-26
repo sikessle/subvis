@@ -6,6 +6,7 @@
 #include <vector>
 #include <QPluginLoader>
 #include <QDir>
+
 #include "subvis_plugin.h"
 #include "controller/draw_controller.h"
 
@@ -24,24 +25,23 @@ struct PluginInfo
 class PluginManager
 {
 public:
-    PluginManager(const QString &plugins_dir);
+    PluginManager(const QString plugins_dir);
 
-    bool load_plugins(DrawController &draw_controller);
+    bool load_plugins(DrawController& draw_controller);
     /**
      * @brief Lists all loaded plugins: id->(name, plugin)
      * @return
      */
-    const map<QString, PluginInfo> &list_plugins() const;
+    const map<QString, PluginInfo>& list_plugins() const;
 
 private:
-    map<QString, PluginInfo> plugins;
-    QString key_active_plugin;
-    QString plugins_directory;
+    map<QString, PluginInfo> plugins_;
+    const QString plugins_directory_;
 
-    void switch_to_plugin_dir(QDir &dir);
-    void check_and_add_plugin(QObject *plugin,
-                              QPluginLoader &plugin_loader,
-                              DrawController &draw_controller);
+    void switch_to_plugin_dir(QDir& dir);
+    void check_and_add_plugin(QObject* plugin,
+                              QPluginLoader& plugin_loader,
+                              DrawController& draw_controller);
 };
 
 } // namespace SubVis

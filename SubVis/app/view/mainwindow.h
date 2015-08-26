@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QLabel>
 #include <QString>
+
 #include "view/viewer_mesh_widget.h"
 #include "view/viewer_plugin_widget.h"
 #include "controller/draw_controller.h"
@@ -21,25 +22,26 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(DrawController &draw_controller,
-               IOController &io_ctrl,
-               PluginManager &plugin_mngr);
+    MainWindow(DrawController& draw_controller,
+               IOController& io_controller,
+               PluginManager& plugin_manager);
     ~MainWindow();
 
     void create_plugin_guis();
 
 private:
-    Ui::MainWindow *ui;
-    IOController &io_controller;
-    PluginManager &plugin_manager;
+    Ui::MainWindow* ui_;
+    IOController& io_controller_;
+    PluginManager& plugin_manager_;
+    // memory managed by Qt's parent-relationship (ui)
+    QLabel* status_label_;
+
     const QString kStatusText {"Build: " __DATE__ " " __TIME__};
     const QString kSaveDialogCaption {"Save model file"};
     const QString kLoadDialogCaption {"Load model file"};
-    // memory managed by Qt's parent-relationship (ui)
-    QLabel *status_label;
 
     void setup_status_bar();
-    void setup_viewer_tabs(DrawController &draw_controller);
+    void setup_viewer_tabs(DrawController& draw_controller);
     void setup_toolbar();
 
 public slots:

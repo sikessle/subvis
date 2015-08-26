@@ -1,9 +1,11 @@
 #include <QPixmap>
-#include "subvis_app.h"
+
 #include "view/mainwindow.h"
 #include "model/mesh_data.h"
 #include "controller/io_controller.h"
 #include "controller/draw_controller.h"
+
+#include "subvis_app.h"
 
 
 namespace SubVis {
@@ -11,7 +13,7 @@ namespace SubVis {
 using std::cerr;
 using std::endl;
 
-SubVisApp::SubVisApp(int argc, char *argv[]) : QApplication(argc, argv)
+SubVisApp::SubVisApp(int argc, char* argv[]) : QApplication(argc, argv)
 {
 }
 

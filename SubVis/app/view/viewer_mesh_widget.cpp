@@ -2,7 +2,7 @@
 
 namespace SubVis {
 
-ViewerMeshWidget::ViewerMeshWidget(QWidget *parent) : ViewerWidget{parent}
+ViewerMeshWidget::ViewerMeshWidget(QWidget* parent) : ViewerWidget{parent}
 {
 }
 

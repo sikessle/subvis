@@ -1,8 +1,9 @@
-#ifndef SUBDIVISON_ALGORITHMS_H
-#define SUBDIVISON_ALGORITHMS_H
+#ifndef SUBDIVISONPLUGIN_SUBDIVISON_ALGORITHMS_H
+#define SUBDIVISONPLUGIN_SUBDIVISON_ALGORITHMS_H
 
 #include <QObject>
 #include <string>
+
 #include "subvis_plugin.h"
 
 namespace SubdivisonPlugin {
@@ -18,13 +19,13 @@ class SubdivisonAlgorithms : public QObject, SubVisPlugin
     Q_INTERFACES(SubVis::SubVisPlugin)
 
 public:
-     void set_draw_controller(const DrawController *draw_ctrl) override;
+     void set_draw_controller(const DrawController* draw_controller_) override;
      void draw_opengl() override;
-     void create_gui(QWidget *parent) override;
+     void create_gui(QWidget* parent) override;
 
 private:
-     const DrawController *draw_controller{nullptr};
+     const DrawController *draw_controller_{nullptr};
 };
 
 } // namespace SubdivisonPlugin
-#endif // SUBDIVISON_ALGORITHMS_H
+#endif // SUBDIVISONPLUGIN_SUBDIVISON_ALGORITHMS_H
