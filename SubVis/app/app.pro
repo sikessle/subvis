@@ -36,7 +36,8 @@ SOURCES += main.cpp \
     controller/io_controller.cpp \
     controller/draw_controller.cpp \
     controller/controller.cpp \
-    subvis_app.cpp
+    subvis_app.cpp \
+    plugin_manager.cpp
 
 HEADERS  += view/mainwindow.h \
             algo/sd_catmull.h \
@@ -50,7 +51,8 @@ HEADERS  += view/mainwindow.h \
     controller/draw_controller.h \
     controller/controller.h \
     subvis_plugin.h \
-    subvis_app.h
+    subvis_app.h \
+    plugin_manager.h
 
 FORMS    += view/mainwindow.ui
 

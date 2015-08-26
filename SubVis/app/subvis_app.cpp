@@ -1,6 +1,4 @@
 #include <QPixmap>
-#include <QDir>
-#include <QPluginLoader>
 #include "subvis_app.h"
 #include "view/mainwindow.h"
 #include "model/mesh_data.h"
@@ -36,7 +34,7 @@ int SubVisApp::run()
                      &mainwindow, SIGNAL(mesh_updated()));
 
     // Plugins
-    if (!load_plugins()) {
+    if (!plugin_manager.load_plugins()) {
         cerr << "Failed to load plugins." << endl;
     }
 
@@ -64,41 +62,6 @@ unique_ptr<QSplashScreen> SubVisApp::create_show_splash()
     processEvents();
 
     return splash;
-}
-
-bool SubVisApp::load_plugins()
-{
-    QDir plugins_dir(qApp->applicationDirPath());
-
-    #if defined(Q_OS_WIN)
-    if (plugins_dir.dirName().toLower() == "debug" || plugins_dir.dirName().toLower() == "release")
-        plugins_dir.cdUp();
-    #elif defined(Q_OS_MAC)
-    if (plugins_dir.dirName() == "MacOS") {
-        plugins_dir.cdUp();
-        plugins_dir.cdUp();
-        plugins_dir.cdUp();
-    }
-    #endif
-
-    plugins_dir.cd("plugins");
-
-    foreach (QString filename, plugins_dir.entryList(QDir::Files)) {
-        QPluginLoader plugin_loader(plugins_dir.absoluteFilePath(filename));
-        QObject *plugin = plugin_loader.instance();
-        if (plugin) {
-            SubVisPlugin *subvis_plugin = qobject_cast<SubVisPlugin *>(plugin);
-            if (!subvis_plugin) {
-                return false;
-            } else {
-                const string key {plugin_loader.metaData().value("MetaData").toObject()
-                            .value("id").toString().toStdString()};
-
-                plugins[key] = unique_ptr<SubVisPlugin>{subvis_plugin};
-            }
-        }
-    }
-    return true;
 }
 
 } // namespace SubVis
