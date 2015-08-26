@@ -26,7 +26,6 @@ private:
     Ui::MainWindow *ui;
 
     const QString kStatusText {"Build: " __DATE__ " " __TIME__};
-    const QString kTabViewerPluginText {"Plugin specific"};
 
     // memory managed by Qt's parent-relationship (ui)
     QLabel *status_label;
