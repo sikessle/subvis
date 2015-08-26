@@ -17,12 +17,6 @@ public:
     DrawController(MeshData &mesh);
 
     Surface_mesh &mesh();
-
-signals:
-    void redraw_required();
-
-public slots:
-    void mesh_updated();
 };
 
 } // namespace SubVis

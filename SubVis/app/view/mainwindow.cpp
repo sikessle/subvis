@@ -25,12 +25,13 @@ void MainWindow::setup_status_bar()
 
 void MainWindow::setup_viewer_tabs(DrawController &draw_controller)
 {
-    // TODO: MOVE THAT TO THE DESIGNER!!!!!!!!!!!!!
-    viewer_mesh_widget = new ViewerMeshWidget{ui->tabs_viewer, draw_controller};
-    ui->tabs_viewer->addTab(viewer_mesh_widget, kTabViewerMeshText);
+    ui->tab_viewer_mesh->set_draw_controller(&draw_controller);
+    ui->tab_viewer_plugin->set_draw_controller(&draw_controller);
 
-    viewer_plugin_widget = new ViewerPluginWidget{ui->tabs_viewer, draw_controller};
-    ui->tabs_viewer->addTab(viewer_plugin_widget, kTabViewerPluginText);
+    QObject::connect(this, SIGNAL(mesh_updated()),
+                     ui->tab_viewer_mesh, SLOT(enforce_redraw()));
+    QObject::connect(this, SIGNAL(mesh_updated()),
+                     ui->tab_viewer_plugin, SLOT(enforce_redraw()));
 }
 
 void MainWindow::setup_plugin_tabs()

@@ -9,7 +9,7 @@ MOC_DIR = ../build
 RCC_DIR = ../build
 
 # UI files generated from Qt
-UI_DIR = view/ui-gen/
+UI_DIR = view/
 
 
 # Main App

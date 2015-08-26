@@ -1,20 +1,31 @@
+#include <exception>
 #include "view/viewer_widget.h"
 
 namespace SubVis {
 
-ViewerWidget::ViewerWidget(QWidget *parent, DrawController &draw_ctrl)
-    : QGLViewer{parent}, draw_controller(draw_ctrl)
+using std::logic_error;
+
+ViewerWidget::ViewerWidget(QWidget *parent) : QGLViewer{parent}
 {
-    QObject::connect(&draw_controller, SIGNAL(redraw_required()),
-                     this, SLOT(redraw_required()));
 }
 
+void ViewerWidget::set_draw_controller(DrawController *draw_ctrl)
+{
+    draw_controller = draw_ctrl;
+}
+
+/**
+ * @brief Called by QGLViewer
+ */
 void ViewerWidget::draw()
 {
-    draw_mesh(draw_controller.mesh());
+    if (!draw_controller) {
+        throw logic_error("draw_controller is null. call set_draw_controller() before.");
+    }
+    draw_mesh(draw_controller->mesh());
 }
 
-void ViewerWidget::redraw_required()
+void ViewerWidget::enforce_redraw()
 {
     draw();
 }

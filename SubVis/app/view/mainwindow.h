@@ -26,17 +26,17 @@ private:
     Ui::MainWindow *ui;
 
     const QString kStatusText {"Build: " __DATE__ " " __TIME__};
-    const QString kTabViewerMeshText {"Mesh"};
     const QString kTabViewerPluginText {"Plugin specific"};
 
     // memory managed by Qt's parent-relationship (ui)
     QLabel *status_label;
-    ViewerMeshWidget *viewer_mesh_widget;
-    ViewerPluginWidget *viewer_plugin_widget;
 
     void setup_status_bar();
     void setup_viewer_tabs(DrawController &draw_controller);
     void setup_plugin_tabs();
+
+signals:
+    void mesh_updated();
 };
 
 

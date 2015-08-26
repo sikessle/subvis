@@ -38,11 +38,21 @@
         </sizepolicy>
        </property>
        <property name="currentIndex">
-        <number>-1</number>
+        <number>1</number>
        </property>
        <property name="movable">
         <bool>true</bool>
        </property>
+       <widget class="ViewerMeshWidget" name="tab_viewer_mesh">
+        <attribute name="title">
+         <string>Mesh</string>
+        </attribute>
+       </widget>
+       <widget class="ViewerPluginWidget" name="tab_viewer_plugin">
+        <attribute name="title">
+         <string>Plugin specific</string>
+        </attribute>
+       </widget>
       </widget>
       <widget class="QTabWidget" name="tabs_plugins">
        <property name="sizePolicy">
@@ -64,7 +74,7 @@
         <enum>QTabWidget::Rounded</enum>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <property name="movable">
         <bool>true</bool>
@@ -148,6 +158,20 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ViewerMeshWidget</class>
+   <extends>QWidget</extends>
+   <header>viewer_mesh_widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ViewerPluginWidget</class>
+   <extends>QWidget</extends>
+   <header>viewer_plugin_widget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../media.qrc"/>
  </resources>

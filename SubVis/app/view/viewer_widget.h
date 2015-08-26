@@ -14,18 +14,20 @@ class ViewerWidget : public QGLViewer
     Q_OBJECT
 
 public:
-    ViewerWidget(QWidget *parent, DrawController &draw_ctrl);
+    ViewerWidget(QWidget *parent = 0);
+
+    void set_draw_controller(DrawController *draw_ctrl);
 
 protected:
     virtual void draw_mesh(Surface_mesh &mesh) = 0;
 
 private:
-    DrawController &draw_controller;
+    DrawController *draw_controller{nullptr};
 
     void draw();
 
 public slots:
-    void redraw_required();
+    void enforce_redraw();
 };
 
 } // namespace SubVis

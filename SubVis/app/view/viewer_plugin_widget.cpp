@@ -2,8 +2,7 @@
 
 namespace SubVis {
 
-ViewerPluginWidget::ViewerPluginWidget(QWidget *parent, DrawController &draw_ctrl)
-    : ViewerWidget{parent, draw_ctrl}
+ViewerPluginWidget::ViewerPluginWidget(QWidget *parent) : ViewerWidget{parent}
 {
 }
 

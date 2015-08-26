@@ -34,6 +34,10 @@ int SubVisApp::run(int argc, char *argv[])
     MainWindow mainwindow{draw_controller};
     // TODO: add io_controller and connect with dialogs
 
+    // Signals
+    QObject::connect(&mesh_data, SIGNAL(updated()),
+                     &mainwindow, SIGNAL(mesh_updated()));
+
     mainwindow.show();
 
     if (splash) {
