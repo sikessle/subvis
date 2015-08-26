@@ -23,15 +23,14 @@
 namespace SubVis {
 namespace algo {
 
-using surface_mesh::Surface_mesh;
-using surface_mesh::Point;
-
-
 // ===============[ public prototypes ]===============
 
 class SubdivCatmull : public SubdivBase {
 
 public:
+
+    using Surface_mesh = surface_mesh::Surface_mesh;
+    using Point = surface_mesh::Point;
 
     SubdivCatmull(Surface_mesh mesh) : SubdivBase(mesh) {
         this->add_mesh_properties(mesh_);

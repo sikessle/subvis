@@ -12,6 +12,10 @@
 namespace SubVis {
 namespace algo {
 
+using ::std::string;
+using surface_mesh::Surface_mesh;
+using surface_mesh::Point;
+
 // ===============[ private prototypes ]===============
 
 // ===============[ public implementation ]===============
