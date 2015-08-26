@@ -21,6 +21,7 @@
 #include "algo/sd_base.h"
 
 namespace SubVis {
+namespace algo {
 
 using surface_mesh::Surface_mesh;
 using surface_mesh::Point;
@@ -122,6 +123,7 @@ private:
 
 void test_catmull();
 
+} // namespace algo
 } // namespace SubVis
 #endif // SUBVIS_SD_CATMULL_H
 

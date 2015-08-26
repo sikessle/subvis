@@ -4,6 +4,7 @@
 #include "surface_mesh/Surface_mesh.h"
 
 namespace SubVis {
+namespace algo {
 
 class SubdivBase {
 public:
@@ -14,7 +15,7 @@ protected:
     surface_mesh::Surface_mesh mesh_;
 };
 
-
+} // namespace algo
 } // namespace SubVis
 
 #endif // SUBVIS_SD_BASE_H

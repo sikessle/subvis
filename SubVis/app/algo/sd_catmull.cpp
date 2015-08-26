@@ -10,6 +10,7 @@
 #include "algo/utils.h"
 
 namespace SubVis {
+namespace algo {
 
 // ===============[ private prototypes ]===============
 
@@ -197,4 +198,5 @@ void SubdivCatmull::mid_edge(Point& mid_edge, const Surface_mesh::Edge& edge) {
     mid_edge /= 2;
 }
 
+} // namespace algo
 } // namespace SubVis

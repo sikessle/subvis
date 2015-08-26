@@ -2,8 +2,8 @@
 
 
 namespace SubVis {
+namespace algo {
 
 
-
-
+} // namespace algo
 } // namespace SubVis

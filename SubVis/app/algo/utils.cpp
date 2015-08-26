@@ -10,6 +10,7 @@
 
 
 namespace SubVis {
+namespace algo {
 
 // ===============[ public implementation ]===============
 
@@ -26,5 +27,5 @@ void utils_debug_point(const surface_mesh::Point point, const QString& title) {
 
 // ===============[ private implementation ]===============
 
-
+} // namespace Algo
 } // namespace SubVis

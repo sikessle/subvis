@@ -7,6 +7,7 @@
 #include "surface_mesh/Surface_mesh.h"
 
 namespace SubVis {
+namespace algo {
 
 using std::string;
 using surface_mesh::Surface_mesh;
@@ -35,6 +36,7 @@ void utils_debug_mesh(const Surface_mesh& mesh, const QString &title);
 
 void utils_debug_point(const Point point, const QString& title);
 
+} // namespace algo
 } // namespace SubVis
 #endif // SUBVIS_UTILS_H
 
