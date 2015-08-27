@@ -13,6 +13,7 @@ using surface_mesh::Surface_mesh;
 class Algorithm
 {
 public:
+    virtual ~Algorithm();
     virtual void subdivide(SubVis::MeshData& mesh_data, int steps = 1);
     /**
      * @brief unique id which identifies the algorithm.
