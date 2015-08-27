@@ -4,6 +4,7 @@
 #include "model/mesh_data.h"
 #include "controller/io_controller.h"
 #include "controller/draw_controller.h"
+#include "plugins/plugin_manager.h"
 
 #include "subvis_app.h"
 
@@ -29,19 +30,16 @@ int SubVisApp::run()
     DrawController draw_controller{mesh_data};
 
     // Plugins
-    PluginManager plugin_manager {"plugins"};
-    if (!plugin_manager.load_plugins(draw_controller)) {
-        cerr << "Failed to load plugins." << endl;
-    }
+    PluginManager plugin_manager;
+    // PASS LIST OF USED PLUGINS?
+    plugin_manager.load_plugins(draw_controller);
 
     // View layer
-    MainWindow mainwindow{draw_controller, io_controller, plugin_manager};
-    mainwindow.create_plugin_guis();
+    MainWindow mainwindow{draw_controller, io_controller, plugin_manager.list_plugins()};
 
     // Signals
     QObject::connect(&mesh_data, SIGNAL(updated()),
                      &mainwindow, SIGNAL(mesh_updated()));
-
 
     mainwindow.show();
 

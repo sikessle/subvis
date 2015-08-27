@@ -6,11 +6,10 @@
 #include "surface_mesh/Surface_mesh.h"
 #include "surface_mesh/IO.h"
 
-#include "algo/utils.h"
+#include "plugins/subdivision/utils.h"
 
 
-namespace SubVis {
-namespace algo {
+namespace SubdivisionPlugin {
 
 using surface_mesh::Surface_mesh;
 using surface_mesh::Point;
@@ -30,5 +29,4 @@ void utils_debug_point(const Point point, const QString& title) {
 
 // ===============[ private implementation ]===============
 
-} // namespace Algo
-} // namespace SubVis
+} // namespace SubdivisionPlugin

@@ -1,13 +1,12 @@
-#ifndef SUBVIS_UTILS_H
-#define SUBVIS_UTILS_H
+#ifndef SUBDIVISIONPLUGIN_UTILS_H
+#define SUBDIVISIONPLUGIN_UTILS_H
 
 // ===============[ includes ]===============
 
 #include <string>
 #include "surface_mesh/Surface_mesh.h"
 
-namespace SubVis {
-namespace algo {
+namespace SubdivisionPlugin {
 
 // ===============[ const ]===============
 
@@ -32,7 +31,6 @@ void utils_debug_mesh(const surface_mesh::Surface_mesh& mesh, const QString &tit
 
 void utils_debug_point(const surface_mesh::Point point, const QString& title);
 
-} // namespace algo
-} // namespace SubVis
-#endif // SUBVIS_UTILS_H
+} // namespace SubdivisionPlugin
+#endif // SUBDIVISIONPLUGIN_UTILS_H
 

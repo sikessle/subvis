@@ -15,19 +15,16 @@ using surface_mesh::Surface_mesh;
  */
 class SubVisPlugin
 {
-#define SUBVIS_PLUGIN_IID "de.htwg.ios.subvis.SubVisPlugin"
-
 public:
+    SubVisPlugin();
     virtual ~SubVisPlugin() {}
+
     virtual void set_draw_controller(DrawController* draw_controller) = 0;
     virtual void draw_opengl() = 0;
     virtual void create_gui(QWidget* parent) = 0;
 };
 
 } // namespace SubVis
-
-// must be outside namespace
-Q_DECLARE_INTERFACE(SubVis::SubVisPlugin, SUBVIS_PLUGIN_IID)
 
 #endif // SUBVIS_SUBVIS_PLUGIN_H
 

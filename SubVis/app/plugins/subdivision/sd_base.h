@@ -1,10 +1,9 @@
-#ifndef SUBVIS_SD_BASE_H
-#define SUBVIS_SD_BASE_H
+#ifndef SUBDIVISIONPLUGIN_SD_BASE_H
+#define SUBDIVISIONPLUGIN_SD_BASE_H
 
 #include "surface_mesh/Surface_mesh.h"
 
-namespace SubVis {
-namespace algo {
+namespace SubdivisionPlugin {
 
 class SubdivBase {
 public:
@@ -15,7 +14,6 @@ protected:
     surface_mesh::Surface_mesh mesh_;
 };
 
-} // namespace algo
-} // namespace SubVis
+} // namespace SubdivisionPlugin
 
-#endif // SUBVIS_SD_BASE_H
+#endif // SUBDIVISIONPLUGIN_SD_BASE_H

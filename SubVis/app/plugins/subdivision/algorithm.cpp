@@ -1,4 +1,4 @@
-#include "algorithm.h"
+#include "plugins/subdivision/algorithm.h"
 
 namespace SubdivisionPlugin {
 

@@ -1,7 +1,7 @@
 #include <GL/gl.h>
 #include <QLabel>
 
-#include "subdivision_algorithms.h"
+#include "plugins/subdivision/subdivision_algorithms.h"
 
 namespace SubdivisionPlugin {
 

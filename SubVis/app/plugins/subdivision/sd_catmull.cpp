@@ -6,11 +6,10 @@
 #include "surface_mesh/Surface_mesh.h"
 #include "surface_mesh/IO.h"
 
-#include "algo/sd_catmull.h"
-#include "algo/utils.h"
+#include "plugins/subdivision/sd_catmull.h"
+#include "plugins/subdivision/utils.h"
 
-namespace SubVis {
-namespace algo {
+namespace SubdivisionPlugin {
 
 using ::std::string;
 using surface_mesh::Surface_mesh;
@@ -202,5 +201,4 @@ void SubdivCatmull::mid_edge(Point& mid_edge, const Surface_mesh::Edge& edge) {
     mid_edge /= 2;
 }
 
-} // namespace algo
-} // namespace SubVis
+} // namespace SubdivisionPlugin

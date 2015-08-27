@@ -9,7 +9,7 @@
 #include "view/viewer_plugin_widget.h"
 #include "controller/draw_controller.h"
 #include "controller/io_controller.h"
-#include "plugin_manager.h"
+#include "plugins/plugin_manager.h"
 
 namespace SubVis {
 
@@ -24,15 +24,13 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(DrawController& draw_controller,
                IOController& io_controller,
-               PluginManager& plugin_manager);
+               const map<QString, PluginWrapper>& plugins);
     ~MainWindow();
-
-    void create_plugin_guis();
 
 private:
     Ui::MainWindow* ui_;
     IOController& io_controller_;
-    PluginManager& plugin_manager_;
+    const map<QString, PluginWrapper>& plugins_;
     // memory managed by Qt's parent-relationship (ui)
     QLabel* status_label_;
 
@@ -43,6 +41,7 @@ private:
     void setup_status_bar();
     void setup_viewer_tabs(DrawController& draw_controller);
     void setup_toolbar();
+    void setup_plugin_guis();
 
 public slots:
     void load_dialog();

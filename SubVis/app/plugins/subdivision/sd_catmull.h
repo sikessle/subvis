@@ -11,17 +11,16 @@
  *
  */
 
-#ifndef SUBVIS_SD_CATMULL_H
-#define SUBVIS_SD_CATMULL_H
+#ifndef SUBDIVISIONPLUGIN_SD_CATMULL_H
+#define SUBDIVISIONPLUGIN_SD_CATMULL_H
 
 // ===============[ includes ]===============
 #include "surface_mesh/Surface_mesh.h"
-#include "algo/types.h"
+#include "plugins/subdivision/types.h"
 
-#include "algo/sd_base.h"
+#include "plugins/subdivision/sd_base.h"
 
-namespace SubVis {
-namespace algo {
+namespace SubdivisionPlugin {
 
 // ===============[ public prototypes ]===============
 
@@ -122,7 +121,6 @@ private:
 
 void test_catmull();
 
-} // namespace algo
-} // namespace SubVis
-#endif // SUBVIS_SD_CATMULL_H
+} // namespace SubdivisionPlugin
+#endif // SUBDIVISIONPLUGIN_SD_CATMULL_H
 

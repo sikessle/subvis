@@ -10,17 +10,16 @@
  *
  */
 
-#ifndef SUBVIS_SD_DOO_SABIN_H
-#define SUBVIS_SD_DOO_SABIN_H
+#ifndef SUBDIVISIONPLUGIN_SD_DOO_SABIN_H
+#define SUBDIVISIONPLUGIN_SD_DOO_SABIN_H
 
 // ===============[ includes ]===============
 #include "surface_mesh/Surface_mesh.h"
-#include "algo/types.h"
+#include "plugins/subdivision/types.h"
 
-#include "algo/sd_base.h"
+#include "plugins/subdivision/sd_base.h"
 
-namespace SubVis {
-namespace algo {
+namespace SubdivisionPlugin {
 
 // ===============[ public prototypes ]===============
 
@@ -36,7 +35,6 @@ public:
 };
 
 
-} // namespace algo
-} // namespace SubVis
+} // namespace SubdivisionPlugin
 
-#endif // SUBVIS_SD_DOO_SABIN_H
+#endif // SUBDIVISIONPLUGIN_SD_DOO_SABIN_H

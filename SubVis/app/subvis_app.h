@@ -5,8 +5,6 @@
 #include <QSplashScreen>
 #include <QApplication>
 
-#include "plugin_manager.h"
-
 namespace SubVis {
 
 using std::unique_ptr;

@@ -11,17 +11,18 @@ using std::string;
 
 MainWindow::MainWindow(DrawController& draw_controller,
                        IOController& io_controller,
-                       PluginManager& plugin_manager)
+                       const map<QString, PluginWrapper>& plugins)
     : QMainWindow{0},
       ui_{new Ui::MainWindow},
       io_controller_(io_controller),
-      plugin_manager_(plugin_manager)
+      plugins_(plugins)
 {
     ui_->setupUi(this);
 
     setup_status_bar();
     setup_viewer_tabs(draw_controller);
     setup_toolbar();
+    setup_plugin_guis();
 }
 
 void MainWindow::setup_status_bar()
@@ -44,25 +45,25 @@ void MainWindow::setup_viewer_tabs(DrawController& draw_controller)
                      ui_->tab_viewer_plugin, SLOT(enforce_redraw()));
 }
 
-void MainWindow::create_plugin_guis()
+void MainWindow::setup_plugin_guis()
 {   
-    for (const auto& it : plugin_manager_.list_plugins()) {
-        const auto& info = it.second;
+    for (const auto& it : plugins_) {
+        const auto& wrapper = it.second;
         QWidget* plugin_container = new QWidget(this);
-        ui_->tabs_plugins->addTab(plugin_container, info.name);
-        info.plugin->create_gui(plugin_container);
+        ui_->tabs_plugins->addTab(plugin_container, wrapper.name);
+        wrapper.plugin->create_gui(plugin_container);
         QObject::connect(ui_->tabs_plugins, SIGNAL(currentChanged(int)),
                          this, SLOT(plugin_tab_changed(int)));
     }
 
-    if (plugin_manager_.list_plugins().size() > 0) {
+    if (plugins_.size() > 0) {
         plugin_tab_changed(0);
     }
 }
 
 void MainWindow::plugin_tab_changed(int current)
 {
-    auto it = plugin_manager_.list_plugins().begin();
+    auto it = plugins_.begin();
 
     for (int i = 0; i < current; i++)
     {

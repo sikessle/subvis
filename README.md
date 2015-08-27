@@ -17,7 +17,6 @@ The project consists of the following main folders:
   - **build**: Created on build, binaries, Doxygen doc(created by Make)
   - **test**: Unit tests
   - **objs**: Object files with 3D models to test
-  - **plugins**: Default plugins
 
 # Documentation
 

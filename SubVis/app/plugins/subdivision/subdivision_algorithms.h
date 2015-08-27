@@ -5,8 +5,7 @@
 #include <string>
 #include <memory>
 
-#include "subvis_plugin.h"
-//#include "catmull.h"
+#include "plugins/subvis_plugin.h"
 
 namespace SubdivisionPlugin {
 
@@ -14,13 +13,8 @@ using SubVis::SubVisPlugin;
 using SubVis::DrawController;
 using std::unique_ptr;
 
-class SubdivisionAlgorithms : public QObject, public SubVisPlugin
+class SubdivisionAlgorithms : public SubVisPlugin
 {
-    Q_OBJECT
-    Q_PLUGIN_METADATA(IID SUBVIS_PLUGIN_IID FILE "subdivision.json")
-    // fully scoped name required in macro
-    Q_INTERFACES(SubVis::SubVisPlugin)
-
 public:
     void set_draw_controller(DrawController* draw_controller) override;
     void draw_opengl() override;

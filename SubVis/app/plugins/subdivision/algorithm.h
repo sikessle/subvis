@@ -4,7 +4,7 @@
 #include "surface_mesh/Surface_mesh.h"
 
 #include "model/mesh_data.h"
-#include "subdivision_algorithms.h"
+#include "plugins/subdivision/subdivision_algorithms.h"
 
 namespace SubdivisionPlugin {
 

@@ -22,9 +22,29 @@ LIBS += -L"../lib/surface_mesh" \
         -lsurface_mesh \
         -lQGLViewer
 
-INCLUDEPATH += "../lib"
+INCLUDEPATH += "../lib" \
+         "../plugins"
 
 # SOURCES
+HEADERS  += view/mainwindow.h \
+    view/viewer_widget.h \
+    view/viewer_plugin_widget.h \
+    view/viewer_mesh_widget.h \
+    model/mesh_data.h \
+    controller/io_controller.h \
+    controller/draw_controller.h \
+    controller/controller.h \
+    subvis_app.h \
+    plugins/subvis_plugin.h \
+    plugins/plugin_manager.h \
+    plugins/subdivision/algorithm.h \
+    plugins/subdivision/subdivision_algorithms.h \
+    plugins/subdivision/types.h \
+    plugins/subdivision/utils.h \
+    plugins/subdivision/sd_catmull.h \
+    plugins/subdivision/sd_base.h \
+    plugins/subdivision/sd_doosabin.h
+
 SOURCES += main.cpp \
     view/mainwindow.cpp \
     view/viewer_widget.cpp \
@@ -35,28 +55,13 @@ SOURCES += main.cpp \
     controller/draw_controller.cpp \
     controller/controller.cpp \
     subvis_app.cpp \
-    plugin_manager.cpp \
-    algo/utils.cpp \
-    algo/sd_catmull.cpp \
-    algo/sd_base.cpp \
-    algo/sd_doosabin.cpp
-
-HEADERS  += view/mainwindow.h \
-    view/viewer_widget.h \
-    view/viewer_plugin_widget.h \
-    view/viewer_mesh_widget.h \
-    model/mesh_data.h \
-    controller/io_controller.h \
-    controller/draw_controller.h \
-    controller/controller.h \
-    subvis_plugin.h \
-    subvis_app.h \
-    plugin_manager.h \
-    algo/types.h \
-    algo/utils.h \
-    algo/sd_catmull.h \
-    algo/sd_base.h \
-    algo/sd_doosabin.h
+    plugins/plugin_manager.cpp \
+    plugins/subdivision/algorithm.cpp \
+    plugins/subdivision/subdivision_algorithms.cpp \
+    plugins/subdivision/utils.cpp \
+    plugins/subdivision/sd_catmull.cpp \
+    plugins/subdivision/sd_base.cpp \
+    plugins/subdivision/sd_doosabin.cpp
 
 FORMS    += view/mainwindow.ui
 

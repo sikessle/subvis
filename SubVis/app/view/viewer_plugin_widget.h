@@ -1,8 +1,8 @@
 #ifndef SUBVIS_VIEWER_PLUGIN_WIDGET_H
 #define SUBVIS_VIEWER_PLUGIN_WIDGET_H
 
+#include "plugins/subvis_plugin.h"
 #include "view/viewer_widget.h"
-#include "subvis_plugin.h"
 
 namespace SubVis {
 
