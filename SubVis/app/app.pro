@@ -35,7 +35,9 @@ SOURCES += main.cpp \
     controller/draw_controller.cpp \
     controller/controller.cpp \
     subvis_app.cpp \
-    plugin_manager.cpp
+    plugin_manager.cpp \
+    algo/sd_base.cpp \
+    algo/sd_doosabin.cpp
 
 HEADERS  += view/mainwindow.h \
     view/viewer_widget.h \
@@ -47,7 +49,9 @@ HEADERS  += view/mainwindow.h \
     controller/controller.h \
     subvis_plugin.h \
     subvis_app.h \
-    plugin_manager.h
+    plugin_manager.h \
+    algo/sd_base.h \
+    algo/sd_doosabin.h
 
 FORMS    += view/mainwindow.ui
 
