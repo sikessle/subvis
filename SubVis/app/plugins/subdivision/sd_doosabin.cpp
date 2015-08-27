@@ -20,13 +20,14 @@ void SubdivDooSabin::subdivide_specific_algorithm()
     this->add_mesh_properties();
     this->init_mesh_members();
 
-    // loop over all faces and compute face points
+    // loop over all faces and compute face points (same as catmull clark face points)
     this->compute_all_face_points();
     // loop over all edges and compute edge points (different to catmull clark edge points!)
     this->compute_all_edge_points();
     // compute new vertex point
 
 
+    this->remove_mesh_properties();
 }
 
 void SubdivDooSabin::compute_all_face_points()
