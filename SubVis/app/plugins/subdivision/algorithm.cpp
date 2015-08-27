@@ -15,6 +15,10 @@ void Algorithm::subdivide(SubVis::MeshData& mesh_data, int steps)
     }
 
     mesh_data.load(std::move(result_mesh_));
+
+    // free memory
+    result_mesh_.reset(nullptr);
+    input_mesh_.reset(nullptr);
 }
 
 Surface_mesh& Algorithm::result_mesh()
