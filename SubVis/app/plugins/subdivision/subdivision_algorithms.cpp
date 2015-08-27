@@ -86,13 +86,15 @@ void SubdivisionAlgorithms::create_gui(QWidget* parent)
     layout->addLayout(layout_steps);
 
     subdivide_ = new QPushButton("subdivide", parent);
+    QObject::connect(subdivide_, SIGNAL(clicked(bool)),
+                     this, SLOT(subdivide_clicked(bool)));
     layout->addWidget(subdivide_);
 }
 
-void SubdivisionAlgorithms::on_subdivide__clicked(bool)
+void SubdivisionAlgorithms::subdivide_clicked(bool)
 {
-    int steps = steps_->value();
-    std::cerr << "WORKIN";
+    //int steps = steps_->value();
+    std::cerr << "WORKING" << std::endl;
 }
 
 } // namespace SubdivisionPlugin

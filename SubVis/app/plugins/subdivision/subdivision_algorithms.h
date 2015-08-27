@@ -12,8 +12,10 @@
 
 namespace SubdivisionPlugin {
 
-class SubdivisionAlgorithms : public SubVis::SubVisPlugin
+class SubdivisionAlgorithms : public QObject, public SubVis::SubVisPlugin
 {
+    Q_OBJECT
+
 public:
     SubdivisionAlgorithms();
 
@@ -31,8 +33,8 @@ private:
     QSpinBox* steps_{nullptr};
     QComboBox* dropdown_{nullptr};
 
-public slots:
-    void on_subdivide__clicked(bool);
+private slots:
+    void subdivide_clicked(bool);
 };
 
 } // namespace SubdivisionPlugin
