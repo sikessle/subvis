@@ -26,7 +26,6 @@ namespace SubdivisionPlugin {
 class SubdivDooSabin : public Algorithm
 {
 public:
-
     using Surface_mesh = surface_mesh::Surface_mesh;
     using Point = surface_mesh::Point;
 
@@ -35,6 +34,30 @@ public:
 
 protected:
     virtual void subdivide_specific_algorithm() override;
+
+private:
+    Surface_mesh::Face_property<Point> f_points_;
+    Surface_mesh::Edge_property<Point> e_points_;
+
+
+    void add_mesh_properties()
+    {
+        // add properties that are necessary for doo sabin
+        input_mesh_->add_face_property<Point>(kSurfMeshPropFacePoint);
+        input_mesh_->add_edge_property<Point>(kSurfMeshPropEdgePoint);
+
+        // index properties
+        input_mesh_->add_face_property<Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshF);
+        input_mesh_->add_edge_property<Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshE);
+
+    }
+
+    void init_mesh_members()
+    {
+        Algorithm::init_mesh_members();
+        f_points_ = input_mesh_->get_face_property<Point>(kSurfMeshPropFacePoint);
+        e_points_ = input_mesh_->get_edge_property<Point>(kSurfMeshPropEdgePoint);
+    }
 };
 
 

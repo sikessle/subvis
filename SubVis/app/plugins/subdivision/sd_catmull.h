@@ -75,8 +75,6 @@ private:
 
     void avg_mid_edges(Point& avg_mid_edges, const Surface_mesh::Vertex& vertex);
 
-    void mid_edge(Point& mid_edge, const Surface_mesh::Edge &edge);
-
     void add_mesh_properties()
     {
         // add properties that are necessary for catmull clark

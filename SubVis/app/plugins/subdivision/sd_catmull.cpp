@@ -46,8 +46,8 @@ const QString SubdivCatmull::name()
 
 void SubdivCatmull::subdivide_specific_algorithm()
 {
-    add_mesh_properties();
-    init_mesh_members();
+    this->add_mesh_properties();
+    this->init_mesh_members();
 
     // loop over all faces and compute face points
     this->compute_all_face_points();
@@ -198,15 +198,6 @@ void SubdivCatmull::avg_mid_edges(Point& avg_mid_edges, const Surface_mesh::Vert
     } while(++hc != hc_end);
     if (i != 0)
         avg_mid_edges /= i;
-}
-
-void SubdivCatmull::mid_edge(Point& mid_edge, const Surface_mesh::Edge& edge)
-{
-    Surface_mesh::Vertex edge_vertex0, edge_vertex1;
-    edge_vertex0 = input_mesh_->vertex(edge, 0);
-    edge_vertex1 = input_mesh_->vertex(edge, 1);
-    mid_edge = v_points_[edge_vertex0] + v_points_[edge_vertex1];
-    mid_edge /= 2;
 }
 
 } // namespace SubdivisionPlugin

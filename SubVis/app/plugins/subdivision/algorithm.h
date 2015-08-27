@@ -47,8 +47,9 @@ protected:
      */
     virtual void subdivide_specific_algorithm() = 0;
 
-
     void init_mesh_members();
+
+    void mid_edge(Point& mid_edge, const Surface_mesh::Edge &edge);
 
     /**
      * @brief compute_face_point Compute the average of all the points of the face.
