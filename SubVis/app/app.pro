@@ -36,6 +36,8 @@ SOURCES += main.cpp \
     controller/controller.cpp \
     subvis_app.cpp \
     plugin_manager.cpp \
+    algo/utils.cpp \
+    algo/sd_catmull.cpp \
     algo/sd_base.cpp \
     algo/sd_doosabin.cpp
 
@@ -50,6 +52,9 @@ HEADERS  += view/mainwindow.h \
     subvis_plugin.h \
     subvis_app.h \
     plugin_manager.h \
+    algo/types.h \
+    algo/utils.h \
+    algo/sd_catmull.h \
     algo/sd_base.h \
     algo/sd_doosabin.h
 
