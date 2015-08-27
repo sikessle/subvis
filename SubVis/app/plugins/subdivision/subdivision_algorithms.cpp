@@ -93,8 +93,13 @@ void SubdivisionAlgorithms::create_gui(QWidget* parent)
 
 void SubdivisionAlgorithms::subdivide_clicked(bool)
 {
-    //int steps = steps_->value();
-    std::cerr << "WORKING" << std::endl;
+    if (dropdown_->count() == 0) {
+        return;
+    }
+    int steps = steps_->value();
+    const QString id = dropdown_->currentData().toString();
+
+    algorithms_.at(id)->subdivide(draw_controller_->mesh_data(), steps);
 }
 
 } // namespace SubdivisionPlugin

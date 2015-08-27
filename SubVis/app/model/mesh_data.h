@@ -25,10 +25,12 @@ public:
     Surface_mesh& mesh() const;
     /**
      * @brief Should be called if the mesh was modified.
+     * Note that load() will also trigger this method.
      */
     void set_updated();
     bool empty() const;
     bool load(const std::string& filename);
+    void load(std::unique_ptr<Surface_mesh> mesh);
     bool persist(const std::string& filename) const;
     const std::string& load_file_formats() const;
     const std::string& persist_file_formats() const;

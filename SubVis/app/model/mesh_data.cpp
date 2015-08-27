@@ -21,13 +21,17 @@ void MeshData::set_updated()
     emit updated();
 }
 
+void MeshData::load(std::unique_ptr<Surface_mesh> mesh)
+{
+    mesh_object_ = std::move(mesh);
+}
+
 bool MeshData::load(const std::string& filename)
 {
     if (filename.empty()) {
         return false;
     }
 
-    // only clear mesh to keep reference to it in other modules alive.
     mesh_object_->clear();
 
     bool success = mesh_object_->read(filename);

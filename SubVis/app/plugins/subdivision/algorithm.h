@@ -24,6 +24,16 @@ public:
     virtual const QString name() = 0;
 
 protected:
+    /**
+     * @brief put the resulting mesh in here
+     */
+    std::unique_ptr<Surface_mesh> result_mesh_;
+
+    /**
+     * @brief Writes the result of modifing the input mesh to result_mesh_
+     * @param mesh
+     * @return
+     */
     virtual void subdivide_specific_algorithm(Surface_mesh& mesh) = 0;
 };
 
