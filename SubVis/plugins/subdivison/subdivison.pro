@@ -20,3 +20,8 @@ SOURCES = subdivision_algorithms.cpp \
 
 DISTFILES += subdivision.json
 
+# Target for documentation
+doc.target = doc
+doc.depends = $(SOURCES) doxygen.conf
+doc.commands = doxygen doxygen.conf
+QMAKE_EXTRA_TARGETS += doc
