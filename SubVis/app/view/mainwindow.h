@@ -24,13 +24,13 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(DrawController& draw_controller,
                IOController& io_controller,
-               const map<QString, PluginWrapper>& plugins);
+               const std::map<QString, PluginWrapper>& plugins);
     ~MainWindow();
 
 private:
     Ui::MainWindow* ui_;
     IOController& io_controller_;
-    const map<QString, PluginWrapper>& plugins_;
+    const std::map<QString, PluginWrapper>& plugins_;
     // memory managed by Qt's parent-relationship (ui)
     QLabel* status_label_;
 

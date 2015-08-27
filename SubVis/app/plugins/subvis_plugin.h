@@ -16,9 +16,10 @@ using surface_mesh::Surface_mesh;
 class SubVisPlugin
 {
 public:
-    SubVisPlugin();
     virtual ~SubVisPlugin() {}
 
+    virtual QString id() = 0;
+    virtual QString name() = 0;
     virtual void set_draw_controller(DrawController* draw_controller) = 0;
     virtual void draw_opengl() = 0;
     virtual void create_gui(QWidget* parent) = 0;

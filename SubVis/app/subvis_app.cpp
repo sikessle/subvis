@@ -5,17 +5,21 @@
 #include "controller/io_controller.h"
 #include "controller/draw_controller.h"
 #include "plugins/plugin_manager.h"
+#include "plugins/subvis_plugin.h"
+#include "plugins/subdivision/subdivision_algorithms.h"
 
 #include "subvis_app.h"
 
 
 namespace SubVis {
 
-using std::cerr;
-using std::endl;
-
-SubVisApp::SubVisApp(int argc, char* argv[]) : QApplication(argc, argv)
+SubVisApp::SubVisApp(int& argc, char* argv[]) : QApplication(argc, argv)
 {
+}
+
+void SubVisApp::register_plugin(SubVisPlugin* plugin)
+{
+    plugin_manager_.register_plugin(plugin);
 }
 
 int SubVisApp::run()
@@ -30,12 +34,10 @@ int SubVisApp::run()
     DrawController draw_controller{mesh_data};
 
     // Plugins
-    PluginManager plugin_manager;
-    // PASS LIST OF USED PLUGINS?
-    plugin_manager.load_plugins(draw_controller);
+    plugin_manager_.set_draw_controller(draw_controller);
 
     // View layer
-    MainWindow mainwindow{draw_controller, io_controller, plugin_manager.list_plugins()};
+    MainWindow mainwindow{draw_controller, io_controller, plugin_manager_.list_plugins()};
 
     // Signals
     QObject::connect(&mesh_data, SIGNAL(updated()),
@@ -50,16 +52,14 @@ int SubVisApp::run()
     return exec();
 }
 
-unique_ptr<QSplashScreen> SubVisApp::create_show_splash()
+std::unique_ptr<QSplashScreen> SubVisApp::create_show_splash()
 {
-    QPixmap splash_image{":/media/splash.png"};
-
-    if (splash_image.isNull()) {
-        cerr << "Failed to load splash screen image" << endl;
+    if (splash_image_.isNull()) {
+        std::cerr << "Failed to load splash screen image" << std::endl;
         return nullptr;
     }
 
-    unique_ptr<QSplashScreen> splash{new QSplashScreen{splash_image}};
+    std::unique_ptr<QSplashScreen> splash{new QSplashScreen{splash_image_}};
 
     splash->show();
     processEvents();

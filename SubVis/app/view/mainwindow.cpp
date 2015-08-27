@@ -7,11 +7,9 @@
 
 namespace SubVis {
 
-using std::string;
-
 MainWindow::MainWindow(DrawController& draw_controller,
                        IOController& io_controller,
-                       const map<QString, PluginWrapper>& plugins)
+                       const std::map<QString, PluginWrapper>& plugins)
     : QMainWindow{0},
       ui_{new Ui::MainWindow},
       io_controller_(io_controller),
@@ -88,7 +86,7 @@ void MainWindow::load_dialog()
                                             QDir::home().absolutePath(), file_filter)};
 
     if (!fn.isNull()) {
-        const string filename = fn.toStdString();
+        const std::string filename = fn.toStdString();
         if (!io_controller_.load_mesh(filename)) {
             QString msg = "Failed to load file " + fn;
             QMessageBox::warning(this, "Error", msg);
@@ -103,7 +101,7 @@ void MainWindow::save_dialog()
                                             QDir::home().absolutePath(), file_filter)};
 
     if (!fn.isNull()) {
-        const string filename = fn.toStdString();
+        const std::string filename = fn.toStdString();
         if (!io_controller_.persist_mesh(filename)) {
             QString msg = "Failed to save to file " + fn;
             QMessageBox::warning(this, "Error", msg);

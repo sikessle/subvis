@@ -21,7 +21,7 @@ void MeshData::set_updated()
     emit updated();
 }
 
-bool MeshData::load(const string& filename)
+bool MeshData::load(const std::string& filename)
 {
     if (filename.empty()) {
         return false;
@@ -37,7 +37,7 @@ bool MeshData::load(const string& filename)
     return success;
 }
 
-bool MeshData::persist(const string& filename) const
+bool MeshData::persist(const std::string& filename) const
 {
     if (filename.empty()) {
         return false;
@@ -48,12 +48,12 @@ bool MeshData::persist(const string& filename) const
     return mesh_object_->write(filename);
 }
 
-const string& MeshData::load_file_formats() const
+const std::string& MeshData::load_file_formats() const
 {
     return kLoadFileFormats;
 }
 
-const string& MeshData::persist_file_formats() const
+const std::string& MeshData::persist_file_formats() const
 {
     return kPersistFileFormats;
 }

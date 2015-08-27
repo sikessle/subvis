@@ -8,8 +8,6 @@
 
 namespace SubVis {
 
-using std::string;
-using std::unique_ptr;
 using surface_mesh::Surface_mesh;
 
 /**
@@ -30,15 +28,15 @@ public:
      */
     void set_updated();
     bool empty() const;
-    bool load(const string& filename);
-    bool persist(const string& filename) const;
-    const string& load_file_formats() const;
-    const string& persist_file_formats() const;
+    bool load(const std::string& filename);
+    bool persist(const std::string& filename) const;
+    const std::string& load_file_formats() const;
+    const std::string& persist_file_formats() const;
 
 private:
-    unique_ptr<surface_mesh::Surface_mesh> mesh_object_{new Surface_mesh};
-    const string kLoadFileFormats {"*.obj *.off *.stl"};
-    const string kPersistFileFormats {"*.off"};
+    std::unique_ptr<Surface_mesh> mesh_object_{new Surface_mesh};
+    const std::string kLoadFileFormats {"*.obj *.off *.stl"};
+    const std::string kPersistFileFormats {"*.off"};
 
 signals:
     void updated();

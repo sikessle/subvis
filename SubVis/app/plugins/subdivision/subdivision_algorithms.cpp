@@ -5,7 +5,17 @@
 
 namespace SubdivisionPlugin {
 
-void SubdivisionAlgorithms::set_draw_controller(DrawController* draw_controller)
+QString SubdivisionAlgorithms::id()
+{
+    return "de.htwg.ios.subvis.plugin.subdivision";
+}
+
+QString SubdivisionAlgorithms::name()
+{
+    return "Subdivision";
+}
+
+void SubdivisionAlgorithms::set_draw_controller(SubVis::DrawController* draw_controller)
 {
     draw_controller_ = draw_controller;
 }

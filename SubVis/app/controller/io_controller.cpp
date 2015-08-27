@@ -7,22 +7,22 @@ IOController::IOController(MeshData& mesh_data) : Controller{mesh_data}
 
 }
 
-bool IOController::load_mesh(const string& filename)
+bool IOController::load_mesh(const std::string& filename)
 {
     return mesh_data_.load(filename);
 }
 
-bool IOController::persist_mesh(const string& filename) const
+bool IOController::persist_mesh(const std::string& filename) const
 {
     return mesh_data_.persist(filename);
 }
 
-const string& IOController::load_file_formats() const
+const std::string& IOController::load_file_formats() const
 {
     return mesh_data_.load_file_formats();
 }
 
-const string& IOController::persist_file_formats() const
+const std::string& IOController::persist_file_formats() const
 {
     return mesh_data_.persist_file_formats();
 }

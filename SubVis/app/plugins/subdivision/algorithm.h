@@ -4,17 +4,15 @@
 #include "surface_mesh/Surface_mesh.h"
 
 #include "model/mesh_data.h"
-#include "plugins/subdivision/subdivision_algorithms.h"
 
 namespace SubdivisionPlugin {
 
 using surface_mesh::Surface_mesh;
-using SubVis::MeshData;
 
-class Algorithm : SubdivisionAlgorithms
+class Algorithm
 {
 public:
-    virtual void subdivide(MeshData& mesh_data, int steps = 1);
+    virtual void subdivide(SubVis::MeshData& mesh_data, int steps = 1);
 
 protected:
     virtual void subdivide_specific_algorithm(Surface_mesh& mesh) = 0;

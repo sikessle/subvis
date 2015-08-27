@@ -5,20 +5,29 @@
 #include <QSplashScreen>
 #include <QApplication>
 
-namespace SubVis {
+#include "plugins/plugin_manager.h"
+#include "plugins/subvis_plugin.h"
 
-using std::unique_ptr;
+namespace SubVis {
 
 class SubVisApp : protected QApplication
 {
     Q_OBJECT
 
 public:
-    SubVisApp(int argc, char* argv[]);
+    SubVisApp(int& argc, char* argv[]);
+    /**
+     * @brief Takes ownership of the plugin
+     * @param plugin
+     */
+    void register_plugin(SubVisPlugin* plugin);
     int run();
 
 private:
-    unique_ptr<QSplashScreen> create_show_splash();
+    PluginManager plugin_manager_;
+    QPixmap splash_image_{":/media/splash.png"};
+
+    std::unique_ptr<QSplashScreen> create_show_splash();
 };
 
 } // namespace SubVis

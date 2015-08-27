@@ -2,8 +2,6 @@
 
 namespace SubVis {
 
-using std::logic_error;
-
 ViewerWidget::ViewerWidget(QWidget* parent) : QGLViewer{parent}
 {
 }

@@ -2,7 +2,7 @@
 
 namespace SubdivisionPlugin {
 
-void Algorithm::subdivide(MeshData& mesh_data, int steps)
+void Algorithm::subdivide(SubVis::MeshData& mesh_data, int steps)
 {
     for (int i = 0; i < steps; i++) {
         subdivide_specific_algorithm(mesh_data.mesh());

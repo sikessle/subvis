@@ -9,19 +9,17 @@
 
 namespace SubdivisionPlugin {
 
-using SubVis::SubVisPlugin;
-using SubVis::DrawController;
-using std::unique_ptr;
-
-class SubdivisionAlgorithms : public SubVisPlugin
+class SubdivisionAlgorithms : public SubVis::SubVisPlugin
 {
 public:
-    void set_draw_controller(DrawController* draw_controller) override;
-    void draw_opengl() override;
-    void create_gui(QWidget* parent) override;
+    virtual QString id() override;
+    virtual QString name() override;
+    virtual void set_draw_controller(SubVis::DrawController* draw_controller) override;
+    virtual void draw_opengl() override;
+    virtual void create_gui(QWidget* parent) override;
 
 private:
-     DrawController* draw_controller_{nullptr};
+    SubVis::DrawController* draw_controller_{nullptr};
      //unique_ptr<Algorithm> catmull_{new Catmull};
 };
 

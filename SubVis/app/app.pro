@@ -22,8 +22,7 @@ LIBS += -L"../lib/surface_mesh" \
         -lsurface_mesh \
         -lQGLViewer
 
-INCLUDEPATH += "../lib" \
-         "../plugins"
+INCLUDEPATH += "../lib"
 
 # SOURCES
 HEADERS  += view/mainwindow.h \
