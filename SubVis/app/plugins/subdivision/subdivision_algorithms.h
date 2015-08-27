@@ -5,6 +5,7 @@
 #include <string>
 
 #include "plugins/subvis_plugin.h"
+#include "plugins/subdivision/algorithm.h"
 
 namespace SubdivisionPlugin {
 
@@ -19,6 +20,8 @@ public:
 
 private:
     SubVis::DrawController* draw_controller_{nullptr};
+    std::unique_ptr<Algorithm> catmull{nullptr};
+    std::unique_ptr<Algorithm> doosabin{nullptr};
 };
 
 } // namespace SubdivisionPlugin

@@ -1,5 +1,10 @@
 #include <GL/gl.h>
 #include <QLabel>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QPushButton>
+#include <QComboBox>
+#include <QSpinBox>
 
 #include "plugins/subdivision/subdivision_algorithms.h"
 
@@ -50,9 +55,33 @@ void SubdivisionAlgorithms::draw_opengl()
 
 void SubdivisionAlgorithms::create_gui(QWidget* parent)
 {
-    // create own gui components
-    QLabel* label = new QLabel{parent};
-    label->setText("My Plugin Interface");
+    QVBoxLayout* layout = new QVBoxLayout(parent);
+    layout->setAlignment(Qt::AlignTop);
+
+    layout->addWidget(new QLabel("Algorithm:"));
+
+    QComboBox* dropdown = new QComboBox(parent);
+    dropdown->addItem("Catmull-Clark");
+    dropdown->addItem("Doo-Sabin");
+    dropdown->addItem("Butterfly");
+    dropdown->addItem("Loop");
+    layout->addWidget(dropdown);
+
+    QHBoxLayout* layout_steps = new QHBoxLayout(parent);
+    layout_steps->setAlignment(Qt::AlignTop);
+
+    layout_steps->addWidget(new QLabel("Steps:"));
+    QSpinBox* steps = new QSpinBox(parent);
+    steps->setRange(1, 100);
+    layout_steps->addWidget(steps);
+
+    layout->addLayout(layout_steps);
+
+    QPushButton* subdivide = new QPushButton("subdivide", parent);
+    layout->addWidget(subdivide);
+
+
+
     // SIGNALS etc.
     //catmull_->subdivide(draw_controller_->mesh_data());
 }
