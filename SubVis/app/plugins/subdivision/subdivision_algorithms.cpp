@@ -7,12 +7,23 @@
 
 namespace SubdivisionPlugin {
 
-QString SubdivisionAlgorithms::id()
+SubdivisionAlgorithms::SubdivisionAlgorithms()
+{
+    std::vector<Algorithm*> instances;
+    //instances.push_back(new Catmull);
+    // Add here all the algorithms
+
+    for (const auto instance : instances) {
+        algorithms_[instance->id()] = std::unique_ptr<Algorithm>{instance};
+    }
+}
+
+const QString SubdivisionAlgorithms::id()
 {
     return "de.htwg.ios.subvis.plugin.subdivision";
 }
 
-QString SubdivisionAlgorithms::name()
+const QString SubdivisionAlgorithms::name()
 {
     return "Subdivision";
 }
@@ -52,35 +63,36 @@ void SubdivisionAlgorithms::draw_opengl()
 
 void SubdivisionAlgorithms::create_gui(QWidget* parent)
 {
+    // Gui creation
     QVBoxLayout* layout = new QVBoxLayout(parent);
     layout->setAlignment(Qt::AlignTop);
 
     layout->addWidget(new QLabel("Algorithm:"));
 
-    dropdown = new QComboBox(parent);
-    dropdown->addItem("Catmull-Clark");
-    dropdown->addItem("Doo-Sabin");
-    dropdown->addItem("Butterfly");
-    dropdown->addItem("Loop");
-    layout->addWidget(dropdown);
+    dropdown_ = new QComboBox(parent);
+    for (const auto& it : algorithms_) {
+        dropdown_->addItem(it.second->name(), QVariant(it.first));
+    }
+    layout->addWidget(dropdown_);
 
     QHBoxLayout* layout_steps = new QHBoxLayout(parent);
     layout_steps->setAlignment(Qt::AlignTop);
 
     layout_steps->addWidget(new QLabel("Steps:"));
-    steps = new QSpinBox(parent);
-    steps->setRange(1, 100);
-    layout_steps->addWidget(steps);
+    steps_ = new QSpinBox(parent);
+    steps_->setRange(1, 100);
+    layout_steps->addWidget(steps_);
 
     layout->addLayout(layout_steps);
 
-    subdivide = new QPushButton("subdivide", parent);
-    layout->addWidget(subdivide);
+    subdivide_ = new QPushButton("subdivide", parent);
+    layout->addWidget(subdivide_);
+}
 
-
-
-    // SIGNALS etc.
-    //catmull_->subdivide(draw_controller_->mesh_data());
+void SubdivisionAlgorithms::on_subdivide_clicked(bool)
+{
+    int steps = steps_->value();
+    //dropdown_->currentIndex()
 }
 
 } // namespace SubdivisionPlugin
