@@ -8,11 +8,12 @@
 
 namespace SubdivisionPlugin {
 
-using surface_mesh::Surface_mesh;
-
 class Algorithm
 {
 public:
+    using Surface_mesh = surface_mesh::Surface_mesh;
+    using Point = surface_mesh::Point;
+
     virtual ~Algorithm() {}
 
     virtual void subdivide(SubVis::MeshData& mesh_data, int steps = 1);
@@ -39,10 +40,21 @@ protected:
 
     std::unique_ptr<Surface_mesh> input_mesh_;
 
+    Surface_mesh::Vertex_property<Point> v_points_;
+
     /**
      * @brief Writes the result of modifiyng the input_mesh_ to result_mesh_
      */
     virtual void subdivide_specific_algorithm() = 0;
+
+
+    void init_mesh_members();
+
+    /**
+     * @brief compute_face_point Compute the average of all the points of the face.
+     */
+    virtual void compute_face_point(Point &face_point, const Surface_mesh::Face& face);
+
 };
 
 } // namespace SubdivisionPlugin

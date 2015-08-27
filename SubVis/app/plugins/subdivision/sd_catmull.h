@@ -39,7 +39,6 @@ protected:
     virtual void subdivide_specific_algorithm();
 
 private:
-    Surface_mesh::Vertex_property<Point> v_points_;
     Surface_mesh::Face_property<Point> f_points_;
     Surface_mesh::Edge_property<Point> e_points_;
     Surface_mesh::Vertex_property<Point> v_points_updated_;
@@ -49,19 +48,16 @@ private:
     Surface_mesh::Edge_property<Surface_mesh::Vertex> v_index_sub_mesh_e_prop_;
     Surface_mesh::Face_property<Surface_mesh::Vertex> v_index_sub_mesh_f_prop_;
 
-    /**
-     * @brief compute_face_point A face point is the average of all the points of the face.
-     *                           The Face Point is stored as surface mesh property of every face
-     */
-    void compute_face_point(const Surface_mesh::Face& face);
+    void compute_all_face_points();
+    void compute_all_edge_points();
+    void compute_all_new_vertex_points();
 
     /**
      * @brief compute_edge_point An edge point is the the average of the two control points on either side of the edge,
      *                           and the face-points of the touching faces
      *                           - all face points have to be computed before usage!
      */
-    void compute_edge_point(const Surface_mesh::Edge& edge);
-
+    void compute_edge_point(Point &edge_point, const Surface_mesh::Edge& edge);
 
     /**
      * @brief compute_new_vertex_point Compute the new vertex coordinates: (Q/n) + (2R/n) + (S(n-3)/n)
@@ -69,10 +65,9 @@ private:
      *  Q - average of the surrounding face points
      *  R - average of all surround edge midpoints
      *  S - old control point
-     *  The result is stored as property in the mesh (kSurfMeshPropVertexPointUpdated)
      * @param vertex old vertex
      */
-    void compute_new_vertex_point(const Surface_mesh::Vertex& vertex);
+    void compute_new_vertex_point(Point& new_vertex_point, const Surface_mesh::Vertex& vertex);
 
     void compute_new_faces(const Surface_mesh::Face& face);
 
@@ -82,7 +77,8 @@ private:
 
     void mid_edge(Point& mid_edge, const Surface_mesh::Edge &edge);
 
-    void add_mesh_properties() {
+    void add_mesh_properties()
+    {
         // add properties that are necessary for catmull clark
         input_mesh_->add_face_property<Point>(kSurfMeshPropFacePoint);
         input_mesh_->add_edge_property<Point>(kSurfMeshPropEdgePoint);
@@ -95,8 +91,9 @@ private:
         input_mesh_->add_face_property<Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshF);
     }
 
-    void init_mesh_members() {
-        v_points_ = input_mesh_->get_vertex_property<Point>(kSurfMeshPropVertexPoint);
+    void init_mesh_members()
+    {
+        Algorithm::init_mesh_members();
         f_points_ = input_mesh_->get_face_property<Point>(kSurfMeshPropFacePoint);
         e_points_ = input_mesh_->get_edge_property<Point>(kSurfMeshPropEdgePoint);
         v_points_updated_ = input_mesh_->get_vertex_property<Point>(kSurfMeshPropVertexPointUpdated);
