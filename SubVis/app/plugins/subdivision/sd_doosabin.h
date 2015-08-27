@@ -39,6 +39,12 @@ private:
     Surface_mesh::Face_property<Point> f_points_;
     Surface_mesh::Edge_property<Point> e_points_;
 
+    // vertex index properties to map from origin mesh to subdivision mesh
+    Surface_mesh::Face_property<Surface_mesh::Vertex> v_index_sub_mesh_f_prop_;
+    Surface_mesh::Edge_property<Surface_mesh::Vertex> v_index_sub_mesh_e_prop_;
+
+    void compute_all_face_points();
+    void compute_all_edge_points();
 
     void add_mesh_properties()
     {
@@ -57,6 +63,9 @@ private:
         Algorithm::init_mesh_members();
         f_points_ = input_mesh_->get_face_property<Point>(kSurfMeshPropFacePoint);
         e_points_ = input_mesh_->get_edge_property<Point>(kSurfMeshPropEdgePoint);
+
+        v_index_sub_mesh_f_prop_ = input_mesh_->get_face_property<Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshF);
+        v_index_sub_mesh_e_prop_ = input_mesh_->get_edge_property<Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshE);
     }
 };
 

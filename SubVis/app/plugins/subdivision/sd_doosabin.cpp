@@ -1,4 +1,5 @@
 #include "plugins/subdivision/sd_doosabin.h"
+#include "plugins/subdivision/utils.h"
 
 namespace SubdivisionPlugin {
 
@@ -23,6 +24,8 @@ void SubdivDooSabin::subdivide_specific_algorithm()
     this->compute_all_face_points();
     // loop over all edges and compute edge points (different to catmull clark edge points!)
     this->compute_all_edge_points();
+    // compute new vertex point
+
 }
 
 void SubdivDooSabin::compute_all_face_points()
