@@ -15,7 +15,8 @@ void ViewerWidget::set_draw_controller(DrawController* draw_controller)
 
 void ViewerWidget::enforce_redraw()
 {
-    draw();
+    // do not call draw() directly.
+    updateGL();
 }
 
 } // namespace SubVis
