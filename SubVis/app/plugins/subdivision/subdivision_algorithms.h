@@ -2,6 +2,9 @@
 #define SUBDIVISIONPLUGIN_SUBDIVISON_ALGORITHMS_H
 
 #include <QObject>
+#include <QComboBox>
+#include <QSpinBox>
+#include <QPushButton>
 #include <string>
 
 #include "plugins/subvis_plugin.h"
@@ -22,6 +25,10 @@ private:
     SubVis::DrawController* draw_controller_{nullptr};
     std::unique_ptr<Algorithm> catmull{nullptr};
     std::unique_ptr<Algorithm> doosabin{nullptr};
+
+    QPushButton* subdivide{nullptr};
+    QSpinBox* steps{nullptr};
+    QComboBox* dropdown{nullptr};
 };
 
 } // namespace SubdivisionPlugin

@@ -2,9 +2,6 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
-#include <QPushButton>
-#include <QComboBox>
-#include <QSpinBox>
 
 #include "plugins/subdivision/subdivision_algorithms.h"
 
@@ -60,7 +57,7 @@ void SubdivisionAlgorithms::create_gui(QWidget* parent)
 
     layout->addWidget(new QLabel("Algorithm:"));
 
-    QComboBox* dropdown = new QComboBox(parent);
+    dropdown = new QComboBox(parent);
     dropdown->addItem("Catmull-Clark");
     dropdown->addItem("Doo-Sabin");
     dropdown->addItem("Butterfly");
@@ -71,13 +68,13 @@ void SubdivisionAlgorithms::create_gui(QWidget* parent)
     layout_steps->setAlignment(Qt::AlignTop);
 
     layout_steps->addWidget(new QLabel("Steps:"));
-    QSpinBox* steps = new QSpinBox(parent);
+    steps = new QSpinBox(parent);
     steps->setRange(1, 100);
     layout_steps->addWidget(steps);
 
     layout->addLayout(layout_steps);
 
-    QPushButton* subdivide = new QPushButton("subdivide", parent);
+    subdivide = new QPushButton("subdivide", parent);
     layout->addWidget(subdivide);
 
 
