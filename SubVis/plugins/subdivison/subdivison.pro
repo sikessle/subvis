@@ -1,9 +1,9 @@
 TEMPLATE        = lib
 CONFIG         += debug plugin c++11
-QT             += widgets
+QT             += core gui widgets opengl
 INCLUDEPATH    += ../../app \
                   ../../lib
-TARGET          = $$qtLibraryTarget(subdivision)
+TARGET          = plugin_subdivision
 
 
 # Build output settings
@@ -13,10 +13,12 @@ MOC_DIR = ../../build/plugins/
 RCC_DIR = ../../build/plugins/
 
 HEADERS = subdivision_algorithms.h \
-    algorithm.h
+    algorithm.h \
+    test.h
 
 SOURCES = subdivision_algorithms.cpp \
-    algorithm.cpp
+    algorithm.cpp \
+    test.cpp
 
 DISTFILES += subdivision.json
 

@@ -16,9 +16,10 @@ public:
     virtual ~Algorithm();
 
     virtual void subdivide(MeshData& mesh_data, int steps = 1);
+    virtual void foo();
 
 protected:
-    virtual void subdivide_specific_algorithm(Surface_mesh& mesh) = 0;
+    //virtual void subdivide_specific_algorithm(Surface_mesh& mesh) = 0;
 };
 
 } // namespace SubdivisionPlugin

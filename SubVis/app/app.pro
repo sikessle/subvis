@@ -77,8 +77,7 @@ doc.depends = $(SOURCES) doxygen.conf
 doc.commands = doxygen doxygen.conf
 QMAKE_EXTRA_TARGETS += doc
 
-RESOURCES += \
-    media.qrc
+RESOURCES += media.qrc
 
 
 

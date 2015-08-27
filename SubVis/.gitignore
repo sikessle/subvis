@@ -3,6 +3,7 @@ build
 
 # System specific pro file
 *.pro.user*
+*.prl
 
 # Object files
 *.o

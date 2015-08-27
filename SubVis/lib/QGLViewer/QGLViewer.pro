@@ -7,7 +7,7 @@
 TEMPLATE = lib
 TARGET = QGLViewer
 VERSION = 2.6.1
-CONFIG *= qt opengl warn_on static thread create_prl rtti no_keywords
+CONFIG *= qt opengl warn_on staticlib thread create_prl rtti no_keywords
 
 QGL_HEADERS = qglviewer.h \
 	  camera.h \
