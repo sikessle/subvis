@@ -17,7 +17,7 @@ class DrawController : public Controller
 public:
     DrawController(MeshData& mesh_data);
 
-    Surface_mesh& mesh() const;
+    MeshData& mesh_data();
 };
 
 } // namespace SubVis

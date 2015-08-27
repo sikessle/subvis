@@ -9,7 +9,7 @@ ViewerMeshWidget::ViewerMeshWidget(QWidget* parent) : ViewerWidget{parent}
 void ViewerMeshWidget::draw()
 {
     // TODO: do our own mesh based rendering here.
-    // get mesh: draw_controller->mesh();
+    // get mesh: draw_controller->mesh_data().mesh();
 
     // placeholder demo code:
     const float nbSteps = 200.0;

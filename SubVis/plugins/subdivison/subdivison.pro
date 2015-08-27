@@ -1,5 +1,5 @@
 TEMPLATE        = lib
-CONFIG         += plugin c++11
+CONFIG         += debug plugin c++11
 QT             += widgets
 INCLUDEPATH    += ../../app \
                   ../../lib
@@ -13,13 +13,10 @@ MOC_DIR = ../../build/plugins/
 RCC_DIR = ../../build/plugins/
 
 HEADERS = subdivision_algorithms.h \
-    utils.h \
-    types.h \
-    catmull.h
+    algorithm.h
 
 SOURCES = subdivision_algorithms.cpp \
-    utils.cpp \
-    catmull.cpp
+    algorithm.cpp
 
 DISTFILES += subdivision.json
 

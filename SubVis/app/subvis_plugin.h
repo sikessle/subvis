@@ -19,7 +19,7 @@ class SubVisPlugin
 
 public:
     virtual ~SubVisPlugin() {}
-    virtual void set_draw_controller(const DrawController* draw_controller) = 0;
+    virtual void set_draw_controller(DrawController* draw_controller) = 0;
     virtual void draw_opengl() = 0;
     virtual void create_gui(QWidget* parent) = 0;
 };

@@ -1,17 +1,20 @@
-#ifndef SUBDIVISONPLUGIN_SUBDIVISON_ALGORITHMS_H
-#define SUBDIVISONPLUGIN_SUBDIVISON_ALGORITHMS_H
+#ifndef SUBDIVISIONPLUGIN_SUBDIVISON_ALGORITHMS_H
+#define SUBDIVISIONPLUGIN_SUBDIVISON_ALGORITHMS_H
 
 #include <QObject>
 #include <string>
+#include <memory>
 
 #include "subvis_plugin.h"
+//#include "catmull.h"
 
-namespace SubdivisonPlugin {
+namespace SubdivisionPlugin {
 
 using SubVis::SubVisPlugin;
 using SubVis::DrawController;
+using std::unique_ptr;
 
-class SubdivisonAlgorithms : public QObject, SubVisPlugin
+class SubdivisionAlgorithms : public QObject, public SubVisPlugin
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID SUBVIS_PLUGIN_IID FILE "subdivision.json")
@@ -19,13 +22,14 @@ class SubdivisonAlgorithms : public QObject, SubVisPlugin
     Q_INTERFACES(SubVis::SubVisPlugin)
 
 public:
-     void set_draw_controller(const DrawController* draw_controller_) override;
-     void draw_opengl() override;
-     void create_gui(QWidget* parent) override;
+    void set_draw_controller(DrawController* draw_controller) override;
+    void draw_opengl() override;
+    void create_gui(QWidget* parent) override;
 
 private:
-     const DrawController *draw_controller_{nullptr};
+     DrawController* draw_controller_{nullptr};
+     //unique_ptr<Algorithm> catmull_{new Catmull};
 };
 
-} // namespace SubdivisonPlugin
-#endif // SUBDIVISONPLUGIN_SUBDIVISON_ALGORITHMS_H
+} // namespace SubdivisionPlugin
+#endif // SUBDIVISIONPLUGIN_SUBDIVISON_ALGORITHMS_H

@@ -21,9 +21,10 @@ bool PluginManager::load_plugins(DrawController& draw_controller)
 
     foreach (QString filename, plugins_dir.entryList(QDir::Files)) {
         QPluginLoader plugin_loader(plugins_dir.absoluteFilePath(filename));
-        check_and_add_plugin(plugin_loader.instance(), plugin_loader, draw_controller);
+        check_and_add_plugin(plugin_loader, draw_controller);
     }
-    return true;
+
+    return plugins_.size() > 0;
 }
 
 void PluginManager::switch_to_plugin_dir(QDir &dir)
@@ -42,15 +43,16 @@ void PluginManager::switch_to_plugin_dir(QDir &dir)
     dir.cd(plugins_directory_);
 }
 
-void PluginManager::check_and_add_plugin(QObject* plugin,
-                                         QPluginLoader& plugin_loader,
+void PluginManager::check_and_add_plugin(QPluginLoader& plugin_loader,
                                          DrawController& draw_controller)
 {
+    QObject* plugin = plugin_loader.instance();
+
     if (!plugin) {
         return;
     }
 
-    SubVisPlugin* subvis_plugin = qobject_cast<SubVisPlugin*>(plugin);
+    SubVisPlugin* subvis_plugin = qobject_cast<SubVisPlugin *>(plugin);
 
     if (!subvis_plugin) {
         return;

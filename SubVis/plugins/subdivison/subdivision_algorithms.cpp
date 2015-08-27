@@ -3,16 +3,18 @@
 
 #include "subdivision_algorithms.h"
 
-namespace SubdivisonPlugin {
+namespace SubdivisionPlugin {
 
-void SubdivisonAlgorithms::set_draw_controller(const DrawController* draw_controller)
+void SubdivisionAlgorithms::set_draw_controller(DrawController* draw_controller)
 {
     draw_controller_ = draw_controller;
 }
 
-void SubdivisonAlgorithms::draw_opengl()
+void SubdivisionAlgorithms::draw_opengl()
 {
-    // draw calls go here
+    // TODO draw calls go here
+    // render limit surface
+    // maybe move that to a new class
 
     // placeholder demo code:
     const float nbSteps = 200.0;
@@ -36,12 +38,13 @@ void SubdivisonAlgorithms::draw_opengl()
     glEnd();
 }
 
-void SubdivisonAlgorithms::create_gui(QWidget* parent)
+void SubdivisionAlgorithms::create_gui(QWidget* parent)
 {
     // create own gui components
     QLabel* label = new QLabel{parent};
     label->setText("My Plugin Interface");
-    // SIGNALS etc... operating on draw_controller.mesh
+    // SIGNALS etc.
+    //catmull_->subdivide(draw_controller_->mesh_data());
 }
 
-} // namespace SubdivisonPlugin
+} // namespace SubdivisionPlugin

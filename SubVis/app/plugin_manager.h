@@ -39,8 +39,7 @@ private:
     const QString plugins_directory_;
 
     void switch_to_plugin_dir(QDir& dir);
-    void check_and_add_plugin(QObject* plugin,
-                              QPluginLoader& plugin_loader,
+    void check_and_add_plugin(QPluginLoader& plugin_loader,
                               DrawController& draw_controller);
 };
 

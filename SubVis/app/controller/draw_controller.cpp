@@ -6,9 +6,9 @@ DrawController::DrawController(MeshData& mesh_data) : Controller{mesh_data}
 {
 }
 
-Surface_mesh& DrawController::mesh() const
+MeshData& DrawController::mesh_data()
 {
-    return mesh_data_.mesh();
+    return mesh_data_;
 }
 
 } // namespace SubVis

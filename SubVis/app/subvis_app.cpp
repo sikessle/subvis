@@ -36,13 +36,12 @@ int SubVisApp::run()
 
     // View layer
     MainWindow mainwindow{draw_controller, io_controller, plugin_manager};
+    mainwindow.create_plugin_guis();
 
     // Signals
     QObject::connect(&mesh_data, SIGNAL(updated()),
                      &mainwindow, SIGNAL(mesh_updated()));
 
-    // Plugins
-    mainwindow.create_plugin_guis();
 
     mainwindow.show();
 

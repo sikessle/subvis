@@ -54,7 +54,10 @@ void MainWindow::create_plugin_guis()
         QObject::connect(ui_->tabs_plugins, SIGNAL(currentChanged(int)),
                          this, SLOT(plugin_tab_changed(int)));
     }
-    plugin_tab_changed(0);
+
+    if (plugin_manager_.list_plugins().size() > 0) {
+        plugin_tab_changed(0);
+    }
 }
 
 void MainWindow::plugin_tab_changed(int current)
