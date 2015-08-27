@@ -18,34 +18,25 @@
 #include "surface_mesh/Surface_mesh.h"
 #include "plugins/subdivision/types.h"
 
-#include "plugins/subdivision/sd_base.h"
+#include "plugins/subdivision/algorithm.h"
 
 namespace SubdivisionPlugin {
 
 // ===============[ public prototypes ]===============
 
-class SubdivCatmull : public SubdivBase {
+
+// mesh_ is input mesh
+class SubdivCatmull : public Algorithm {
 
 public:
-
     using Surface_mesh = surface_mesh::Surface_mesh;
     using Point = surface_mesh::Point;
 
-    SubdivCatmull(Surface_mesh mesh) : SubdivBase(mesh) {
-        this->add_mesh_properties(mesh_);
-        this->init_mesh_members();
-    }
+    virtual const QString id();
+    virtual const QString name();
 
-    void subdivide();
-    void subdivide(unsigned char steps);
-
-    /**
-     * @brief get_subdivision_mesh get the result mesh after calling subdivision
-     * @return The subdivided mesh (result of subdivide() method)
-     */
-    Surface_mesh get_subdivision_mesh() {
-        return mesh_;
-    }
+protected:
+    virtual void subdivide_specific_algorithm();
 
 private:
     Surface_mesh::Vertex_property<Point> v_points_;
@@ -83,7 +74,7 @@ private:
      */
     void compute_new_vertex_point(const Surface_mesh::Vertex& vertex);
 
-    void compute_new_faces(Surface_mesh& result_mesh, const Surface_mesh::Face& face);
+    void compute_new_faces(const Surface_mesh::Face& face);
 
     void avg_face_points(Point& avg_face_points, const Surface_mesh::Vertex& vertex);
 
@@ -91,28 +82,28 @@ private:
 
     void mid_edge(Point& mid_edge, const Surface_mesh::Edge &edge);
 
-    void add_mesh_properties(Surface_mesh& mesh) {
+    void add_mesh_properties() {
         // add properties that are necessary for catmull clark
-        mesh.add_face_property<Point>(kSurfMeshPropFacePoint);
-        mesh.add_edge_property<Point>(kSurfMeshPropEdgePoint);
-        mesh.add_vertex_property<Point>(kSurfMeshPropVertexPointUpdated);
+        input_mesh_->add_face_property<Point>(kSurfMeshPropFacePoint);
+        input_mesh_->add_edge_property<Point>(kSurfMeshPropEdgePoint);
+        input_mesh_->add_vertex_property<Point>(kSurfMeshPropVertexPointUpdated);
         // (vertex point property with key kSurfMeshPropVertexPoint is maintained by default)
 
         // index properties
-        mesh.add_vertex_property<Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshV);
-        mesh.add_edge_property<Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshE);
-        mesh.add_face_property<Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshF);
+        input_mesh_->add_vertex_property<Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshV);
+        input_mesh_->add_edge_property<Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshE);
+        input_mesh_->add_face_property<Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshF);
     }
 
     void init_mesh_members() {
-        v_points_ = mesh_.get_vertex_property<Point>(kSurfMeshPropVertexPoint);
-        f_points_ = mesh_.get_face_property<Point>(kSurfMeshPropFacePoint);
-        e_points_ = mesh_.get_edge_property<Point>(kSurfMeshPropEdgePoint);
-        v_points_updated_ = mesh_.get_vertex_property<Point>(kSurfMeshPropVertexPointUpdated);
+        v_points_ = input_mesh_->get_vertex_property<Point>(kSurfMeshPropVertexPoint);
+        f_points_ = input_mesh_->get_face_property<Point>(kSurfMeshPropFacePoint);
+        e_points_ = input_mesh_->get_edge_property<Point>(kSurfMeshPropEdgePoint);
+        v_points_updated_ = input_mesh_->get_vertex_property<Point>(kSurfMeshPropVertexPointUpdated);
 
-        v_index_sub_mesh_v_prop_ = mesh_.get_vertex_property<Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshV);
-        v_index_sub_mesh_e_prop_ = mesh_.get_edge_property<Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshE);
-        v_index_sub_mesh_f_prop_ = mesh_.get_face_property<Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshF);
+        v_index_sub_mesh_v_prop_ = input_mesh_->get_vertex_property<Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshV);
+        v_index_sub_mesh_e_prop_ = input_mesh_->get_edge_property<Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshE);
+        v_index_sub_mesh_f_prop_ = input_mesh_->get_face_property<Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshF);
     }
 };
 

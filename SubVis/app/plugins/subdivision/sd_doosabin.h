@@ -17,21 +17,24 @@
 #include "surface_mesh/Surface_mesh.h"
 #include "plugins/subdivision/types.h"
 
-#include "plugins/subdivision/sd_base.h"
+#include "plugins/subdivision/algorithm.h"
 
 namespace SubdivisionPlugin {
 
 // ===============[ public prototypes ]===============
 
-class SubdivDooSabin : public SubdivBase{
+class SubdivDooSabin : public Algorithm
+{
 public:
 
     using Surface_mesh = surface_mesh::Surface_mesh;
     using Point = surface_mesh::Point;
 
-    SubdivDooSabin(Surface_mesh mesh) : SubdivBase(mesh) {
-        ;
-    }
+    virtual const QString id() override;
+    virtual const QString name() override;
+
+protected:
+    virtual void subdivide_specific_algorithm() override;
 };
 
 

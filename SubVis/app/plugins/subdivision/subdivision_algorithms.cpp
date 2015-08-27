@@ -3,6 +3,9 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 
+#include "plugins/subdivision/sd_catmull.h"
+#include "plugins/subdivision/sd_doosabin.h"
+
 #include "plugins/subdivision/subdivision_algorithms.h"
 
 namespace SubdivisionPlugin {
@@ -10,8 +13,9 @@ namespace SubdivisionPlugin {
 SubdivisionAlgorithms::SubdivisionAlgorithms()
 {
     std::vector<Algorithm*> instances;
-    //instances.push_back(new Catmull);
     // Add here all the algorithms
+    instances.push_back(new SubdivCatmull);
+    instances.push_back(new SubdivDooSabin);
 
     for (const auto instance : instances) {
         algorithms_[instance->id()] = std::unique_ptr<Algorithm>{instance};

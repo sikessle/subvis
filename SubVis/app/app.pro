@@ -41,7 +41,6 @@ HEADERS  += view/mainwindow.h \
     plugins/subdivision/types.h \
     plugins/subdivision/utils.h \
     plugins/subdivision/sd_catmull.h \
-    plugins/subdivision/sd_base.h \
     plugins/subdivision/sd_doosabin.h
 
 SOURCES += main.cpp \
@@ -59,7 +58,6 @@ SOURCES += main.cpp \
     plugins/subdivision/subdivision_algorithms.cpp \
     plugins/subdivision/utils.cpp \
     plugins/subdivision/sd_catmull.cpp \
-    plugins/subdivision/sd_base.cpp \
     plugins/subdivision/sd_doosabin.cpp
 
 FORMS    += view/mainwindow.ui
