@@ -31,7 +31,8 @@ private:
     QSpinBox* steps_{nullptr};
     QComboBox* dropdown_{nullptr};
 
-    void on_subdivide_clicked(bool);
+public slots:
+    void on_subdivide__clicked(bool);
 };
 
 } // namespace SubdivisionPlugin

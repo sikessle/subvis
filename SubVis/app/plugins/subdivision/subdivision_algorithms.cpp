@@ -75,7 +75,7 @@ void SubdivisionAlgorithms::create_gui(QWidget* parent)
     }
     layout->addWidget(dropdown_);
 
-    QHBoxLayout* layout_steps = new QHBoxLayout(parent);
+    QHBoxLayout* layout_steps = new QHBoxLayout;
     layout_steps->setAlignment(Qt::AlignTop);
 
     layout_steps->addWidget(new QLabel("Steps:"));
@@ -89,10 +89,10 @@ void SubdivisionAlgorithms::create_gui(QWidget* parent)
     layout->addWidget(subdivide_);
 }
 
-void SubdivisionAlgorithms::on_subdivide_clicked(bool)
+void SubdivisionAlgorithms::on_subdivide__clicked(bool)
 {
     int steps = steps_->value();
-    //dropdown_->currentIndex()
+    std::cerr << "WORKIN";
 }
 
 } // namespace SubdivisionPlugin
