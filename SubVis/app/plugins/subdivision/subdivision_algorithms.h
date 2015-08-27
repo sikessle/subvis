@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include <string>
-#include <memory>
 
 #include "plugins/subvis_plugin.h"
 
@@ -20,7 +19,6 @@ public:
 
 private:
     SubVis::DrawController* draw_controller_{nullptr};
-     //unique_ptr<Algorithm> catmull_{new Catmull};
 };
 
 } // namespace SubdivisionPlugin
