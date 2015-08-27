@@ -41,7 +41,8 @@ void SubdivisionAlgorithms::draw_opengl()
 {
     // TODO draw calls go here
     // render limit surface
-    // maybe move that to a new class
+    // maybe move that to a new class and call draw_opengl(Algorithm algo) with the active algorithm
+    // mesh: draw_controller_->mesh_data().mesh()
 
     // placeholder demo code:
     const float nbSteps = 200.0;
