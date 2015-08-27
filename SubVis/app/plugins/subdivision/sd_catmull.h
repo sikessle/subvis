@@ -35,6 +35,10 @@ public:
     virtual const QString id();
     virtual const QString name();
 
+    ~SubdivCatmull() {
+        remove_mesh_properties();
+    }
+
 protected:
     virtual void subdivide_specific_algorithm();
 
@@ -96,9 +100,19 @@ private:
         e_points_ = input_mesh_->get_edge_property<Point>(kSurfMeshPropEdgePoint);
         v_points_updated_ = input_mesh_->get_vertex_property<Point>(kSurfMeshPropVertexPointUpdated);
 
-        v_index_sub_mesh_v_prop_ = input_mesh_->get_vertex_property<Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshV);
-        v_index_sub_mesh_e_prop_ = input_mesh_->get_edge_property<Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshE);
         v_index_sub_mesh_f_prop_ = input_mesh_->get_face_property<Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshF);
+        v_index_sub_mesh_e_prop_ = input_mesh_->get_edge_property<Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshE);
+        v_index_sub_mesh_v_prop_ = input_mesh_->get_vertex_property<Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshV);
+    }
+
+    void remove_mesh_properties()
+    {
+        input_mesh_->remove_face_property(f_points_);
+        input_mesh_->remove_edge_property(e_points_);
+        input_mesh_->remove_vertex_property(v_points_updated_);
+        input_mesh_->remove_face_property(v_index_sub_mesh_f_prop_);
+        input_mesh_->remove_edge_property(v_index_sub_mesh_e_prop_);
+        input_mesh_->remove_vertex_property(v_index_sub_mesh_v_prop_);
     }
 };
 

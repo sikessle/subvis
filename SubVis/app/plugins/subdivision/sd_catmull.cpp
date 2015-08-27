@@ -61,6 +61,7 @@ void SubdivCatmull::subdivide_specific_algorithm()
         this->compute_new_faces(*fit);
     }
     utils_debug_mesh(*(result_mesh_.get()), "Subdivision Mesh");
+    remove_mesh_properties();
 }
 
 void SubdivCatmull::compute_all_face_points()
