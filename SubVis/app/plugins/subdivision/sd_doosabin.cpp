@@ -26,6 +26,7 @@ void SubdivDooSabin::subdivide_specific_algorithm()
     this->compute_all_edge_points();
     // compute new vertex point
 
+
 }
 
 void SubdivDooSabin::compute_all_face_points()
@@ -52,6 +53,22 @@ void SubdivDooSabin::compute_all_edge_points()
         utils_debug_point(edge_point, "Edge Point");
         v_index_sub_mesh_e_prop_[*eit] = result_mesh_->add_vertex(e_points_[*eit]);
     }
+}
+
+void SubdivDooSabin::compute_new_vertex_point(Point& new_vertex_point, const Surface_mesh::Vertex& vertex, const Surface_mesh::Face& face)
+{
+    // compute new vertex point: average of four points (face point, two edge points and vertex)
+    Surface_mesh::Halfedge_around_face_circulator hc, hc_end;
+    hc = input_mesh_->halfedges(face);
+    hc_end = hc;
+    do {
+        if (input_mesh_->from_vertex(*hc) == vertex)
+            break;
+    } while (++hc != hc_end);
+    Surface_mesh::Edge e1, e2;
+    e1 = input_mesh_->edge(*hc);
+    e2 = input_mesh_->edge(input_mesh_->prev_halfedge(*hc));
+    new_vertex_point = (v_points_[vertex] + f_points_[face] + e_points_[e1] + e_points_[e2] ) / 4;
 }
 
 } // namespace SubVis
