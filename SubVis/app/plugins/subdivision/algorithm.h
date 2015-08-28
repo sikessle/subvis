@@ -55,7 +55,7 @@ protected:
      * @param mid_edge The result (mid of edge).
      * @param edge Edge to compute the mid point.
      */
-    void mid_edge(Point& mid_edge, const Surface_mesh::Edge &edge);
+    virtual void mid_edge(Point& mid_edge, const Surface_mesh::Edge &edge);
 
     /**
      * @brief compute_face_point Compute the average of all the points of the face.
