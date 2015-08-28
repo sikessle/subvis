@@ -49,6 +49,7 @@ void SubdivCatmull::subdivide_specific_algorithm()
     this->add_mesh_properties();
     this->init_mesh_members();
 
+    utils_debug_mesh(*(input_mesh_.get()), "Input Mesh");
     // loop over all faces and compute face points
     this->compute_all_face_points();
     // loop over all edges and compute edge points
@@ -60,7 +61,7 @@ void SubdivCatmull::subdivide_specific_algorithm()
     for (fit = input_mesh_->faces_begin(); fit != input_mesh_->faces_end(); ++fit) {
         this->compute_new_faces(*fit);
     }
-    utils_debug_mesh(*(result_mesh_.get()), "Subdivision Mesh");
+    utils_debug_mesh(*(result_mesh_.get()), "Output Mesh");
     remove_mesh_properties();
 }
 
