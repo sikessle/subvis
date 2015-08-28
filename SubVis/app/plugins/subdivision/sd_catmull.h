@@ -36,7 +36,10 @@ public:
     virtual const QString name();
 
     ~SubdivCatmull() {
-        remove_mesh_properties();
+        //TODO remove this destructor. input_mesh_ and result_mesh_ are only
+        // valid during the lifetime of the subdivide_specific_algorithm() function.
+        // after that the pointers may be null.
+        //remove_mesh_properties();
     }
 
 protected:
