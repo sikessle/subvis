@@ -217,12 +217,17 @@ Im folgenden Unterkapitel werden Bibliotheken oder Programme untersucht, die Pol
 \subsection{BezierView}
 
 BezierView (kurz bview) ist ein einfaches Programm zum Rendern von Bézier Patches, rationalen Bézier Patches und Polygonnetzen \cite{Peters.bview.27.07.2015}.
+Das Programm wurde von Saleh Dindar, Xiaobin Wu, Jorg Peters (University of Florida) entwickelt
+und ist für Forschungs- und Lehrzwecke als Open Source Projekt
+frei verfügbar.
+Der Viewer ist in C++ geschrieben und verwendet OpenGL.
 
-TODO
+Hier ist die Implementierung zum Rendern der Netze interessant.
+Diese Funktionalität können wir für das SubVis Projekt übernehmen bzw. als Hilfestellung für unsere
+konkrete Implementierung verwenden.
+
 
 \subsection{OpenGL}
-
-TODO: hier sollte man noch die Renderfunktionen erklären, wie man z.B. ein Netz rendert etc!!
 
 Die API-Spezifikation OpenGL beschreibt einige hundert Befehle zur Programmierung von Grafikkarten.
 Basierend auf einem Zustandsautomaten ermöglicht OpenGL es, bei einem Draw-Call lediglich die veränderten Parameter mitzugeben.
