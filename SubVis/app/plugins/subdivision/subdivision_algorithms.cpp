@@ -2,6 +2,7 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include "surface_mesh/Surface_mesh.h"
 
 #include "plugins/subdivision/sd_catmull.h"
 #include "plugins/subdivision/sd_doosabin.h"
@@ -103,8 +104,11 @@ void SubdivisionAlgorithms::subdivide_clicked(bool)
     }
     int steps = steps_->value();
     const QString id = dropdown_->currentData().toString();
+    auto& mesh_data = draw_controller_->mesh_data();
 
-    algorithms_.at(id)->subdivide(draw_controller_->mesh_data(), steps);
+    auto result = algorithms_.at(id)->subdivide(mesh_data, steps);
+
+    mesh_data.load(std::move(result));
 }
 
 } // namespace SubdivisionPlugin

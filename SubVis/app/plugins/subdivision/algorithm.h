@@ -16,7 +16,7 @@ public:
 
     virtual ~Algorithm() {}
 
-    virtual void subdivide(SubVis::MeshData& mesh_data, int steps = 1);
+    virtual std::unique_ptr<Surface_mesh> subdivide(SubVis::MeshData& mesh_data, int steps = 1);
     /**
      * @brief unique id which identifies the algorithm.
      * i.e. de.htwg.ios.subvis.plugin.subdivision.catmull
@@ -27,8 +27,8 @@ public:
     virtual const QString name() = 0;
 
     /**
-     * @brief Returns result mesh for testing etc.
-     * @return
+     * @brief Returns result mesh for testing.
+     * @return A view on the mesh, but ownership stays in this class.
      */
     virtual Surface_mesh& result_mesh();
 

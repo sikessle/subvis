@@ -6,7 +6,7 @@ namespace SubdivisionPlugin {
 using surface_mesh::Surface_mesh;
 using surface_mesh::Point;
 
-void Algorithm::subdivide(SubVis::MeshData& mesh_data, int steps)
+std::unique_ptr<Surface_mesh> Algorithm::subdivide(SubVis::MeshData& mesh_data, int steps)
 {
     result_mesh_.reset(new Surface_mesh);
     input_mesh_.reset(new Surface_mesh{mesh_data.mesh()});
@@ -18,11 +18,10 @@ void Algorithm::subdivide(SubVis::MeshData& mesh_data, int steps)
         input_mesh_.reset(new Surface_mesh{*(result_mesh_.get())});
     }
 
-    mesh_data.load(std::move(result_mesh_));
-
     // free memory
-    result_mesh_.reset(nullptr);
     input_mesh_.reset(nullptr);
+
+    return std::move(result_mesh_);
 }
 
 Surface_mesh& Algorithm::result_mesh()
