@@ -49,6 +49,12 @@ protected:
 
     void init_mesh_members();
 
+    /**
+     * @brief mid_edge Compute the mid point of an edge (average of the two vertices).
+     *                 The edge has to be in the input_mesh_.
+     * @param mid_edge The result (mid of edge).
+     * @param edge Edge to compute the mid point.
+     */
     void mid_edge(Point& mid_edge, const Surface_mesh::Edge &edge);
 
     /**
