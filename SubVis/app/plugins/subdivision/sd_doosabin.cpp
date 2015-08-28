@@ -71,6 +71,7 @@ void SubdivDooSabin::compute_all_new_vertex_points()
             this->compute_new_vertex_point(new_vertex_point, *vc, *fit);
             // TODO
 
+            result_mesh_->add_vertex(new_vertex_point);
             utils_debug_point(new_vertex_point, "New Vertex Point");
         } while (++vc != vc_end);
     }
