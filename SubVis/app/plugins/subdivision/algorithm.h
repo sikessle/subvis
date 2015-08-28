@@ -47,7 +47,7 @@ protected:
      */
     virtual void subdivide_specific_algorithm() = 0;
 
-    void init_mesh_members();
+    virtual void init_mesh_members();
 
     /**
      * @brief mid_edge Compute the mid point of an edge (average of the two vertices).
