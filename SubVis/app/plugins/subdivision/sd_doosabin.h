@@ -45,6 +45,7 @@ private:
 
     void compute_all_face_points();
     void compute_all_edge_points();
+    void compute_all_new_vertex_points();
 
     void compute_new_vertex_point(Point& new_vertex_point, const Surface_mesh::Vertex& vertex, const Surface_mesh::Face& face);
 

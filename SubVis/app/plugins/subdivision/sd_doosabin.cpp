@@ -20,12 +20,16 @@ void SubdivDooSabin::subdivide_specific_algorithm()
     this->add_mesh_properties();
     this->init_mesh_members();
 
+    utils_debug_mesh(*(input_mesh_.get()), "Input Mesh");
+
     // loop over all faces and compute face points (same as catmull clark face points)
     this->compute_all_face_points();
     // loop over all edges and compute edge points (different to catmull clark edge points!)
     this->compute_all_edge_points();
     // compute new vertex point
+    this->compute_all_new_vertex_points();
 
+    utils_debug_mesh(*(result_mesh_.get()), "Output Mesh");
 
     this->remove_mesh_properties();
 }
@@ -51,6 +55,24 @@ void SubdivDooSabin::compute_all_edge_points()
         // store edge_point as property
         e_points_[*eit] = edge_point;
         utils_debug_point(edge_point, "Edge Point");
+    }
+}
+
+void SubdivDooSabin::compute_all_new_vertex_points()
+{
+    // loop over all faces - every face creates 4 new vertex points
+    Surface_mesh::Face_iterator fit;
+    Surface_mesh::Vertex_around_face_circulator vc, vc_end;
+    Point new_vertex_point;
+    for (fit = input_mesh_->faces_begin(); fit != input_mesh_->faces_end(); ++fit) {
+        vc = input_mesh_->vertices(*fit);
+        vc_end = vc;
+        do {
+            this->compute_new_vertex_point(new_vertex_point, *vc, *fit);
+            // TODO
+
+            utils_debug_point(new_vertex_point, "New Vertex Point");
+        } while (++vc != vc_end);
     }
 }
 
