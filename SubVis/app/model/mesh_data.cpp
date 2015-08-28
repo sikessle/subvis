@@ -32,7 +32,8 @@ bool MeshData::load(const std::string& filename)
         return false;
     }
 
-    mesh_object_->clear();
+    // create new mesh
+    mesh_object_.reset(new Surface_mesh);
 
     bool success = mesh_object_->read(filename);
 

@@ -10,11 +10,6 @@ namespace SubVis {
 
 using surface_mesh::Surface_mesh;
 
-/**
- * @brief Must NEVER swap its encapsulated mesh object, as other
- * modules may rely on it. If it is swapped out, some modules may hold
- * an invalid reference to an old object.
- */
 class MeshData : public QObject
 {
     Q_OBJECT
