@@ -6,6 +6,8 @@
 
 #include "plugins/subdivision/sd_catmull.h"
 #include "plugins/subdivision/sd_doosabin.h"
+#include "plugins/subdivision/sd_loop.h"
+#include "plugins/subdivision/sd_butterfly.h"
 
 #include "plugins/subdivision/subdivision_algorithms.h"
 
@@ -17,6 +19,8 @@ SubdivisionAlgorithms::SubdivisionAlgorithms()
     // Add here all the algorithms
     instances.push_back(new SubdivCatmull);
     instances.push_back(new SubdivDooSabin);
+    instances.push_back(new SubdivLoop);
+    instances.push_back(new SubdivButterfly);
 
     for (const auto instance : instances) {
         algorithms_[instance->id()] = std::unique_ptr<Algorithm>{instance};
