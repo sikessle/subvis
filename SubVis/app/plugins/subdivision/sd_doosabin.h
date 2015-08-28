@@ -53,11 +53,6 @@ private:
         // add properties that are necessary for doo sabin
         input_mesh_->add_face_property<Point>(kSurfMeshPropFacePoint);
         input_mesh_->add_edge_property<Point>(kSurfMeshPropEdgePoint);
-
-        // index properties
-        input_mesh_->add_face_property<Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshF);
-        input_mesh_->add_edge_property<Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshE);
-
     }
 
     void init_mesh_members()
@@ -65,18 +60,12 @@ private:
         Algorithm::init_mesh_members();
         f_points_ = input_mesh_->get_face_property<Point>(kSurfMeshPropFacePoint);
         e_points_ = input_mesh_->get_edge_property<Point>(kSurfMeshPropEdgePoint);
-
-        v_index_sub_mesh_f_prop_ = input_mesh_->get_face_property<Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshF);
-        v_index_sub_mesh_e_prop_ = input_mesh_->get_edge_property<Surface_mesh::Vertex>(kSurfMeshPropVertexIndexSubMeshE);
     }
 
     void remove_mesh_properties()
     {
         input_mesh_->remove_face_property(f_points_);
         input_mesh_->remove_edge_property(e_points_);
-
-        input_mesh_->remove_face_property(v_index_sub_mesh_f_prop_);
-        input_mesh_->remove_edge_property(v_index_sub_mesh_e_prop_);
     }
 };
 

@@ -39,7 +39,6 @@ void SubdivDooSabin::compute_all_face_points()
         // add new face point to mesh
         f_points_[*fit] = face_point;
         utils_debug_point(face_point, "Face Point");
-        v_index_sub_mesh_f_prop_[*fit] = result_mesh_->add_vertex(f_points_[*fit]);
     }
 }
 
@@ -52,7 +51,6 @@ void SubdivDooSabin::compute_all_edge_points()
         // store edge_point as property
         e_points_[*eit] = edge_point;
         utils_debug_point(edge_point, "Edge Point");
-        v_index_sub_mesh_e_prop_[*eit] = result_mesh_->add_vertex(e_points_[*eit]);
     }
 }
 
