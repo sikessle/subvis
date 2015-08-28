@@ -110,7 +110,7 @@ void SubdivisionAlgorithms::subdivide_clicked(bool)
     const QString id = dropdown_->currentData().toString();
     auto& mesh_data = draw_controller_->mesh_data();
 
-    auto result = algorithms_.at(id)->subdivide(mesh_data, steps);
+    auto result = algorithms_.at(id)->subdivide(mesh_data.mesh(), steps);
 
     mesh_data.load(std::move(result));
 }

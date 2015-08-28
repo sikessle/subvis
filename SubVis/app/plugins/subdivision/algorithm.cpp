@@ -1,15 +1,16 @@
-#include "plugins/subdivision/algorithm.h"
 #include "plugins/subdivision/types.h"
+
+#include "plugins/subdivision/algorithm.h"
 
 namespace SubdivisionPlugin {
 
 using surface_mesh::Surface_mesh;
 using surface_mesh::Point;
 
-std::unique_ptr<Surface_mesh> Algorithm::subdivide(SubVis::MeshData& mesh_data, int steps)
+std::unique_ptr<Surface_mesh> Algorithm::subdivide(Surface_mesh& mesh, int steps)
 {
     result_mesh_.reset(new Surface_mesh);
-    input_mesh_.reset(new Surface_mesh{mesh_data.mesh()});
+    input_mesh_.reset(new Surface_mesh{mesh});
 
     for (int i = 0; i < steps; i++) {
         result_mesh_->clear();
