@@ -15,6 +15,8 @@
 #define SUBDIVISIONPLUGIN_SD_CATMULL_H
 
 // ===============[ includes ]===============
+#include "plugins/subdivision/types.h"
+
 #include "plugins/subdivision/algorithm.h"
 
 namespace subdivision {

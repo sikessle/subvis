@@ -1,13 +1,9 @@
-#ifndef SUBDIVISIONPLUGIN_ALGORITHM_H
-#define SUBDIVISIONPLUGIN_ALGORITHM_H
+#ifndef SUBDIVISION_ALGORITHM_H
+#define SUBDIVISION_ALGORITHM_H
 
 #include <memory>
 #include <QString>
-#include <GL/gl.h>
 #include "surface_mesh/Surface_mesh.h"
-
-#include "plugins/subdivision/utils.h"
-#include "plugins/subdivision/types.h"
 
 namespace subdivision {
 

@@ -1,3 +1,6 @@
+#include "plugins/subdivision/utils.h"
+#include "plugins/subdivision/types.h"
+
 #include "plugins/subdivision/sd_doosabin.h"
 
 namespace subdivision {

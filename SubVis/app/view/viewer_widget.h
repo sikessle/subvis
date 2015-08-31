@@ -2,7 +2,6 @@
 #define SUBVIS_VIEWER_WIDGET_H
 
 #include "QGLViewer/qglviewer.h"
-#include "surface_mesh/Surface_mesh.h"
 
 #include "controller/draw_controller.h"
 

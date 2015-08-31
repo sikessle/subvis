@@ -2,15 +2,17 @@
 // ===============[ includes ]===============
 
 #include <QDebug>
+#include <exception>
 
 #include "surface_mesh/IO.h"
 
+#include "plugins/subdivision/utils.h"
+#include "plugins/subdivision/types.h"
 #include "plugins/subdivision/sd_catmull.h"
 
 
 namespace subdivision {
 
-using ::std::string;
 using surface_mesh::Surface_mesh;
 using surface_mesh::Point;
 
@@ -20,7 +22,7 @@ using surface_mesh::Point;
 
 void test_catmull() {
     Surface_mesh mesh;
-    string path = kRootPathToObjFiles + kObjDemoFilesString[kCube];
+    std::string path = kRootPathToObjFiles + kObjDemoFilesString[kCube];
     // read mesh and print basic info to stdout
     read_mesh(mesh, path);
     DEBUG_MESH(mesh, QString("Cube Mesh"));
@@ -163,7 +165,7 @@ void SubdivCatmull::compute_new_faces(const Surface_mesh::Face& face)
         result_mesh_->add_quad(v_index_list[2], e_index_list[2], f_index, e_index_list[1]);
         result_mesh_->add_quad(v_index_list[3], e_index_list[3], f_index, e_index_list[2]);
     } else { // error
-        throw new string("Invalid mesh topology: " + i);
+        throw new std::runtime_error("Invalid mesh topology: " + i);
     }
     // TODO
 }

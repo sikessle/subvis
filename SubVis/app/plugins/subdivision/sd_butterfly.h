@@ -1,5 +1,5 @@
-#ifndef SUBDIVISIONPLUGIN_SD_BUTTERFLY_H
-#define SUBDIVISIONPLUGIN_SD_BUTTERFLY_H
+#ifndef SUBDIVISION_SD_BUTTERFLY_H
+#define SUBDIVISION_SD_BUTTERFLY_H
 
 #include "plugins/subdivision/algorithm.h"
 

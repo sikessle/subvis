@@ -1,5 +1,3 @@
-#include <QApplication>
-
 #include "plugins/plugin_manager.h"
 
 namespace subvis {

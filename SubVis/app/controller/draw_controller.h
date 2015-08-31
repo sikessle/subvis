@@ -2,7 +2,6 @@
 #define SUBVIS_DRAW_CONTROLLER_H
 
 #include <QObject>
-#include "surface_mesh/Surface_mesh.h"
 
 #include "controller/controller.h"
 
