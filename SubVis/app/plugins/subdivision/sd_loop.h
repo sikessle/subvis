@@ -1,8 +1,6 @@
 #ifndef SUBDIVISIONPLUGIN_SD_LOOP_H
 #define SUBDIVISIONPLUGIN_SD_LOOP_H
 
-#include "surface_mesh/Surface_mesh.h"
-
 #include "plugins/subdivision/algorithm.h"
 
 namespace SubdivisionPlugin {

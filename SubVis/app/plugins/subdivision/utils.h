@@ -32,6 +32,18 @@ void utils_debug_mesh(const surface_mesh::Surface_mesh& mesh, const QString &tit
 
 void utils_debug_point(const surface_mesh::Point point, const QString& title);
 
+#ifdef DEBUG_SUBDIV
+
+#define DEBUG_MESH(mesh, name)      utils_debug_mesh(mesh, name);
+#define DEBUG_POINT(point, name)    utils_debug_point(point, name);
+
+#else
+
+#define DEBUG_MESH(mesh, name)
+#define DEBUG_POINT(point, name)
+
+#endif
+
 } // namespace SubdivisionPlugin
 #endif // SUBDIVISIONPLUGIN_UTILS_H
 

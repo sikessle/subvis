@@ -1,6 +1,3 @@
-
-#include "plugins/subdivision/types.h"
-#include "plugins/subdivision/utils.h"
 #include "plugins/subdivision/sd_doosabin.h"
 
 namespace SubdivisionPlugin {
@@ -21,18 +18,14 @@ void SubdivDooSabin::subdivide_specific_algorithm()
     // write to result_mesh_
     this->add_mesh_properties();
     this->init_mesh_members();
-#ifdef DEBUG_SUBDIV
-    utils_debug_mesh(*(input_mesh_.get()), "Input Mesh");
-#endif
+
     // loop over all faces and compute face points (same as catmull clark face points)
     this->compute_all_face_points();
     // loop over all edges and compute edge points (different to catmull clark edge points!)
     this->compute_all_edge_points();
     // compute new vertex point
     this->compute_all_new_vertex_points();
-#ifdef DEBUG_SUBDIV
-    utils_debug_mesh(*(result_mesh_.get()), "Output Mesh");
-#endif
+
     this->remove_mesh_properties();
 }
 
@@ -44,9 +37,7 @@ void SubdivDooSabin::compute_all_face_points()
         this->compute_face_point(face_point, *fit);
         // add new face point to mesh
         f_points_[*fit] = face_point;
-#ifdef DEBUG_SUBDIV
-        utils_debug_point(face_point, "Face Point");
-#endif
+        DEBUG_POINT(face_point, "Face Point");
     }
 }
 
@@ -58,9 +49,7 @@ void SubdivDooSabin::compute_all_edge_points()
         this->mid_edge(edge_point, *eit);
         // store edge_point as property
         e_points_[*eit] = edge_point;
-#ifdef DEBUG_SUBDIV
-        utils_debug_point(edge_point, "Edge Point");
-#endif
+        DEBUG_POINT(edge_point, "Edge Point");
     }
 }
 
@@ -78,9 +67,7 @@ void SubdivDooSabin::compute_all_new_vertex_points()
             // TODO
 
             result_mesh_->add_vertex(new_vertex_point);
-#ifdef DEBUG_SUBDIV
-            utils_debug_point(new_vertex_point, "New Vertex Point");
-#endif
+            DEBUG_POINT(new_vertex_point, "New Vertex Point");
         } while (++vc != vc_end);
     }
 }

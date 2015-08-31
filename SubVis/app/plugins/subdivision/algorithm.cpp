@@ -1,5 +1,3 @@
-
-#include "plugins/subdivision/types.h"
 #include "plugins/subdivision/algorithm.h"
 
 namespace SubdivisionPlugin {
@@ -14,7 +12,9 @@ std::unique_ptr<Surface_mesh> Algorithm::subdivide(Surface_mesh& mesh, int steps
 
     for (int i = 0; i < steps; i++) {
         result_mesh_->clear();
+        DEBUG_MESH(*input_mesh_.get(), "input mesh")
         subdivide_specific_algorithm();
+        DEBUG_MESH(*result_mesh_.get(), "input mesh")
         // input mesh is now the previous result mesh
         input_mesh_.reset(new Surface_mesh{*(result_mesh_.get())});
     }

@@ -5,6 +5,9 @@
 #include <QString>
 #include "surface_mesh/Surface_mesh.h"
 
+#include "plugins/subdivision/utils.h"
+#include "plugins/subdivision/types.h"
+
 namespace SubdivisionPlugin {
 
 class Algorithm
