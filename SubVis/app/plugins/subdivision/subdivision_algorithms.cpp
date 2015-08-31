@@ -1,4 +1,4 @@
-#include <GL/gl.h>
+#include <exception>
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -44,31 +44,19 @@ void SubdivisionAlgorithms::set_draw_controller(SubVis::DrawController* draw_con
 
 void SubdivisionAlgorithms::draw_opengl()
 {
-    // TODO draw calls go here
-    // render limit surface
-    // maybe move that to a new class and call draw_opengl(Algorithm algo) with the active algorithm
-    // mesh: draw_controller_->mesh_data().mesh()
+    auto& algorithm = active_algorithm();
+    algorithm->draw_limit_surface(draw_controller_->mesh_data().mesh());
+}
 
-    // placeholder demo code:
-    const float nbSteps = 200.0;
-
-    glBegin(GL_QUAD_STRIP);
-    for (int i=0; i<nbSteps; ++i) {
-        const float ratio = i/nbSteps;
-        const float angle = 21.0*ratio;
-        const float c = cos(angle);
-        const float s = sin(angle);
-        const float r1 = 1.0 - 0.8f*ratio;
-        const float r2 = 0.8f - 0.8f*ratio;
-        const float alt = ratio - 0.5f;
-        const float nor = 0.5f;
-        const float up = sqrt(1.0-nor*nor);
-        glColor3f(1.0-ratio, 0.2f , ratio);
-        glNormal3f(nor*c, up, nor*s);
-        glVertex3f(r1*c, alt, r1*s);
-        glVertex3f(r2*c, alt+0.05f, r2*s);
+std::unique_ptr<Algorithm>& SubdivisionAlgorithms::active_algorithm()
+{
+    if (dropdown_->count() == 0) {
+        throw new std::logic_error("no algorithms loaded. ensure that at least one is loaded in the constructor.");
     }
-    glEnd();
+    const QString id = dropdown_->currentData().toString();
+    auto& result = algorithms_.at(id);
+
+    return result;
 }
 
 void SubdivisionAlgorithms::create_gui(QWidget* parent)
@@ -103,14 +91,11 @@ void SubdivisionAlgorithms::create_gui(QWidget* parent)
 
 void SubdivisionAlgorithms::subdivide_clicked(bool)
 {
-    if (dropdown_->count() == 0) {
-        return;
-    }
     int steps = steps_->value();
-    const QString id = dropdown_->currentData().toString();
     auto& mesh_data = draw_controller_->mesh_data();
+    auto& algorithm = active_algorithm();
 
-    auto result = algorithms_.at(id)->subdivide(mesh_data.mesh(), steps);
+    auto result = algorithm->subdivide(mesh_data.mesh(), steps);
 
     mesh_data.load(std::move(result));
 }

@@ -33,6 +33,8 @@ private:
     QSpinBox* steps_{nullptr};
     QComboBox* dropdown_{nullptr};
 
+    std::unique_ptr<Algorithm>& active_algorithm();
+
 private slots:
     void subdivide_clicked(bool);
 };

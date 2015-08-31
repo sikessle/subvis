@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <QString>
+#include <GL/gl.h>
 #include "surface_mesh/Surface_mesh.h"
 
 #include "plugins/subdivision/utils.h"
@@ -40,6 +41,12 @@ public:
      * @return A view on the mesh, but ownership stays in this class.
      */
     virtual Surface_mesh& result_mesh();
+
+    /**
+     * @brief Draws the limit surface of the given mesh with OpenGL.
+     * @param mesh The mesh to draw
+     */
+    virtual void draw_limit_surface(const Surface_mesh& mesh);
 
 protected:
     /**
