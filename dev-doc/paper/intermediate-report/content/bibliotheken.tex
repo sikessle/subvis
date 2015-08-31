@@ -212,28 +212,30 @@ Da Surface\_mesh sehr kompakt ist (es besteht nur aus sehr wenigen C++ und H-Dat
 
 \section{Rendering}
 
-Im folgenden Unterkapitel werden Bibliotheken oder Programme untersucht, die Polygonnetze rendern und inwieweit diese Funktionen übernommen werden können. 
+Im folgenden Unterkapitel werden Bibliotheken und bereits bestehende Software untersucht, mittels derer das Rendering von Polygonnetzen und Limesflächen realisiert werden kann.
 
-\subsection{BezierView}
-
-BezierView (kurz bview) ist ein einfaches Programm zum Rendern von Bézier Patches, rationalen Bézier Patches und Polygonnetzen \cite{Peters.bview.27.07.2015}.
-Das Programm wurde von Saleh Dindar, Xiaobin Wu, Jorg Peters (University of Florida) entwickelt
-und ist für Forschungs- und Lehrzwecke als Open Source Projekt
-frei verfügbar.
-Der Viewer ist in C++ geschrieben und verwendet OpenGL.
-
-Hier ist die Implementierung zum Rendern der Netze interessant.
-Diese Funktionalität können wir für das SubVis Projekt übernehmen bzw. als Hilfestellung für unsere
-konkrete Implementierung verwenden.
+Im Gegensatz zur großen Auswahl an unterschiedlichen Möglichkeiten wie beispielsweise bei den Datenstrukturen, beschränkt sich diese hier auf nur wenige Möglichkeiten. Die Wahl ist auf OpenGL wegen seinem großen Funktionsumfang und seiner weiten Verbreitung und auf BezierView auf Grund sehr guter funktionaler Überschneidungen gefallen.
 
 
 \subsection{OpenGL}
 
-Die API-Spezifikation OpenGL beschreibt einige hundert Befehle zur Programmierung von Grafikkarten.
-Basierend auf einem Zustandsautomaten ermöglicht OpenGL es, bei einem Draw-Call lediglich die veränderten Parameter mitzugeben.
-Somit müssen gleichbleibende Parameter nicht redundant angegeben werden, was auch die Performance erhöht.
-Die OpenGL-Befehle folgen einem konsistenten Namensschema, an dem sich einige Informationen ablesen lassen. So bezeichnet z. B. glVertex3fv() einen OpenGL-Befehl (gl), der einen Eckpunkt definiert (Vertex) und drei (3) float (f) Argumente als Zeiger (v) bekommt.
-OpenGL ist frei von jeglichen Lizenzen.
+Bei OpenGL handelt es sich um eine sehr weit verbreitete cross-platform Bibliothek für 2-D und 3-D Rendering.
+Die API-Spezifikation von OpenGL beinhaltet eine Vielzahl von Befehlen, welche sowohl softwarebasiertes, als auch Hardware beschleunigtes Rendering auf der Grafikkarte ermöglichen. Das ermöglicht eine effiziente Umsetzung des Renderings von Polygonnetzen und Flächen.
+
+Diese Effizienz zeigt sich beispielsweise auch bei Standardoperationen wie dem Draw-Call. Bedingt durch die Verwendung eines internen Zustandsautomaten muss der Befehl lediglich mit den veränderten Parametern aufgerufen werden. OpenGL-Befehle folgen einem konsistenten, sprachunabhängigen Namensschema, welches Informationen zum Aufruf und zur Funktionalität des Befehls enthält. So bezeichnet beispielsweise glVertex3fv() einen OpenGL-Befehl (gl), der einen Eckpunkt definiert (Vertex) und drei (3) float (f) Argumente als Zeiger (v) bekommt.
+
+Ein weiterer Vorteil von OpenGL ist die Lizenzfreiheit für Anwendungsentwickler.
+
+
+\subsection{BezierView}
+
+BezierView (kurz bview) ist ein einfaches Programm zum Rendern von Bézier Patches, rationalen Bézier Patches und Polygonnetzen 
+\\\cite{Peters.bview.27.07.2015}.
+
+Das Programm wurde von Saleh Dindar, Xiaobin Wu, Jorg Peters (University of Florida) entwickelt und ist für Forschungs- und Lehrzwecke als Open Source Projekt frei verfügbar. BezierView ist ebenso wie SubVis in C++ implementiert und verwendet OpenGL für das Rendering.
+
+Überschneidungen ergeben sich besonders beim Rendern der Polygonnetze und der Limesflächen. Die Implementierung von BezierView kann als Grundlage für die konkrete Umsetzung von SubVis verwendet werden.
+
 
 \section{Grafische Oberfläche}
 
@@ -241,7 +243,7 @@ In diesem Abschnitt werden die Bibliotheken, die für die Darstellung nötig sin
 
 \subsection{Qt} % im finalen Bericht (2. Semester) noch ausbauen!
 
-\begin{figure}
+\begin{figure}[hp]
   \centering
   \includegraphics[width=0.6\textwidth]{content/media/qt_signal}
   \caption{Signal-Slots Konzept von Qt \cite{Qt}}
@@ -292,33 +294,3 @@ Diese Annotationen werden dann mittels Transformation in ein Ausgabeformat (z. B
 Der Vorteil liegt darin, dass so die Dokumentation sehr nahe und eng mit dem Quellcode verbunden ist, was die Aktualität der Dokumentation begünstigt.
 Qt Creator bietet Syntaxhervorhebung für die speziellen Kommentare und erleichtert so die Verwendung.
 Doxygen steht unter der \ac{GPL}.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
