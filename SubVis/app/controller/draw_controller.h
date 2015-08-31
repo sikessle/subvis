@@ -1,5 +1,5 @@
-#ifndef SUBVIS_DRAW_CONTROLLER_H
-#define SUBVIS_DRAW_CONTROLLER_H
+#ifndef SUBVIS_CONTROLLER_DRAW_CONTROLLER_H
+#define SUBVIS_CONTROLLER_DRAW_CONTROLLER_H
 
 #include <QObject>
 
@@ -18,4 +18,4 @@ public:
 };
 
 } // namespace subvis
-#endif // SUBVIS_DRAW_CONTROLLER_H
+#endif // SUBVIS_CONTROLLER_DRAW_CONTROLLER_H

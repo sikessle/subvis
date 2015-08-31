@@ -10,8 +10,8 @@
  *
  */
 
-#ifndef SUBDIVISIONPLUGIN_SD_DOO_SABIN_H
-#define SUBDIVISIONPLUGIN_SD_DOO_SABIN_H
+#ifndef SUBVIS_PLUGINS_SUBDIVISION_SD_DOO_SABIN_H
+#define SUBVIS_PLUGINS_SUBDIVISION_SD_DOO_SABIN_H
 
 // ===============[ includes ]===============
 #include "plugins/subdivision/algorithm.h"
@@ -70,4 +70,4 @@ private:
 
 } // namespace subdivision
 
-#endif // SUBDIVISION_SD_DOO_SABIN_H
+#endif // SUBVIS_PLUGINS_SUBDIVISION_SD_DOO_SABIN_H

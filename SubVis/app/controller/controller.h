@@ -1,5 +1,5 @@
-#ifndef SUBVIS_CONTROLLER_H
-#define SUBVIS_CONTROLLER_H
+#ifndef SUBVIS_CONTROLLER_CONTROLLER_H
+#define SUBVIS_CONTROLLER_CONTROLLER_H
 
 #include <QObject>
 
@@ -23,4 +23,4 @@ public slots:
 };
 
 } // namespace subvis
-#endif // SUBVIS_CONTROLLER_H
+#endif // SUBVIS_CONTROLLER_CONTROLLER_H

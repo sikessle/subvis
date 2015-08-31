@@ -1,5 +1,5 @@
-#ifndef SUBDIVISION_TYPES_H
-#define SUBDIVISION_TYPES_H
+#ifndef SUBVIS_PLUGINS_SUBDIVISION_TYPES_H
+#define SUBVIS_PLUGINS_SUBDIVISION_TYPES_H
 
 #include <string>
 
@@ -38,4 +38,4 @@ const ::std::string kSurfMeshPropVertexIndexSubMeshF = "f:subdivision_mesh_verte
 
 } // namespace subdivision
 
-#endif // SUBDIVISION_TYPES_H
+#endif // SUBVIS_PLUGINS_SUBDIVISION_TYPES_H

@@ -1,5 +1,5 @@
-#ifndef SUBDIVISIONPLUGIN_SD_LOOP_H
-#define SUBDIVISIONPLUGIN_SD_LOOP_H
+#ifndef SUBVIS_PLUGINS_SUBDIVISION_SD_LOOP_H
+#define SUBVIS_PLUGINS_SUBDIVISION_SD_LOOP_H
 
 #include "plugins/subdivision/algorithm.h"
 
@@ -21,4 +21,4 @@ protected:
 
 } // namespace subdivision
 
-#endif // SUBDIVISION_SD_LOOP_H
+#endif // SUBVIS_PLUGINS_SUBDIVISION_SD_LOOP_H

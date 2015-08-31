@@ -1,5 +1,5 @@
-#ifndef SUBDIVISIONPLUGIN_UTILS_H
-#define SUBDIVISIONPLUGIN_UTILS_H
+#ifndef SUBVIS_PLUGINS_SUBDIVISION_UTILS_H
+#define SUBVIS_PLUGINS_SUBDIVISION_UTILS_H
 
 // ===============[ includes ]===============
 
@@ -45,5 +45,5 @@ void utils_debug_point(const surface_mesh::Point point, const QString& title);
 #endif
 
 } // namespace subdivision
-#endif // SUBDIVISION_UTILS_H
+#endif // SUBVIS_PLUGINS_SUBDIVISION_UTILS_H
 

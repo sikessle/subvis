@@ -1,5 +1,5 @@
-#ifndef SUBVISAPP_SUBVIS_H
-#define SUBVISAPP_H
+#ifndef SUBVIS_SUBVIS_APP_H
+#define SUBVIS_SUBVIS_APP_H
 
 #include <memory>
 #include <QSplashScreen>
@@ -32,4 +32,4 @@ private:
 
 } // namespace subvis
 
-#endif // SUBVIS_SUBVISAPP_H
+#endif // SUBVIS_SUBVIS_APP_H

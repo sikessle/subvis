@@ -1,5 +1,5 @@
-#ifndef SUBDIVISION_SD_BUTTERFLY_H
-#define SUBDIVISION_SD_BUTTERFLY_H
+#ifndef SUBVIS_PLUGINS_SUBDIVISION_SD_BUTTERFLY_H
+#define SUBVIS_PLUGINS_SUBDIVISION_SD_BUTTERFLY_H
 
 #include "plugins/subdivision/algorithm.h"
 
@@ -21,4 +21,4 @@ protected:
 
 } // namespace subdivision
 
-#endif // SUBDIVISION_SD_BUTTERFLY_H
+#endif // SUBVIS_PLUGINS_SUBDIVISION_SD_BUTTERFLY_H

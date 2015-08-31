@@ -11,8 +11,8 @@
  *
  */
 
-#ifndef SUBDIVISIONPLUGIN_SD_CATMULL_H
-#define SUBDIVISIONPLUGIN_SD_CATMULL_H
+#ifndef SUBVIS_PLUGINS_SUBDIVISION_SD_CATMULL_H
+#define SUBVIS_PLUGINS_SUBDIVISION_SD_CATMULL_H
 
 // ===============[ includes ]===============
 #include "plugins/subdivision/types.h"
@@ -117,5 +117,5 @@ private:
 void test_catmull();
 
 } // namespace subdivision
-#endif // SUBDIVISION_SD_CATMULL_H
+#endif // SUBVIS_PLUGINS_SUBDIVISION_SD_CATMULL_H
 

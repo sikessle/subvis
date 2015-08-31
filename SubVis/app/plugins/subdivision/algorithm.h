@@ -1,5 +1,5 @@
-#ifndef SUBDIVISION_ALGORITHM_H
-#define SUBDIVISION_ALGORITHM_H
+#ifndef SUBVIS_PLUGINS_SUBDIVISION_ALGORITHM_H
+#define SUBVIS_PLUGINS_SUBDIVISION_ALGORITHM_H
 
 #include <memory>
 #include <QString>
@@ -90,5 +90,5 @@ protected:
 };
 
 } // namespace subdivision
-#endif // SUBDIVISION_ALGORITHM_H
+#endif // SUBVIS_PLUGINS_SUBDIVISION_ALGORITHM_H
 

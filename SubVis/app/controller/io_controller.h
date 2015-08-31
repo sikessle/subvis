@@ -1,5 +1,5 @@
-#ifndef SUBIVS_IO_CONTROLLER_H
-#define SUBIVS_IO_CONTROLLER_H
+#ifndef SUBIVS_CONTROLLER_IO_CONTROLLER_H
+#define SUBIVS_CONTROLLER_IO_CONTROLLER_H
 
 #include <QObject>
 
@@ -21,4 +21,4 @@ public:
 };
 
 } // namespace subvis
-#endif // SUBIVS_IO_CONTROLLER_H
+#endif // SUBIVS_CONTROLLER_IO_CONTROLLER_H
