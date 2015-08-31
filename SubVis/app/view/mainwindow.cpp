@@ -5,7 +5,7 @@
 #include "ui_mainwindow.h"
 #include "view/mainwindow.h"
 
-namespace SubVis {
+namespace subvis {
 
 MainWindow::MainWindow(DrawController& draw_controller,
                        IOController& io_controller,

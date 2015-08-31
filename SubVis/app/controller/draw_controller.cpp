@@ -1,6 +1,6 @@
 #include "draw_controller.h"
 
-namespace SubVis {
+namespace subvis {
 
 DrawController::DrawController(MeshData& mesh_data) : Controller{mesh_data}
 {

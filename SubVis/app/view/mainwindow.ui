@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SubVis::MainWindow</class>
- <widget class="QMainWindow" name="SubVis::MainWindow">
+ <class>subvis::MainWindow</class>
+ <widget class="QMainWindow" name="subvis::MainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>

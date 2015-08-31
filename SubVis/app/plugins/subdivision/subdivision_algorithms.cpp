@@ -37,7 +37,7 @@ const QString SubdivisionAlgorithms::name()
     return "Subdivision";
 }
 
-void SubdivisionAlgorithms::set_draw_controller(SubVis::DrawController* draw_controller)
+void SubdivisionAlgorithms::set_draw_controller(subvis::DrawController* draw_controller)
 {
     draw_controller_ = draw_controller;
 }

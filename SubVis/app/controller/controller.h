@@ -5,7 +5,7 @@
 
 #include "model/mesh_data.h"
 
-namespace SubVis {
+namespace subvis {
 
 class Controller : public QObject
 {

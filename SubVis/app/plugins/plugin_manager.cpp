@@ -2,7 +2,7 @@
 
 #include "plugins/plugin_manager.h"
 
-namespace SubVis {
+namespace subvis {
 
 void PluginManager::set_draw_controller(DrawController& draw_controller)
 {    

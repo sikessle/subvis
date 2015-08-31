@@ -3,7 +3,7 @@
 
 #include "view/viewer_widget.h"
 
-namespace SubVis {
+namespace subvis {
 
 class ViewerMeshWidget : public ViewerWidget
 {

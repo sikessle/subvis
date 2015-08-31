@@ -1,6 +1,6 @@
 #include "view/viewer_widget.h"
 
-namespace SubVis {
+namespace subvis {
 
 ViewerWidget::ViewerWidget(QWidget* parent) : QGLViewer{parent}
 {

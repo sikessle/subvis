@@ -5,7 +5,7 @@
 
 #include "controller/controller.h"
 
-namespace SubVis {
+namespace subvis {
 
 class IOController : public Controller
 {

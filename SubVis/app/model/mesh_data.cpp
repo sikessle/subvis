@@ -1,6 +1,6 @@
 #include "mesh_data.h"
 
-namespace SubVis {
+namespace subvis {
 
 MeshData::MeshData()
 {

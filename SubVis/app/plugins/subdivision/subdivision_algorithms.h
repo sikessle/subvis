@@ -12,7 +12,7 @@
 
 namespace SubdivisionPlugin {
 
-class SubdivisionAlgorithms : public QObject, public SubVis::SubVisPlugin
+class SubdivisionAlgorithms : public QObject, public subvis::SubVisPlugin
 {
     Q_OBJECT
 
@@ -21,12 +21,12 @@ public:
 
     virtual const QString id() override;
     virtual const QString name() override;
-    virtual void set_draw_controller(SubVis::DrawController* draw_controller) override;
+    virtual void set_draw_controller(subvis::DrawController* draw_controller) override;
     virtual void draw_opengl() override;
     virtual void create_gui(QWidget* parent) override;
 
 private:
-    SubVis::DrawController* draw_controller_{nullptr};
+    subvis::DrawController* draw_controller_{nullptr};
     std::map<QString, std::unique_ptr<Algorithm>> algorithms_;
 
     QPushButton* subdivide_{nullptr};

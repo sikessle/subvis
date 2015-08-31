@@ -6,7 +6,7 @@
 #include <QObject>
 #include "surface_mesh/Surface_mesh.h"
 
-namespace SubVis {
+namespace subvis {
 
 using surface_mesh::Surface_mesh;
 

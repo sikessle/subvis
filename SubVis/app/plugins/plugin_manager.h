@@ -10,7 +10,7 @@
 #include "plugins/subvis_plugin.h"
 #include "controller/draw_controller.h"
 
-namespace SubVis {
+namespace subvis {
 
 struct PluginWrapper
 {

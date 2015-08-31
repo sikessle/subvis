@@ -1,6 +1,6 @@
 #include "view/viewer_plugin_widget.h"
 
-namespace SubVis {
+namespace subvis {
 
 ViewerPluginWidget::ViewerPluginWidget(QWidget* parent) : ViewerWidget{parent}
 {

@@ -3,7 +3,7 @@
 
 int main(int argc, char* argv[])
 {
-    using SubVis::SubVisApp;
+    using subvis::SubVisApp;
 
     SubVisApp subvis_app{argc, argv};
 

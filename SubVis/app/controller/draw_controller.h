@@ -6,7 +6,7 @@
 
 #include "controller/controller.h"
 
-namespace SubVis {
+namespace subvis {
 
 using surface_mesh::Surface_mesh;
 

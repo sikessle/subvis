@@ -4,7 +4,7 @@
 #include "plugins/subvis_plugin.h"
 #include "view/viewer_widget.h"
 
-namespace SubVis {
+namespace subvis {
 
 class ViewerPluginWidget : public ViewerWidget
 {

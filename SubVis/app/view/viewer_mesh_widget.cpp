@@ -1,6 +1,6 @@
 #include "view/viewer_mesh_widget.h"
 
-namespace SubVis {
+namespace subvis {
 
 ViewerMeshWidget::ViewerMeshWidget(QWidget* parent) : ViewerWidget{parent}
 {

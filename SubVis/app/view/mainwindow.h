@@ -11,7 +11,7 @@
 #include "controller/io_controller.h"
 #include "plugins/plugin_manager.h"
 
-namespace SubVis {
+namespace subvis {
 
 namespace Ui {
 class MainWindow;

@@ -8,7 +8,7 @@
 #include "plugins/plugin_manager.h"
 #include "plugins/subvis_plugin.h"
 
-namespace SubVis {
+namespace subvis {
 
 class SubVisApp : protected QApplication
 {

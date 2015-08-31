@@ -11,7 +11,7 @@
 #include "subvis_app.h"
 
 
-namespace SubVis {
+namespace subvis {
 
 SubVisApp::SubVisApp(int& argc, char* argv[]) : QApplication(argc, argv)
 {

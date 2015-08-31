@@ -1,6 +1,6 @@
 #include "io_controller.h"
 
-namespace SubVis {
+namespace subvis {
 
 IOController::IOController(MeshData& mesh_data) : Controller{mesh_data}
 {
