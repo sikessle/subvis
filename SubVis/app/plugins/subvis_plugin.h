@@ -25,7 +25,7 @@ public:
     virtual void create_gui(QWidget* parent) = 0;
 };
 
-} // namespace SubVis
+} // namespace subvis
 
 #endif // SUBVIS_SUBVIS_PLUGIN_H
 

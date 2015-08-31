@@ -68,6 +68,6 @@ private:
 };
 
 
-} // namespace SubdivisionPlugin
+} // namespace subdivision
 
-#endif // SUBDIVISIONPLUGIN_SD_DOO_SABIN_H
+#endif // SUBDIVISION_SD_DOO_SABIN_H

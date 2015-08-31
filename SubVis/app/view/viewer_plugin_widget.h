@@ -23,5 +23,5 @@ public slots:
     void set_drawing_plugin(SubVisPlugin* plugin);
 };
 
-} // namespace SubVis
+} // namespace subvis
 #endif // SUBVIS_VIEWER_PLUGIN_WIDGET_H

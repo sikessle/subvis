@@ -114,4 +114,4 @@ MainWindow::~MainWindow()
     delete ui_;
 }
 
-} // namespace SubVis
+} // namespace subvis

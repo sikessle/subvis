@@ -1,6 +1,6 @@
 #include "plugins/subdivision/algorithm.h"
 
-namespace subdivisionplugin {
+namespace subdivision {
 
 using surface_mesh::Surface_mesh;
 using surface_mesh::Point;
@@ -96,4 +96,4 @@ void Algorithm::mid_edge(Point& mid_edge, const Surface_mesh::Edge& edge)
     mid_edge /= 2;
 }
 
-} // namespace SubdivisionPlugin
+} // namespace subdivision

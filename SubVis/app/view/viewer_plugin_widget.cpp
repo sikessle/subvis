@@ -18,4 +18,4 @@ void ViewerPluginWidget::set_drawing_plugin(SubVisPlugin* plugin)
     drawing_plugin_ = plugin;
 }
 
-} // namespace SubVis
+} // namespace subvis

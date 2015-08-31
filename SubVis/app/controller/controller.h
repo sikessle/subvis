@@ -22,5 +22,5 @@ signals:
 public slots:
 };
 
-} // namespace SubVis
+} // namespace subvis
 #endif // SUBVIS_CONTROLLER_H

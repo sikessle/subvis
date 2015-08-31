@@ -45,6 +45,6 @@ void utils_debug_point(const surface_mesh::Point point, const QString& title);
 
 #endif
 
-} // namespace SubdivisionPlugin
-#endif // SUBDIVISIONPLUGIN_UTILS_H
+} // namespace subdivision
+#endif // SUBDIVISION_UTILS_H
 

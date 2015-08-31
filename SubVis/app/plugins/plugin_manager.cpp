@@ -23,5 +23,5 @@ void PluginManager::register_plugin(SubVisPlugin* plugin)
     plugins_[id] = {name, std::unique_ptr<SubVisPlugin>{plugin}};
 }
 
-} // namespace SubVis
+} // namespace subvis
 

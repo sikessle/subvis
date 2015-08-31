@@ -42,5 +42,5 @@ public slots:
 
 };
 
-} // namespace SubVis
+} // namespace subvis
 #endif // SUBVIS_MESH_DATA_H

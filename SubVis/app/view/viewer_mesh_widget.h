@@ -15,5 +15,5 @@ protected:
 };
 
 
-} // namespace SubVis
+} // namespace subvis
 #endif // SUBVIS_VIEW_VIEWER_MESH_WIDGET_H

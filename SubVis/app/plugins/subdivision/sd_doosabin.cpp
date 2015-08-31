@@ -1,6 +1,6 @@
 #include "plugins/subdivision/sd_doosabin.h"
 
-namespace subdivisionplugin {
+namespace subdivision {
 
 const QString SubdivDooSabin::id()
 {
@@ -88,4 +88,4 @@ void SubdivDooSabin::compute_new_vertex_point(Point& new_vertex_point, const Sur
     new_vertex_point = (v_points_[vertex] + f_points_[face] + e_points_[e1] + e_points_[e2] ) / 4;
 }
 
-} // namespace SubVis
+} // namespace subdivision

@@ -67,5 +67,5 @@ std::unique_ptr<QSplashScreen> SubVisApp::create_show_splash()
     return splash;
 }
 
-} // namespace SubVis
+} // namespace subvis
 

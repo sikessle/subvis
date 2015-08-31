@@ -27,4 +27,4 @@ const std::string& IOController::persist_file_formats() const
     return mesh_data_.persist_file_formats();
 }
 
-} // namespace SubVis
+} // namespace subvis

@@ -20,5 +20,5 @@ public:
     MeshData& mesh_data();
 };
 
-} // namespace SubVis
+} // namespace subvis
 #endif // SUBVIS_DRAW_CONTROLLER_H

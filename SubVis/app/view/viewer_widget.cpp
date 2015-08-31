@@ -17,4 +17,4 @@ void ViewerWidget::enforce_redraw()
     updateGL();
 }
 
-} // namespace SubVis
+} // namespace subvis

@@ -114,6 +114,6 @@ private:
 
 void test_catmull();
 
-} // namespace SubdivisionPlugin
-#endif // SUBDIVISIONPLUGIN_SD_CATMULL_H
+} // namespace subdivision
+#endif // SUBDIVISION_SD_CATMULL_H
 

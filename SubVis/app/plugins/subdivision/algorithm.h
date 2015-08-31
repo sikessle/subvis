@@ -93,6 +93,6 @@ protected:
 
 };
 
-} // namespace SubdivisionPlugin
-#endif // SUBDIVISIONPLUGIN_ALGORITHM_H
+} // namespace subdivision
+#endif // SUBDIVISION_ALGORITHM_H
 

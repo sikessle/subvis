@@ -17,4 +17,4 @@ void SubdivLoop::subdivide_specific_algorithm()
 
 }
 
-} // namespace SubVis
+} // namespace subdivision

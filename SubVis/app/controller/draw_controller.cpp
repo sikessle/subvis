@@ -11,5 +11,5 @@ MeshData& DrawController::mesh_data()
     return mesh_data_;
 }
 
-} // namespace SubVis
+} // namespace subvis
 

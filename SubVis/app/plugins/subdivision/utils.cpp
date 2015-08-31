@@ -28,4 +28,4 @@ void utils_debug_point(const Point point, const QString& title) {
 
 // ===============[ private implementation ]===============
 
-} // namespace SubdivisionPlugin
+} // namespace subdivision

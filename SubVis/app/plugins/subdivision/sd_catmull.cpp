@@ -8,7 +8,7 @@
 #include "plugins/subdivision/sd_catmull.h"
 
 
-namespace subdivisionplugin {
+namespace subdivision {
 
 using ::std::string;
 using surface_mesh::Surface_mesh;
@@ -200,4 +200,4 @@ void SubdivCatmull::avg_mid_edges(Point& avg_mid_edges, const Surface_mesh::Vert
         avg_mid_edges /= i;
 }
 
-} // namespace SubdivisionPlugin
+} // namespace subdivision

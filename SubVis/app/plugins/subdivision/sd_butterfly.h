@@ -19,6 +19,6 @@ protected:
 
 };
 
-} // namespace SubdivisionPlugin
+} // namespace subdivision
 
-#endif // SUBDIVISIONPLUGIN_SD_BUTTERFLY_H
+#endif // SUBDIVISION_SD_BUTTERFLY_H

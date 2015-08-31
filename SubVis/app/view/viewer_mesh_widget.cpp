@@ -47,5 +47,5 @@ void ViewerMeshWidget::draw()
     glEnd();
 }
 
-} // namespace SubVis
+} // namespace subvis
 

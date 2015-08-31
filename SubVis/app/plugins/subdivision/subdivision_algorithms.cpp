@@ -99,4 +99,4 @@ void SubdivisionAlgorithms::subdivide_clicked(bool)
     mesh_data.load(std::move(result));
 }
 
-} // namespace SubdivisionPlugin
+} // namespace subdivision

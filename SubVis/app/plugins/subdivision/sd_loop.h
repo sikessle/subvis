@@ -19,6 +19,6 @@ protected:
 
 };
 
-} // namespace SubdivisionPlugin
+} // namespace subdivision
 
-#endif // SUBDIVISIONPLUGIN_SD_LOOP_H
+#endif // SUBDIVISION_SD_LOOP_H

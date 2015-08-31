@@ -29,5 +29,5 @@ public slots:
     void enforce_redraw();
 };
 
-} // namespace SubVis
+} // namespace subvis
 #endif // SUBVIS_VIEWER_WIDGET_H

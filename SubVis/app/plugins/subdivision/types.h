@@ -36,6 +36,6 @@ const ::std::string kSurfMeshPropVertexIndexSubMeshV = "v:subdivision_mesh_verte
 const ::std::string kSurfMeshPropVertexIndexSubMeshE = "e:subdivision_mesh_vertex_index";
 const ::std::string kSurfMeshPropVertexIndexSubMeshF = "f:subdivision_mesh_vertex_index";
 
-} // namespace SubdivisionPlugin
+} // namespace subdivision
 
-#endif // SUBDIVISIONPLUGIN_TYPES_H
+#endif // SUBDIVISION_TYPES_H

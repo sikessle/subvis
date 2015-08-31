@@ -30,6 +30,6 @@ private:
     std::unique_ptr<QSplashScreen> create_show_splash();
 };
 
-} // namespace SubVis
+} // namespace subvis
 
 #endif // SUBVIS_SUBVISAPP_H

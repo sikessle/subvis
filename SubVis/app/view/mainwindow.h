@@ -53,5 +53,5 @@ signals:
 };
 
 
-} // namespace SubVis
+} // namespace subvis
 #endif // SUBVIS_MAINWINDOW_H

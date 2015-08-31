@@ -20,5 +20,5 @@ public:
     const std::string& persist_file_formats() const;
 };
 
-} // namespace SubVis
+} // namespace subvis
 #endif // SUBIVS_IO_CONTROLLER_H

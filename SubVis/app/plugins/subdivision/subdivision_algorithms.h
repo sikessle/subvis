@@ -39,5 +39,5 @@ private slots:
     void subdivide_clicked(bool);
 };
 
-} // namespace SubdivisionPlugin
-#endif // SUBDIVISIONPLUGIN_SUBDIVISON_ALGORITHMS_H
+} // namespace subdivision
+#endif // SUBDIVISION_SUBDIVISON_ALGORITHMS_H

@@ -43,5 +43,5 @@ private:
     std::map<QString, PluginWrapper> plugins_;
 };
 
-} // namespace SubVis
+} // namespace subvis
 #endif // SUBVIS_PLUGIN_MANAGER_H
