@@ -8,8 +8,6 @@
 
 namespace subvis {
 
-using surface_mesh::Surface_mesh;
-
 class MeshData : public QObject
 {
     Q_OBJECT
@@ -17,7 +15,7 @@ class MeshData : public QObject
 public:
     MeshData();
 
-    Surface_mesh& mesh() const;
+    surface_mesh::Surface_mesh& mesh() const;
     /**
      * @brief Should be called if the mesh was modified.
      * Note that load() will also trigger this method.
@@ -25,13 +23,13 @@ public:
     void set_updated();
     bool empty() const;
     bool load(const std::string& filename);
-    void load(std::unique_ptr<Surface_mesh> mesh);
+    void load(std::unique_ptr<surface_mesh::Surface_mesh> mesh);
     bool persist(const std::string& filename) const;
     const std::string& load_file_formats() const;
     const std::string& persist_file_formats() const;
 
 private:
-    std::unique_ptr<Surface_mesh> mesh_object_{new Surface_mesh};
+    std::unique_ptr<surface_mesh::Surface_mesh> mesh_object_{new surface_mesh::Surface_mesh};
     const std::string kLoadFileFormats {"*.obj *.off *.stl"};
     const std::string kPersistFileFormats {"*.off"};
 

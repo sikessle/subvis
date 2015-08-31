@@ -3,9 +3,7 @@
 
 int main(int argc, char* argv[])
 {
-    using subvis::SubVisApp;
-
-    SubVisApp subvis_app{argc, argv};
+    subvis::SubVisApp subvis_app{argc, argv};
 
     // Register your plugins here:
     subvis_app.register_plugin(new subdivision::SubdivisionAlgorithms);

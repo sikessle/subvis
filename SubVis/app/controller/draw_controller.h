@@ -8,8 +8,6 @@
 
 namespace subvis {
 
-using surface_mesh::Surface_mesh;
-
 class DrawController : public Controller
 {
     Q_OBJECT

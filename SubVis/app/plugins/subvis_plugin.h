@@ -8,8 +8,6 @@
 
 namespace subvis {
 
-using surface_mesh::Surface_mesh;
-
 /**
  * @brief Interface for plugins
  */
