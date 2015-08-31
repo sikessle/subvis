@@ -5,6 +5,7 @@
 
 #include <string>
 #include <QString>
+#include <plugins/subdivision/types.h>
 #include "surface_mesh/Surface_mesh.h"
 
 namespace SubdivisionPlugin {
