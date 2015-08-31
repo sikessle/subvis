@@ -11,6 +11,20 @@ void ViewerMeshWidget::draw()
     // TODO: do our own mesh based rendering here.
     // get mesh: draw_controller->mesh_data().mesh();
 
+    /* Something like this..
+	glDisable(GL_LIGHTING);
+    glColor3f(1.0, 1.0, 1.0);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+    glEnableClientState(GL_VERTEX_ARRAY);
+    //GL::glVertexPointer(mesh_.points());
+
+    //glDrawElements(GL_TRIANGLES, indices_.size(), GL_UNSIGNED_INT, &indices_[0]);
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    */
+
     // placeholder demo code:
     const float nbSteps = 200.0;
 
