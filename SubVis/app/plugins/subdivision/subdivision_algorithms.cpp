@@ -54,9 +54,8 @@ std::unique_ptr<Algorithm>& SubdivisionAlgorithms::active_algorithm()
         throw new std::logic_error("no algorithms loaded. ensure that at least one is loaded in the constructor.");
     }
     const QString id = dropdown_->currentData().toString();
-    auto& result = algorithms_.at(id);
 
-    return result;
+    return algorithms_.at(id);
 }
 
 void SubdivisionAlgorithms::create_gui(QWidget* parent)
