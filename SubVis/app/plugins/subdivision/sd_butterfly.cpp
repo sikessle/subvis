@@ -1,7 +1,7 @@
 #include "plugins/subdivision/sd_butterfly.h"
 
 
-namespace SubdivisionPlugin {
+namespace subdivision {
 
 const QString SubdivButterfly::id()
 {

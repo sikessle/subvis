@@ -9,7 +9,7 @@
 #include "plugins/subdivision/utils.h"
 #include "plugins/subdivision/types.h"
 
-namespace SubdivisionPlugin {
+namespace subdivision {
 
 class Algorithm
 {

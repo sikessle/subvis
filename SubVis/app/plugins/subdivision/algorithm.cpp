@@ -1,6 +1,6 @@
 #include "plugins/subdivision/algorithm.h"
 
-namespace SubdivisionPlugin {
+namespace subdivisionplugin {
 
 using surface_mesh::Surface_mesh;
 using surface_mesh::Point;

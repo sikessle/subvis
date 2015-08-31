@@ -10,7 +10,7 @@
 #include "plugins/subvis_plugin.h"
 #include "plugins/subdivision/algorithm.h"
 
-namespace SubdivisionPlugin {
+namespace subdivision {
 
 class SubdivisionAlgorithms : public QObject, public subvis::SubVisPlugin
 {

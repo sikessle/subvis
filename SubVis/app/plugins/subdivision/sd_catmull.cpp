@@ -8,7 +8,7 @@
 #include "plugins/subdivision/sd_catmull.h"
 
 
-namespace SubdivisionPlugin {
+namespace subdivisionplugin {
 
 using ::std::string;
 using surface_mesh::Surface_mesh;

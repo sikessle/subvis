@@ -8,7 +8,7 @@ int main(int argc, char* argv[])
     SubVisApp subvis_app{argc, argv};
 
     // Register your plugins here:
-    subvis_app.register_plugin(new SubdivisionPlugin::SubdivisionAlgorithms);
+    subvis_app.register_plugin(new subdivisionplugin::SubdivisionAlgorithms);
     // end registering plugins
 
     return subvis_app.run();

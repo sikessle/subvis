@@ -3,7 +3,7 @@
 
 #include "plugins/subdivision/algorithm.h"
 
-namespace SubdivisionPlugin {
+namespace subdivision {
 
 class SubdivButterfly : public Algorithm
 {

@@ -11,7 +11,7 @@
 
 #include "plugins/subdivision/subdivision_algorithms.h"
 
-namespace SubdivisionPlugin {
+namespace subdivision {
 
 SubdivisionAlgorithms::SubdivisionAlgorithms()
 {

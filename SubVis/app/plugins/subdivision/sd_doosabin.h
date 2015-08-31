@@ -16,7 +16,7 @@
 // ===============[ includes ]===============
 #include "plugins/subdivision/algorithm.h"
 
-namespace SubdivisionPlugin {
+namespace subdivision {
 
 // ===============[ public prototypes ]===============
 

@@ -1,6 +1,6 @@
 #include "plugins/subdivision/sd_loop.h"
 
-namespace SubdivisionPlugin {
+namespace subdivision {
 
 const QString SubdivLoop::id()
 {

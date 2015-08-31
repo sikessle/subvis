@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace SubdivisionPlugin {
+namespace subdivision {
 
 
 #define DEBUG_SUBDIV

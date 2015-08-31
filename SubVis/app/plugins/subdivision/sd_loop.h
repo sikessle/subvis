@@ -3,7 +3,7 @@
 
 #include "plugins/subdivision/algorithm.h"
 
-namespace SubdivisionPlugin {
+namespace subdivision {
 
 class SubdivLoop : public Algorithm
 {

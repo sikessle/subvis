@@ -8,7 +8,7 @@
 #include "plugins/subdivision/utils.h"
 
 
-namespace SubdivisionPlugin {
+namespace subdivision {
 
 using surface_mesh::Surface_mesh;
 using surface_mesh::Point;
