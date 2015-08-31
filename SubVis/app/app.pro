@@ -16,6 +16,20 @@ UI_DIR = view/
 TARGET = SubVis
 TEMPLATE = app
 
+# Extra clean up commands
+extraclean.commands = rm -rf ../build
+clean.depends = extraclean
+QMAKE_EXTRA_TARGETS += clean extraclean
+
+
+# Target for documentation
+doc.target = doc
+doc.depends = $(SOURCES) doxygen.conf
+doc.commands = doxygen doxygen.conf
+QMAKE_EXTRA_TARGETS += doc
+
+RESOURCES += media.qrc
+
 # Libraries
 LIBS += -L"../lib/surface_mesh" \
         -L"../lib/QGLViewer" \
@@ -66,24 +80,6 @@ SOURCES += main.cpp \
 
 FORMS    += view/mainwindow.ui
 
-
-
-# Extra clean up commands
-extraclean.commands = rm -rf ../build
-clean.depends = extraclean
-QMAKE_EXTRA_TARGETS += clean extraclean
-
-
-# Add astylerc
-DISTFILES = .astylerc
-
-# Target for documentation
-doc.target = doc
-doc.depends = $(SOURCES) doxygen.conf
-doc.commands = doxygen doxygen.conf
-QMAKE_EXTRA_TARGETS += doc
-
-RESOURCES += media.qrc
 
 
 
