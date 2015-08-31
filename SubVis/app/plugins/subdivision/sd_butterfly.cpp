@@ -1,4 +1,7 @@
+
+#include "plugins/subdivision/types.h"
 #include "plugins/subdivision/sd_butterfly.h"
+
 
 namespace SubdivisionPlugin {
 

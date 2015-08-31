@@ -2,8 +2,6 @@
 #define SUBDIVISIONPLUGIN_SD_BUTTERFLY_H
 
 #include "surface_mesh/Surface_mesh.h"
-#include "plugins/subdivision/types.h"
-
 #include "plugins/subdivision/algorithm.h"
 
 namespace SubdivisionPlugin {

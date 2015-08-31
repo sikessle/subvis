@@ -2,7 +2,6 @@
 #define SUBDIVISIONPLUGIN_SD_LOOP_H
 
 #include "surface_mesh/Surface_mesh.h"
-#include "plugins/subdivision/types.h"
 
 #include "plugins/subdivision/algorithm.h"
 

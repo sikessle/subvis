@@ -6,8 +6,10 @@
 #include "surface_mesh/Surface_mesh.h"
 #include "surface_mesh/IO.h"
 
-#include "plugins/subdivision/sd_catmull.h"
+#include "plugins/subdivision/types.h"
 #include "plugins/subdivision/utils.h"
+#include "plugins/subdivision/sd_catmull.h"
+
 
 namespace SubdivisionPlugin {
 
@@ -48,8 +50,9 @@ void SubdivCatmull::subdivide_specific_algorithm()
 {
     this->add_mesh_properties();
     this->init_mesh_members();
-
+#ifdef DEBUG_SUBDIV
     utils_debug_mesh(*(input_mesh_.get()), "Input Mesh");
+#endif
     // loop over all faces and compute face points
     this->compute_all_face_points();
     // loop over all edges and compute edge points
@@ -61,7 +64,9 @@ void SubdivCatmull::subdivide_specific_algorithm()
     for (fit = input_mesh_->faces_begin(); fit != input_mesh_->faces_end(); ++fit) {
         this->compute_new_faces(*fit);
     }
+#ifdef DEBUG_SUBDIV
     utils_debug_mesh(*(result_mesh_.get()), "Output Mesh");
+#endif
     remove_mesh_properties();
 }
 
@@ -71,10 +76,12 @@ void SubdivCatmull::compute_all_face_points()
     Point face_point;
     for (fit = input_mesh_->faces_begin(); fit != input_mesh_->faces_end(); ++fit) {
         this->compute_face_point(face_point, *fit);
-        // add new face point to mesh
+        // store face point as property
         f_points_[*fit] = face_point;
-        utils_debug_point(face_point, "Face Point");
         v_index_sub_mesh_f_prop_[*fit] = result_mesh_->add_vertex(f_points_[*fit]);
+#ifdef DEBUG_SUBDIV
+        utils_debug_point(face_point, "Face Point");
+#endif
     }
 }
 
@@ -86,8 +93,10 @@ void SubdivCatmull::compute_all_edge_points()
         this->compute_edge_point(edge_point, *eit);
         // store edge_point as property
         e_points_[*eit] = edge_point;
-        utils_debug_point(edge_point, "Edge Point");
         v_index_sub_mesh_e_prop_[*eit] = result_mesh_->add_vertex(e_points_[*eit]);
+#ifdef DEBUG_SUBDIV
+        utils_debug_point(edge_point, "Edge Point");
+#endif
     }
 }
 
@@ -99,8 +108,10 @@ void SubdivCatmull::compute_all_new_vertex_points()
         this->compute_new_vertex_point(new_vertex_point, *vit);
         // store result in kSurfMeshPropVertexPointUpdated
         v_points_updated_[*vit] = new_vertex_point;
-        utils_debug_point(new_vertex_point, "New Vertex Point");
         v_index_sub_mesh_v_prop_[*vit] = result_mesh_->add_vertex(v_points_updated_[*vit]);
+#ifdef DEBUG_SUBDIV
+        utils_debug_point(new_vertex_point, "New Vertex Point");
+#endif
     }
 }
 

@@ -1,3 +1,5 @@
+
+#include "plugins/subdivision/types.h"
 #include "plugins/subdivision/sd_loop.h"
 
 namespace SubdivisionPlugin {

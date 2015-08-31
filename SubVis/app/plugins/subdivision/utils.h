@@ -4,6 +4,7 @@
 // ===============[ includes ]===============
 
 #include <string>
+#include <QString>
 #include "surface_mesh/Surface_mesh.h"
 
 namespace SubdivisionPlugin {

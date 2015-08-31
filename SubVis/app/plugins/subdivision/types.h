@@ -5,6 +5,9 @@
 
 namespace SubdivisionPlugin {
 
+
+#define DEBUG_SUBDIV
+
 /**
  * @brief kSurfMeshPropVertexPoint key to access surface mesh property that stores the vertex coordinates
  */
