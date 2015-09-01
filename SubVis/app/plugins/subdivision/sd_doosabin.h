@@ -60,7 +60,6 @@ class SubdivDooSabin : public SubdivAlgorithm {
 
 
   void add_mesh_properties();
-
   void remove_mesh_properties();
 };
 

@@ -6,8 +6,6 @@
 namespace subdivision {
 
 void SubdivDooSabin::subdivide_specific_algorithm() {
-  // read from input_mesh_
-  // write to result_mesh_
   this->add_mesh_properties();
   this->init_mesh_members();
 
