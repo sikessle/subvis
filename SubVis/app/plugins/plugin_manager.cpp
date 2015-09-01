@@ -14,11 +14,11 @@ const std::map<QString, PluginWrapper>& PluginManager::list_plugins() const
     return plugins_;
 }
 
-void PluginManager::register_plugin(SubVisPlugin* plugin)
+void PluginManager::register_plugin(std::unique_ptr<SubVisPlugin> plugin)
 {
     const QString id = plugin->id();
     const QString name = plugin->name();
-    plugins_[id] = {name, std::unique_ptr<SubVisPlugin>{plugin}};
+    plugins_[id] = {name, std::move(plugin)};
 }
 
 } // namespace subvis

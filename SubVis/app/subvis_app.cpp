@@ -17,9 +17,9 @@ SubVisApp::SubVisApp(int& argc, char* argv[]) : QApplication(argc, argv)
 {
 }
 
-void SubVisApp::register_plugin(SubVisPlugin* plugin)
+void SubVisApp::register_plugin(std::unique_ptr<SubVisPlugin> plugin)
 {
-    plugin_manager_.register_plugin(plugin);
+    plugin_manager_.register_plugin(std::move(plugin));
 }
 
 int SubVisApp::run()

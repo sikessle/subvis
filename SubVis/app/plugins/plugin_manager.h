@@ -25,7 +25,7 @@ public:
      * @brief Takes ownership of the plugin
      * @param plugin
      */
-    void register_plugin(SubVisPlugin *plugin);
+    void register_plugin(std::unique_ptr<SubVisPlugin> plugin);
 
     /**
      * @brief Lists all loaded plugins: id->(name, plugin)
