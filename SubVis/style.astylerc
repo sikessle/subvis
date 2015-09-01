@@ -1,7 +1,5 @@
 # 2 space indent
 -s2
-# Indent 'class' and 'struct' access modifiers, 'public:', 'protected:' and 'private:', one half indent.
--xG
 # Indent 'switch' blocks so that the 'case X:' statements are indented in the switch block. The entire case block is indented.
 -S
 # Do not retain a backup of the original file. The original file is purged after it is formatted.
@@ -16,4 +14,10 @@
 -H
 # Insert space padding around operators.
 -p
+# Add brackets to single statements
+-j
+# Convert tabs to spaces
+-c
+# Google brackets style
+-A14
 
