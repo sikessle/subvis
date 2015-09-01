@@ -24,7 +24,12 @@ Should be inlined with **DoxyGen**.
 
 # Style Guide
 
-For formatting we use astyle with a project specific .astylerc option file.
+For formatting we use astyle with a project specific style.astylerc option file.
+We strive to use the good parts of the Google Style Guide.
+
+## Namespaces
+
+All lower case.
 
 ## Variables
 
