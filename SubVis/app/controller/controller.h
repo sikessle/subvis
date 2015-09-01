@@ -16,10 +16,6 @@ public:
 
 protected:
     MeshData& mesh_data_;
-
-signals:
-
-public slots:
 };
 
 } // namespace subvis
