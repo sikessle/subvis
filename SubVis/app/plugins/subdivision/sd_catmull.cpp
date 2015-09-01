@@ -183,7 +183,7 @@ void SubdivCatmull::avg_mid_edges(Point& avg_mid_edges,
   Surface_mesh::Halfedge_around_vertex_circulator hc = input_mesh_->halfedges(
         vertex);
   for (const Surface_mesh::Halfedge& h : hc) {
-    this->mid_edge(mid_edge, input_mesh_->edge(h));
+    this->compute_mid_edge(mid_edge, input_mesh_->edge(h));
     avg_mid_edges += mid_edge;
     ++i;
   }

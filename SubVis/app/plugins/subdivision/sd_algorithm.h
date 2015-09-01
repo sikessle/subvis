@@ -92,18 +92,17 @@ class SubdivAlgorithm {
   virtual void deinit_mesh_members();
 
   /**
-   * @brief mid_edge Compute the mid point of an edge (average of the two vertices).
+   * @brief compute_mid_edge Compute the mid point of an edge (average of the two vertices).
    *                 The edge has to be in the input_mesh_.
    * @param mid_edge The result (mid of edge).
    * @param edge Edge to compute the mid point.
    */
-  virtual void mid_edge(Point& mid_edge, const Surface_mesh::Edge& edge);
+  void compute_mid_edge(Point& mid_edge, const Surface_mesh::Edge& edge);
 
   /**
    * @brief compute_face_point Compute the average of all the points of the face.
    */
-  virtual void compute_face_point(Point& face_point,
-                                  const Surface_mesh::Face& face);
+  void compute_face_point(Point& face_point, const Surface_mesh::Face& face);
 
 };
 

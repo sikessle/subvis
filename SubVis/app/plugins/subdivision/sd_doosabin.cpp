@@ -48,7 +48,7 @@ void SubdivDooSabin::compute_all_edge_points() {
   Surface_mesh::Edge_iterator eit;
   Point edge_point;
   for (eit = input_mesh_->edges_begin(); eit != input_mesh_->edges_end(); ++eit) {
-    this->mid_edge(edge_point, *eit);
+    this->compute_mid_edge(edge_point, *eit);
     // store edge_point as property
     e_points_[*eit] = edge_point;
     DEBUG_POINT(edge_point, "Edge Point");

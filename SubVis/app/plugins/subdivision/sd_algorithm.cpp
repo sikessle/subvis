@@ -62,7 +62,7 @@ void SubdivAlgorithm::compute_face_point(Point& face_point,
   // initialize circulators
   Surface_mesh::Vertex_around_face_circulator vc = input_mesh_->vertices(face);
   int i = 0;
-  for (const Surface_mesh::Vertex& v: vc) {
+  for (const Surface_mesh::Vertex& v : vc) {
     face_point += v_points_[v];
     ++i;
   }
@@ -71,8 +71,8 @@ void SubdivAlgorithm::compute_face_point(Point& face_point,
   }
 }
 
-void SubdivAlgorithm::mid_edge(Point& mid_edge,
-                               const Surface_mesh::Edge& edge) {
+void SubdivAlgorithm::compute_mid_edge(Point& mid_edge,
+                                       const Surface_mesh::Edge& edge) {
   Surface_mesh::Vertex edge_vertex0, edge_vertex1;
   edge_vertex0 = input_mesh_->vertex(edge, 0);
   edge_vertex1 = input_mesh_->vertex(edge, 1);
