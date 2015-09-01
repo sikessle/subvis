@@ -14,20 +14,17 @@
 #define SUBVIS_PLUGINS_SUBDIVISION_SD_DOO_SABIN_H
 
 // ===============[ includes ]===============
-#include "plugins/subdivision/algorithm.h"
+#include "plugins/subdivision/sd_algorithm.h"
 
 namespace subdivision {
 
 // ===============[ public prototypes ]===============
 
-class SubdivDooSabin : public Algorithm
+class SubdivDooSabin : public SubdivAlgorithm
 {
 public:
     using Surface_mesh = surface_mesh::Surface_mesh;
     using Point = surface_mesh::Point;
-
-    virtual const QString id() override;
-    virtual const QString name() override;
 
 protected:
     virtual void subdivide_specific_algorithm() override;
@@ -55,7 +52,7 @@ private:
 
     void init_mesh_members()
     {
-        Algorithm::init_mesh_members();
+        SubdivAlgorithm::init_mesh_members();
         f_points_ = input_mesh_->get_face_property<Point>(kSurfMeshPropFacePoint);
         e_points_ = input_mesh_->get_edge_property<Point>(kSurfMeshPropEdgePoint);
     }

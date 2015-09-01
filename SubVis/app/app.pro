@@ -50,7 +50,6 @@ HEADERS  += view/mainwindow.h \
     subvis_app.h \
     plugins/subvis_plugin.h \
     plugins/plugin_manager.h \
-    plugins/subdivision/algorithm.h \
     plugins/subdivision/types.h \
     plugins/subdivision/utils.h \
     plugins/subdivision/sd_catmull.h \
@@ -58,7 +57,9 @@ HEADERS  += view/mainwindow.h \
     plugins/subdivision/sd_loop.h \
     plugins/subdivision/sd_butterfly.h \
     plugins/subdivision/subdivision_algorithms_plugin.h \
-    plugins/subdivision/renderer.h
+    plugins/subdivision/sd_algorithm.h \
+    plugins/subdivision/gl_renderer.h \
+    plugins/subdivision/gl_bspline_renderer.h
 
 SOURCES += main.cpp \
     view/mainwindow.cpp \
@@ -71,14 +72,15 @@ SOURCES += main.cpp \
     controller/controller.cpp \
     subvis_app.cpp \
     plugins/plugin_manager.cpp \
-    plugins/subdivision/algorithm.cpp \
     plugins/subdivision/utils.cpp \
     plugins/subdivision/sd_catmull.cpp \
     plugins/subdivision/sd_doosabin.cpp \
     plugins/subdivision/sd_loop.cpp \
     plugins/subdivision/sd_butterfly.cpp \
     plugins/subdivision/subdivision_algorithms_plugin.cpp \
-    plugins/subdivision/renderer.cpp
+    plugins/subdivision/sd_algorithm.cpp \
+    plugins/subdivision/gl_renderer.cpp \
+    plugins/subdivision/gl_bspline_renderer.cpp
 
 FORMS    += view/mainwindow.ui
 

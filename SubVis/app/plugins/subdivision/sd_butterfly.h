@@ -1,18 +1,15 @@
 #ifndef SUBVIS_PLUGINS_SUBDIVISION_SD_BUTTERFLY_H
 #define SUBVIS_PLUGINS_SUBDIVISION_SD_BUTTERFLY_H
 
-#include "plugins/subdivision/algorithm.h"
+#include "plugins/subdivision/sd_algorithm.h"
 
 namespace subdivision {
 
-class SubdivButterfly : public Algorithm
+class SubdivButterfly : public SubdivAlgorithm
 {
 public:
     using Surface_mesh = surface_mesh::Surface_mesh;
     using Point = surface_mesh::Point;
-
-    virtual const QString id() override;
-    virtual const QString name() override;
 
 protected:
     virtual void subdivide_specific_algorithm() override;

@@ -1,5 +1,5 @@
-#ifndef SUBVIS_PLUGINS_SUBDIVISION_ALGORITHM_H
-#define SUBVIS_PLUGINS_SUBDIVISION_ALGORITHM_H
+#ifndef SUBVIS_PLUGINS_SUBDIVISION_SUBDIV_ALGORITHM_H
+#define SUBVIS_PLUGINS_SUBDIVISION_SUBDIV_ALGORITHM_H
 
 #include <memory>
 #include <QString>
@@ -7,13 +7,13 @@
 
 namespace subdivision {
 
-class Algorithm
+class SubdivAlgorithm
 {
 public:
     using Surface_mesh = surface_mesh::Surface_mesh;
     using Point = surface_mesh::Point;
 
-    virtual ~Algorithm() {}
+    virtual ~SubdivAlgorithm() {}
 
     /**
      * @brief Subdivides the given mesh_data object in n steps.
@@ -22,15 +22,6 @@ public:
      * @return The resulting mesh including ownership.
      */
     virtual std::unique_ptr<Surface_mesh> subdivide(Surface_mesh& mesh_data, int steps = 1);
-
-    /**
-     * @brief Unique id which identifies the algorithm.
-     * i.e. de.htwg.ios.subvis.plugin.subdivision.catmull
-     * @return
-     */
-    virtual const QString id() = 0;
-
-    virtual const QString name() = 0;
 
     /**
      * @brief Returns result mesh for testing.
@@ -84,5 +75,5 @@ protected:
 };
 
 } // namespace subdivision
-#endif // SUBVIS_PLUGINS_SUBDIVISION_ALGORITHM_H
+#endif // SUBVIS_PLUGINS_SUBDIVISION_SUBDIV_ALGORITHM_H
 

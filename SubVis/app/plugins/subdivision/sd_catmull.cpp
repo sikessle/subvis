@@ -35,16 +35,6 @@ void test_catmull() {
 
 // ===============[ class implementation ]===============
 
-const QString SubdivCatmull::id()
-{
-    return "de.htwg.ios.subvis.plugin.subdivision.catmullclark";
-}
-
-const QString SubdivCatmull::name()
-{
-    return "Catmull-Clark";
-}
-
 void SubdivCatmull::subdivide_specific_algorithm()
 {
     this->add_mesh_properties();

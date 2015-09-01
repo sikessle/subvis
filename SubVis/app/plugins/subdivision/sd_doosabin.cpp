@@ -5,16 +5,6 @@
 
 namespace subdivision {
 
-const QString SubdivDooSabin::id()
-{
-    return "de.htwg.ios.subvis.plugin.subdivision.doosabin";
-}
-
-const QString SubdivDooSabin::name()
-{
-    return "Doo-Sabin";
-}
-
 void SubdivDooSabin::subdivide_specific_algorithm()
 {
     // read from input_mesh_

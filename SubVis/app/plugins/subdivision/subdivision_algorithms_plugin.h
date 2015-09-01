@@ -8,9 +8,17 @@
 #include <string>
 
 #include "plugins/subvis_plugin.h"
-#include "plugins/subdivision/algorithm.h"
+#include "plugins/subdivision/sd_algorithm.h"
+#include "plugins/subdivision/gl_renderer.h"
 
 namespace subdivision {
+
+struct AlgorithmRenderer
+{
+    std::unique_ptr<SubdivAlgorithm> algorithm;
+    // shared_ptr to allow multiple algorithms to use the same renderer
+    std::shared_ptr<GLRenderer> renderer;
+};
 
 class SubdivisionAlgorithmsPlugin : public QObject, public subvis::SubVisPlugin
 {
@@ -27,13 +35,16 @@ public:
 
 private:
     subvis::DrawController* draw_controller_{nullptr};
-    std::map<QString, std::unique_ptr<Algorithm>> algorithms_;
+    /**
+     * @brief name->(algorithm, renderer)
+     */
+    std::map<QString, AlgorithmRenderer> algorithms_;
 
     QPushButton* subdivide_{nullptr};
     QSpinBox* steps_{nullptr};
     QComboBox* dropdown_{nullptr};
 
-    std::unique_ptr<Algorithm>& active_algorithm();
+    AlgorithmRenderer& active_algorithm_renderer_pair();
 
 private slots:
     void subdivide_clicked(bool);

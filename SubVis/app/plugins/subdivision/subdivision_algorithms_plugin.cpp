@@ -4,6 +4,8 @@
 #include <QHBoxLayout>
 #include "surface_mesh/Surface_mesh.h"
 
+#include "plugins/subdivision/gl_bspline_renderer.h"
+
 #include "plugins/subdivision/sd_catmull.h"
 #include "plugins/subdivision/sd_doosabin.h"
 #include "plugins/subdivision/sd_loop.h"
@@ -15,16 +17,27 @@ namespace subdivision {
 
 SubdivisionAlgorithmsPlugin::SubdivisionAlgorithmsPlugin()
 {
-    std::vector<Algorithm*> instances;
-    // Add here all the algorithms
-    instances.push_back(new SubdivCatmull);
-    instances.push_back(new SubdivDooSabin);
-    instances.push_back(new SubdivLoop);
-    instances.push_back(new SubdivButterfly);
+    // Add all special renderers here to share them among the algorithms
+    std::shared_ptr<GLRenderer> bspline_renderer {new BSplineGLRenderer};
 
-    for (const auto instance : instances) {
-        algorithms_[instance->id()] = std::unique_ptr<Algorithm>{instance};
-    }
+    // Add here all the algorithms and their special renderer
+
+    algorithms_["Catmull-Clark"] = {
+            std::unique_ptr<SubdivAlgorithm>{new SubdivCatmull},
+            bspline_renderer
+    };
+    algorithms_["Doo-Sabin"] = {
+            std::unique_ptr<SubdivAlgorithm>{new SubdivDooSabin},
+            bspline_renderer
+    };
+    algorithms_["Loop"] = {
+            std::unique_ptr<SubdivAlgorithm>{new SubdivLoop},
+            bspline_renderer
+    };
+    algorithms_["Butterfly"] = {
+            std::unique_ptr<SubdivAlgorithm>{new SubdivButterfly},
+            bspline_renderer
+    };
 }
 
 const QString SubdivisionAlgorithmsPlugin::id()
@@ -44,18 +57,18 @@ void SubdivisionAlgorithmsPlugin::set_draw_controller(subvis::DrawController* dr
 
 void SubdivisionAlgorithmsPlugin::draw_opengl()
 {
-    //auto& algorithm = active_algorithm();
-    //algorithm->draw_limit_surface(draw_controller_->mesh_data().mesh());
+    auto& renderer = active_algorithm_renderer_pair().renderer;
+    renderer->render_mesh_opengl(draw_controller_->mesh_data().mesh());
 }
 
-std::unique_ptr<Algorithm>& SubdivisionAlgorithmsPlugin::active_algorithm()
+AlgorithmRenderer& SubdivisionAlgorithmsPlugin::active_algorithm_renderer_pair()
 {
     if (dropdown_->count() == 0) {
         throw new std::logic_error("no algorithms loaded. ensure that at least one is loaded in the constructor.");
     }
-    const QString id = dropdown_->currentData().toString();
+    const QString name = dropdown_->currentText();
 
-    return algorithms_.at(id);
+    return algorithms_.at(name);
 }
 
 void SubdivisionAlgorithmsPlugin::create_gui(QWidget* parent)
@@ -68,7 +81,8 @@ void SubdivisionAlgorithmsPlugin::create_gui(QWidget* parent)
 
     dropdown_ = new QComboBox(parent);
     for (const auto& it : algorithms_) {
-        dropdown_->addItem(it.second->name(), QVariant(it.first));
+        // using name from map's entries as label
+        dropdown_->addItem(it.first);
     }
     layout->addWidget(dropdown_);
 
@@ -83,16 +97,17 @@ void SubdivisionAlgorithmsPlugin::create_gui(QWidget* parent)
     layout->addLayout(layout_steps);
 
     subdivide_ = new QPushButton("subdivide", parent);
+    layout->addWidget(subdivide_);
+
     QObject::connect(subdivide_, SIGNAL(clicked(bool)),
                      this, SLOT(subdivide_clicked(bool)));
-    layout->addWidget(subdivide_);
 }
 
 void SubdivisionAlgorithmsPlugin::subdivide_clicked(bool)
 {
     int steps = steps_->value();
     auto& mesh_data = draw_controller_->mesh_data();
-    auto& algorithm = active_algorithm();
+    auto& algorithm = active_algorithm_renderer_pair().algorithm;
 
     auto result = algorithm->subdivide(mesh_data.mesh(), steps);
 

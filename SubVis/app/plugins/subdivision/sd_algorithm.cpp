@@ -1,14 +1,14 @@
 #include "plugins/subdivision/utils.h"
 #include "plugins/subdivision/types.h"
 
-#include "plugins/subdivision/algorithm.h"
+#include "plugins/subdivision/sd_algorithm.h"
 
 namespace subdivision {
 
 using surface_mesh::Surface_mesh;
 using surface_mesh::Point;
 
-std::unique_ptr<Surface_mesh> Algorithm::subdivide(Surface_mesh& mesh, int steps)
+std::unique_ptr<Surface_mesh> SubdivAlgorithm::subdivide(Surface_mesh& mesh, int steps)
 {
     result_mesh_.reset(new Surface_mesh);
     input_mesh_.reset(new Surface_mesh{mesh});
@@ -28,17 +28,17 @@ std::unique_ptr<Surface_mesh> Algorithm::subdivide(Surface_mesh& mesh, int steps
     return std::move(result_mesh_);
 }
 
-Surface_mesh& Algorithm::result_mesh()
+Surface_mesh& SubdivAlgorithm::result_mesh()
 {
     return *(result_mesh_.get());
 }
 
-void Algorithm::init_mesh_members()
+void SubdivAlgorithm::init_mesh_members()
 {
     v_points_ = input_mesh_->get_vertex_property<Point>(kSurfMeshPropVertexPoint);
 }
 
-void Algorithm::compute_face_point(Point& face_point, const Surface_mesh::Face& face)
+void SubdivAlgorithm::compute_face_point(Point& face_point, const Surface_mesh::Face& face)
 {
     // init result with zero
     face_point = Point(0);
@@ -56,7 +56,7 @@ void Algorithm::compute_face_point(Point& face_point, const Surface_mesh::Face& 
         face_point /= i;
 }
 
-void Algorithm::mid_edge(Point& mid_edge, const Surface_mesh::Edge& edge)
+void SubdivAlgorithm::mid_edge(Point& mid_edge, const Surface_mesh::Edge& edge)
 {
     Surface_mesh::Vertex edge_vertex0, edge_vertex1;
     edge_vertex0 = input_mesh_->vertex(edge, 0);

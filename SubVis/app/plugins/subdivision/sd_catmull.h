@@ -17,7 +17,7 @@
 // ===============[ includes ]===============
 #include "plugins/subdivision/types.h"
 
-#include "plugins/subdivision/algorithm.h"
+#include "plugins/subdivision/sd_algorithm.h"
 
 namespace subdivision {
 
@@ -25,14 +25,11 @@ namespace subdivision {
 
 
 // mesh_ is input mesh
-class SubdivCatmull : public Algorithm {
+class SubdivCatmull : public SubdivAlgorithm {
 
 public:
     using Surface_mesh = surface_mesh::Surface_mesh;
     using Point = surface_mesh::Point;
-
-    virtual const QString id();
-    virtual const QString name();
 
 protected:
     virtual void subdivide_specific_algorithm();
@@ -90,7 +87,7 @@ private:
 
     void init_mesh_members()
     {
-        Algorithm::init_mesh_members();
+        SubdivAlgorithm::init_mesh_members();
         f_points_ = input_mesh_->get_face_property<Point>(kSurfMeshPropFacePoint);
         e_points_ = input_mesh_->get_edge_property<Point>(kSurfMeshPropEdgePoint);
         v_points_updated_ = input_mesh_->get_vertex_property<Point>(kSurfMeshPropVertexPointUpdated);
