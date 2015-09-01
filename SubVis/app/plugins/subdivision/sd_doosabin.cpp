@@ -104,6 +104,7 @@ void SubdivDooSabin::compute_faces() {
   // compute face faces
   this->compute_faces_face();
   // compute edge faces
+  // TODO why not working ?
   this->compute_faces_edge();
   // compute vertex faces
   this->compute_faces_vertex();
@@ -115,7 +116,7 @@ void SubdivDooSabin::compute_faces_face() {
   for (fit = input_mesh_->faces_begin(); fit != input_mesh_->faces_end(); ++fit) {
     Surface_mesh::Vertex_around_face_circulator vc = input_mesh_->vertices(*fit);
     for (const Surface_mesh::Vertex& v : vc) {
-      vertices_vec.push_back(f_vertex_index_map_[*fit][v]);
+      vertices_vec.push_back(f_vertex_index_map_[*fit].at(v));
     }
     result_mesh_->add_face(vertices_vec);
     vertices_vec.clear();
@@ -125,18 +126,35 @@ void SubdivDooSabin::compute_faces_face() {
 void SubdivDooSabin::compute_faces_edge() {
   std::vector<Surface_mesh::Vertex> vertices_vec;
   Surface_mesh::Edge_iterator eit;
-  //Surface_mesh::Face f0, f1;
-  //Surface_mesh::Vertex v0, v1;
-  //for (eit = input_mesh_->edges_begin(); eit != input_mesh_->edges_end(); ++eit) {
-  //f0 = input_mesh_->
-  //vertices_vec.push_back(f_vertex_index_map_[*fit][*vc]);
-  //result_mesh().add_face(vertices_vec);
-  //vertices_vec.clear();
-  //}
+  Surface_mesh::Face f0, f1;
+  Surface_mesh::Vertex v0, v1;
+  for (eit = input_mesh_->edges_begin(); eit != input_mesh_->edges_end(); ++eit) {
+    f0 = input_mesh_->face(*eit, 0);
+    f1 = input_mesh_->face(*eit, 1);
+    v0 = input_mesh_->vertex(*eit, 0);
+    v1 = input_mesh_->vertex(*eit, 1);
+    // get coordinates of the subdivision vertex points
+    vertices_vec.push_back(f_vertex_index_map_[f0].at(v0));
+    vertices_vec.push_back(f_vertex_index_map_[f0].at(v1));
+    vertices_vec.push_back(f_vertex_index_map_[f1].at(v0));
+    vertices_vec.push_back(f_vertex_index_map_[f1].at(v1));
+    result_mesh_->add_face(vertices_vec);
+    vertices_vec.clear();
+  }
 }
 
 void SubdivDooSabin::compute_faces_vertex() {
-
+  std::vector<Surface_mesh::Vertex> vertices_vec;
+  Surface_mesh::Vertex_iterator vit;
+  for (vit = input_mesh_->vertices_begin(); vit != input_mesh_->vertices_end();
+       ++vit) {
+    Surface_mesh::Face_around_vertex_circulator fc = input_mesh_->faces(*vit);
+    for (const Surface_mesh::Face& f : fc) {
+      vertices_vec.push_back(f_vertex_index_map_[f].at(*vit));
+    }
+    result_mesh_->add_face(vertices_vec);
+    vertices_vec.clear();
+  }
 }
 
 
