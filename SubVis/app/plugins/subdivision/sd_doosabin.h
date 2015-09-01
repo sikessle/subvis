@@ -53,6 +53,12 @@ class SubdivDooSabin : public SubdivAlgorithm {
   void compute_new_vertex_point(Point& new_vertex_point,
                                 const Surface_mesh::Vertex& vertex, const Surface_mesh::Face& face);
 
+  void compute_faces();
+  void compute_faces_face();
+  void compute_faces_edge();
+  void compute_faces_vertex();
+
+
   void add_mesh_properties();
 
   void remove_mesh_properties();

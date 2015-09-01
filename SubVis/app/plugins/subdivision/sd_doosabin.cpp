@@ -1,4 +1,5 @@
 
+#include <vector>
 #include "plugins/subdivision/debug.h"
 #include "plugins/subdivision/sd_doosabin.h"
 
@@ -16,6 +17,8 @@ void SubdivDooSabin::subdivide_specific_algorithm() {
   this->compute_all_edge_points();
   // compute new vertex point
   this->compute_all_new_vertex_points();
+  // compute and add faces to the result mesh
+  this->compute_faces();
 
   this->remove_mesh_properties();
 }
@@ -75,9 +78,8 @@ void SubdivDooSabin::compute_all_new_vertex_points() {
     vc_end = vc;
     do {
       this->compute_new_vertex_point(new_vertex_point, *vc, *fit);
-      // TODO
-
-      result_mesh_->add_vertex(new_vertex_point);
+      // add new vertex to result mesh and store the index of the vertex as property in the input mesh
+      f_vertex_index_map_[*fit][*vc] = result_mesh_->add_vertex(new_vertex_point);
       DEBUG_POINT(new_vertex_point, "New Vertex Point");
     } while (++vc != vc_end);
   }
@@ -100,5 +102,47 @@ void SubdivDooSabin::compute_new_vertex_point(Point& new_vertex_point,
   new_vertex_point = (v_points_[vertex] + f_points_[face] + e_points_[e1] +
                       e_points_[e2] ) / 4;
 }
+
+void SubdivDooSabin::compute_faces() {
+  // compute face faces
+  this->compute_faces_face();
+  // compute edge faces
+  this->compute_faces_edge();
+  // compute vertex faces
+  this->compute_faces_vertex();
+}
+
+void SubdivDooSabin::compute_faces_face() {
+  std::vector<Surface_mesh::Vertex> vertices_vec;
+  Surface_mesh::Face_iterator fit;
+  for (fit = input_mesh_->faces_begin(); fit != input_mesh_->faces_end(); ++fit) {
+    Surface_mesh::Vertex_around_face_circulator vc, vc_end;
+    vc = input_mesh_->vertices(*fit);
+    vc_end = vc;
+    do {
+      vertices_vec.push_back(f_vertex_index_map_[*fit][*vc]);
+    } while (++vc != vc_end);
+    result_mesh().add_face(vertices_vec);
+    vertices_vec.clear();
+  }
+}
+
+void SubdivDooSabin::compute_faces_edge() {
+  std::vector<Surface_mesh::Vertex> vertices_vec;
+  Surface_mesh::Edge_iterator eit;
+  //Surface_mesh::Face f0, f1;
+  //Surface_mesh::Vertex v0, v1;
+  for (eit = input_mesh_->edges_begin(); eit != input_mesh_->edges_end(); ++eit) {
+    //f0 = input_mesh_->
+    //vertices_vec.push_back(f_vertex_index_map_[*fit][*vc]);
+    //result_mesh().add_face(vertices_vec);
+    //vertices_vec.clear();
+  }
+}
+
+void SubdivDooSabin::compute_faces_vertex() {
+
+}
+
 
 } // namespace subdivision
