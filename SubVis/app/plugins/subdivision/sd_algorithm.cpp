@@ -1,6 +1,5 @@
-#include "plugins/subdivision/debug.h"
-#include "plugins/subdivision/types.h"
 
+#include "plugins/subdivision/debug.h"
 #include "plugins/subdivision/sd_algorithm.h"
 
 namespace subdivision {
@@ -37,7 +36,7 @@ Surface_mesh& SubdivAlgorithm::result_mesh() {
 }
 
 void SubdivAlgorithm::init_mesh_members() {
-  v_points_ = input_mesh_->get_vertex_property<Point>(kSurfMeshPropVertexPoint);
+  v_points_ = input_mesh_->get_vertex_property<Point>(kPropVertexPoint);
 }
 
 void SubdivAlgorithm::compute_face_point(Point& face_point,

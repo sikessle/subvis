@@ -1,6 +1,5 @@
 
 #include "plugins/subdivision/debug.h"
-#include "plugins/subdivision/types.h"
 #include "plugins/subdivision/sd_doosabin.h"
 
 namespace subdivision {
@@ -23,19 +22,19 @@ void SubdivDooSabin::subdivide_specific_algorithm() {
 
 void SubdivDooSabin::add_mesh_properties() {
   // add properties that are necessary for doo sabin
-  input_mesh_->add_face_property<Point>(kSurfMeshPropFacePoint);
-  input_mesh_->add_edge_property<Point>(kSurfMeshPropEdgePoint);
+  input_mesh_->add_face_property<Point>(kPropFacePoint);
+  input_mesh_->add_edge_property<Point>(kPropEdgePoint);
 
   input_mesh_->add_face_property<VertexToVertexMap>
-  (kSurfMeshPropVertexIndexSubMeshV);
+  (kPropVertexIndexResultMapF);
 }
 
 void SubdivDooSabin::init_mesh_members() {
   SubdivAlgorithm::init_mesh_members();
-  f_points_ = input_mesh_->get_face_property<Point>(kSurfMeshPropFacePoint);
-  e_points_ = input_mesh_->get_edge_property<Point>(kSurfMeshPropEdgePoint);
+  f_points_ = input_mesh_->get_face_property<Point>(kPropFacePoint);
+  e_points_ = input_mesh_->get_edge_property<Point>(kPropEdgePoint);
   f_vertex_index_map_ = input_mesh_->get_face_property<VertexToVertexMap>
-                        (kSurfMeshPropVertexIndexSubMeshV);
+                        (kPropVertexIndexResultMapF);
 }
 
 void SubdivDooSabin::remove_mesh_properties() {

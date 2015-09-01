@@ -50,7 +50,6 @@ HEADERS  += view/mainwindow.h \
     subvis_app.h \
     plugins/subvis_plugin.h \
     plugins/plugin_manager.h \
-    plugins/subdivision/types.h \
     plugins/subdivision/sd_catmull.h \
     plugins/subdivision/sd_doosabin.h \
     plugins/subdivision/sd_loop.h \

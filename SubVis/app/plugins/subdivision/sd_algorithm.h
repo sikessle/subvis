@@ -2,6 +2,7 @@
 #define SUBVIS_PLUGINS_SUBDIVISION_SUBDIV_ALGORITHM_H
 
 #include <memory>
+#include <string>
 #include <QString>
 #include "surface_mesh/Surface_mesh.h"
 
@@ -30,6 +31,26 @@ class SubdivAlgorithm {
   virtual Surface_mesh& result_mesh();
 
  protected:
+  /**
+   * @brief kPropVertexPoint key to access surface mesh property that stores the vertex coordinates
+   */
+  const ::std::string kPropVertexPoint = "v:point";
+
+  /**
+   * @brief kPropVertexPointUpdated key to access surface mesh property that stores the updated vertex coordinates
+   */
+  const ::std::string kPropVertexPointUpdated = "v:point_updated";
+
+  /**
+   * @brief kPropFacePoint key to access surface mesh property that stores the face point coordinates
+   */
+  const ::std::string kPropFacePoint = "f:point";
+
+  /**
+   * @brief kPropEdgePoint key to access surface mesh property that stores the edge point coordinates
+   */
+  const ::std::string kPropEdgePoint = "e:point";
+
   /**
    * @brief Put the resulting mesh in here.
    */

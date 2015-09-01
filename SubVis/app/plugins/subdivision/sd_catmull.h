@@ -30,6 +30,18 @@ class SubdivCatmull : public SubdivAlgorithm {
   void init_mesh_members() override;
 
  private:
+
+  /**
+   * @brief kSurfMeshPropVertexIndexSubMesh index of the corresponding vertex in the new result mesh
+   * This is necessary to map vertices from origin mesh to result mesh.
+   */
+  const ::std::string kPropVertexIndexResultV =
+    "v:subdivision_mesh_vertex_index";
+  const ::std::string kPropVertexIndexResultE =
+    "e:subdivision_mesh_vertex_index";
+  const ::std::string kPropVertexIndexResultF =
+    "f:subdivision_mesh_vertex_index";
+
   Surface_mesh::Face_property<Point> f_points_;
   Surface_mesh::Edge_property<Point> e_points_;
   Surface_mesh::Vertex_property<Point> v_points_updated_;

@@ -32,6 +32,9 @@ class SubdivDooSabin : public SubdivAlgorithm {
   using VertexToVertexMap =
     std::map<Surface_mesh::Vertex, Surface_mesh::Vertex>;
 
+  const ::std::string kPropVertexIndexResultMapF =
+    "f:subdivision_mesh_vertex_index_map";
+
   Surface_mesh::Face_property<Point> f_points_;
   Surface_mesh::Edge_property<Point> e_points_;
 
