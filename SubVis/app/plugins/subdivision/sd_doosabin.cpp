@@ -1,4 +1,4 @@
-#include "plugins/subdivision/utils.h"
+#include "plugins/subdivision/debug.h"
 #include "plugins/subdivision/types.h"
 
 #include "plugins/subdivision/sd_doosabin.h"
@@ -19,6 +19,23 @@ void SubdivDooSabin::subdivide_specific_algorithm() {
   this->compute_all_new_vertex_points();
 
   this->remove_mesh_properties();
+}
+
+void SubdivDooSabin::add_mesh_properties() {
+  // add properties that are necessary for doo sabin
+  input_mesh_->add_face_property<Point>(kSurfMeshPropFacePoint);
+  input_mesh_->add_edge_property<Point>(kSurfMeshPropEdgePoint);
+}
+
+void SubdivDooSabin::init_mesh_members() {
+  SubdivAlgorithm::init_mesh_members();
+  f_points_ = input_mesh_->get_face_property<Point>(kSurfMeshPropFacePoint);
+  e_points_ = input_mesh_->get_edge_property<Point>(kSurfMeshPropEdgePoint);
+}
+
+void SubdivDooSabin::remove_mesh_properties() {
+  input_mesh_->remove_face_property(f_points_);
+  input_mesh_->remove_edge_property(e_points_);
 }
 
 void SubdivDooSabin::compute_all_face_points() {

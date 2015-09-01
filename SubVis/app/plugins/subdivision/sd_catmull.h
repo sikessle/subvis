@@ -14,17 +14,11 @@
 #ifndef SUBVIS_PLUGINS_SUBDIVISION_SD_CATMULL_H
 #define SUBVIS_PLUGINS_SUBDIVISION_SD_CATMULL_H
 
-// ===============[ includes ]===============
-#include "plugins/subdivision/types.h"
-
 #include "plugins/subdivision/sd_algorithm.h"
 
 namespace subdivision {
 
-// ===============[ public prototypes ]===============
 
-
-// mesh_ is input mesh
 class SubdivCatmull : public SubdivAlgorithm {
 
  public:
@@ -73,50 +67,12 @@ class SubdivCatmull : public SubdivAlgorithm {
 
   void avg_mid_edges(Point& avg_mid_edges, const Surface_mesh::Vertex& vertex);
 
-  void add_mesh_properties() {
-    // add properties that are necessary for catmull clark
-    input_mesh_->add_face_property<Point>(kSurfMeshPropFacePoint);
-    input_mesh_->add_edge_property<Point>(kSurfMeshPropEdgePoint);
-    input_mesh_->add_vertex_property<Point>(kSurfMeshPropVertexPointUpdated);
-    // (vertex point property with key kSurfMeshPropVertexPoint is maintained by default)
+  void add_mesh_properties();
 
-    // index properties
-    input_mesh_->add_vertex_property<Surface_mesh::Vertex>
-    (kSurfMeshPropVertexIndexSubMeshV);
-    input_mesh_->add_edge_property<Surface_mesh::Vertex>
-    (kSurfMeshPropVertexIndexSubMeshE);
-    input_mesh_->add_face_property<Surface_mesh::Vertex>
-    (kSurfMeshPropVertexIndexSubMeshF);
-  }
+  void init_mesh_members();
 
-  void init_mesh_members() {
-    SubdivAlgorithm::init_mesh_members();
-    f_points_ = input_mesh_->get_face_property<Point>(kSurfMeshPropFacePoint);
-    e_points_ = input_mesh_->get_edge_property<Point>(kSurfMeshPropEdgePoint);
-    v_points_updated_ = input_mesh_->get_vertex_property<Point>
-                        (kSurfMeshPropVertexPointUpdated);
-
-    v_index_sub_mesh_f_prop_ = input_mesh_->get_face_property<Surface_mesh::Vertex>
-                               (kSurfMeshPropVertexIndexSubMeshF);
-    v_index_sub_mesh_e_prop_ = input_mesh_->get_edge_property<Surface_mesh::Vertex>
-                               (kSurfMeshPropVertexIndexSubMeshE);
-    v_index_sub_mesh_v_prop_ =
-      input_mesh_->get_vertex_property<Surface_mesh::Vertex>
-      (kSurfMeshPropVertexIndexSubMeshV);
-  }
-
-  void remove_mesh_properties() {
-    input_mesh_->remove_face_property(f_points_);
-    input_mesh_->remove_edge_property(e_points_);
-    input_mesh_->remove_vertex_property(v_points_updated_);
-    input_mesh_->remove_face_property(v_index_sub_mesh_f_prop_);
-    input_mesh_->remove_edge_property(v_index_sub_mesh_e_prop_);
-    input_mesh_->remove_vertex_property(v_index_sub_mesh_v_prop_);
-  }
+  void remove_mesh_properties();
 };
-
-
-// ===============[ public prototypes ]===============
 
 void test_catmull();
 

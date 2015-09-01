@@ -1,4 +1,4 @@
-#include "plugins/subdivision/utils.h"
+#include "plugins/subdivision/debug.h"
 #include "plugins/subdivision/types.h"
 
 #include "plugins/subdivision/sd_algorithm.h"

@@ -51,7 +51,6 @@ HEADERS  += view/mainwindow.h \
     plugins/subvis_plugin.h \
     plugins/plugin_manager.h \
     plugins/subdivision/types.h \
-    plugins/subdivision/utils.h \
     plugins/subdivision/sd_catmull.h \
     plugins/subdivision/sd_doosabin.h \
     plugins/subdivision/sd_loop.h \
@@ -59,7 +58,8 @@ HEADERS  += view/mainwindow.h \
     plugins/subdivision/subdivision_algorithms_plugin.h \
     plugins/subdivision/sd_algorithm.h \
     plugins/subdivision/gl_renderer.h \
-    plugins/subdivision/gl_bspline_renderer.h
+    plugins/subdivision/gl_bspline_renderer.h \
+    plugins/subdivision/debug.h
 
 SOURCES += main.cpp \
     view/mainwindow.cpp \
@@ -72,7 +72,6 @@ SOURCES += main.cpp \
     controller/controller.cpp \
     subvis_app.cpp \
     plugins/plugin_manager.cpp \
-    plugins/subdivision/utils.cpp \
     plugins/subdivision/sd_catmull.cpp \
     plugins/subdivision/sd_doosabin.cpp \
     plugins/subdivision/sd_loop.cpp \
@@ -80,7 +79,8 @@ SOURCES += main.cpp \
     plugins/subdivision/subdivision_algorithms_plugin.cpp \
     plugins/subdivision/sd_algorithm.cpp \
     plugins/subdivision/gl_renderer.cpp \
-    plugins/subdivision/gl_bspline_renderer.cpp
+    plugins/subdivision/gl_bspline_renderer.cpp \
+    plugins/subdivision/debug.cpp
 
 FORMS    += view/mainwindow.ui
 
