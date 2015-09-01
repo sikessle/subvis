@@ -57,7 +57,8 @@ HEADERS  += view/mainwindow.h \
     plugins/subdivision/sd_doosabin.h \
     plugins/subdivision/sd_loop.h \
     plugins/subdivision/sd_butterfly.h \
-    plugins/subdivision/subdivision_algorithms_plugin.h
+    plugins/subdivision/subdivision_algorithms_plugin.h \
+    plugins/subdivision/renderer.h
 
 SOURCES += main.cpp \
     view/mainwindow.cpp \
@@ -76,7 +77,8 @@ SOURCES += main.cpp \
     plugins/subdivision/sd_doosabin.cpp \
     plugins/subdivision/sd_loop.cpp \
     plugins/subdivision/sd_butterfly.cpp \
-    plugins/subdivision/subdivision_algorithms_plugin.cpp
+    plugins/subdivision/subdivision_algorithms_plugin.cpp \
+    plugins/subdivision/renderer.cpp
 
 FORMS    += view/mainwindow.ui
 
