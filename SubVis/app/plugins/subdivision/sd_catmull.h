@@ -74,8 +74,6 @@ class SubdivCatmull : public SubdivAlgorithm {
   void remove_mesh_properties();
 };
 
-void test_catmull();
-
 } // namespace subdivision
 #endif // SUBVIS_PLUGINS_SUBDIVISION_SD_CATMULL_H
 

@@ -10,15 +10,6 @@ namespace subdivision {
 // uncomment to disable debug output
 #define DEBUG_SUBDIV
 
-enum ObjDemoFiles {
-  kBigGuy = 0,
-  kCube,
-  kMonsterFrog,
-  kTetra
-};
-const ::std::string kObjDemoFilesString[4] = {"bigguy.obj", "cube.obj", "monsterfrog.obj", "tetra.obj"};
-const ::std::string kRootPathToObjFiles = "./../../SubVis/objs/";
-
 /**
  * @brief utils_q_debug_mesh Print basic information (Vertices, Edges and Faces) of mesh with QDebug.
  * @param mesh

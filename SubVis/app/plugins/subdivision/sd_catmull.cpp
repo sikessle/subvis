@@ -15,19 +15,6 @@ namespace subdivision {
 using surface_mesh::Surface_mesh;
 using surface_mesh::Point;
 
-void test_catmull() {
-  Surface_mesh mesh;
-  std::string path = kRootPathToObjFiles + kObjDemoFilesString[kCube];
-  // read mesh and print basic info to stdout
-  read_mesh(mesh, path);
-  DEBUG_MESH(mesh, QString("Cube Mesh"));
-  // compute subdivision
-  //SubdivCatmull sd_catmull(mesh);
-  //sd_catmull.subdivide();
-  //Surface_mesh subdivision_mesh = sd_catmull.get_subdivision_mesh();
-  // Do something with the subdivision_mesh
-}
-
 void SubdivCatmull::subdivide_specific_algorithm() {
   this->add_mesh_properties();
   this->init_mesh_members();
