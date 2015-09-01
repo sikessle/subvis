@@ -18,10 +18,6 @@
 namespace subdivision {
 
 class SubdivLoop : public SubdivAlgorithm {
- public:
-  using Surface_mesh = surface_mesh::Surface_mesh;
-  using Point = surface_mesh::Point;
-
  protected:
   virtual void subdivide_specific_algorithm() override;
   virtual void init_mesh_members() override;
