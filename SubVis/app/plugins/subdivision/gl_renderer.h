@@ -10,13 +10,26 @@ class GLRenderer {
   virtual ~GLRenderer();
 
   /**
-   * @brief Renders the given mesh
+   * @brief Renders the given mesh. Calls start_rendering() and end_rendering()
+   * before respective after calling render().
    * @param mesh
    */
-  virtual void render_mesh_opengl(const surface_mesh::Surface_mesh& mesh) = 0;
+  virtual void render_mesh_opengl(const surface_mesh::Surface_mesh& mesh);
 
  protected:
-  // add common methods for rendering here (like init OpenGL, ..)
+  /**
+  * @brief Called before render()
+  */
+  virtual void start_rendering();
+  /**
+  * @brief Main render method
+  * @param mesh
+  */
+  virtual void render(const surface_mesh::Surface_mesh& mesh) = 0;
+  /**
+  * @brief Called after render()
+  */
+  virtual void end_rendering();
 };
 
 } // namespace subdivision

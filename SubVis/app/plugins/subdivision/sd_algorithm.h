@@ -12,7 +12,7 @@ class SubdivAlgorithm {
   using Surface_mesh = surface_mesh::Surface_mesh;
   using Point = surface_mesh::Point;
 
-  virtual ~SubdivAlgorithm() {}
+  virtual ~SubdivAlgorithm();
 
   /**
    * @brief Subdivides the given mesh_data object in n steps.

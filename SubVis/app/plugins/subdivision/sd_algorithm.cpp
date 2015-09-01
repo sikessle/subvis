@@ -8,6 +8,10 @@ namespace subdivision {
 using surface_mesh::Surface_mesh;
 using surface_mesh::Point;
 
+SubdivAlgorithm::~SubdivAlgorithm() {
+
+}
+
 std::unique_ptr<Surface_mesh> SubdivAlgorithm::subdivide(Surface_mesh& mesh,
     int steps) {
   result_mesh_.reset(new Surface_mesh);
