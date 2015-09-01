@@ -51,13 +51,13 @@ HEADERS  += view/mainwindow.h \
     plugins/subvis_plugin.h \
     plugins/plugin_manager.h \
     plugins/subdivision/algorithm.h \
-    plugins/subdivision/subdivision_algorithms.h \
     plugins/subdivision/types.h \
     plugins/subdivision/utils.h \
     plugins/subdivision/sd_catmull.h \
     plugins/subdivision/sd_doosabin.h \
     plugins/subdivision/sd_loop.h \
-    plugins/subdivision/sd_butterfly.h
+    plugins/subdivision/sd_butterfly.h \
+    plugins/subdivision/subdivision_algorithms_plugin.h
 
 SOURCES += main.cpp \
     view/mainwindow.cpp \
@@ -71,12 +71,12 @@ SOURCES += main.cpp \
     subvis_app.cpp \
     plugins/plugin_manager.cpp \
     plugins/subdivision/algorithm.cpp \
-    plugins/subdivision/subdivision_algorithms.cpp \
     plugins/subdivision/utils.cpp \
     plugins/subdivision/sd_catmull.cpp \
     plugins/subdivision/sd_doosabin.cpp \
     plugins/subdivision/sd_loop.cpp \
-    plugins/subdivision/sd_butterfly.cpp
+    plugins/subdivision/sd_butterfly.cpp \
+    plugins/subdivision/subdivision_algorithms_plugin.cpp
 
 FORMS    += view/mainwindow.ui
 

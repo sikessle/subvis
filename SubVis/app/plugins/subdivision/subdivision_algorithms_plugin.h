@@ -1,5 +1,5 @@
-#ifndef SUBVIS_PLUGINS_SUBDIVISION_SUBDIVISON_ALGORITHMS_H
-#define SUBVIS_PLUGINS_SUBDIVISION_SUBDIVISON_ALGORITHMS_H
+#ifndef SUBVIS_PLUGINS_SUBDIVISION_SUBDIVISON_ALGORITHMS_PLUGIN_H
+#define SUBVIS_PLUGINS_SUBDIVISION_SUBDIVISON_ALGORITHMS_PLUGIN_H
 
 #include <QObject>
 #include <QComboBox>
@@ -12,12 +12,12 @@
 
 namespace subdivision {
 
-class SubdivisionAlgorithms : public QObject, public subvis::SubVisPlugin
+class SubdivisionAlgorithmsPlugin : public QObject, public subvis::SubVisPlugin
 {
     Q_OBJECT
 
 public:
-    SubdivisionAlgorithms();
+    SubdivisionAlgorithmsPlugin();
 
     virtual const QString id() override;
     virtual const QString name() override;
@@ -40,4 +40,4 @@ private slots:
 };
 
 } // namespace subdivision
-#endif // SUBVIS_PLUGINS_SUBDIVISION_SUBDIVISON_ALGORITHMS_H
+#endif // SUBVIS_PLUGINS_SUBDIVISION_SUBDIVISON_ALGORITHMS_PLUGIN_H

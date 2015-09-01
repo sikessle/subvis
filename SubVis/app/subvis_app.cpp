@@ -6,7 +6,7 @@
 #include "controller/draw_controller.h"
 #include "plugins/plugin_manager.h"
 #include "plugins/subvis_plugin.h"
-#include "plugins/subdivision/subdivision_algorithms.h"
+#include "plugins/subdivision/subdivision_algorithms_plugin.h"
 
 #include "subvis_app.h"
 

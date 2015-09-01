@@ -9,11 +9,11 @@
 #include "plugins/subdivision/sd_loop.h"
 #include "plugins/subdivision/sd_butterfly.h"
 
-#include "plugins/subdivision/subdivision_algorithms.h"
+#include "plugins/subdivision/subdivision_algorithms_plugin.h"
 
 namespace subdivision {
 
-SubdivisionAlgorithms::SubdivisionAlgorithms()
+SubdivisionAlgorithmsPlugin::SubdivisionAlgorithmsPlugin()
 {
     std::vector<Algorithm*> instances;
     // Add here all the algorithms
@@ -27,28 +27,28 @@ SubdivisionAlgorithms::SubdivisionAlgorithms()
     }
 }
 
-const QString SubdivisionAlgorithms::id()
+const QString SubdivisionAlgorithmsPlugin::id()
 {
     return "de.htwg.ios.subvis.plugin.subdivision";
 }
 
-const QString SubdivisionAlgorithms::name()
+const QString SubdivisionAlgorithmsPlugin::name()
 {
     return "Subdivision";
 }
 
-void SubdivisionAlgorithms::set_draw_controller(subvis::DrawController* draw_controller)
+void SubdivisionAlgorithmsPlugin::set_draw_controller(subvis::DrawController* draw_controller)
 {
     draw_controller_ = draw_controller;
 }
 
-void SubdivisionAlgorithms::draw_opengl()
+void SubdivisionAlgorithmsPlugin::draw_opengl()
 {
-    auto& algorithm = active_algorithm();
-    algorithm->draw_limit_surface(draw_controller_->mesh_data().mesh());
+    //auto& algorithm = active_algorithm();
+    //algorithm->draw_limit_surface(draw_controller_->mesh_data().mesh());
 }
 
-std::unique_ptr<Algorithm>& SubdivisionAlgorithms::active_algorithm()
+std::unique_ptr<Algorithm>& SubdivisionAlgorithmsPlugin::active_algorithm()
 {
     if (dropdown_->count() == 0) {
         throw new std::logic_error("no algorithms loaded. ensure that at least one is loaded in the constructor.");
@@ -58,7 +58,7 @@ std::unique_ptr<Algorithm>& SubdivisionAlgorithms::active_algorithm()
     return algorithms_.at(id);
 }
 
-void SubdivisionAlgorithms::create_gui(QWidget* parent)
+void SubdivisionAlgorithmsPlugin::create_gui(QWidget* parent)
 {
     // Gui creation
     QVBoxLayout* layout = new QVBoxLayout(parent);
@@ -88,7 +88,7 @@ void SubdivisionAlgorithms::create_gui(QWidget* parent)
     layout->addWidget(subdivide_);
 }
 
-void SubdivisionAlgorithms::subdivide_clicked(bool)
+void SubdivisionAlgorithmsPlugin::subdivide_clicked(bool)
 {
     int steps = steps_->value();
     auto& mesh_data = draw_controller_->mesh_data();
