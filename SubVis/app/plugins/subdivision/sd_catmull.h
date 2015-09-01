@@ -27,6 +27,7 @@ class SubdivCatmull : public SubdivAlgorithm {
 
  protected:
   virtual void subdivide_specific_algorithm();
+  void init_mesh_members() override;
 
  private:
   Surface_mesh::Face_property<Point> f_points_;
@@ -68,9 +69,6 @@ class SubdivCatmull : public SubdivAlgorithm {
   void avg_mid_edges(Point& avg_mid_edges, const Surface_mesh::Vertex& vertex);
 
   void add_mesh_properties();
-
-  void init_mesh_members();
-
   void remove_mesh_properties();
 };
 

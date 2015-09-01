@@ -30,8 +30,7 @@ void SubdivCatmull::subdivide_specific_algorithm() {
   for (fit = input_mesh_->faces_begin(); fit != input_mesh_->faces_end(); ++fit) {
     this->compute_new_faces(*fit);
   }
-
-  remove_mesh_properties();
+  this->remove_mesh_properties();
 }
 
 void SubdivCatmull::add_mesh_properties() {
@@ -41,7 +40,7 @@ void SubdivCatmull::add_mesh_properties() {
   input_mesh_->add_vertex_property<Point>(kSurfMeshPropVertexPointUpdated);
   // (vertex point property with key kSurfMeshPropVertexPoint is maintained by default)
 
-  // index properties
+  // add properties
   input_mesh_->add_vertex_property<Surface_mesh::Vertex>
   (kSurfMeshPropVertexIndexSubMeshV);
   input_mesh_->add_edge_property<Surface_mesh::Vertex>
