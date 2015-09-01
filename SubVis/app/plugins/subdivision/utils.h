@@ -12,10 +12,10 @@ namespace subdivision {
 // ===============[ const ]===============
 
 enum ObjDemoFiles {
-    kBigGuy = 0,
-    kCube,
-    kMonsterFrog,
-    kTetra
+  kBigGuy = 0,
+  kCube,
+  kMonsterFrog,
+  kTetra
 };
 const ::std::string kObjDemoFilesString[4] = {"bigguy.obj", "cube.obj", "monsterfrog.obj", "tetra.obj"};
 
@@ -28,7 +28,8 @@ const ::std::string kRootPathToObjFiles = "./../../SubVis/objs/";
  * @param mesh
  * @param title
  */
-void utils_debug_mesh(const surface_mesh::Surface_mesh& mesh, const QString &title);
+void utils_debug_mesh(const surface_mesh::Surface_mesh& mesh,
+                      const QString& title);
 
 void utils_debug_point(const surface_mesh::Point point, const QString& title);
 

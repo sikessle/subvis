@@ -2,23 +2,20 @@
 
 namespace subvis {
 
-void PluginManager::set_draw_controller(DrawController& draw_controller)
-{    
-   for (const auto& it : plugins_) {
-       it.second.plugin->set_draw_controller(&draw_controller);
-    }
+void PluginManager::set_draw_controller(DrawController& draw_controller) {
+  for (const auto& it : plugins_) {
+    it.second.plugin->set_draw_controller(&draw_controller);
+  }
 }
 
-const std::map<QString, PluginWrapper>& PluginManager::list_plugins() const
-{
-    return plugins_;
+const std::map<QString, PluginWrapper>& PluginManager::list_plugins() const {
+  return plugins_;
 }
 
-void PluginManager::register_plugin(std::unique_ptr<SubVisPlugin> plugin)
-{
-    const QString id = plugin->id();
-    const QString name = plugin->name();
-    plugins_[id] = {name, std::move(plugin)};
+void PluginManager::register_plugin(std::unique_ptr<SubVisPlugin> plugin) {
+  const QString id = plugin->id();
+  const QString name = plugin->name();
+  plugins_[id] = {name, std::move(plugin)};
 }
 
 } // namespace subvis

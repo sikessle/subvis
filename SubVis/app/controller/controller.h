@@ -7,15 +7,14 @@
 
 namespace subvis {
 
-class Controller : public QObject
-{
-    Q_OBJECT
+class Controller : public QObject {
+  Q_OBJECT
 
-public:
-    Controller(MeshData& mesh_data);
+ public:
+  Controller(MeshData& mesh_data);
 
-protected:
-    MeshData& mesh_data_;
+ protected:
+  MeshData& mesh_data_;
 };
 
 } // namespace subvis

@@ -3,8 +3,7 @@
 
 namespace subdivision {
 
-void SubdivButterfly::subdivide_specific_algorithm()
-{
+void SubdivButterfly::subdivide_specific_algorithm() {
 
 }
 

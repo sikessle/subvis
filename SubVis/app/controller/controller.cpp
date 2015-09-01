@@ -2,8 +2,7 @@
 
 namespace subvis {
 
-Controller::Controller(MeshData& mesh_data) : mesh_data_(mesh_data)
-{
+Controller::Controller(MeshData& mesh_data) : mesh_data_(mesh_data) {
 
 }
 

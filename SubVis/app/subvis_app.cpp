@@ -13,58 +13,54 @@
 
 namespace subvis {
 
-SubVisApp::SubVisApp(int& argc, char* argv[]) : QApplication(argc, argv)
-{
+SubVisApp::SubVisApp(int& argc, char* argv[]) : QApplication(argc, argv) {
 }
 
-void SubVisApp::register_plugin(std::unique_ptr<SubVisPlugin> plugin)
-{
-    plugin_manager_.register_plugin(std::move(plugin));
+void SubVisApp::register_plugin(std::unique_ptr<SubVisPlugin> plugin) {
+  plugin_manager_.register_plugin(std::move(plugin));
 }
 
-int SubVisApp::run()
-{
-    auto splash = create_show_splash();
+int SubVisApp::run() {
+  auto splash = create_show_splash();
 
-    // Model layer
-    MeshData mesh_data;
+  // Model layer
+  MeshData mesh_data;
 
-    // Controller layer
-    IOController io_controller{mesh_data};
-    DrawController draw_controller{mesh_data};
+  // Controller layer
+  IOController io_controller{mesh_data};
+  DrawController draw_controller{mesh_data};
 
-    // Plugins
-    plugin_manager_.set_draw_controller(draw_controller);
+  // Plugins
+  plugin_manager_.set_draw_controller(draw_controller);
 
-    // View layer
-    MainWindow mainwindow{draw_controller, io_controller, plugin_manager_.list_plugins()};
+  // View layer
+  MainWindow mainwindow{draw_controller, io_controller, plugin_manager_.list_plugins()};
 
-    // Signals
-    QObject::connect(&mesh_data, SIGNAL(updated()),
-                     &mainwindow, SIGNAL(mesh_updated()));
+  // Signals
+  QObject::connect(&mesh_data, SIGNAL(updated()),
+                   &mainwindow, SIGNAL(mesh_updated()));
 
-    mainwindow.show();
+  mainwindow.show();
 
-    if (splash) {
-        splash->finish(&mainwindow);
-    }
+  if (splash) {
+    splash->finish(&mainwindow);
+  }
 
-    return exec();
+  return exec();
 }
 
-std::unique_ptr<QSplashScreen> SubVisApp::create_show_splash()
-{
-    if (splash_image_.isNull()) {
-        std::cerr << "Failed to load splash screen image" << std::endl;
-        return nullptr;
-    }
+std::unique_ptr<QSplashScreen> SubVisApp::create_show_splash() {
+  if (splash_image_.isNull()) {
+    std::cerr << "Failed to load splash screen image" << std::endl;
+    return nullptr;
+  }
 
-    std::unique_ptr<QSplashScreen> splash{new QSplashScreen{splash_image_}};
+  std::unique_ptr<QSplashScreen> splash{new QSplashScreen{splash_image_}};
 
-    splash->show();
-    processEvents();
+  splash->show();
+  processEvents();
 
-    return splash;
+  return splash;
 }
 
 } // namespace subvis

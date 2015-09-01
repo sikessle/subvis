@@ -20,4 +20,5 @@
 -c
 # Google brackets style
 -A14
-
+# max 80 chars per line
+-xC80

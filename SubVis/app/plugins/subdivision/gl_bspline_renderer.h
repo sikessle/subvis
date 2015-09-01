@@ -5,10 +5,9 @@
 
 namespace subdivision {
 
-class BSplineGLRenderer : public GLRenderer
-{
-public:
-    void render_mesh_opengl(const surface_mesh::Surface_mesh& mesh) override;
+class BSplineGLRenderer : public GLRenderer {
+ public:
+  void render_mesh_opengl(const surface_mesh::Surface_mesh& mesh) override;
 };
 
 } // namespace subdivision

@@ -7,23 +7,22 @@
 
 namespace subvis {
 
-class ViewerWidget : public QGLViewer
-{
-    Q_OBJECT
+class ViewerWidget : public QGLViewer {
+  Q_OBJECT
 
-public:
-    ViewerWidget(QWidget* parent = 0);
+ public:
+  ViewerWidget(QWidget* parent = 0);
 
-    void set_draw_controller(DrawController* draw_controller);
+  void set_draw_controller(DrawController* draw_controller);
 
-protected:
-    virtual void draw() = 0;
+ protected:
+  virtual void draw() = 0;
 
-protected:
-    DrawController *draw_controller_{nullptr};
+ protected:
+  DrawController* draw_controller_{nullptr};
 
-public slots:
-    void enforce_redraw();
+ public slots:
+  void enforce_redraw();
 };
 
 } // namespace subvis

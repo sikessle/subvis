@@ -5,13 +5,12 @@
 
 namespace subvis {
 
-class ViewerMeshWidget : public ViewerWidget
-{
-public:
-    ViewerMeshWidget(QWidget* parent = 0);
+class ViewerMeshWidget : public ViewerWidget {
+ public:
+  ViewerMeshWidget(QWidget* parent = 0);
 
-protected:
-    void draw() override;
+ protected:
+  void draw() override;
 };
 
 

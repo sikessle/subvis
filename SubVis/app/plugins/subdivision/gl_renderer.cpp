@@ -2,8 +2,7 @@
 
 namespace subdivision {
 
-GLRenderer::~GLRenderer()
-{
+GLRenderer::~GLRenderer() {
 
 }
 

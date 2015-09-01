@@ -2,8 +2,7 @@
 
 namespace subdivision {
 
-void SubdivLoop::subdivide_specific_algorithm()
-{
+void SubdivLoop::subdivide_specific_algorithm() {
 
 }
 

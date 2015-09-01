@@ -2,13 +2,11 @@
 
 namespace subvis {
 
-DrawController::DrawController(MeshData& mesh_data) : Controller{mesh_data}
-{
+DrawController::DrawController(MeshData& mesh_data) : Controller{mesh_data} {
 }
 
-MeshData& DrawController::mesh_data()
-{
-    return mesh_data_;
+MeshData& DrawController::mesh_data() {
+  return mesh_data_;
 }
 
 } // namespace subvis

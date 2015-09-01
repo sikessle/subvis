@@ -7,14 +7,13 @@
 
 namespace subvis {
 
-class DrawController : public Controller
-{
-    Q_OBJECT
+class DrawController : public Controller {
+  Q_OBJECT
 
-public:
-    DrawController(MeshData& mesh_data);
+ public:
+  DrawController(MeshData& mesh_data);
 
-    MeshData& mesh_data();
+  MeshData& mesh_data();
 };
 
 } // namespace subvis

@@ -6,21 +6,20 @@
 
 namespace subvis {
 
-class ViewerPluginWidget : public ViewerWidget
-{
-    Q_OBJECT
+class ViewerPluginWidget : public ViewerWidget {
+  Q_OBJECT
 
-public:
-    ViewerPluginWidget(QWidget* parent = 0);
+ public:
+  ViewerPluginWidget(QWidget* parent = 0);
 
-protected:
-    void draw() override;
+ protected:
+  void draw() override;
 
-private:
-    SubVisPlugin* drawing_plugin_{nullptr};
+ private:
+  SubVisPlugin* drawing_plugin_{nullptr};
 
-public slots:
-    void set_drawing_plugin(SubVisPlugin* plugin);
+ public slots:
+  void set_drawing_plugin(SubVisPlugin* plugin);
 };
 
 } // namespace subvis

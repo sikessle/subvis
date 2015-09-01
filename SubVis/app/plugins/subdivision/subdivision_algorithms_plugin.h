@@ -13,41 +13,41 @@
 
 namespace subdivision {
 
-struct AlgorithmRenderer
-{
-    std::unique_ptr<SubdivAlgorithm> algorithm;
-    // shared_ptr to allow multiple algorithms to use the same renderer
-    std::shared_ptr<GLRenderer> renderer;
+struct AlgorithmRenderer {
+  std::unique_ptr<SubdivAlgorithm> algorithm;
+  // shared_ptr to allow multiple algorithms to use the same renderer
+  std::shared_ptr<GLRenderer> renderer;
 };
 
-class SubdivisionAlgorithmsPlugin : public QObject, public subvis::SubVisPlugin
-{
-    Q_OBJECT
+class SubdivisionAlgorithmsPlugin : public QObject,
+  public subvis::SubVisPlugin {
+  Q_OBJECT
 
-public:
-    SubdivisionAlgorithmsPlugin();
+ public:
+  SubdivisionAlgorithmsPlugin();
 
-    virtual const QString id() override;
-    virtual const QString name() override;
-    virtual void set_draw_controller(subvis::DrawController* draw_controller) override;
-    virtual void draw_opengl() override;
-    virtual void create_gui(QWidget* parent) override;
+  virtual const QString id() override;
+  virtual const QString name() override;
+  virtual void set_draw_controller(subvis::DrawController* draw_controller)
+  override;
+  virtual void draw_opengl() override;
+  virtual void create_gui(QWidget* parent) override;
 
-private:
-    subvis::DrawController* draw_controller_{nullptr};
-    /**
-     * @brief name->(algorithm, renderer)
-     */
-    std::map<QString, AlgorithmRenderer> algorithms_;
+ private:
+  subvis::DrawController* draw_controller_{nullptr};
+  /**
+   * @brief name->(algorithm, renderer)
+   */
+  std::map<QString, AlgorithmRenderer> algorithms_;
 
-    QPushButton* subdivide_{nullptr};
-    QSpinBox* steps_{nullptr};
-    QComboBox* dropdown_{nullptr};
+  QPushButton* subdivide_{nullptr};
+  QSpinBox* steps_{nullptr};
+  QComboBox* dropdown_{nullptr};
 
-    AlgorithmRenderer& active_algorithm_renderer_pair();
+  AlgorithmRenderer& active_algorithm_renderer_pair();
 
-private slots:
-    void subdivide_clicked(bool);
+ private slots:
+  void subdivide_clicked(bool);
 };
 
 } // namespace subdivision
