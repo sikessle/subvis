@@ -26,7 +26,8 @@ class SubdivDooSabin : public SubdivAlgorithm {
 
  protected:
   virtual void subdivide_specific_algorithm() override;
-  void init_mesh_members() override;
+  virtual void init_mesh_members() override;
+  virtual void deinit_mesh_members() override;
 
  private:
   using VertexToVertexMap =
@@ -34,9 +35,6 @@ class SubdivDooSabin : public SubdivAlgorithm {
 
   const ::std::string kPropVertexIndexResultMapF =
     "f:subdivision_mesh_vertex_index_map";
-
-  Surface_mesh::Face_property<Point> f_points_;
-  Surface_mesh::Edge_property<Point> e_points_;
 
   /**
    * @brief v_index_vertex_map_ every face has this property to store the new vertices
@@ -57,10 +55,6 @@ class SubdivDooSabin : public SubdivAlgorithm {
   void compute_faces_face();
   void compute_faces_edge();
   void compute_faces_vertex();
-
-
-  void add_mesh_properties();
-  void remove_mesh_properties();
 };
 
 

@@ -63,6 +63,10 @@ class SubdivAlgorithm {
   std::unique_ptr<Surface_mesh> input_mesh_;
 
   Surface_mesh::Vertex_property<Point> v_points_;
+  Surface_mesh::Edge_property<Point> e_points_;
+  Surface_mesh::Face_property<Point> f_points_;
+  Surface_mesh::Vertex_property<Point> v_points_updated_;
+
 
   /**
    * @brief Writes the result of modifiyng the input_mesh_ to result_mesh_
@@ -78,7 +82,14 @@ class SubdivAlgorithm {
    */
   virtual void subdivide_specific_algorithm() = 0;
 
+  /**
+   * @brief init_mesh_members Allocate memory for surface mesh properties and init the class members.
+   */
   virtual void init_mesh_members();
+  /**
+   * @brief deinit_mesh_members Release allocated memory of init_mesh_members().
+   */
+  virtual void deinit_mesh_members();
 
   /**
    * @brief mid_edge Compute the mid point of an edge (average of the two vertices).

@@ -36,7 +36,23 @@ Surface_mesh& SubdivAlgorithm::result_mesh() {
 }
 
 void SubdivAlgorithm::init_mesh_members() {
+  // add properties to mesh
+  input_mesh_->add_face_property<Point>(kPropFacePoint);
+  input_mesh_->add_edge_property<Point>(kPropEdgePoint);
+  input_mesh_->add_vertex_property<Point>(kPropVertexPointUpdated);
+  // (vertex point property with key kPropVertexPoint is maintained by default)
+  // init members
   v_points_ = input_mesh_->get_vertex_property<Point>(kPropVertexPoint);
+  e_points_ = input_mesh_->get_edge_property<Point>(kPropEdgePoint);
+  f_points_ = input_mesh_->get_face_property<Point>(kPropFacePoint);
+  v_points_updated_ = input_mesh_->get_vertex_property<Point>
+                      (kPropVertexPointUpdated);
+}
+
+void SubdivAlgorithm::deinit_mesh_members() {
+  input_mesh_->remove_face_property(f_points_);
+  input_mesh_->remove_edge_property(e_points_);
+  input_mesh_->remove_vertex_property(v_points_updated_);
 }
 
 void SubdivAlgorithm::compute_face_point(Point& face_point,

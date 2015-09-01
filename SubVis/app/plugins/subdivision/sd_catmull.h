@@ -26,8 +26,9 @@ class SubdivCatmull : public SubdivAlgorithm {
   using Point = surface_mesh::Point;
 
  protected:
-  virtual void subdivide_specific_algorithm();
-  void init_mesh_members() override;
+  virtual void subdivide_specific_algorithm() override;
+  virtual void init_mesh_members() override;
+  virtual void deinit_mesh_members() override;
 
  private:
 
@@ -42,14 +43,10 @@ class SubdivCatmull : public SubdivAlgorithm {
   const ::std::string kPropVertexIndexResultF =
     "f:subdivision_mesh_vertex_index";
 
-  Surface_mesh::Face_property<Point> f_points_;
-  Surface_mesh::Edge_property<Point> e_points_;
-  Surface_mesh::Vertex_property<Point> v_points_updated_;
-
   // vertex index properties to map from origin mesh to subdivision mesh
-  Surface_mesh::Vertex_property<Surface_mesh::Vertex> v_index_sub_mesh_v_prop_;
-  Surface_mesh::Edge_property<Surface_mesh::Vertex> v_index_sub_mesh_e_prop_;
-  Surface_mesh::Face_property<Surface_mesh::Vertex> v_index_sub_mesh_f_prop_;
+  Surface_mesh::Vertex_property<Surface_mesh::Vertex> v_index_result_v_prop_;
+  Surface_mesh::Edge_property<Surface_mesh::Vertex> v_index_result_e_prop_;
+  Surface_mesh::Face_property<Surface_mesh::Vertex> v_index_result_f_prop_;
 
   void compute_all_face_points();
   void compute_all_edge_points();
@@ -79,9 +76,6 @@ class SubdivCatmull : public SubdivAlgorithm {
                        const Surface_mesh::Vertex& vertex);
 
   void avg_mid_edges(Point& avg_mid_edges, const Surface_mesh::Vertex& vertex);
-
-  void add_mesh_properties();
-  void remove_mesh_properties();
 };
 
 } // namespace subdivision

@@ -6,7 +6,6 @@
 namespace subdivision {
 
 void SubdivDooSabin::subdivide_specific_algorithm() {
-  this->add_mesh_properties();
   this->init_mesh_members();
 
   // loop over all faces and compute face points (same as catmull clark face points)
@@ -18,29 +17,19 @@ void SubdivDooSabin::subdivide_specific_algorithm() {
   // compute and add faces to the result mesh
   this->compute_faces();
 
-  this->remove_mesh_properties();
-}
-
-void SubdivDooSabin::add_mesh_properties() {
-  // add properties that are necessary for doo sabin
-  input_mesh_->add_face_property<Point>(kPropFacePoint);
-  input_mesh_->add_edge_property<Point>(kPropEdgePoint);
-
-  input_mesh_->add_face_property<VertexToVertexMap>
-  (kPropVertexIndexResultMapF);
+  this->deinit_mesh_members();
 }
 
 void SubdivDooSabin::init_mesh_members() {
   SubdivAlgorithm::init_mesh_members();
-  f_points_ = input_mesh_->get_face_property<Point>(kPropFacePoint);
-  e_points_ = input_mesh_->get_edge_property<Point>(kPropEdgePoint);
+  input_mesh_->add_face_property<VertexToVertexMap>
+  (kPropVertexIndexResultMapF);
   f_vertex_index_map_ = input_mesh_->get_face_property<VertexToVertexMap>
                         (kPropVertexIndexResultMapF);
 }
 
-void SubdivDooSabin::remove_mesh_properties() {
-  input_mesh_->remove_face_property(f_points_);
-  input_mesh_->remove_edge_property(e_points_);
+void SubdivDooSabin::deinit_mesh_members() {
+  SubdivAlgorithm::deinit_mesh_members();
   input_mesh_->remove_face_property(f_vertex_index_map_);
 }
 

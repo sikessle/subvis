@@ -15,9 +15,7 @@ using surface_mesh::Surface_mesh;
 using surface_mesh::Point;
 
 void SubdivCatmull::subdivide_specific_algorithm() {
-  this->add_mesh_properties();
   this->init_mesh_members();
-
   // loop over all faces and compute face points
   this->compute_all_face_points();
   // loop over all edges and compute edge points
@@ -29,48 +27,30 @@ void SubdivCatmull::subdivide_specific_algorithm() {
   for (fit = input_mesh_->faces_begin(); fit != input_mesh_->faces_end(); ++fit) {
     this->compute_new_faces(*fit);
   }
-  this->remove_mesh_properties();
+  this->deinit_mesh_members();
 }
 
-void SubdivCatmull::add_mesh_properties() {
-  // add properties that are necessary for catmull clark
-  input_mesh_->add_face_property<Point>(kPropFacePoint);
-  input_mesh_->add_edge_property<Point>(kPropEdgePoint);
-  input_mesh_->add_vertex_property<Point>(kPropVertexPointUpdated);
-  // (vertex point property with key kSurfMeshPropVertexPoint is maintained by default)
-
-  // add properties
+void SubdivCatmull::init_mesh_members() {
+  SubdivAlgorithm::init_mesh_members();
   input_mesh_->add_vertex_property<Surface_mesh::Vertex>
   (kPropVertexIndexResultV);
   input_mesh_->add_edge_property<Surface_mesh::Vertex>
   (kPropVertexIndexResultE);
   input_mesh_->add_face_property<Surface_mesh::Vertex>
   (kPropVertexIndexResultF);
-}
-
-void SubdivCatmull::init_mesh_members() {
-  SubdivAlgorithm::init_mesh_members();
-  f_points_ = input_mesh_->get_face_property<Point>(kPropFacePoint);
-  e_points_ = input_mesh_->get_edge_property<Point>(kPropEdgePoint);
-  v_points_updated_ = input_mesh_->get_vertex_property<Point>
-                      (kPropVertexPointUpdated);
-
-  v_index_sub_mesh_f_prop_ = input_mesh_->get_face_property<Surface_mesh::Vertex>
+  v_index_result_f_prop_ = input_mesh_->get_face_property<Surface_mesh::Vertex>
                              (kPropVertexIndexResultF);
-  v_index_sub_mesh_e_prop_ = input_mesh_->get_edge_property<Surface_mesh::Vertex>
+  v_index_result_e_prop_ = input_mesh_->get_edge_property<Surface_mesh::Vertex>
                              (kPropVertexIndexResultE);
-  v_index_sub_mesh_v_prop_ =
-    input_mesh_->get_vertex_property<Surface_mesh::Vertex>
-    (kPropVertexIndexResultV);
+  v_index_result_v_prop_ =
+    input_mesh_->get_vertex_property<Surface_mesh::Vertex>(kPropVertexIndexResultV);
 }
 
-void SubdivCatmull::remove_mesh_properties() {
-  input_mesh_->remove_face_property(f_points_);
-  input_mesh_->remove_edge_property(e_points_);
-  input_mesh_->remove_vertex_property(v_points_updated_);
-  input_mesh_->remove_face_property(v_index_sub_mesh_f_prop_);
-  input_mesh_->remove_edge_property(v_index_sub_mesh_e_prop_);
-  input_mesh_->remove_vertex_property(v_index_sub_mesh_v_prop_);
+void SubdivCatmull::deinit_mesh_members() {
+  SubdivAlgorithm::deinit_mesh_members();
+  input_mesh_->remove_face_property(v_index_result_f_prop_);
+  input_mesh_->remove_edge_property(v_index_result_e_prop_);
+  input_mesh_->remove_vertex_property(v_index_result_v_prop_);
 }
 
 void SubdivCatmull::compute_all_face_points() {
@@ -80,7 +60,7 @@ void SubdivCatmull::compute_all_face_points() {
     this->compute_face_point(face_point, *fit);
     // store face point as property
     f_points_[*fit] = face_point;
-    v_index_sub_mesh_f_prop_[*fit] = result_mesh_->add_vertex(f_points_[*fit]);
+    v_index_result_f_prop_[*fit] = result_mesh_->add_vertex(f_points_[*fit]);
     DEBUG_POINT(face_point, "Face Point")
   }
 }
@@ -92,7 +72,7 @@ void SubdivCatmull::compute_all_edge_points() {
     this->compute_edge_point(edge_point, *eit);
     // store edge_point as property
     e_points_[*eit] = edge_point;
-    v_index_sub_mesh_e_prop_[*eit] = result_mesh_->add_vertex(e_points_[*eit]);
+    v_index_result_e_prop_[*eit] = result_mesh_->add_vertex(e_points_[*eit]);
     DEBUG_POINT(edge_point, "Edge Point");
   }
 }
@@ -105,7 +85,7 @@ void SubdivCatmull::compute_all_new_vertex_points() {
     this->compute_new_vertex_point(new_vertex_point, *vit);
     // store result in kSurfMeshPropVertexPointUpdated
     v_points_updated_[*vit] = new_vertex_point;
-    v_index_sub_mesh_v_prop_[*vit] = result_mesh_->add_vertex(
+    v_index_result_v_prop_[*vit] = result_mesh_->add_vertex(
                                        v_points_updated_[*vit]);
     DEBUG_POINT(new_vertex_point, "New Vertex Point");
   }
@@ -153,12 +133,12 @@ void SubdivCatmull::compute_new_faces(const Surface_mesh::Face& face) {
   Surface_mesh::Halfedge_around_face_circulator hc = input_mesh_->halfedges(face);
   for (const Surface_mesh::Halfedge& h : hc) {
     if (i < kArraySize) { // check if in array bounds
-      v_index_list[i] = v_index_sub_mesh_v_prop_[input_mesh_->from_vertex(h)];
-      e_index_list[i] = v_index_sub_mesh_e_prop_[input_mesh_->edge(h)];
+      v_index_list[i] = v_index_result_v_prop_[input_mesh_->from_vertex(h)];
+      e_index_list[i] = v_index_result_e_prop_[input_mesh_->edge(h)];
     }
     ++i; // increment to compute face valence
   }
-  const Surface_mesh::Vertex f_index = v_index_sub_mesh_f_prop_[face];
+  const Surface_mesh::Vertex f_index = v_index_result_f_prop_[face];
   if (i == 3) { // triangle face
     result_mesh_->add_quad(v_index_list[0], e_index_list[0], f_index,
                            e_index_list[2]);

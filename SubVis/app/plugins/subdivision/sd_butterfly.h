@@ -12,7 +12,8 @@ class SubdivButterfly : public SubdivAlgorithm {
 
  protected:
   virtual void subdivide_specific_algorithm() override;
-
+  virtual void init_mesh_members() override;
+  virtual void deinit_mesh_members() override;
 };
 
 } // namespace subdivision
