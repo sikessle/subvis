@@ -75,27 +75,24 @@ void SubdivDooSabin::compute_all_new_vertex_points() {
   Point new_vertex_point;
   for (fit = input_mesh_->faces_begin(); fit != input_mesh_->faces_end(); ++fit) {
     vc = input_mesh_->vertices(*fit);
-    vc_end = vc;
-    do {
-      this->compute_new_vertex_point(new_vertex_point, *vc, *fit);
+    for (const Surface_mesh::Vertex& v : vc) {
+      this->compute_new_vertex_point(new_vertex_point, v, *fit);
       // add new vertex to result mesh and store the index of the vertex as property in the input mesh
       f_vertex_index_map_[*fit][*vc] = result_mesh_->add_vertex(new_vertex_point);
       DEBUG_POINT(new_vertex_point, "New Vertex Point");
-    } while (++vc != vc_end);
+    }
   }
 }
 
 void SubdivDooSabin::compute_new_vertex_point(Point& new_vertex_point,
     const Surface_mesh::Vertex& vertex, const Surface_mesh::Face& face) {
   // compute new vertex point: average of four points (face point, two edge points and vertex)
-  Surface_mesh::Halfedge_around_face_circulator hc, hc_end;
-  hc = input_mesh_->halfedges(face);
-  hc_end = hc;
-  do {
-    if (input_mesh_->from_vertex(*hc) == vertex) {
+  Surface_mesh::Halfedge_around_face_circulator hc = input_mesh_->halfedges(face);
+  for (const Surface_mesh::Halfedge& h : hc) {
+    if (input_mesh_->from_vertex(h) == vertex) {
       break;
     }
-  } while (++hc != hc_end);
+  }
   Surface_mesh::Edge e1, e2;
   e1 = input_mesh_->edge(*hc);
   e2 = input_mesh_->edge(input_mesh_->prev_halfedge(*hc));
@@ -116,12 +113,10 @@ void SubdivDooSabin::compute_faces_face() {
   std::vector<Surface_mesh::Vertex> vertices_vec;
   Surface_mesh::Face_iterator fit;
   for (fit = input_mesh_->faces_begin(); fit != input_mesh_->faces_end(); ++fit) {
-    Surface_mesh::Vertex_around_face_circulator vc, vc_end;
-    vc = input_mesh_->vertices(*fit);
-    vc_end = vc;
-    do {
-      vertices_vec.push_back(f_vertex_index_map_[*fit][*vc]);
-    } while (++vc != vc_end);
+    Surface_mesh::Vertex_around_face_circulator vc = input_mesh_->vertices(*fit);
+    for (const Surface_mesh::Vertex& v : vc) {
+      vertices_vec.push_back(f_vertex_index_map_[*fit][v]);
+    }
     result_mesh().add_face(vertices_vec);
     vertices_vec.clear();
   }
@@ -132,12 +127,12 @@ void SubdivDooSabin::compute_faces_edge() {
   Surface_mesh::Edge_iterator eit;
   //Surface_mesh::Face f0, f1;
   //Surface_mesh::Vertex v0, v1;
-  for (eit = input_mesh_->edges_begin(); eit != input_mesh_->edges_end(); ++eit) {
+  //for (eit = input_mesh_->edges_begin(); eit != input_mesh_->edges_end(); ++eit) {
     //f0 = input_mesh_->
     //vertices_vec.push_back(f_vertex_index_map_[*fit][*vc]);
     //result_mesh().add_face(vertices_vec);
     //vertices_vec.clear();
-  }
+  //}
 }
 
 void SubdivDooSabin::compute_faces_vertex() {

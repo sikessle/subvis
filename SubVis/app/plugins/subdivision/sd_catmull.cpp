@@ -146,22 +146,18 @@ void SubdivCatmull::compute_new_vertex_point(Point& new_vertex_point,
 }
 
 void SubdivCatmull::compute_new_faces(const Surface_mesh::Face& face) {
-  // init halfedge circulator
-  Surface_mesh::Halfedge_around_face_circulator hc, hc_end;
-  hc = input_mesh_->halfedges(face);
-  hc_end = hc;
-  // add vertices to new mesh
   const int kArraySize = 4;
   Surface_mesh::Vertex v_index_list[kArraySize];
   Surface_mesh::Vertex e_index_list[kArraySize];
   int i = 0;
-  do {
+  Surface_mesh::Halfedge_around_face_circulator hc = input_mesh_->halfedges(face);
+  for (const Surface_mesh::Halfedge& h : hc) {
     if (i < kArraySize) { // check if in array bounds
-      v_index_list[i] = v_index_sub_mesh_v_prop_[input_mesh_->from_vertex(*hc)];
-      e_index_list[i] = v_index_sub_mesh_e_prop_[input_mesh_->edge(*hc)];
+      v_index_list[i] = v_index_sub_mesh_v_prop_[input_mesh_->from_vertex(h)];
+      e_index_list[i] = v_index_sub_mesh_e_prop_[input_mesh_->edge(h)];
     }
     ++i; // increment to compute face valence
-  } while (++hc != hc_end);
+  }
   const Surface_mesh::Vertex f_index = v_index_sub_mesh_f_prop_[face];
   if (i == 3) { // triangle face
     result_mesh_->add_quad(v_index_list[0], e_index_list[0], f_index,
@@ -188,14 +184,12 @@ void SubdivCatmull::compute_new_faces(const Surface_mesh::Face& face) {
 void SubdivCatmull::avg_face_points(Point& avg_face_points,
                                     const Surface_mesh::Vertex& vertex) {
   avg_face_points = Point(0);
-  Surface_mesh::Face_around_vertex_circulator fc, fc_end;
-  fc = input_mesh_->faces(vertex);
-  fc_end = fc;
   int i = 0;
-  do {
-    avg_face_points += f_points_[*fc];
+  Surface_mesh::Face_around_vertex_circulator fc = input_mesh_->faces(vertex);
+  for (const Surface_mesh::Face& f : fc) {
+    avg_face_points += f_points_[f];
     ++i;
-  } while (++fc != fc_end);
+  }
   if (i != 0) {
     avg_face_points /= i;
   }
@@ -204,16 +198,15 @@ void SubdivCatmull::avg_face_points(Point& avg_face_points,
 void SubdivCatmull::avg_mid_edges(Point& avg_mid_edges,
                                   const Surface_mesh::Vertex& vertex) {
   avg_mid_edges = Point(0);
-  Surface_mesh::Halfedge_around_vertex_circulator hc, hc_end;
-  hc = input_mesh_->halfedges(vertex);
-  hc_end = hc;
   int i = 0;
   Point mid_edge;
-  do {
-    this->mid_edge(mid_edge, input_mesh_->edge(*hc));
+  Surface_mesh::Halfedge_around_vertex_circulator hc = input_mesh_->halfedges(
+        vertex);
+  for (const Surface_mesh::Halfedge& h : hc) {
+    this->mid_edge(mid_edge, input_mesh_->edge(h));
     avg_mid_edges += mid_edge;
     ++i;
-  } while (++hc != hc_end);
+  }
   if (i != 0) {
     avg_mid_edges /= i;
   }
