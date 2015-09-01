@@ -6,7 +6,7 @@
 namespace subdivision {
 
 class BSplineGLRenderer : public GLRenderer {
- public:
+ protected:
   void render(const surface_mesh::Surface_mesh& mesh) override;
 };
 
