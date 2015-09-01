@@ -78,7 +78,7 @@ void SubdivDooSabin::compute_all_new_vertex_points() {
     for (const Surface_mesh::Vertex& v : vc) {
       this->compute_new_vertex_point(new_vertex_point, v, *fit);
       // add new vertex to result mesh and store the index of the vertex as property in the input mesh
-      f_vertex_index_map_[*fit][*vc] = result_mesh_->add_vertex(new_vertex_point);
+      f_vertex_index_map_[*fit][v] = result_mesh_->add_vertex(new_vertex_point);
       DEBUG_POINT(new_vertex_point, "New Vertex Point");
     }
   }
@@ -117,7 +117,7 @@ void SubdivDooSabin::compute_faces_face() {
     for (const Surface_mesh::Vertex& v : vc) {
       vertices_vec.push_back(f_vertex_index_map_[*fit][v]);
     }
-    result_mesh().add_face(vertices_vec);
+    result_mesh_->add_face(vertices_vec);
     vertices_vec.clear();
   }
 }
@@ -128,10 +128,10 @@ void SubdivDooSabin::compute_faces_edge() {
   //Surface_mesh::Face f0, f1;
   //Surface_mesh::Vertex v0, v1;
   //for (eit = input_mesh_->edges_begin(); eit != input_mesh_->edges_end(); ++eit) {
-    //f0 = input_mesh_->
-    //vertices_vec.push_back(f_vertex_index_map_[*fit][*vc]);
-    //result_mesh().add_face(vertices_vec);
-    //vertices_vec.clear();
+  //f0 = input_mesh_->
+  //vertices_vec.push_back(f_vertex_index_map_[*fit][*vc]);
+  //result_mesh().add_face(vertices_vec);
+  //vertices_vec.clear();
   //}
 }
 
