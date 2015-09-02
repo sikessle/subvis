@@ -33,8 +33,22 @@ class SubdivLoop : public SubdivAlgorithm {
   Surface_mesh::Edge_property<Surface_mesh::Vertex> v_index_result_e_prop_;
 
   void compute_all_odd_vertices();
+  void compute_all_even_vertices();
+  void compute_all_faces();
 
-  void compute_odd_vertex(Point& edge_point, const Surface_mesh::Edge& edge);
+  void compute_odd_vertex(Point& odd_vertex, const Surface_mesh::Edge& edge);
+  void compute_even_vertex(Point& even_vertex,
+                           const Surface_mesh::Vertex& vertex);
+
+  /**
+   * @brief compute_beta Compute the constante beta as proposed by Warren.
+   * for n > 3, beta = 3/(8n) and for n = 3, beta = 3/16
+   *
+   * [original choice of Loop: 1/n(5/8-(3/8+1/4cos(2pi/n))^2)]
+   * @param n
+   * @return
+   */
+  double compute_beta(unsigned int n) const;
 };
 
 } // namespace subdivision
