@@ -51,7 +51,7 @@ int SubVisApp::run() {
 
 std::unique_ptr<QSplashScreen> SubVisApp::create_splash() {
   if (splash_image_.isNull()) {
-    throw std::runtime_error("Failed to load splash screen image.");
+    throw std::runtime_error{"Failed to load splash screen image."};
   }
   std::unique_ptr<QSplashScreen> splash{new QSplashScreen{splash_image_}};
 
