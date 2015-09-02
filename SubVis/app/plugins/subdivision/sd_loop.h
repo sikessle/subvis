@@ -42,7 +42,7 @@ class SubdivLoop : public SubdivAlgorithm {
   void compute_new_faces(const Surface_mesh::Face& face);
 
   /**
-   * @brief compute_beta Compute the constante beta as proposed by Warren.
+   * @brief compute_beta Compute the constant beta as proposed by Warren.
    * for n > 3, beta = 3/(8n) and for n = 3, beta = 3/16
    *
    * [original choice of Loop: 1/n(5/8-(3/8+1/4cos(2pi/n))^2)]
