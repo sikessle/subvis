@@ -1,5 +1,6 @@
 
 #include <exception>
+#include <QDebug>
 #include "plugins/subdivision/debug.h"
 #include "plugins/subdivision/sd_loop.h"
 
@@ -38,7 +39,6 @@ void SubdivLoop::compute_all_odd_vertices() {
   Point odd_vertex_point;
   for (eit = input_mesh_->edges_begin(); eit != input_mesh_->edges_end(); ++eit) {
     this->compute_odd_vertex(odd_vertex_point, *eit);
-    //this->compute_mid_edge(odd_vertex_point, *eit);
     e_points_[*eit] = odd_vertex_point;
     v_index_result_e_prop_[*eit] = result_mesh_->add_vertex(e_points_[*eit]);
     DEBUG_POINT(odd_vertex_point, "Odd Vertex Point");
@@ -67,7 +67,6 @@ void SubdivLoop::compute_all_faces() {
 
 void SubdivLoop::compute_odd_vertex(Point& odd_vertex,
                                     const Surface_mesh::Edge& edge) {
-  // TODO fix error
   odd_vertex = Point(0);
   Surface_mesh::Vertex edge_vertex0, edge_vertex1, face_vertex0, face_vertex1;
   Surface_mesh::Halfedge h_face0, h_face1;
@@ -75,11 +74,11 @@ void SubdivLoop::compute_odd_vertex(Point& odd_vertex,
   edge_vertex1 = input_mesh_->vertex(edge, 1);
   h_face0 = input_mesh_->halfedge(edge, 0);
   h_face1 = input_mesh_->halfedge(edge, 1);
-  face_vertex0 = input_mesh_->from_vertex(input_mesh_->prev_halfedge(h_face0));
-  face_vertex1 = input_mesh_->from_vertex(input_mesh_->prev_halfedge(h_face1));
-  odd_vertex = 3 * v_points_[edge_vertex0] +  3 * v_points_[edge_vertex1] +
-               v_points_[face_vertex0] + v_points_[face_vertex0];
-  odd_vertex /= 8;
+  face_vertex0 = input_mesh_->to_vertex(input_mesh_->next_halfedge(h_face0));
+  face_vertex1 = input_mesh_->to_vertex(input_mesh_->next_halfedge(h_face1));
+  odd_vertex = 3 * (v_points_[edge_vertex0] + v_points_[edge_vertex1]) +
+               (v_points_[face_vertex0] + v_points_[face_vertex0]);
+  odd_vertex /= 8.;
 }
 
 void SubdivLoop::compute_even_vertex(Point& even_vertex,
@@ -113,7 +112,7 @@ void SubdivLoop::compute_new_faces(const Surface_mesh::Face& face) {
     ++i;
   }
   result_mesh_->add_triangle(e_index_list[0], e_index_list[1], e_index_list[2]);
-  result_mesh_->add_triangle(v_index_list[0], e_index_list[0], e_index_list[3]);
+  result_mesh_->add_triangle(v_index_list[0], e_index_list[0], e_index_list[2]);
   result_mesh_->add_triangle(v_index_list[1], e_index_list[1], e_index_list[0]);
   result_mesh_->add_triangle(v_index_list[2], e_index_list[2], e_index_list[1]);
 }
