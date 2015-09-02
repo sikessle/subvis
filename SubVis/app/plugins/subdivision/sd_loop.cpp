@@ -58,7 +58,10 @@ void SubdivLoop::compute_all_even_vertices() {
 }
 
 void SubdivLoop::compute_all_faces() {
-  // TODO
+  Surface_mesh::Face_iterator fit;
+  for (fit = input_mesh_->faces_begin(); fit != input_mesh_->faces_end(); ++fit) {
+    this->compute_new_faces(*fit);
+  }
 }
 
 void SubdivLoop::compute_odd_vertex(Point& odd_vertex,
@@ -92,6 +95,25 @@ void SubdivLoop::compute_even_vertex(Point& even_vertex,
   const double kBeta = this->compute_beta(n);
   even_vertex = v_points_[vertex] * (1 - n * kBeta) + sum_surrounding_vertices *
                 kBeta;
+}
+
+void SubdivLoop::compute_new_faces(const Surface_mesh::Face& face) {
+  const int kArraySize = 3;
+  Surface_mesh::Vertex v_index_list[kArraySize];
+  Surface_mesh::Vertex e_index_list[kArraySize];
+  Surface_mesh::Halfedge_around_face_circulator hc = input_mesh_->halfedges(face);
+  unsigned int i = 0;
+  for (const Surface_mesh::Halfedge& h : hc) {
+    if (i < kArraySize) { // check if in array bounds
+      v_index_list[i] = v_index_result_v_prop_[input_mesh_->from_vertex(h)];
+      e_index_list[i] = v_index_result_e_prop_[input_mesh_->edge(h)];
+    }
+    ++i;
+  }
+  result_mesh_->add_triangle(e_index_list[0], e_index_list[1], e_index_list[2]);
+  result_mesh_->add_triangle(v_index_list[0], e_index_list[0], e_index_list[3]);
+  result_mesh_->add_triangle(v_index_list[1], e_index_list[1], e_index_list[0]);
+  result_mesh_->add_triangle(v_index_list[2], e_index_list[2], e_index_list[1]);
 }
 
 double SubdivLoop::compute_beta(unsigned int n) const {

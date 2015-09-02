@@ -39,6 +39,7 @@ class SubdivLoop : public SubdivAlgorithm {
   void compute_odd_vertex(Point& odd_vertex, const Surface_mesh::Edge& edge);
   void compute_even_vertex(Point& even_vertex,
                            const Surface_mesh::Vertex& vertex);
+  void compute_new_faces(const Surface_mesh::Face& face);
 
   /**
    * @brief compute_beta Compute the constante beta as proposed by Warren.
