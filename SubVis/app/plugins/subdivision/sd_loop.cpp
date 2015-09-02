@@ -7,7 +7,7 @@ namespace subdivision {
 void SubdivLoop::subdivide_input_mesh_write_output_mesh() {
   this->init_mesh_members();
 
-  this->compute_all_edge_points();
+  this->compute_all_odd_vertices();
 
   this->deinit_mesh_members();
 }
@@ -30,18 +30,18 @@ void SubdivLoop::deinit_mesh_members() {
   input_mesh_->remove_vertex_property(v_index_result_v_prop_);
 }
 
-void SubdivLoop::compute_all_edge_points() {
+void SubdivLoop::compute_all_odd_vertices() {
   Surface_mesh::Edge_iterator eit;
   Point edge_point;
   for (eit = input_mesh_->edges_begin(); eit != input_mesh_->edges_end(); ++eit) {
-    this->compute_edge_point(edge_point, *eit);
+    this->compute_odd_vertex(edge_point, *eit);
     e_points_[*eit] = edge_point;
     v_index_result_e_prop_[*eit] = result_mesh_->add_vertex(e_points_[*eit]);
     DEBUG_POINT(edge_point, "Edge Point");
   }
 }
 
-void SubdivLoop::compute_edge_point(Point& edge_point,
+void SubdivLoop::compute_odd_vertex(Point& edge_point,
                                     const Surface_mesh::Edge& edge) {
   edge_point = Point(0);
   Surface_mesh::Vertex edge_vertex0, edge_vertex1, face_vertex0, face_vertex1;

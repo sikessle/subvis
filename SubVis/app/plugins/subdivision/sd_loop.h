@@ -5,7 +5,8 @@
  * 1. create edge point for each edge
  * 2. update all vertices of the old mesh
  * 2. create new faces (4 new triangle faces replace the old triangle face)
- * (https://graphics.stanford.edu/~mdfisher/subdivision.html)
+ * (https://graphics.stanford.edu/~mdfisher/subdivision.html
+ *  http://www.cs.cmu.edu/afs/cs/academic/class/15462-s14/www/lec_slides/Subdivision.pdf)
  *
  */
 
@@ -31,9 +32,9 @@ class SubdivLoop : public SubdivAlgorithm {
   Surface_mesh::Vertex_property<Surface_mesh::Vertex> v_index_result_v_prop_;
   Surface_mesh::Edge_property<Surface_mesh::Vertex> v_index_result_e_prop_;
 
-  void compute_all_edge_points();
+  void compute_all_odd_vertices();
 
-  void compute_edge_point(Point& edge_point, const Surface_mesh::Edge& edge);
+  void compute_odd_vertex(Point& edge_point, const Surface_mesh::Edge& edge);
 };
 
 } // namespace subdivision
