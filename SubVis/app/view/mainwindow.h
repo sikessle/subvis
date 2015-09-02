@@ -23,14 +23,16 @@ class MainWindow : public QMainWindow {
  public:
   MainWindow(DrawController& draw_controller,
              IOController& io_controller,
-             const std::map<QString, PluginWrapper>& plugins);
+             const std::map<const QString, PluginWrapper>& plugins);
   ~MainWindow();
 
  private:
   Ui::MainWindow* ui_;
   IOController& io_controller_;
-  const std::map<QString, PluginWrapper>& plugins_;
-  // memory managed by Qt's parent-relationship (ui)
+  const std::map<const QString, PluginWrapper>& plugins_;
+  /**
+  * @brief memory managed by Qt's parent-relationship (ui)
+  */
   QLabel* status_label_;
 
   const QString kStatusText {"Build: " __DATE__ " " __TIME__};
@@ -43,8 +45,8 @@ class MainWindow : public QMainWindow {
   void setup_plugin_guis();
 
  public slots:
-  void load_dialog();
-  void save_dialog();
+  void show_load_dialog();
+  void show_save_dialog();
   void plugin_tab_changed(int current);
 
  signals:

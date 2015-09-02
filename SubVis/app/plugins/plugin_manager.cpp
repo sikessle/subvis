@@ -8,7 +8,7 @@ void PluginManager::set_draw_controller(DrawController& draw_controller) {
   }
 }
 
-const std::map<QString, PluginWrapper>& PluginManager::list_plugins() const {
+const std::map<const QString, PluginWrapper>& PluginManager::list_plugins() const {
   return plugins_;
 }
 

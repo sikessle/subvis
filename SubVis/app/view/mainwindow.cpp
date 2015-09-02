@@ -9,7 +9,7 @@ namespace subvis {
 
 MainWindow::MainWindow(DrawController& draw_controller,
                        IOController& io_controller,
-                       const std::map<QString, PluginWrapper>& plugins)
+                       const std::map<const QString, PluginWrapper>& plugins)
   : QMainWindow{0},
     ui_{new Ui::MainWindow},
 io_controller_(io_controller),
@@ -67,14 +67,14 @@ void MainWindow::plugin_tab_changed(int current) {
 
 void MainWindow::setup_toolbar() {
   QObject::connect(ui_->action_load, SIGNAL(triggered(bool)), this,
-                   SLOT(load_dialog()));
+                   SLOT(show_load_dialog()));
   QObject::connect(ui_->action_save, SIGNAL(triggered(bool)), this,
-                   SLOT(save_dialog()));
+                   SLOT(show_save_dialog()));
   QObject::connect(ui_->action_snapshot, SIGNAL(triggered(bool)),
                    ui_->tab_viewer_mesh, SLOT(saveSnapshot(bool)));
 }
 
-void MainWindow::load_dialog() {
+void MainWindow::show_load_dialog() {
   QString file_filter{QString::fromStdString(io_controller_.get_load_file_formats())};
   QString fn{QFileDialog::getOpenFileName(this, kLoadDialogCaption,
                                           QDir::home().absolutePath(), file_filter)};
@@ -88,7 +88,7 @@ void MainWindow::load_dialog() {
   }
 }
 
-void MainWindow::save_dialog() {
+void MainWindow::show_save_dialog() {
   QString file_filter{QString::fromStdString(io_controller_.get_persist_file_formats())};
   QString fn{QFileDialog::getSaveFileName(this, kSaveDialogCaption,
                                           QDir::home().absolutePath(), file_filter)};
