@@ -18,7 +18,7 @@ class SubdivAlgorithm {
   /**
    * @brief Subdivides the given mesh object in n steps.
    * @param steps The number of subdivision steps.
-   * @return The resulting mesh including ownership.
+   * @return The subdivided mesh
    */
   virtual std::unique_ptr<Surface_mesh> subdivide(const Surface_mesh& mesh,
       int steps = 1);
@@ -27,7 +27,7 @@ class SubdivAlgorithm {
    * @brief Returns result mesh for testing.
    * @return A view on the mesh, but ownership stays in this class.
    */
-  virtual Surface_mesh& result_mesh();
+  virtual const Surface_mesh& get_result_mesh();
 
  protected:
   /**

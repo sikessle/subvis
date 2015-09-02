@@ -8,11 +8,11 @@ using surface_mesh::Surface_mesh;
 using surface_mesh::Point;
 
 SubdivAlgorithm::~SubdivAlgorithm() {
-
 }
 
-std::unique_ptr<Surface_mesh> SubdivAlgorithm::subdivide(const Surface_mesh& mesh,
-    int steps) {
+std::unique_ptr<Surface_mesh> SubdivAlgorithm::subdivide(
+  const Surface_mesh& mesh,
+  int steps) {
   result_mesh_.reset(new Surface_mesh);
   input_mesh_.reset(new Surface_mesh{mesh});
 
@@ -22,7 +22,7 @@ std::unique_ptr<Surface_mesh> SubdivAlgorithm::subdivide(const Surface_mesh& mes
     subdivide_specific_algorithm();
     DEBUG_MESH(*result_mesh_.get(), "result mesh")
     // input mesh is now the previous result mesh
-    input_mesh_.reset(new Surface_mesh{ * (result_mesh_.get())});
+    input_mesh_.reset(new Surface_mesh{ *result_mesh_.get()});
   }
 
   // free memory
@@ -31,8 +31,8 @@ std::unique_ptr<Surface_mesh> SubdivAlgorithm::subdivide(const Surface_mesh& mes
   return std::move(result_mesh_);
 }
 
-Surface_mesh& SubdivAlgorithm::result_mesh() {
-  return *(result_mesh_.get());
+const Surface_mesh& SubdivAlgorithm::get_result_mesh() {
+  return *result_mesh_.get();
 }
 
 void SubdivAlgorithm::init_mesh_members() {
