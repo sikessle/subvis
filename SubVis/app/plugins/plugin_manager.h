@@ -29,7 +29,7 @@ class PluginManager {
    * @brief Lists all loaded plugins: id->(name, plugin)
    * @return
    */
-  const std::map<const QString, PluginWrapper>& list_plugins() const;
+  const std::map<const QString, PluginWrapper>& get_plugins() const;
 
   /**
    * @brief Sets the draw controller on every registered plugin

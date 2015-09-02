@@ -37,7 +37,7 @@ int SubVisApp::run() {
   plugin_manager_.set_draw_controller(draw_controller);
 
   // View layer
-  MainWindow mainwindow{draw_controller, io_controller, plugin_manager_.list_plugins()};
+  MainWindow mainwindow{draw_controller, io_controller, plugin_manager_.get_plugins()};
 
   // Signals
   QObject::connect(&mesh_data, SIGNAL(updated()),
