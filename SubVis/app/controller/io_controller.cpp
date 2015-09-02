@@ -14,11 +14,11 @@ bool IOController::persist_mesh(const std::string& filename) const {
   return mesh_data_.persist(filename);
 }
 
-const std::string& IOController::load_file_formats() const {
+const std::string& IOController::get_load_file_formats() const {
   return mesh_data_.get_load_file_formats();
 }
 
-const std::string& IOController::persist_file_formats() const {
+const std::string& IOController::get_persist_file_formats() const {
   return mesh_data_.get_persist_file_formats();
 }
 

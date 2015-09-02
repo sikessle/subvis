@@ -15,8 +15,8 @@ class IOController : public Controller {
 
   bool load_mesh(const std::string& filename);
   bool persist_mesh(const std::string& filename) const;
-  const std::string& load_file_formats() const;
-  const std::string& persist_file_formats() const;
+  const std::string& get_load_file_formats() const;
+  const std::string& get_persist_file_formats() const;
 };
 
 } // namespace subvis

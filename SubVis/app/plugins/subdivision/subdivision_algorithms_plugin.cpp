@@ -54,7 +54,7 @@ void SubdivisionAlgorithmsPlugin::set_draw_controller(subvis::DrawController*
 
 void SubdivisionAlgorithmsPlugin::draw_opengl() {
   auto& renderer = active_algorithm_renderer_pair().renderer;
-  renderer->render_mesh_opengl(draw_controller_->mesh_data().get_mesh());
+  renderer->render_mesh_opengl(draw_controller_->get_mesh_data().get_mesh());
 }
 
 AlgorithmRenderer&
@@ -100,7 +100,7 @@ void SubdivisionAlgorithmsPlugin::create_gui(QWidget* parent) {
 
 void SubdivisionAlgorithmsPlugin::subdivide_clicked(bool) {
   int steps = steps_->value();
-  auto& mesh_data = draw_controller_->mesh_data();
+  auto& mesh_data = draw_controller_->get_mesh_data();
   auto& algorithm = active_algorithm_renderer_pair().algorithm;
 
   auto result = algorithm->subdivide(mesh_data.get_mesh(), steps);

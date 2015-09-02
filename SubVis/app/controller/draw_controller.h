@@ -13,7 +13,7 @@ class DrawController : public Controller {
  public:
   DrawController(MeshData& mesh_data);
 
-  MeshData& mesh_data();
+  MeshData& get_mesh_data();
 };
 
 } // namespace subvis

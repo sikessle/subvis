@@ -75,7 +75,7 @@ void MainWindow::setup_toolbar() {
 }
 
 void MainWindow::load_dialog() {
-  QString file_filter{QString::fromStdString(io_controller_.load_file_formats())};
+  QString file_filter{QString::fromStdString(io_controller_.get_load_file_formats())};
   QString fn{QFileDialog::getOpenFileName(this, kLoadDialogCaption,
                                           QDir::home().absolutePath(), file_filter)};
 
@@ -89,7 +89,7 @@ void MainWindow::load_dialog() {
 }
 
 void MainWindow::save_dialog() {
-  QString file_filter{QString::fromStdString(io_controller_.persist_file_formats())};
+  QString file_filter{QString::fromStdString(io_controller_.get_persist_file_formats())};
   QString fn{QFileDialog::getSaveFileName(this, kSaveDialogCaption,
                                           QDir::home().absolutePath(), file_filter)};
 
