@@ -44,7 +44,6 @@ int SubVisApp::run() {
                    &mainwindow, SIGNAL(mesh_updated()));
 
   mainwindow.show();
-
   splash->finish(&mainwindow);
 
   return exec();
@@ -54,7 +53,6 @@ std::unique_ptr<QSplashScreen> SubVisApp::create_splash() {
   if (splash_image_.isNull()) {
     throw new std::runtime_error("Failed to load splash screen image.");
   }
-
   std::unique_ptr<QSplashScreen> splash{new QSplashScreen{splash_image_}};
 
   return splash;
