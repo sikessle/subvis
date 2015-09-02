@@ -19,7 +19,7 @@ namespace subdivision {
 
 class SubdivLoop : public SubdivAlgorithm {
  protected:
-  virtual void subdivide_specific_algorithm() override;
+  virtual void subdivide_input_mesh_write_output_mesh() override;
   virtual void init_mesh_members() override;
   virtual void deinit_mesh_members() override;
 

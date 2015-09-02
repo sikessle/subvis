@@ -79,7 +79,7 @@ class SubdivAlgorithm {
    * There is also no need to destruct or clean up the two pointers as they are
    * smart pointers.
    */
-  virtual void subdivide_specific_algorithm() = 0;
+  virtual void subdivide_input_mesh_write_output_mesh() = 0;
 
   /**
    * @brief init_mesh_members Allocate memory for surface mesh properties and init the class members.

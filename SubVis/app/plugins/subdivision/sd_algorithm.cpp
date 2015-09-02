@@ -19,7 +19,7 @@ std::unique_ptr<Surface_mesh> SubdivAlgorithm::subdivide(
   for (int i = 0; i < steps; i++) {
     result_mesh_->clear();
     DEBUG_MESH(*input_mesh_.get(), "input mesh")
-    subdivide_specific_algorithm();
+    subdivide_input_mesh_write_output_mesh();
     DEBUG_MESH(*result_mesh_.get(), "result mesh")
     // input mesh is now the previous result mesh
     input_mesh_.reset(new Surface_mesh{ *result_mesh_.get()});

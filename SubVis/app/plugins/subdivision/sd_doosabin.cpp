@@ -5,7 +5,7 @@
 
 namespace subdivision {
 
-void SubdivDooSabin::subdivide_specific_algorithm() {
+void SubdivDooSabin::subdivide_input_mesh_write_output_mesh() {
   this->init_mesh_members();
 
   // loop over all faces and compute face points (same as catmull clark face points)

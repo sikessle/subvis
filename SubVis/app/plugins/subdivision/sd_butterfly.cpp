@@ -3,7 +3,7 @@
 
 namespace subdivision {
 
-void SubdivButterfly::subdivide_specific_algorithm() {
+void SubdivButterfly::subdivide_input_mesh_write_output_mesh() {
   this->init_mesh_members();
 
 

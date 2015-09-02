@@ -4,7 +4,7 @@
 
 namespace subdivision {
 
-void SubdivLoop::subdivide_specific_algorithm() {
+void SubdivLoop::subdivide_input_mesh_write_output_mesh() {
   this->init_mesh_members();
 
 
