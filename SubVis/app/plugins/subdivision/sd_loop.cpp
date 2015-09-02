@@ -35,12 +35,13 @@ void SubdivLoop::deinit_mesh_members() {
 
 void SubdivLoop::compute_all_odd_vertices() {
   Surface_mesh::Edge_iterator eit;
-  Point edge_point;
+  Point odd_vertex_point;
   for (eit = input_mesh_->edges_begin(); eit != input_mesh_->edges_end(); ++eit) {
-    this->compute_odd_vertex(edge_point, *eit);
-    e_points_[*eit] = edge_point;
+    this->compute_odd_vertex(odd_vertex_point, *eit);
+    //this->compute_mid_edge(odd_vertex_point, *eit);
+    e_points_[*eit] = odd_vertex_point;
     v_index_result_e_prop_[*eit] = result_mesh_->add_vertex(e_points_[*eit]);
-    DEBUG_POINT(edge_point, "Odd Vertex Point");
+    DEBUG_POINT(odd_vertex_point, "Odd Vertex Point");
   }
 }
 
@@ -66,6 +67,7 @@ void SubdivLoop::compute_all_faces() {
 
 void SubdivLoop::compute_odd_vertex(Point& odd_vertex,
                                     const Surface_mesh::Edge& edge) {
+  // TODO fix error
   odd_vertex = Point(0);
   Surface_mesh::Vertex edge_vertex0, edge_vertex1, face_vertex0, face_vertex1;
   Surface_mesh::Halfedge h_face0, h_face1;
