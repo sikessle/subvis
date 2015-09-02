@@ -90,7 +90,8 @@ void SubdivLoop::compute_even_vertex(Point& even_vertex,
     ++n; // count number of surrounding vertices
   }
   const double kBeta = this->compute_beta(n);
-  even_vertex = v_points_[vertex] * (1 - n * kBeta) + sum_surrounding_vertices * kBeta;
+  even_vertex = v_points_[vertex] * (1 - n * kBeta) + sum_surrounding_vertices *
+                kBeta;
 }
 
 double SubdivLoop::compute_beta(unsigned int n) const {
