@@ -15,8 +15,8 @@ class SubVisPlugin {
  public:
   virtual ~SubVisPlugin() {}
 
-  virtual const QString id() = 0;
-  virtual const QString name() = 0;
+  virtual const QString id() const = 0;
+  virtual const QString name() const = 0;
   virtual void set_draw_controller(DrawController* draw_controller) = 0;
   virtual void draw_opengl() = 0;
   virtual void create_gui(QWidget* parent) = 0;

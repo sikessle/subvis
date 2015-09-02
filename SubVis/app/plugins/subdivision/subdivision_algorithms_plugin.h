@@ -26,8 +26,8 @@ class SubdivisionAlgorithmsPlugin : public QObject,
  public:
   SubdivisionAlgorithmsPlugin();
 
-  virtual const QString id() override;
-  virtual const QString name() override;
+  virtual const QString id() const override;
+  virtual const QString name() const override;
   virtual void set_draw_controller(subvis::DrawController* draw_controller)
   override;
   virtual void draw_opengl() override;
@@ -38,7 +38,7 @@ class SubdivisionAlgorithmsPlugin : public QObject,
   /**
    * @brief name->(algorithm, renderer)
    */
-  std::map<QString, AlgorithmRenderer> algorithms_;
+  std::map<const QString, AlgorithmRenderer> algorithms_;
 
   QPushButton* subdivide_{nullptr};
   QSpinBox* steps_{nullptr};

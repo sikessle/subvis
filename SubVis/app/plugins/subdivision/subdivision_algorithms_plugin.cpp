@@ -39,11 +39,11 @@ SubdivisionAlgorithmsPlugin::SubdivisionAlgorithmsPlugin() {
   };
 }
 
-const QString SubdivisionAlgorithmsPlugin::id() {
+const QString SubdivisionAlgorithmsPlugin::id() const {
   return "de.htwg.ios.subvis.plugin.subdivision";
 }
 
-const QString SubdivisionAlgorithmsPlugin::name() {
+const QString SubdivisionAlgorithmsPlugin::name() const {
   return "Subdivision";
 }
 
@@ -99,7 +99,7 @@ void SubdivisionAlgorithmsPlugin::create_gui(QWidget* parent) {
 }
 
 void SubdivisionAlgorithmsPlugin::subdivide_clicked(bool) {
-  int steps = steps_->value();
+  const int steps = steps_->value();
   auto& mesh_data = draw_controller_->get_mesh_data();
   auto& algorithm = active_algorithm_renderer_pair().algorithm;
 
