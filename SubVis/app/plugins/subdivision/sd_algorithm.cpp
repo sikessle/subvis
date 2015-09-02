@@ -11,7 +11,7 @@ SubdivAlgorithm::~SubdivAlgorithm() {
 
 }
 
-std::unique_ptr<Surface_mesh> SubdivAlgorithm::subdivide(Surface_mesh& mesh,
+std::unique_ptr<Surface_mesh> SubdivAlgorithm::subdivide(const Surface_mesh& mesh,
     int steps) {
   result_mesh_.reset(new Surface_mesh);
   input_mesh_.reset(new Surface_mesh{mesh});

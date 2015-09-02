@@ -16,12 +16,11 @@ class SubdivAlgorithm {
   virtual ~SubdivAlgorithm();
 
   /**
-   * @brief Subdivides the given mesh_data object in n steps.
-   * @param mesh_data Will not be modified but copied.
+   * @brief Subdivides the given mesh object in n steps.
    * @param steps The number of subdivision steps.
    * @return The resulting mesh including ownership.
    */
-  virtual std::unique_ptr<Surface_mesh> subdivide(Surface_mesh& mesh_data,
+  virtual std::unique_ptr<Surface_mesh> subdivide(const Surface_mesh& mesh,
       int steps = 1);
 
   /**

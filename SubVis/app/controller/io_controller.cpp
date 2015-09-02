@@ -15,11 +15,11 @@ bool IOController::persist_mesh(const std::string& filename) const {
 }
 
 const std::string& IOController::load_file_formats() const {
-  return mesh_data_.load_file_formats();
+  return mesh_data_.get_load_file_formats();
 }
 
 const std::string& IOController::persist_file_formats() const {
-  return mesh_data_.persist_file_formats();
+  return mesh_data_.get_persist_file_formats();
 }
 
 } // namespace subvis

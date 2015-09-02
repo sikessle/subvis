@@ -5,16 +5,8 @@ namespace subvis {
 MeshData::MeshData() {
 }
 
-surface_mesh::Surface_mesh& MeshData::mesh() const {
+const surface_mesh::Surface_mesh& MeshData::get_mesh() const {
   return *mesh_object_.get();
-}
-
-bool MeshData::empty() const {
-  return mesh_object_->empty();
-}
-
-void MeshData::set_updated() {
-  emit updated();
 }
 
 void MeshData::load(std::unique_ptr<surface_mesh::Surface_mesh> mesh) {
@@ -28,9 +20,7 @@ bool MeshData::load(const std::string& filename) {
 
   // create new mesh
   mesh_object_.reset(new surface_mesh::Surface_mesh);
-
   bool success = mesh_object_->read(filename);
-
   emit updated();
 
   return success;
@@ -46,11 +36,11 @@ bool MeshData::persist(const std::string& filename) const {
   return mesh_object_->write(filename);
 }
 
-const std::string& MeshData::load_file_formats() const {
+const std::string& MeshData::get_load_file_formats() const {
   return kLoadFileFormats;
 }
 
-const std::string& MeshData::persist_file_formats() const {
+const std::string& MeshData::get_persist_file_formats() const {
   return kPersistFileFormats;
 }
 
