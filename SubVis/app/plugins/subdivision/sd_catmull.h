@@ -32,11 +32,11 @@ class SubdivCatmull : public SubdivAlgorithm {
    * This is necessary to map vertices from origin mesh to result mesh.
    */
   const ::std::string kPropVertexIndexResultV =
-    "v:subdivision_mesh_vertex_index";
+    "v:result_mesh_vertex_index";
   const ::std::string kPropVertexIndexResultE =
-    "e:subdivision_mesh_vertex_index";
+    "e:result_mesh_vertex_index";
   const ::std::string kPropVertexIndexResultF =
-    "f:subdivision_mesh_vertex_index";
+    "f:result_mesh_vertex_index";
 
   // vertex index properties to map from origin mesh to subdivision mesh
   Surface_mesh::Vertex_property<Surface_mesh::Vertex> v_index_result_v_prop_;

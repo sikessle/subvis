@@ -23,6 +23,17 @@ class SubdivLoop : public SubdivAlgorithm {
   virtual void init_mesh_members() override;
   virtual void deinit_mesh_members() override;
 
+ private:
+  const ::std::string kPropVertexIndexResultV =
+    "v:result_mesh_vertex_index";
+  const ::std::string kPropVertexIndexResultE =
+    "e:result_mesh_vertex_index";
+  Surface_mesh::Vertex_property<Surface_mesh::Vertex> v_index_result_v_prop_;
+  Surface_mesh::Edge_property<Surface_mesh::Vertex> v_index_result_e_prop_;
+
+  void compute_all_edge_points();
+
+  void compute_edge_point(Point& edge_point, const Surface_mesh::Edge& edge);
 };
 
 } // namespace subdivision
