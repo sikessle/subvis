@@ -1,4 +1,5 @@
 #include <QPixmap>
+#include <exception>
 
 #include "view/mainwindow.h"
 #include "model/mesh_data.h"
@@ -21,7 +22,9 @@ void SubVisApp::register_plugin(std::unique_ptr<SubVisPlugin> plugin) {
 }
 
 int SubVisApp::run() {
-  auto splash = create_show_splash();
+  const auto splash = create_splash();
+  splash->show();
+  processEvents();
 
   // Model layer
   MeshData mesh_data;
@@ -42,23 +45,17 @@ int SubVisApp::run() {
 
   mainwindow.show();
 
-  if (splash) {
-    splash->finish(&mainwindow);
-  }
+  splash->finish(&mainwindow);
 
   return exec();
 }
 
-std::unique_ptr<QSplashScreen> SubVisApp::create_show_splash() {
+std::unique_ptr<QSplashScreen> SubVisApp::create_splash() {
   if (splash_image_.isNull()) {
-    std::cerr << "Failed to load splash screen image" << std::endl;
-    return nullptr;
+    throw new std::runtime_error("Failed to load splash screen image.");
   }
 
   std::unique_ptr<QSplashScreen> splash{new QSplashScreen{splash_image_}};
-
-  splash->show();
-  processEvents();
 
   return splash;
 }

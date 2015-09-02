@@ -15,10 +15,6 @@ class SubVisApp : protected QApplication {
 
  public:
   SubVisApp(int& argc, char* argv[]);
-  /**
-   * @brief Takes ownership of the plugin
-   * @param plugin
-   */
   void register_plugin(std::unique_ptr<SubVisPlugin> plugin);
   int run();
 
@@ -26,7 +22,7 @@ class SubVisApp : protected QApplication {
   PluginManager plugin_manager_;
   QPixmap splash_image_{":/media/splash.png"};
 
-  std::unique_ptr<QSplashScreen> create_show_splash();
+  std::unique_ptr<QSplashScreen> create_splash();
 };
 
 } // namespace subvis
