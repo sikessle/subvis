@@ -60,7 +60,7 @@ void SubdivisionAlgorithmsPlugin::draw_opengl() {
 AlgorithmRenderer&
 SubdivisionAlgorithmsPlugin::active_algorithm_renderer_pair() {
   if (dropdown_->count() == 0) {
-    throw new std::logic_error("no algorithms loaded. ensure that at least one is loaded in the constructor.");
+    throw std::logic_error("no algorithms loaded. ensure that at least one is loaded in the constructor.");
   }
   const QString name = dropdown_->currentText();
 
