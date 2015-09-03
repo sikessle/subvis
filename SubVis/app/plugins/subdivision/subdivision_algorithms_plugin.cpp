@@ -49,6 +49,7 @@ const QString SubdivisionAlgorithmsPlugin::name() const {
 
 void SubdivisionAlgorithmsPlugin::set_draw_controller(subvis::DrawController*
     draw_controller) {
+  assert(draw_controller);
   draw_controller_ = draw_controller;
 }
 
