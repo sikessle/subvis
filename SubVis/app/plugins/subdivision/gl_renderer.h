@@ -1,19 +1,18 @@
 #ifndef SUBVIS_PLUGINS_SUBDIVISION_GL_RENDERER_H
 #define SUBVIS_PLUGINS_SUBDIVISION_GL_RENDERER_H
 
+#include <QObject>
 #include "surface_mesh/Surface_mesh.h"
 
 namespace subdivision {
 
-class GLRenderer {
+class GLRenderer : public QObject {
+  Q_OBJECT
+
  public:
   virtual ~GLRenderer();
 
-  /**
-   * @brief Renders the given mesh.
-   * @param mesh
-   */
-  virtual void render_mesh_opengl(const surface_mesh::Surface_mesh& mesh);
+  void render_mesh_opengl();
   /**
   * @brief Is called once before render_mesh_opengl()
   * Override for specific settings.
@@ -21,11 +20,20 @@ class GLRenderer {
   virtual void init_opengl();
 
  protected:
+  // TODO placeholder, here we should use a custom data structure to hold vertices
+  const surface_mesh::Surface_mesh* mesh_ {nullptr};
+
   /**
-  * @brief Main render method which does the main job of rendering.
-  * @param mesh
-  */
-  virtual void render(const surface_mesh::Surface_mesh& mesh) = 0;
+   * @brief Guaranteed to be called only if the mesh is available.
+   */
+  virtual void render() = 0;
+
+ public slots:
+  /**
+   * @brief Extracts the data required to render to a custom data structure.
+   * @param mesh
+   */
+  virtual void mesh_updated(const surface_mesh::Surface_mesh& mesh);
 };
 
 } // namespace subdivision

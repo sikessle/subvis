@@ -4,7 +4,7 @@
 
 namespace subdivision {
 
-void BSplineGLRenderer::render(const surface_mesh::Surface_mesh& /*mesh*/) {
+void BSplineGLRenderer::render() {
   // placeholder demo code:
   const float nbSteps = 200.0;
 

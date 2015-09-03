@@ -26,7 +26,7 @@ class ViewerMeshWidget : public ViewerWidget {
   void draw_mesh();
 
  public slots:
-  void mesh_updated();
+  void mesh_updated(const surface_mesh::Surface_mesh& mesh);
 };
 
 

@@ -11,7 +11,7 @@ const surface_mesh::Surface_mesh& MeshData::get_mesh() const {
 
 void MeshData::load(std::unique_ptr<surface_mesh::Surface_mesh> mesh) {
   mesh_object_ = std::move(mesh);
-  emit updated();
+  emit updated(*mesh_object_.get());
 }
 
 bool MeshData::load(const std::string& filename) {
@@ -22,7 +22,7 @@ bool MeshData::load(const std::string& filename) {
   // create new mesh
   mesh_object_.reset(new surface_mesh::Surface_mesh);
   bool success = mesh_object_->read(filename);
-  emit updated();
+  emit updated(*mesh_object_.get());
 
   return success;
 }

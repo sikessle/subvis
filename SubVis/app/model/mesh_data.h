@@ -27,7 +27,7 @@ class MeshData : public QObject {
   const std::string kPersistFileFormats {"*.off"};
 
  signals:
-  void updated();
+  void updated(const surface_mesh::Surface_mesh& mesh);
 };
 
 } // namespace subvis

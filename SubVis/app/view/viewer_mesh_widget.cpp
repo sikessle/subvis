@@ -12,13 +12,14 @@ void ViewerMeshWidget::set_draw_controller(DrawController& draw_controller) {
   ViewerWidget::set_draw_controller(draw_controller);
 
   // listen to mesh updates
-  QObject::connect(&draw_controller.get_mesh_data(), SIGNAL(updated()), this,
-                   SLOT(mesh_updated()));
+  QObject::connect(&draw_controller.get_mesh_data(),
+                   SIGNAL(updated(const surface_mesh::Surface_mesh&)), this,
+                   SLOT(mesh_updated(const surface_mesh::Surface_mesh&)));
 }
 
-void ViewerMeshWidget::mesh_updated() {
+void ViewerMeshWidget::mesh_updated(const surface_mesh::Surface_mesh& mesh) {
   // placeholder for custom data structure
-  mesh_ = &(draw_controller_->get_mesh_data().get_mesh());
+  mesh_ = &mesh;
   // TODO extract vertices in a custom data structure (member variable) to speed up drawing!
 
   // force redraw
