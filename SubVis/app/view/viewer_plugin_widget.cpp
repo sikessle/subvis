@@ -5,6 +5,13 @@ namespace subvis {
 ViewerPluginWidget::ViewerPluginWidget(QWidget* parent) : ViewerWidget{parent} {
 }
 
+
+void ViewerPluginWidget::init() {
+  if (drawing_plugin_) {
+    drawing_plugin_->init_opengl();
+  }
+}
+
 void ViewerPluginWidget::draw() {
   if (drawing_plugin_) {
     drawing_plugin_->draw_opengl();

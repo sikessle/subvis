@@ -10,7 +10,8 @@ class ViewerMeshWidget : public ViewerWidget {
   ViewerMeshWidget(QWidget* parent = 0);
 
  protected:
-  void draw() override;
+  virtual void draw() override;
+  virtual void init() override;
 };
 
 

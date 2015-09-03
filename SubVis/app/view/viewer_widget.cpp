@@ -11,7 +11,7 @@ void ViewerWidget::set_draw_controller(DrawController* draw_controller) {
 }
 
 void ViewerWidget::enforce_redraw() {
-  // do not call draw() directly.
+  // do not call draw() or init() directly.
   updateGL();
 }
 

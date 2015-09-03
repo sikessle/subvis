@@ -52,6 +52,11 @@ void SubdivisionAlgorithmsPlugin::set_draw_controller(subvis::DrawController&
   draw_controller_ = &draw_controller;
 }
 
+void SubdivisionAlgorithmsPlugin::init_opengl() {
+  auto& renderer = active_algorithm_renderer_pair().renderer;
+  renderer->init_opengl();
+}
+
 void SubdivisionAlgorithmsPlugin::draw_opengl() {
   auto& renderer = active_algorithm_renderer_pair().renderer;
   renderer->render_mesh_opengl(draw_controller_->get_mesh_data().get_mesh());

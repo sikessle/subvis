@@ -20,6 +20,10 @@ class ViewerWidget : public QGLViewer {
    * @brief Must not be called directly. Call enforce_redraw() instead.
    */
   virtual void draw() = 0;
+  /**
+   * @brief Must not be called directly. Call enforce_redraw() instead.
+   */
+  virtual void init() = 0;
 
  protected:
   DrawController* draw_controller_{nullptr};

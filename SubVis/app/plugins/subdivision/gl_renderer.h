@@ -11,25 +11,21 @@ class GLRenderer {
 
   /**
    * @brief Renders the given mesh.
-   * It basically just before_render(), render() and after_render() (in this order).
    * @param mesh
    */
   virtual void render_mesh_opengl(const surface_mesh::Surface_mesh& mesh);
+  /**
+  * @brief Is called once before render_mesh_opengl()
+  * Override for specific settings.
+  */
+  virtual void init_opengl();
 
  protected:
-  /**
-  * @brief Can be used to initialize OpenGL etc.
-  */
-  virtual void before_render();
   /**
   * @brief Main render method which does the main job of rendering.
   * @param mesh
   */
   virtual void render(const surface_mesh::Surface_mesh& mesh) = 0;
-  /**
-  * @brief Can be used to deinitialize OpenGL etc.
-  */
-  virtual void after_render();
 };
 
 } // namespace subdivision

@@ -14,7 +14,7 @@
 namespace subdivision {
 
 struct AlgorithmRenderer {
-  std::unique_ptr<SubdivAlgorithm> algorithm; 
+  std::unique_ptr<SubdivAlgorithm> algorithm;
   /**
    * @brief shared_ptr to allow multiple algorithms to use the same renderer
    */
@@ -32,6 +32,7 @@ class SubdivisionAlgorithmsPlugin : public QObject,
   virtual const QString name() const override;
   virtual void set_draw_controller(subvis::DrawController& draw_controller)
   override;
+  virtual void init_opengl() override;
   virtual void draw_opengl() override;
   virtual void create_gui(QWidget* parent) override;
 
