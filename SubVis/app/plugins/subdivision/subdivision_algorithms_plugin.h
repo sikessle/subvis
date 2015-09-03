@@ -40,6 +40,7 @@ class SubdivisionAlgorithmsPlugin : public QObject,
    */
   std::map<const QString, AlgorithmRenderer> algorithms_;
 
+  // memory managed by Qt's parent-relationship
   QPushButton* subdivide_{nullptr};
   QSpinBox* steps_{nullptr};
   QComboBox* dropdown_{nullptr};
