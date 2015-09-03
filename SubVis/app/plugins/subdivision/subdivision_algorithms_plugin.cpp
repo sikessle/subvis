@@ -47,10 +47,9 @@ const QString SubdivisionAlgorithmsPlugin::name() const {
   return "Subdivision";
 }
 
-void SubdivisionAlgorithmsPlugin::set_draw_controller(subvis::DrawController*
+void SubdivisionAlgorithmsPlugin::set_draw_controller(subvis::DrawController&
     draw_controller) {
-  assert(draw_controller);
-  draw_controller_ = draw_controller;
+  draw_controller_ = &draw_controller;
 }
 
 void SubdivisionAlgorithmsPlugin::draw_opengl() {
