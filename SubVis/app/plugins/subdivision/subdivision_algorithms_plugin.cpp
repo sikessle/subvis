@@ -50,13 +50,12 @@ const QString SubdivisionAlgorithmsPlugin::name() const {
 void SubdivisionAlgorithmsPlugin::set_draw_controller(subvis::DrawController&
     draw_controller) {
   draw_controller_ = &draw_controller;
+}
 
-  for (const auto& it : algorithms_) {
-    // listen to mesh updates
-    QObject::connect(&draw_controller.get_mesh_data(),
-                     SIGNAL(updated(const surface_mesh::Surface_mesh&)), it.second.renderer.get(),
-                     SLOT(mesh_updated(const surface_mesh::Surface_mesh&)));
-  }
+void SubdivisionAlgorithmsPlugin::mesh_updated(const surface_mesh::Surface_mesh&
+    mesh) {
+  auto& renderer = active_algorithm_renderer_pair().renderer;
+  renderer->mesh_updated(mesh);
 }
 
 void SubdivisionAlgorithmsPlugin::init_opengl() {

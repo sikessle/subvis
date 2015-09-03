@@ -12,6 +12,9 @@ class ViewerPluginWidget : public ViewerWidget {
  public:
   ViewerPluginWidget(QWidget* parent = 0);
 
+  void set_drawing_plugin(SubVisPlugin* plugin);
+  virtual void set_draw_controller(DrawController& draw_controller) override;
+
  protected:
   virtual void draw() override;
   virtual void init() override;
@@ -20,7 +23,7 @@ class ViewerPluginWidget : public ViewerWidget {
   SubVisPlugin* drawing_plugin_{nullptr};
 
  public slots:
-  void set_drawing_plugin(SubVisPlugin* plugin);
+  void mesh_updated(const surface_mesh::Surface_mesh& mesh);
 };
 
 } // namespace subvis

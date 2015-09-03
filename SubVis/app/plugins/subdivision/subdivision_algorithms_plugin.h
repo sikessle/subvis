@@ -32,6 +32,7 @@ class SubdivisionAlgorithmsPlugin : public QObject,
   virtual const QString name() const override;
   virtual void set_draw_controller(subvis::DrawController& draw_controller)
   override;
+  virtual void mesh_updated(const surface_mesh::Surface_mesh& mesh) override;
   virtual void init_opengl() override;
   virtual void draw_opengl() override;
   virtual void create_gui(QWidget* parent) override;

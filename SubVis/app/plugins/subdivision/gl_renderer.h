@@ -6,9 +6,7 @@
 
 namespace subdivision {
 
-class GLRenderer : public QObject {
-  Q_OBJECT
-
+class GLRenderer {
  public:
   virtual ~GLRenderer();
 
@@ -18,6 +16,11 @@ class GLRenderer : public QObject {
   * Override for specific settings.
   */
   virtual void init_opengl();
+  /**
+   * @brief Extracts the data required to render to a custom data structure.
+   * @param mesh
+   */
+  virtual void mesh_updated(const surface_mesh::Surface_mesh& mesh);
 
  protected:
   // TODO placeholder, here we should use a custom data structure to hold vertices
@@ -27,13 +30,6 @@ class GLRenderer : public QObject {
    * @brief Guaranteed to be called only if the mesh is available.
    */
   virtual void render() = 0;
-
- public slots:
-  /**
-   * @brief Extracts the data required to render to a custom data structure.
-   * @param mesh
-   */
-  virtual void mesh_updated(const surface_mesh::Surface_mesh& mesh);
 };
 
 } // namespace subdivision
