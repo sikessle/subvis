@@ -7,7 +7,7 @@ namespace subdivision {
 
 class BSplineGLRenderer : public GLRenderer {
  protected:
-  void render(const surface_mesh::Surface_mesh& mesh) override;
+  virtual void render(const surface_mesh::Surface_mesh& mesh) override;
 };
 
 } // namespace subdivision
