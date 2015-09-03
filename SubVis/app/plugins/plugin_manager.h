@@ -26,12 +26,7 @@ class PluginManager {
    * @return id->(name, plugin)
    */
   const std::map<const QString, PluginWrapper>& get_plugins() const;
-
-  /**
-   * @brief Sets the draw controller on every registered plugin
-   * @param draw_controller
-   */
-  void set_draw_controller(DrawController& draw_controller);
+  void set_draw_controller_on_plugins(DrawController& draw_controller);
 
  private:
   std::map<const QString, PluginWrapper> plugins_;

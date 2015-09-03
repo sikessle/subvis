@@ -34,7 +34,7 @@ int SubVisApp::run() {
   DrawController draw_controller{mesh_data};
 
   // Plugins
-  plugin_manager_.set_draw_controller(draw_controller);
+  plugin_manager_.set_draw_controller_on_plugins(draw_controller);
 
   // View layer
   MainWindow mainwindow{draw_controller, io_controller, plugin_manager_.get_plugins()};

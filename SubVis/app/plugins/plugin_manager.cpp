@@ -2,7 +2,7 @@
 
 namespace subvis {
 
-void PluginManager::set_draw_controller(DrawController& draw_controller) {
+void PluginManager::set_draw_controller_on_plugins(DrawController& draw_controller) {
   for (const auto& it : plugins_) {
     it.second.plugin->set_draw_controller(draw_controller);
   }

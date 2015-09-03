@@ -14,8 +14,10 @@
 namespace subdivision {
 
 struct AlgorithmRenderer {
-  std::unique_ptr<SubdivAlgorithm> algorithm;
-  // shared_ptr to allow multiple algorithms to use the same renderer
+  std::unique_ptr<SubdivAlgorithm> algorithm; 
+  /**
+   * @brief shared_ptr to allow multiple algorithms to use the same renderer
+   */
   std::shared_ptr<GLRenderer> renderer;
 };
 

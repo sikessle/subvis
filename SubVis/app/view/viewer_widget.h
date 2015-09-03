@@ -16,6 +16,9 @@ class ViewerWidget : public QGLViewer {
   void set_draw_controller(DrawController* draw_controller);
 
  protected:
+  /**
+   * @brief Must not be called directly. Call enforce_redraw() instead.
+   */
   virtual void draw() = 0;
 
  protected:

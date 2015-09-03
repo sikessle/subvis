@@ -30,9 +30,7 @@ class MainWindow : public QMainWindow {
   Ui::MainWindow* ui_;
   IOController& io_controller_;
   const std::map<const QString, PluginWrapper>& plugins_;
-  /**
-  * @brief memory managed by Qt's parent-relationship (ui)
-  */
+  // memory managed by Qt's parent-relationship (ui)
   QLabel* status_label_;
 
   const QString kStatusText {"Build: " __DATE__ " " __TIME__};
