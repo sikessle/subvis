@@ -31,13 +31,8 @@ void MainWindow::setup_status_bar() {
 }
 
 void MainWindow::setup_viewer_tabs(DrawController& draw_controller) {
-  ui_->tab_viewer_mesh->set_draw_controller(&draw_controller);
-  ui_->tab_viewer_plugin->set_draw_controller(&draw_controller);
-
-  QObject::connect(this, SIGNAL(mesh_updated()),
-                   ui_->tab_viewer_mesh, SLOT(enforce_redraw()));
-  QObject::connect(this, SIGNAL(mesh_updated()),
-                   ui_->tab_viewer_plugin, SLOT(enforce_redraw()));
+  ui_->tab_viewer_mesh->set_draw_controller(draw_controller);
+  ui_->tab_viewer_plugin->set_draw_controller(draw_controller);
 }
 
 void MainWindow::setup_plugin_guis() {

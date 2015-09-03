@@ -39,10 +39,6 @@ int SubVisApp::run() {
   // View layer
   MainWindow mainwindow{draw_controller, io_controller, plugin_manager_.get_plugins()};
 
-  // Signals
-  QObject::connect(&mesh_data, SIGNAL(updated()),
-                   &mainwindow, SIGNAL(mesh_updated()));
-
   mainwindow.show();
   splash->finish(&mainwindow);
 
