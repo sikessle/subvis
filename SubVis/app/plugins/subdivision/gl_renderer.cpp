@@ -8,17 +8,17 @@ GLRenderer::~GLRenderer() {
 
 }
 
-void GLRenderer::start_rendering() {
+void GLRenderer::before_rendering() {
   glBegin(GL_QUAD_STRIP);
 }
 
 void GLRenderer::render_mesh_opengl(const surface_mesh::Surface_mesh& mesh) {
-  start_rendering();
+  before_rendering();
   render(mesh);
-  end_rendering();
+  after_rendering();
 }
 
-void GLRenderer::end_rendering() {
+void GLRenderer::after_rendering() {
   glEnd();
 }
 

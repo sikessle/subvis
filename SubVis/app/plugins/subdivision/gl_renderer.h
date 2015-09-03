@@ -17,19 +17,13 @@ class GLRenderer {
   virtual void render_mesh_opengl(const surface_mesh::Surface_mesh& mesh);
 
  protected:
-  /**
-  * @brief Called before render()
-  */
-  virtual void start_rendering();
+  virtual void before_rendering();
   /**
   * @brief Main render method
   * @param mesh
   */
   virtual void render(const surface_mesh::Surface_mesh& mesh) = 0;
-  /**
-  * @brief Called after render()
-  */
-  virtual void end_rendering();
+  virtual void after_rendering();
 };
 
 } // namespace subdivision
