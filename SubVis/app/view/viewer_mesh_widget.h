@@ -12,6 +12,9 @@ class ViewerMeshWidget : public ViewerWidget {
  protected:
   virtual void draw() override;
   virtual void init() override;
+
+ private:
+  void draw_mesh(const surface_mesh::Surface_mesh& mesh);
 };
 
 
