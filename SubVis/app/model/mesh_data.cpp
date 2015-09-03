@@ -11,6 +11,7 @@ const surface_mesh::Surface_mesh& MeshData::get_mesh() const {
 
 void MeshData::load(std::unique_ptr<surface_mesh::Surface_mesh> mesh) {
   mesh_object_ = std::move(mesh);
+  emit updated();
 }
 
 bool MeshData::load(const std::string& filename) {
