@@ -19,15 +19,11 @@ struct PluginWrapper {
 
 class PluginManager {
  public:
-  /**
-   * @brief Takes ownership of the plugin
-   * @param plugin
-   */
   void register_plugin(std::unique_ptr<SubVisPlugin> plugin);
 
   /**
-   * @brief Lists all loaded plugins: id->(name, plugin)
-   * @return
+   * @brief Lists all loaded plugins.
+   * @return id->(name, plugin)
    */
   const std::map<const QString, PluginWrapper>& get_plugins() const;
 
