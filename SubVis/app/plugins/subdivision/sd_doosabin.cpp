@@ -117,8 +117,8 @@ void SubdivDooSabin::compute_faces_edge() {
     // get coordinates of the subdivision vertex points
     vertices_vec.push_back(f_vertex_index_map_[f0].at(v0));
     vertices_vec.push_back(f_vertex_index_map_[f0].at(v1));
-    vertices_vec.push_back(f_vertex_index_map_[f1].at(v0));
     vertices_vec.push_back(f_vertex_index_map_[f1].at(v1));
+    vertices_vec.push_back(f_vertex_index_map_[f1].at(v0));
     result_mesh_->add_face(vertices_vec);
     vertices_vec.clear();
   }
