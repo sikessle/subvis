@@ -37,9 +37,7 @@ void SubdivLoop::deinit_mesh_members() {
 void SubdivLoop::compute_all_odd_vertices() {
   Point odd_vertex_point;
   for (const auto& edge : input_mesh_->edges()) {
-    //this->compute_odd_vertex(odd_vertex_point, edge);
-    // only for debugging - use this->compute_odd_vertex for real subdivision
-    this->compute_mid_edge(odd_vertex_point, edge);
+    this->compute_odd_vertex(odd_vertex_point, edge);
     e_points_[edge] = odd_vertex_point;
     v_index_result_e_prop_[edge] = result_mesh_->add_vertex(e_points_[edge]);
     DEBUG_POINT(odd_vertex_point, "Odd Vertex Point");
