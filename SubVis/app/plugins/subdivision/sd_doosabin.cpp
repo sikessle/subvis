@@ -88,7 +88,6 @@ void SubdivDooSabin::compute_faces() {
   // compute face faces
   this->compute_faces_face();
   // compute edge faces
-  // TODO why not working ?
   this->compute_faces_edge();
   // compute vertex faces
   this->compute_faces_vertex();
