@@ -23,9 +23,8 @@ void SubdivCatmull::subdivide_input_mesh_write_output_mesh() {
   // update all vertices
   this->compute_all_new_vertex_points();
   // create faces in new mesh
-  Surface_mesh::Face_iterator fit;
-  for (fit = input_mesh_->faces_begin(); fit != input_mesh_->faces_end(); ++fit) {
-    this->compute_new_faces(*fit);
+  for (const auto& face : input_mesh_->faces()) {
+    this->compute_new_faces(face);
   }
   this->deinit_mesh_members();
 }
@@ -39,9 +38,9 @@ void SubdivCatmull::init_mesh_members() {
   input_mesh_->add_face_property<Surface_mesh::Vertex>
   (kPropVertexIndexResultF);
   v_index_result_f_prop_ = input_mesh_->get_face_property<Surface_mesh::Vertex>
-                             (kPropVertexIndexResultF);
+                           (kPropVertexIndexResultF);
   v_index_result_e_prop_ = input_mesh_->get_edge_property<Surface_mesh::Vertex>
-                             (kPropVertexIndexResultE);
+                           (kPropVertexIndexResultE);
   v_index_result_v_prop_ =
     input_mesh_->get_vertex_property<Surface_mesh::Vertex>(kPropVertexIndexResultV);
 }
@@ -54,39 +53,35 @@ void SubdivCatmull::deinit_mesh_members() {
 }
 
 void SubdivCatmull::compute_all_face_points() {
-  Surface_mesh::Face_iterator fit;
   Point face_point;
-  for (fit = input_mesh_->faces_begin(); fit != input_mesh_->faces_end(); ++fit) {
-    this->compute_face_point(face_point, *fit);
+  for (const auto& face : input_mesh_->faces()) {
+    this->compute_face_point(face_point, face);
     // store face point as property
-    f_points_[*fit] = face_point;
-    v_index_result_f_prop_[*fit] = result_mesh_->add_vertex(f_points_[*fit]);
+    f_points_[face] = face_point;
+    v_index_result_f_prop_[face] = result_mesh_->add_vertex(f_points_[face]);
     DEBUG_POINT(face_point, "Face Point")
   }
 }
 
 void SubdivCatmull::compute_all_edge_points() {
-  Surface_mesh::Edge_iterator eit;
   Point edge_point;
-  for (eit = input_mesh_->edges_begin(); eit != input_mesh_->edges_end(); ++eit) {
-    this->compute_edge_point(edge_point, *eit);
+  for (const auto& edge : input_mesh_->edges()) {
+    this->compute_edge_point(edge_point, edge);
     // store edge_point as property
-    e_points_[*eit] = edge_point;
-    v_index_result_e_prop_[*eit] = result_mesh_->add_vertex(e_points_[*eit]);
+    e_points_[edge] = edge_point;
+    v_index_result_e_prop_[edge] = result_mesh_->add_vertex(e_points_[edge]);
     DEBUG_POINT(edge_point, "Edge Point");
   }
 }
 
 void SubdivCatmull::compute_all_new_vertex_points() {
-  Surface_mesh::Vertex_iterator vit;
   Point new_vertex_point;
-  for (vit = input_mesh_->vertices_begin(); vit != input_mesh_->vertices_end();
-       ++vit) {
-    this->compute_new_vertex_point(new_vertex_point, *vit);
+  for (const auto& vertex : input_mesh_->vertices()) {
+    this->compute_new_vertex_point(new_vertex_point, vertex);
     // store result in kSurfMeshPropVertexPointUpdated
-    v_points_updated_[*vit] = new_vertex_point;
-    v_index_result_v_prop_[*vit] = result_mesh_->add_vertex(
-                                       v_points_updated_[*vit]);
+    v_points_updated_[vertex] = new_vertex_point;
+    v_index_result_v_prop_[vertex] = result_mesh_->add_vertex(
+                                       v_points_updated_[vertex]);
     DEBUG_POINT(new_vertex_point, "New Vertex Point");
   }
 }
@@ -130,11 +125,10 @@ void SubdivCatmull::compute_new_faces(const Surface_mesh::Face& face) {
   Surface_mesh::Vertex v_index_list[kArraySize];
   Surface_mesh::Vertex e_index_list[kArraySize];
   int i = 0;
-  Surface_mesh::Halfedge_around_face_circulator hc = input_mesh_->halfedges(face);
-  for (const Surface_mesh::Halfedge& h : hc) {
+  for (const auto& halfedge : input_mesh_->halfedges(face)) {
     if (i < kArraySize) { // check if in array bounds
-      v_index_list[i] = v_index_result_v_prop_[input_mesh_->from_vertex(h)];
-      e_index_list[i] = v_index_result_e_prop_[input_mesh_->edge(h)];
+      v_index_list[i] = v_index_result_v_prop_[input_mesh_->from_vertex(halfedge)];
+      e_index_list[i] = v_index_result_e_prop_[input_mesh_->edge(halfedge)];
     }
     ++i; // increment to compute face valence
   }
@@ -158,16 +152,14 @@ void SubdivCatmull::compute_new_faces(const Surface_mesh::Face& face) {
   } else { // error
     throw new std::runtime_error("Invalid mesh topology: " + i);
   }
-  // TODO
 }
 
 void SubdivCatmull::avg_face_points(Point& avg_face_points,
                                     const Surface_mesh::Vertex& vertex) {
   avg_face_points = Point(0);
   int i = 0;
-  Surface_mesh::Face_around_vertex_circulator fc = input_mesh_->faces(vertex);
-  for (const Surface_mesh::Face& f : fc) {
-    avg_face_points += f_points_[f];
+  for (const auto& face : input_mesh_->faces(vertex)) {
+    avg_face_points += f_points_[face];
     ++i;
   }
   if (i != 0) {
@@ -180,10 +172,8 @@ void SubdivCatmull::avg_mid_edges(Point& avg_mid_edges,
   avg_mid_edges = Point(0);
   int i = 0;
   Point mid_edge;
-  Surface_mesh::Halfedge_around_vertex_circulator hc = input_mesh_->halfedges(
-        vertex);
-  for (const Surface_mesh::Halfedge& h : hc) {
-    this->compute_mid_edge(mid_edge, input_mesh_->edge(h));
+  for (const auto& halfedge : input_mesh_->halfedges(vertex)) {
+    this->compute_mid_edge(mid_edge, input_mesh_->edge(halfedge));
     avg_mid_edges += mid_edge;
     ++i;
   }

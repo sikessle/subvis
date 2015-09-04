@@ -35,35 +35,31 @@ void SubdivLoop::deinit_mesh_members() {
 }
 
 void SubdivLoop::compute_all_odd_vertices() {
-  Surface_mesh::Edge_iterator eit;
   Point odd_vertex_point;
-  for (eit = input_mesh_->edges_begin(); eit != input_mesh_->edges_end(); ++eit) {
-    //this->compute_odd_vertex(odd_vertex_point, *eit);
+  for (const auto& edge : input_mesh_->edges()) {
+    //this->compute_odd_vertex(odd_vertex_point, edge);
     // only for debugging - use this->compute_odd_vertex for real subdivision
-    this->compute_mid_edge(odd_vertex_point, *eit);
-    e_points_[*eit] = odd_vertex_point;
-    v_index_result_e_prop_[*eit] = result_mesh_->add_vertex(e_points_[*eit]);
+    this->compute_mid_edge(odd_vertex_point, edge);
+    e_points_[edge] = odd_vertex_point;
+    v_index_result_e_prop_[edge] = result_mesh_->add_vertex(e_points_[edge]);
     DEBUG_POINT(odd_vertex_point, "Odd Vertex Point");
   }
 }
 
 void SubdivLoop::compute_all_even_vertices() {
-  Surface_mesh::Vertex_iterator vit;
   Point even_vertex_point;
-  for (vit = input_mesh_->vertices_begin(); vit != input_mesh_->vertices_end();
-       ++vit) {
-    this->compute_even_vertex(even_vertex_point, *vit);
-    v_points_updated_[*vit] = even_vertex_point;
-    v_index_result_v_prop_[*vit] = result_mesh_->add_vertex(
-                                     v_points_updated_[*vit]);
+  for (const auto& vertex : input_mesh_->vertices()) {
+    this->compute_even_vertex(even_vertex_point, vertex);
+    v_points_updated_[vertex] = even_vertex_point;
+    v_index_result_v_prop_[vertex] = result_mesh_->add_vertex(
+                                       v_points_updated_[vertex]);
     DEBUG_POINT(even_vertex_point, "Even Vertex Point");
   }
 }
 
 void SubdivLoop::compute_all_faces() {
-  Surface_mesh::Face_iterator fit;
-  for (fit = input_mesh_->faces_begin(); fit != input_mesh_->faces_end(); ++fit) {
-    this->compute_new_faces(*fit);
+  for (const auto& face : input_mesh_->faces()) {
+    this->compute_new_faces(face);
   }
 }
 
@@ -89,10 +85,8 @@ void SubdivLoop::compute_even_vertex(Point& even_vertex,
   Point sum_surrounding_vertices = Point(0);
   // n - number of surrounding vertices connected to the vertex by an edge
   unsigned int n = 0;
-  Surface_mesh::Halfedge_around_vertex_circulator hc = input_mesh_->halfedges(
-        vertex);
-  for (const Surface_mesh::Halfedge& h : hc) {
-    sum_surrounding_vertices += v_points_[input_mesh_->to_vertex(h)];
+  for (const auto& halfedge : input_mesh_->halfedges(vertex)) {
+    sum_surrounding_vertices += v_points_[input_mesh_->to_vertex(halfedge)];
     ++n; // count number of surrounding vertices
   }
   const double kBeta = this->compute_beta(n);
@@ -104,12 +98,11 @@ void SubdivLoop::compute_new_faces(const Surface_mesh::Face& face) {
   const int kArraySize = 3;
   Surface_mesh::Vertex v_index_list[kArraySize];
   Surface_mesh::Vertex e_index_list[kArraySize];
-  Surface_mesh::Halfedge_around_face_circulator hc = input_mesh_->halfedges(face);
   unsigned int i = 0;
-  for (const Surface_mesh::Halfedge& h : hc) {
+  for (const auto& halfedge : input_mesh_->halfedges(face)) {
     if (i < kArraySize) { // check if in array bounds
-      v_index_list[i] = v_index_result_v_prop_[input_mesh_->from_vertex(h)];
-      e_index_list[i] = v_index_result_e_prop_[input_mesh_->edge(h)];
+      v_index_list[i] = v_index_result_v_prop_[input_mesh_->from_vertex(halfedge)];
+      e_index_list[i] = v_index_result_e_prop_[input_mesh_->edge(halfedge)];
     }
     ++i;
   }
