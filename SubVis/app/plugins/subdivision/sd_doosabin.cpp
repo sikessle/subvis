@@ -69,18 +69,19 @@ void SubdivDooSabin::compute_all_new_vertex_points() {
 void SubdivDooSabin::compute_new_vertex_point(Point& new_vertex_point,
     const Surface_mesh::Vertex& vertex, const Surface_mesh::Face& face) {
   // compute new vertex point: average of four points (face point, two edge points and vertex)
-  Surface_mesh::Halfedge_around_face_circulator hc = input_mesh_->halfedges(face);
-  for (const Surface_mesh::Halfedge& h : hc) {
-    if (input_mesh_->from_vertex(h) == vertex) {
+  new_vertex_point = Point(0);
+  // find halfedge with from vertex == vertex
+  for (const Surface_mesh::Halfedge& halfedge : input_mesh_->halfedges(face)) {
+    if (input_mesh_->from_vertex(halfedge) == vertex) {
+      // halfedge found - do computation
+      Surface_mesh::Edge e1, e2;
+      e1 = input_mesh_->edge(halfedge);
+      e2 = input_mesh_->edge(input_mesh_->prev_halfedge(halfedge));
+      new_vertex_point = (v_points_[vertex] + f_points_[face] + e_points_[e1] +
+                          e_points_[e2] ) / 4;
       break;
     }
   }
-  // TODO check computation for error
-  Surface_mesh::Edge e1, e2;
-  e1 = input_mesh_->edge(*hc);
-  e2 = input_mesh_->edge(input_mesh_->prev_halfedge(*hc));
-  new_vertex_point = (v_points_[vertex] + f_points_[face] + e_points_[e1] +
-                      e_points_[e2] ) / 4;
 }
 
 void SubdivDooSabin::compute_faces() {
