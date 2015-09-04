@@ -38,7 +38,9 @@ void SubdivLoop::compute_all_odd_vertices() {
   Surface_mesh::Edge_iterator eit;
   Point odd_vertex_point;
   for (eit = input_mesh_->edges_begin(); eit != input_mesh_->edges_end(); ++eit) {
-    this->compute_odd_vertex(odd_vertex_point, *eit);
+    //this->compute_odd_vertex(odd_vertex_point, *eit);
+    // only for debugging - use this->compute_odd_vertex for real subdivision
+    this->compute_mid_edge(odd_vertex_point, *eit);
     e_points_[*eit] = odd_vertex_point;
     v_index_result_e_prop_[*eit] = result_mesh_->add_vertex(e_points_[*eit]);
     DEBUG_POINT(odd_vertex_point, "Odd Vertex Point");
@@ -112,9 +114,9 @@ void SubdivLoop::compute_new_faces(const Surface_mesh::Face& face) {
     ++i;
   }
   result_mesh_->add_triangle(e_index_list[0], e_index_list[1], e_index_list[2]);
-  result_mesh_->add_triangle(v_index_list[0], e_index_list[0], e_index_list[2]);
-  result_mesh_->add_triangle(v_index_list[1], e_index_list[1], e_index_list[0]);
-  result_mesh_->add_triangle(v_index_list[2], e_index_list[2], e_index_list[1]);
+  //result_mesh_->add_triangle(v_index_list[0], e_index_list[0], e_index_list[2]);
+  //result_mesh_->add_triangle(v_index_list[1], e_index_list[1], e_index_list[0]);
+  //result_mesh_->add_triangle(v_index_list[2], e_index_list[2], e_index_list[1]);
 }
 
 double SubdivLoop::compute_beta(unsigned int n) const {
