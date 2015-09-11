@@ -1,5 +1,5 @@
-#ifndef SUBVIS_PLUGINS_SUBDIVISION_QL_BSPLINE_QLRENDERER_H
-#define SUBVIS_PLUGINS_SUBDIVISION_QL_BSPLINE_QLRENDERER_H
+#ifndef SUBVIS_PLUGINS_SUBDIVISION_GL_BSPLINE_RENDERER_H
+#define SUBVIS_PLUGINS_SUBDIVISION_GL_BSPLINE_RENDERER_H
 
 #include "plugins/subdivision/gl_renderer.h"
 
@@ -7,8 +7,8 @@ namespace subdivision {
 
 class BSplineGLRenderer : public GLRenderer {
  protected:
-  virtual void render() override;
+  virtual void render(const surface_mesh::Surface_mesh* mesh) override;
 };
 
 } // namespace subdivision
-#endif // SUBVIS_PLUGINS_SUBDIVISION_QL_BSPLINE_QLRENDERER_H
+#endif // SUBVIS_PLUGINS_SUBDIVISION_GL_BSPLINE_RENDERER_H

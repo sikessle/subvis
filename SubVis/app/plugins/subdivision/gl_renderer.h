@@ -27,9 +27,9 @@ class GLRenderer {
   const surface_mesh::Surface_mesh* mesh_ {nullptr};
 
   /**
-   * @brief Guaranteed to be called only if the mesh is available.
+   * @brief Called with the custom data structure TODO!!
    */
-  virtual void render() = 0;
+  virtual void render(const surface_mesh::Surface_mesh* mesh) = 0;
 };
 
 } // namespace subdivision
