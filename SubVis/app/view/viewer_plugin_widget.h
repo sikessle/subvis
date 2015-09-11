@@ -13,11 +13,11 @@ class ViewerPluginWidget : public ViewerWidget {
   ViewerPluginWidget(QWidget* parent = 0);
 
   void set_drawing_plugin(SubVisPlugin* plugin);
-  virtual void set_draw_controller(DrawController& draw_controller) override;
+  void set_draw_controller(DrawController& draw_controller) override;
 
  protected:
-  virtual void draw() override;
-  virtual void init() override;
+  void draw() override;
+  void init() override;
 
  private:
   SubVisPlugin* drawing_plugin_{nullptr};

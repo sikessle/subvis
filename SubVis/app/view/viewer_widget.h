@@ -14,8 +14,8 @@ class ViewerWidget : public QGLViewer {
   virtual void set_draw_controller(DrawController& draw_controller);
 
  protected:
-  virtual void draw() override = 0;
-  virtual void init() override = 0;
+  void draw() override = 0;
+  void init() override = 0;
 
  protected:
   DrawController* draw_controller_{nullptr};

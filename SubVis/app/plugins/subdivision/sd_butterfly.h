@@ -7,9 +7,9 @@ namespace subdivision {
 
 class SubdivButterfly : public SubdivAlgorithm {
  protected:
-  virtual void subdivide_input_mesh_write_output_mesh() override;
-  virtual void init_mesh_members() override;
-  virtual void deinit_mesh_members() override;
+  void subdivide_input_mesh_write_output_mesh() override;
+  void init_mesh_members() override;
+  void deinit_mesh_members() override;
 };
 
 } // namespace subdivision

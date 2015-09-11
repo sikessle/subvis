@@ -13,15 +13,15 @@ class ViewerMeshWidget : public ViewerWidget {
  public:
   ViewerMeshWidget(QWidget* parent = 0);
 
-  virtual void set_draw_controller(DrawController& draw_controller) override;
+  void set_draw_controller(DrawController& draw_controller) override;
 
  protected:
-  virtual void draw() override;
-  virtual void init() override;
+  void draw() override;
+  void init() override;
 
  private:
   // TODO placeholder, here we should use a custom data structure to hold vertices
-  const surface_mesh::Surface_mesh* mesh_{nullptr};
+  const surface_mesh::Surface_mesh* mesh_ {nullptr};
 
   void draw_mesh();
 
