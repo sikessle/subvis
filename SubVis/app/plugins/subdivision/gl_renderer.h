@@ -13,7 +13,7 @@ class GLRenderer {
   void render_mesh_opengl();
   /**
   * @brief Is called once before render_mesh_opengl()
-  * Override for specific settings.
+  * Override for specific settings (background color etc.)
   */
   virtual void init_opengl();
   /**
@@ -29,7 +29,7 @@ class GLRenderer {
   /**
    * @brief Called with the custom data structure TODO!!
    */
-  virtual void render(const surface_mesh::Surface_mesh* mesh) = 0;
+  virtual void render(const surface_mesh::Surface_mesh& mesh) = 0;
 };
 
 } // namespace subdivision

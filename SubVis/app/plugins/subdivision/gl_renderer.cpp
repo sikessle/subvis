@@ -16,7 +16,7 @@ void GLRenderer::mesh_updated(const surface_mesh::Surface_mesh& mesh) {
 void GLRenderer::render_mesh_opengl() {
   // TODO use custom data structure here
   if (mesh_) {
-    render(mesh_);
+    render(*mesh_);
   }
 }
 
