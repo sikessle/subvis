@@ -58,7 +58,9 @@ HEADERS  += view/mainwindow.h \
     plugins/subdivision/sd_algorithm.h \
     plugins/subdivision/gl_renderer.h \
     plugins/subdivision/gl_bspline_renderer.h \
-    plugins/subdivision/debug.h
+    plugins/subdivision/debug.h \
+    plugins/subdivision/sd_quad.h \
+    plugins/subdivision/sd_triangle.h
 
 SOURCES += main.cpp \
     view/mainwindow.cpp \
@@ -79,7 +81,9 @@ SOURCES += main.cpp \
     plugins/subdivision/sd_algorithm.cpp \
     plugins/subdivision/gl_renderer.cpp \
     plugins/subdivision/gl_bspline_renderer.cpp \
-    plugins/subdivision/debug.cpp
+    plugins/subdivision/debug.cpp \
+    plugins/subdivision/sd_quad.cpp \
+    plugins/subdivision/sd_triangle.cpp
 
 FORMS    += view/mainwindow.ui
 

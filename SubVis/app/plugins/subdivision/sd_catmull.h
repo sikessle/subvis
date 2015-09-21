@@ -14,12 +14,12 @@
 #ifndef SUBVIS_PLUGINS_SUBDIVISION_SD_CATMULL_H
 #define SUBVIS_PLUGINS_SUBDIVISION_SD_CATMULL_H
 
-#include "plugins/subdivision/sd_algorithm.h"
+#include "plugins/subdivision/sd_quad.h"
 
 namespace subdivision {
 
 
-class SdCatmull : public SdAlgorithm {
+class SdCatmull : public SdQuad {
  protected:
   void subdivide_input_mesh_write_output_mesh() override;
   void init_mesh_members() override;

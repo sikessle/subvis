@@ -30,7 +30,7 @@ void SdCatmull::subdivide_input_mesh_write_output_mesh() {
 }
 
 void SdCatmull::init_mesh_members() {
-  SdAlgorithm::init_mesh_members();
+  SdQuad::init_mesh_members();
   input_mesh_->add_vertex_property<Surface_mesh::Vertex>
   (kPropVertexIndexResultV);
   input_mesh_->add_edge_property<Surface_mesh::Vertex>
@@ -46,7 +46,7 @@ void SdCatmull::init_mesh_members() {
 }
 
 void SdCatmull::deinit_mesh_members() {
-  SdAlgorithm::deinit_mesh_members();
+  SdQuad::deinit_mesh_members();
   input_mesh_->remove_face_property(v_index_result_f_prop_);
   input_mesh_->remove_edge_property(v_index_result_e_prop_);
   input_mesh_->remove_vertex_property(v_index_result_v_prop_);

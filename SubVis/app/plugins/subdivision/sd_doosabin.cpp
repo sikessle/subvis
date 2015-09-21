@@ -21,7 +21,7 @@ void SdDooSabin::subdivide_input_mesh_write_output_mesh() {
 }
 
 void SdDooSabin::init_mesh_members() {
-  SdAlgorithm::init_mesh_members();
+  SdQuad::init_mesh_members();
   input_mesh_->add_face_property<VertexToVertexMap>
   (kPropVertexIndexResultMapF);
   f_vertex_index_map_ = input_mesh_->get_face_property<VertexToVertexMap>
@@ -29,7 +29,7 @@ void SdDooSabin::init_mesh_members() {
 }
 
 void SdDooSabin::deinit_mesh_members() {
-  SdAlgorithm::deinit_mesh_members();
+  SdQuad::deinit_mesh_members();
   input_mesh_->remove_face_property(f_vertex_index_map_);
 }
 

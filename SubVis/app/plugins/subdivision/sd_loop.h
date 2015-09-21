@@ -14,32 +14,21 @@
 #ifndef SUBVIS_PLUGINS_SUBDIVISION_SD_LOOP_H
 #define SUBVIS_PLUGINS_SUBDIVISION_SD_LOOP_H
 
-#include "plugins/subdivision/sd_algorithm.h"
+#include "plugins/subdivision/sd_triangle.h"
 
 namespace subdivision {
 
-class SdLoop : public SdAlgorithm {
+class SdLoop : public SdTriangle {
  protected:
   void subdivide_input_mesh_write_output_mesh() override;
-  void init_mesh_members() override;
-  void deinit_mesh_members() override;
 
  private:
-  const ::std::string kPropVertexIndexResultV =
-    "v:result_mesh_vertex_index";
-  const ::std::string kPropVertexIndexResultE =
-    "e:result_mesh_vertex_index";
-  Surface_mesh::Vertex_property<Surface_mesh::Vertex> v_index_result_v_prop_;
-  Surface_mesh::Edge_property<Surface_mesh::Vertex> v_index_result_e_prop_;
-
   void compute_all_odd_vertices();
   void compute_all_even_vertices();
-  void compute_all_faces();
 
   void compute_odd_vertex(Point& odd_vertex, const Surface_mesh::Edge& edge);
   void compute_even_vertex(Point& even_vertex,
                            const Surface_mesh::Vertex& vertex);
-  void compute_new_faces(const Surface_mesh::Face& face);
 
   /**
    * @brief compute_beta Compute the constant beta as proposed by Warren.
@@ -50,6 +39,7 @@ class SdLoop : public SdAlgorithm {
    * @return
    */
   double compute_beta(unsigned int n) const;
+
 };
 
 } // namespace subdivision

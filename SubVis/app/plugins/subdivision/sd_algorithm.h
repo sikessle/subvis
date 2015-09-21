@@ -36,21 +36,6 @@ class SdAlgorithm {
   const ::std::string kPropVertexPoint = "v:point";
 
   /**
-   * @brief kPropVertexPointUpdated key to access surface mesh property that stores the updated vertex coordinates
-   */
-  const ::std::string kPropVertexPointUpdated = "v:point_updated";
-
-  /**
-   * @brief kPropFacePoint key to access surface mesh property that stores the face point coordinates
-   */
-  const ::std::string kPropFacePoint = "f:point";
-
-  /**
-   * @brief kPropEdgePoint key to access surface mesh property that stores the edge point coordinates
-   */
-  const ::std::string kPropEdgePoint = "e:point";
-
-  /**
    * @brief Put the resulting mesh in here.
    */
   std::unique_ptr<Surface_mesh> result_mesh_;
@@ -62,10 +47,6 @@ class SdAlgorithm {
   std::unique_ptr<Surface_mesh> input_mesh_;
 
   Surface_mesh::Vertex_property<Point> v_points_;
-  Surface_mesh::Edge_property<Point> e_points_;
-  Surface_mesh::Face_property<Point> f_points_;
-  Surface_mesh::Vertex_property<Point> v_points_updated_;
-
 
   /**
    * @brief Writes the result of modifiyng the input_mesh_ to result_mesh_
@@ -89,20 +70,6 @@ class SdAlgorithm {
    * @brief deinit_mesh_members Release allocated memory of init_mesh_members().
    */
   virtual void deinit_mesh_members();
-
-  /**
-   * @brief compute_mid_edge Compute the mid point of an edge (average of the two vertices).
-   *                 The edge has to be in the input_mesh_.
-   * @param mid_edge The result (mid of edge).
-   * @param edge Edge to compute the mid point.
-   */
-  void compute_mid_edge(Point& mid_edge, const Surface_mesh::Edge& edge);
-
-  /**
-   * @brief compute_face_point Compute the average of all the points of the face.
-   */
-  void compute_face_point(Point& face_point, const Surface_mesh::Face& face);
-
 };
 
 } // namespace subdivision
