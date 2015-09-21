@@ -73,7 +73,7 @@ void SdLoop::compute_odd_vertex(Point& odd_vertex,
   face_vertex0 = input_mesh_->to_vertex(input_mesh_->next_halfedge(h_face0));
   face_vertex1 = input_mesh_->to_vertex(input_mesh_->next_halfedge(h_face1));
   odd_vertex = 3 * (v_points_[edge_vertex0] + v_points_[edge_vertex1]) +
-               (v_points_[face_vertex0] + v_points_[face_vertex0]);
+               (v_points_[face_vertex0] + v_points_[face_vertex1]);
   odd_vertex /= 8.;
 }
 
@@ -105,9 +105,9 @@ void SdLoop::compute_new_faces(const Surface_mesh::Face& face) {
     ++i;
   }
   result_mesh_->add_triangle(e_index_list[0], e_index_list[1], e_index_list[2]);
-  //result_mesh_->add_triangle(v_index_list[0], e_index_list[0], e_index_list[2]);
-  //result_mesh_->add_triangle(v_index_list[1], e_index_list[1], e_index_list[0]);
-  //result_mesh_->add_triangle(v_index_list[2], e_index_list[2], e_index_list[1]);
+  result_mesh_->add_triangle(v_index_list[0], e_index_list[0], e_index_list[2]);
+  result_mesh_->add_triangle(v_index_list[1], e_index_list[1], e_index_list[0]);
+  result_mesh_->add_triangle(v_index_list[2], e_index_list[2], e_index_list[1]);
 }
 
 double SdLoop::compute_beta(unsigned int n) const {
