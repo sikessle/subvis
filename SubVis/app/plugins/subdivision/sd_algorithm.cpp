@@ -7,10 +7,10 @@ namespace subdivision {
 using surface_mesh::Surface_mesh;
 using surface_mesh::Point;
 
-SubdivAlgorithm::~SubdivAlgorithm() {
+SdAlgorithm::~SdAlgorithm() {
 }
 
-std::unique_ptr<Surface_mesh> SubdivAlgorithm::subdivide(
+std::unique_ptr<Surface_mesh> SdAlgorithm::subdivide(
   const Surface_mesh& mesh,
   int steps) {
   result_mesh_.reset(new Surface_mesh);
@@ -31,11 +31,11 @@ std::unique_ptr<Surface_mesh> SubdivAlgorithm::subdivide(
   return std::move(result_mesh_);
 }
 
-const Surface_mesh& SubdivAlgorithm::get_result_mesh() {
+const Surface_mesh& SdAlgorithm::get_result_mesh() {
   return *result_mesh_.get();
 }
 
-void SubdivAlgorithm::init_mesh_members() {
+void SdAlgorithm::init_mesh_members() {
   // add properties to mesh
   input_mesh_->add_face_property<Point>(kPropFacePoint);
   input_mesh_->add_edge_property<Point>(kPropEdgePoint);
@@ -49,13 +49,13 @@ void SubdivAlgorithm::init_mesh_members() {
                       (kPropVertexPointUpdated);
 }
 
-void SubdivAlgorithm::deinit_mesh_members() {
+void SdAlgorithm::deinit_mesh_members() {
   input_mesh_->remove_face_property(f_points_);
   input_mesh_->remove_edge_property(e_points_);
   input_mesh_->remove_vertex_property(v_points_updated_);
 }
 
-void SubdivAlgorithm::compute_face_point(Point& face_point,
+void SdAlgorithm::compute_face_point(Point& face_point,
     const Surface_mesh::Face& face) {
   face_point = Point(0);
   int i = 0;
@@ -68,7 +68,7 @@ void SubdivAlgorithm::compute_face_point(Point& face_point,
   }
 }
 
-void SubdivAlgorithm::compute_mid_edge(Point& mid_edge,
+void SdAlgorithm::compute_mid_edge(Point& mid_edge,
                                        const Surface_mesh::Edge& edge) {
   Surface_mesh::Vertex edge_vertex0, edge_vertex1;
   edge_vertex0 = input_mesh_->vertex(edge, 0);

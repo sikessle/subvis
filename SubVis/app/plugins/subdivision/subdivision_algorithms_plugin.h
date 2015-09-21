@@ -14,7 +14,7 @@
 namespace subdivision {
 
 struct AlgorithmRenderer {
-  std::unique_ptr<SubdivAlgorithm> algorithm;
+  std::unique_ptr<SdAlgorithm> algorithm;
   /**
    * @brief shared_ptr to allow multiple algorithms to use the same renderer
    */

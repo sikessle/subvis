@@ -5,7 +5,7 @@
 
 namespace subdivision {
 
-void SubdivDooSabin::subdivide_input_mesh_write_output_mesh() {
+void SdDooSabin::subdivide_input_mesh_write_output_mesh() {
   this->init_mesh_members();
 
   // loop over all faces and compute face points (same as catmull clark face points)
@@ -20,20 +20,20 @@ void SubdivDooSabin::subdivide_input_mesh_write_output_mesh() {
   this->deinit_mesh_members();
 }
 
-void SubdivDooSabin::init_mesh_members() {
-  SubdivAlgorithm::init_mesh_members();
+void SdDooSabin::init_mesh_members() {
+  SdAlgorithm::init_mesh_members();
   input_mesh_->add_face_property<VertexToVertexMap>
   (kPropVertexIndexResultMapF);
   f_vertex_index_map_ = input_mesh_->get_face_property<VertexToVertexMap>
                         (kPropVertexIndexResultMapF);
 }
 
-void SubdivDooSabin::deinit_mesh_members() {
-  SubdivAlgorithm::deinit_mesh_members();
+void SdDooSabin::deinit_mesh_members() {
+  SdAlgorithm::deinit_mesh_members();
   input_mesh_->remove_face_property(f_vertex_index_map_);
 }
 
-void SubdivDooSabin::compute_all_face_points() {
+void SdDooSabin::compute_all_face_points() {
   Point face_point;
   for (const auto& face : input_mesh_->faces()) {
     this->compute_face_point(face_point, face);
@@ -43,7 +43,7 @@ void SubdivDooSabin::compute_all_face_points() {
   }
 }
 
-void SubdivDooSabin::compute_all_edge_points() {
+void SdDooSabin::compute_all_edge_points() {
   Point edge_point;
   for (const auto& edge : input_mesh_->edges()) {
     this->compute_mid_edge(edge_point, edge);
@@ -53,7 +53,7 @@ void SubdivDooSabin::compute_all_edge_points() {
   }
 }
 
-void SubdivDooSabin::compute_all_new_vertex_points() {
+void SdDooSabin::compute_all_new_vertex_points() {
   // loop over all faces - every face creates 4 new vertex points
   Point new_vertex_point;
   for (const auto& face : input_mesh_->faces()) {
@@ -66,7 +66,7 @@ void SubdivDooSabin::compute_all_new_vertex_points() {
   }
 }
 
-void SubdivDooSabin::compute_new_vertex_point(Point& new_vertex_point,
+void SdDooSabin::compute_new_vertex_point(Point& new_vertex_point,
     const Surface_mesh::Vertex& vertex, const Surface_mesh::Face& face) {
   // compute new vertex point: average of four points (face point, two edge points and vertex)
   new_vertex_point = Point(0);
@@ -84,7 +84,7 @@ void SubdivDooSabin::compute_new_vertex_point(Point& new_vertex_point,
   }
 }
 
-void SubdivDooSabin::compute_faces() {
+void SdDooSabin::compute_faces() {
   // compute face faces
   this->compute_faces_face();
   // compute edge faces
@@ -93,7 +93,7 @@ void SubdivDooSabin::compute_faces() {
   this->compute_faces_vertex();
 }
 
-void SubdivDooSabin::compute_faces_face() {
+void SdDooSabin::compute_faces_face() {
   std::vector<Surface_mesh::Vertex> vertices_vec;
   for (const auto& face : input_mesh_->faces()) {
     for (const auto& vertex : input_mesh_->vertices(face)) {
@@ -104,7 +104,7 @@ void SubdivDooSabin::compute_faces_face() {
   }
 }
 
-void SubdivDooSabin::compute_faces_edge() {
+void SdDooSabin::compute_faces_edge() {
   std::vector<Surface_mesh::Vertex> vertices_vec;
   Surface_mesh::Face f0, f1;
   Surface_mesh::Vertex v0, v1;
@@ -123,7 +123,7 @@ void SubdivDooSabin::compute_faces_edge() {
   }
 }
 
-void SubdivDooSabin::compute_faces_vertex() {
+void SdDooSabin::compute_faces_vertex() {
   std::vector<Surface_mesh::Vertex> vertices_vec;
   for (const auto& vertex : input_mesh_->vertices()) {
     for (const auto& face : input_mesh_->faces(vertex)) {

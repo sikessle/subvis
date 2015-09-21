@@ -8,12 +8,12 @@
 
 namespace subdivision {
 
-class SubdivAlgorithm {
+class SdAlgorithm {
  public:
   using Surface_mesh = surface_mesh::Surface_mesh;
   using Point = surface_mesh::Point;
 
-  virtual ~SubdivAlgorithm();
+  virtual ~SdAlgorithm();
 
   /**
    * @brief Subdivides the given mesh object in n steps.

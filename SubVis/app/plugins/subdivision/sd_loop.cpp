@@ -6,7 +6,7 @@
 
 namespace subdivision {
 
-void SubdivLoop::subdivide_input_mesh_write_output_mesh() {
+void SdLoop::subdivide_input_mesh_write_output_mesh() {
   this->init_mesh_members();
 
   this->compute_all_odd_vertices();
@@ -16,8 +16,8 @@ void SubdivLoop::subdivide_input_mesh_write_output_mesh() {
   this->deinit_mesh_members();
 }
 
-void SubdivLoop::init_mesh_members() {
-  SubdivAlgorithm::init_mesh_members();
+void SdLoop::init_mesh_members() {
+  SdAlgorithm::init_mesh_members();
   input_mesh_->add_vertex_property<Surface_mesh::Vertex>
   (kPropVertexIndexResultV);
   input_mesh_->add_edge_property<Surface_mesh::Vertex>
@@ -28,13 +28,13 @@ void SubdivLoop::init_mesh_members() {
                            (kPropVertexIndexResultE);
 }
 
-void SubdivLoop::deinit_mesh_members() {
-  SubdivAlgorithm::deinit_mesh_members();
+void SdLoop::deinit_mesh_members() {
+  SdAlgorithm::deinit_mesh_members();
   input_mesh_->remove_edge_property(v_index_result_e_prop_);
   input_mesh_->remove_vertex_property(v_index_result_v_prop_);
 }
 
-void SubdivLoop::compute_all_odd_vertices() {
+void SdLoop::compute_all_odd_vertices() {
   Point odd_vertex_point;
   for (const auto& edge : input_mesh_->edges()) {
     this->compute_odd_vertex(odd_vertex_point, edge);
@@ -44,7 +44,7 @@ void SubdivLoop::compute_all_odd_vertices() {
   }
 }
 
-void SubdivLoop::compute_all_even_vertices() {
+void SdLoop::compute_all_even_vertices() {
   Point even_vertex_point;
   for (const auto& vertex : input_mesh_->vertices()) {
     this->compute_even_vertex(even_vertex_point, vertex);
@@ -55,13 +55,13 @@ void SubdivLoop::compute_all_even_vertices() {
   }
 }
 
-void SubdivLoop::compute_all_faces() {
+void SdLoop::compute_all_faces() {
   for (const auto& face : input_mesh_->faces()) {
     this->compute_new_faces(face);
   }
 }
 
-void SubdivLoop::compute_odd_vertex(Point& odd_vertex,
+void SdLoop::compute_odd_vertex(Point& odd_vertex,
                                     const Surface_mesh::Edge& edge) {
   odd_vertex = Point(0);
   Surface_mesh::Vertex edge_vertex0, edge_vertex1, face_vertex0, face_vertex1;
@@ -77,7 +77,7 @@ void SubdivLoop::compute_odd_vertex(Point& odd_vertex,
   odd_vertex /= 8.;
 }
 
-void SubdivLoop::compute_even_vertex(Point& even_vertex,
+void SdLoop::compute_even_vertex(Point& even_vertex,
                                      const Surface_mesh::Vertex& vertex) {
   even_vertex = Point(0);
   Point sum_surrounding_vertices = Point(0);
@@ -92,7 +92,7 @@ void SubdivLoop::compute_even_vertex(Point& even_vertex,
                 kBeta;
 }
 
-void SubdivLoop::compute_new_faces(const Surface_mesh::Face& face) {
+void SdLoop::compute_new_faces(const Surface_mesh::Face& face) {
   const int kArraySize = 3;
   Surface_mesh::Vertex v_index_list[kArraySize];
   Surface_mesh::Vertex e_index_list[kArraySize];
@@ -110,7 +110,7 @@ void SubdivLoop::compute_new_faces(const Surface_mesh::Face& face) {
   //result_mesh_->add_triangle(v_index_list[2], e_index_list[2], e_index_list[1]);
 }
 
-double SubdivLoop::compute_beta(unsigned int n) const {
+double SdLoop::compute_beta(unsigned int n) const {
   if (n == 3) {
     return 3. / 16.;
   } else if (n > 3) {

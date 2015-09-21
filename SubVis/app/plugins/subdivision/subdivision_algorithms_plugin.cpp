@@ -22,19 +22,19 @@ SubdivisionAlgorithmsPlugin::SubdivisionAlgorithmsPlugin() {
   // Add here all the algorithms and their special renderer
 
   algorithms_["Catmull-Clark"] = {
-    std::unique_ptr<SubdivAlgorithm>{new SubdivCatmull},
+    std::unique_ptr<SdAlgorithm>{new SdCatmull},
     bspline_renderer
   };
   algorithms_["Doo-Sabin"] = {
-    std::unique_ptr<SubdivAlgorithm>{new SubdivDooSabin},
+    std::unique_ptr<SdAlgorithm>{new SdDooSabin},
     bspline_renderer
   };
   algorithms_["Loop"] = {
-    std::unique_ptr<SubdivAlgorithm>{new SubdivLoop},
+    std::unique_ptr<SdAlgorithm>{new SdLoop},
     bspline_renderer
   };
   algorithms_["Butterfly"] = {
-    std::unique_ptr<SubdivAlgorithm>{new SubdivButterfly},
+    std::unique_ptr<SdAlgorithm>{new SdButterfly},
     bspline_renderer
   };
 }

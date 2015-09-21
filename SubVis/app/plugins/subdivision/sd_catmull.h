@@ -19,7 +19,7 @@
 namespace subdivision {
 
 
-class SubdivCatmull : public SubdivAlgorithm {
+class SdCatmull : public SdAlgorithm {
  protected:
   void subdivide_input_mesh_write_output_mesh() override;
   void init_mesh_members() override;

@@ -14,7 +14,7 @@ namespace subdivision {
 using surface_mesh::Surface_mesh;
 using surface_mesh::Point;
 
-void SubdivCatmull::subdivide_input_mesh_write_output_mesh() {
+void SdCatmull::subdivide_input_mesh_write_output_mesh() {
   this->init_mesh_members();
   // loop over all faces and compute face points
   this->compute_all_face_points();
@@ -29,8 +29,8 @@ void SubdivCatmull::subdivide_input_mesh_write_output_mesh() {
   this->deinit_mesh_members();
 }
 
-void SubdivCatmull::init_mesh_members() {
-  SubdivAlgorithm::init_mesh_members();
+void SdCatmull::init_mesh_members() {
+  SdAlgorithm::init_mesh_members();
   input_mesh_->add_vertex_property<Surface_mesh::Vertex>
   (kPropVertexIndexResultV);
   input_mesh_->add_edge_property<Surface_mesh::Vertex>
@@ -45,14 +45,14 @@ void SubdivCatmull::init_mesh_members() {
     input_mesh_->get_vertex_property<Surface_mesh::Vertex>(kPropVertexIndexResultV);
 }
 
-void SubdivCatmull::deinit_mesh_members() {
-  SubdivAlgorithm::deinit_mesh_members();
+void SdCatmull::deinit_mesh_members() {
+  SdAlgorithm::deinit_mesh_members();
   input_mesh_->remove_face_property(v_index_result_f_prop_);
   input_mesh_->remove_edge_property(v_index_result_e_prop_);
   input_mesh_->remove_vertex_property(v_index_result_v_prop_);
 }
 
-void SubdivCatmull::compute_all_face_points() {
+void SdCatmull::compute_all_face_points() {
   Point face_point;
   for (const auto& face : input_mesh_->faces()) {
     this->compute_face_point(face_point, face);
@@ -63,7 +63,7 @@ void SubdivCatmull::compute_all_face_points() {
   }
 }
 
-void SubdivCatmull::compute_all_edge_points() {
+void SdCatmull::compute_all_edge_points() {
   Point edge_point;
   for (const auto& edge : input_mesh_->edges()) {
     this->compute_edge_point(edge_point, edge);
@@ -74,7 +74,7 @@ void SubdivCatmull::compute_all_edge_points() {
   }
 }
 
-void SubdivCatmull::compute_all_new_vertex_points() {
+void SdCatmull::compute_all_new_vertex_points() {
   Point new_vertex_point;
   for (const auto& vertex : input_mesh_->vertices()) {
     this->compute_new_vertex_point(new_vertex_point, vertex);
@@ -86,7 +86,7 @@ void SubdivCatmull::compute_all_new_vertex_points() {
   }
 }
 
-void SubdivCatmull::compute_edge_point(Point& edge_point,
+void SdCatmull::compute_edge_point(Point& edge_point,
                                        const Surface_mesh::Edge& edge) {
   // init result with zero
   edge_point = Point(0);
@@ -104,7 +104,7 @@ void SubdivCatmull::compute_edge_point(Point& edge_point,
   edge_point /= 4;
 }
 
-void SubdivCatmull::compute_new_vertex_point(Point& new_vertex_point,
+void SdCatmull::compute_new_vertex_point(Point& new_vertex_point,
     const Surface_mesh::Vertex& vertex) {
   // compute new vertex point: (Q/n) + (2R/n) + (S(n-3)/n)
   Point q, r, s;
@@ -120,7 +120,7 @@ void SubdivCatmull::compute_new_vertex_point(Point& new_vertex_point,
                      (vertex_valence - 3) / vertex_valence);
 }
 
-void SubdivCatmull::compute_new_faces(const Surface_mesh::Face& face) {
+void SdCatmull::compute_new_faces(const Surface_mesh::Face& face) {
   const int kArraySize = 4;
   Surface_mesh::Vertex v_index_list[kArraySize];
   Surface_mesh::Vertex e_index_list[kArraySize];
@@ -154,7 +154,7 @@ void SubdivCatmull::compute_new_faces(const Surface_mesh::Face& face) {
   }
 }
 
-void SubdivCatmull::avg_face_points(Point& avg_face_points,
+void SdCatmull::avg_face_points(Point& avg_face_points,
                                     const Surface_mesh::Vertex& vertex) {
   avg_face_points = Point(0);
   int i = 0;
@@ -167,7 +167,7 @@ void SubdivCatmull::avg_face_points(Point& avg_face_points,
   }
 }
 
-void SubdivCatmull::avg_mid_edges(Point& avg_mid_edges,
+void SdCatmull::avg_mid_edges(Point& avg_mid_edges,
                                   const Surface_mesh::Vertex& vertex) {
   avg_mid_edges = Point(0);
   int i = 0;
