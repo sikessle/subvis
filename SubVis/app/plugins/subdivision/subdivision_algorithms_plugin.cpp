@@ -10,6 +10,7 @@
 #include "plugins/subdivision/sd_doosabin.h"
 #include "plugins/subdivision/sd_loop.h"
 #include "plugins/subdivision/sd_butterfly.h"
+#include "plugins/subdivision/sd_modbutterfly.h"
 
 #include "plugins/subdivision/subdivision_algorithms_plugin.h"
 
@@ -35,6 +36,10 @@ SubdivisionAlgorithmsPlugin::SubdivisionAlgorithmsPlugin() {
   };
   algorithms_["Butterfly"] = {
     std::unique_ptr<SdAlgorithm>{new SdButterfly},
+    bspline_renderer
+  };
+  algorithms_["Modified Butterfly"] = {
+    std::unique_ptr<SdAlgorithm>{new SdModButterfly},
     bspline_renderer
   };
 }

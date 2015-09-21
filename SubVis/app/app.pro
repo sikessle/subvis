@@ -60,7 +60,8 @@ HEADERS  += view/mainwindow.h \
     plugins/subdivision/gl_bspline_renderer.h \
     plugins/subdivision/debug.h \
     plugins/subdivision/sd_quad.h \
-    plugins/subdivision/sd_triangle.h
+    plugins/subdivision/sd_triangle.h \
+    plugins/subdivision/sd_modbutterfly.h
 
 SOURCES += main.cpp \
     view/mainwindow.cpp \
@@ -83,7 +84,8 @@ SOURCES += main.cpp \
     plugins/subdivision/gl_bspline_renderer.cpp \
     plugins/subdivision/debug.cpp \
     plugins/subdivision/sd_quad.cpp \
-    plugins/subdivision/sd_triangle.cpp
+    plugins/subdivision/sd_triangle.cpp \
+    plugins/subdivision/sd_modbutterfly.cpp
 
 FORMS    += view/mainwindow.ui
 
