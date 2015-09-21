@@ -8,7 +8,7 @@
 namespace subdivision {
 
 // uncomment to disable debug output
-#define DEBUG_SUBDIV
+//#define DEBUG_SUBDIV
 
 /**
  * @brief utils_q_debug_mesh Print basic information (Vertices, Edges and Faces) of mesh with QDebug.
