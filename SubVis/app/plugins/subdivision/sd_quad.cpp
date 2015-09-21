@@ -43,7 +43,7 @@ void SdQuad::compute_mid_edge(Point& mid_edge,
   edge_vertex0 = input_mesh_->vertex(edge, 0);
   edge_vertex1 = input_mesh_->vertex(edge, 1);
   mid_edge = v_points_[edge_vertex0] + v_points_[edge_vertex1];
-  mid_edge /= 2;
+  mid_edge /= 2.;
 }
 
 } // namespace subdivision
