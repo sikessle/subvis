@@ -105,7 +105,6 @@ void SdDooSabin::compute_faces_face() {
 }
 
 void SdDooSabin::compute_faces_edge() {
-  std::vector<Surface_mesh::Vertex> vertices_vec;
   Surface_mesh::Face f0, f1;
   Surface_mesh::Vertex v0, v1;
   for (const auto& edge : input_mesh_->edges()) {
@@ -113,13 +112,9 @@ void SdDooSabin::compute_faces_edge() {
     f1 = input_mesh_->face(edge, 1);
     v0 = input_mesh_->vertex(edge, 0);
     v1 = input_mesh_->vertex(edge, 1);
-    // get coordinates of the subdivision vertex points
-    vertices_vec.push_back(f_vertex_index_map_[f0].at(v0));
-    vertices_vec.push_back(f_vertex_index_map_[f0].at(v1));
-    vertices_vec.push_back(f_vertex_index_map_[f1].at(v1));
-    vertices_vec.push_back(f_vertex_index_map_[f1].at(v0));
-    result_mesh_->add_face(vertices_vec);
-    vertices_vec.clear();
+    result_mesh_->add_quad(f_vertex_index_map_[f0].at(v0),
+                           f_vertex_index_map_[f0].at(v1), f_vertex_index_map_[f1].at(v1),
+                           f_vertex_index_map_[f1].at(v0));
   }
 }
 
