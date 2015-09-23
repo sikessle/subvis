@@ -1,11 +1,46 @@
 /**
+ * @class SdCatmull Catmull–Clark subdivision "plugins/subdivision/sd_catmull.h"
  *
- * @brief Implementation of the catmull-clark subdivision algorithm.
+ * @brief Implementation of the Catmull–Clark subdivision algorithm.
  *
- * 1. create face point for each face
- * 2. create edge point for each edge
- * 3. update vertex point coordinates
- * (http://rosettacode.org/wiki/Catmull%E2%80%93Clark_subdivision_surface)
+ * The algorithm was devised by Edwin Catmull and Jim Clark.
+ * Catmull–Clark subdivision is a generalization of bi-cubic uniform B-spline surfaces and
+ * operates on meshes with arbitrary topology (with quad and triangle faces).
+ * The subdivided output mesh contains always quad faces.
+ * The control points are approximated.
+ *
+ * The subdivision scheme:
+ *  1. Compute face points for each face (average of all vertices of a face).
+ *  2. Compute edge points for each edge (average of the center of the edge and
+ * the center of face points of the two adjacent faces).
+ *  3. Update the coordinates of all vertices: /f$(Q/n) + (2R/n) + (S(n-3)/n)/f$
+ *    - n: valence
+ *    - Q: average of the surrounding face points
+ *    - R: average of all surround edge midpoints
+ *    - S: old control point
+ *  4. Replace each face by new faces. Ever face is splitted from the face point
+ *    - triangle:
+ *      +----------+      +----------+
+ *       \        /        \   |    /
+ *        \      /          \  +   /
+ *         \    /  -->       \/ \ /
+ *          \  /              +  +
+ *           \/                \/
+ *           +                  +
+ *    - quad:
+ *      +-------+      +---+---+
+ *      |       |      |   |   |
+ *      |       | -->  +---+---+
+ *      |       |      |   |   |
+ *      +-------+      +---+---+
+ *
+ * @todo implement boundary cases
+ *
+ * Sources that helped to implement the algorithm.
+ * <a href="http://rosettacode.org/wiki/Catmull%E2%80%93Clark_subdivision_surface">Catmull-Clark Subdivision Surface</a>
+ * <a href="http://yoshihitoyagi.com/projects/mesh/subdiv/catmull/">Catmull–Clark subdivision surface</a>
+ * <a href="http://www.rorydriscoll.com/2008/08/01/catmull-clark-subdivision-the-basics/">Catmull-Clark Subdivision:
+ * The Basics </a>
  *
  * @author Felix Born
  *
@@ -18,7 +53,6 @@
 
 namespace subdivision {
 
-
 class SdCatmull : public SdQuad {
  protected:
   void subdivide_input_mesh_write_output_mesh() override;
@@ -26,50 +60,85 @@ class SdCatmull : public SdQuad {
   void deinit_mesh_members() override;
 
  private:
+  /// Property key to store the index of the corresponding output mesh vertex points.
+  const ::std::string kPropVertexIndexOutputV =
+    "v:vertex_index_output_mesh";
 
-  /**
-   * @brief kSurfMeshPropVertexIndexSubMesh index of the corresponding vertex in the new result mesh
-   * This is necessary to map vertices from origin mesh to result mesh.
-   */
-  const ::std::string kPropVertexIndexResultV =
-    "v:result_mesh_vertex_index";
-  const ::std::string kPropVertexIndexResultE =
-    "e:result_mesh_vertex_index";
-  const ::std::string kPropVertexIndexResultF =
-    "f:result_mesh_vertex_index";
+  /// Property key to store the index of the corresponding output mesh edge points.
+  const ::std::string kPropVertexIndexOutputE =
+    "e:vertex_index_output_mesh";
 
-  // vertex index properties to map from origin mesh to subdivision mesh
-  Surface_mesh::Vertex_property<Surface_mesh::Vertex> v_index_result_v_prop_;
-  Surface_mesh::Edge_property<Surface_mesh::Vertex> v_index_result_e_prop_;
-  Surface_mesh::Face_property<Surface_mesh::Vertex> v_index_result_f_prop_;
+  /// Property key to store the index of the corresponding output mesh face points.
+  const ::std::string kPropVertexIndexOutputF =
+    "f:vertex_index_output_mesh";
 
+
+  /// Property with the key @c kPropVertexIndexOutputV.
+  /// Use @c init_mesh_members() and @c deinit_mesh_members() to initialize and release.
+  Surface_mesh::Vertex_property<Surface_mesh::Vertex> v_index_output_v_prop_;
+
+  /// Property with the key @c kPropVertexIndexOutputE.
+  /// Use @c init_mesh_members() and @c deinit_mesh_members() to initialize and release.
+  Surface_mesh::Edge_property<Surface_mesh::Vertex> v_index_output_e_prop_;
+
+  /// Property with the key @c kPropVertexIndexOutputF.
+  /// Use @c init_mesh_members() and @c deinit_mesh_members() to initialize and release.
+  Surface_mesh::Face_property<Surface_mesh::Vertex> v_index_output_f_prop_;
+
+
+  /// Loop over all faces of the input mesh and compute all face points.
+  /// The face points are stored as property in the input mesh and added as vertex to the output mesh.
+  /// @sa compute_face_point(Point& face_point, const Surface_mesh::Face& face);
   void compute_all_face_points();
+
+  /// Loop over all edges of the input mesh and compute all edge points
+  /// The edge points are stored as property in the input mesh and added as vertex to the output mesh.
+  /// @sa compute_edge_point(Point& edge_point, const Surface_mesh::Edge& edge)
   void compute_all_edge_points();
-  void compute_all_new_vertex_points();
+
+  /// Loop over all vertices and update the coordinates.
+  /// The updated vertex points are stored as property in the input mesh and added as vertex to the output mesh.
+  /// @sa compute_updated_vertex_point(Point& new_vertex_point, const Surface_mesh::Vertex& vertex)
+  void compute_all_updated_vertex_points();
+
+  /// Loop over all faces, split them and add the splitted faces to the output mesh.
+  /// @sa add_splitted_face_to_output_mesh(const Surface_mesh::Face& face)
+  void add_all_faces_output_mesh();
 
   /**
-   * @brief compute_edge_point An edge point is the the average of the two control points on either side of the edge,
-   *                           and the face-points of the touching faces
-   *                           - all face points have to be computed before usage!
+   * @brief Compute the @c edge_point of the @c edge.
+   *
+   * An edge point is the the average of the two control points on either side of the edge,
+   * and the face-points of the touching faces
+   * @param[out] edge_point The computed edge point coordinate.
+   * @param[in]  edge       The edge for which the edge point has to be computed.
+   * @attention All face points have to be computed and stored as property before usage! (call @c compute_all_face_points())
    */
   void compute_edge_point(Point& edge_point, const Surface_mesh::Edge& edge);
 
   /**
-   * @brief compute_new_vertex_point Compute the new vertex coordinates: (Q/n) + (2R/n) + (S(n-3)/n)
-   *  n - valence
-   *  Q - average of the surrounding face points
-   *  R - average of all surround edge midpoints
-   *  S - old control point
-   * @param vertex old vertex
+   * @brief Compute the updated coordinate @c new_vertex_point of the @c vertex.
+   *
+   * The computation of the coordinate: /f$(Q/n) + (2R/n) + (S(n-3)/n)/f$
+   *    - n: valence
+   *    - Q: average of the surrounding face points
+   *    - R: average of all surround edge midpoints
+   *    - S: old control point
+   * @param[out] new_vertex_point The updated vertex coordinate.
+   * @param[in]  vertex           The vertex for which the updated vertex point has to be computed.
+   * @attention All face points have to be computed and stored as property before usage! (call @c compute_all_face_points())
    */
-  void compute_new_vertex_point(Point& new_vertex_point,
-                                const Surface_mesh::Vertex& vertex);
+  void compute_updated_vertex_point(Point& new_vertex_point,
+                                    const Surface_mesh::Vertex& vertex);
 
-  void compute_new_faces(const Surface_mesh::Face& face);
+  /// Split the @c face (quad or triangle face) and add the splitted faces to the output mesh.
+  void add_splitted_face_to_output_mesh(const Surface_mesh::Face& face);
 
+  /// Compute the average of all surrounding face points of the @c vertex and store the output in @c avg_face_points.
   void avg_face_points(Point& avg_face_points,
                        const Surface_mesh::Vertex& vertex);
 
+  /// Compute the average of all surrounding edge midpoints of the @c vertex and store the output in @c avg_mid_edges.
   void avg_mid_edges(Point& avg_mid_edges, const Surface_mesh::Vertex& vertex);
 };
 

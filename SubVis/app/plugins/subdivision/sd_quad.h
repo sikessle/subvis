@@ -1,10 +1,15 @@
 /**
+ * @class SdQuad "plugins/subdivision/sd_quad.h"
  *
- * @brief Base class for all quad subdivision algorithms
+ * @brief Base class for all quad subdivision algorithms.
  *
+ * This class bunches methods that are used by subdivision algorithms that operate
+ * mainly on quad meshes like Doo Sabin and Catmull-Clark.
+ * It provides methods to initializes all necessary properties.
+ *
+ * @author Felix Born
  *
  */
-
 
 #ifndef SUBVIS_PLUGINS_SUBDIVISION_SD_QUAD_H
 #define SUBVIS_PLUGINS_SUBDIVISION_SD_QUAD_H
@@ -20,37 +25,35 @@ class SdQuad : public SdAlgorithm {
   void init_mesh_members() override;
   void deinit_mesh_members() override;
 
-  /**
-   * @brief kPropVertexPointUpdated key to access surface mesh property that stores the updated vertex coordinates
-   */
-  const ::std::string kPropVertexPointUpdated = "v:point_updated";
 
-  /**
-   * @brief kPropFacePoint key to access surface mesh property that stores the face point coordinates
-   */
-  const ::std::string kPropFacePoint = "f:point";
-
-  /**
-   * @brief kPropEdgePoint key to access surface mesh property that stores the edge point coordinates
-   */
+  /// Property key to store the coordinate of the edge points.
   const ::std::string kPropEdgePoint = "e:point";
 
+  /// Property key to store the coordinate of the face points.
+  const ::std::string kPropFacePoint = "f:point";
 
+  /// Property key to store the coordinate of the updated vertex points.
+  const ::std::string kPropVertexPointUpdated = "v:point_updated";
+
+
+  /// Property with the key @c kPropEdgePoint.
+  /// Use @c init_mesh_members() and @c deinit_mesh_members() to initialize and release.
   Surface_mesh::Edge_property<Point> e_points_;
+
+  /// Property with the key @c kPropFacePoint.
+  /// Use @c init_mesh_members() and @c deinit_mesh_members() to initialize and release.
   Surface_mesh::Face_property<Point> f_points_;
+
+  /// Property with the key @c kPropVertexPointUpdated.
+  /// Use @c init_mesh_members() and @c deinit_mesh_members() to initialize and release.
   Surface_mesh::Vertex_property<Point> v_points_updated_;
 
-  /**
-   * @brief compute_mid_edge Compute the mid point of an edge (average of the two vertices).
-   *                 The edge has to be in the input_mesh_.
-   * @param mid_edge The result (mid of edge).
-   * @param edge Edge to compute the mid point.
-   */
+
+  /// Compute the mid point of the @c edge (average of the two vertices)
+  /// and store the computed coordinates in @c mid_edge.
   void compute_mid_edge(Point& mid_edge, const Surface_mesh::Edge& edge);
 
-  /**
-   * @brief compute_face_point Compute the average of all the points of the face.
-   */
+  /// Compute the average of all the points of the @c face and store the result in @c face_point.
   void compute_face_point(Point& face_point, const Surface_mesh::Face& face);
 };
 
