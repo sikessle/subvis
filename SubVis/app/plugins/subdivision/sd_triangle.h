@@ -29,11 +29,11 @@ class SdTriangle : public SdAlgorithm {
 
   /// Property key to store the index of the corresponding output mesh vertex points.
   const ::std::string kPropVertexIndexOutputV =
-    "v:result_mesh_vertex_index";
+    "v:vertex_index_output_mesh";
 
   /// Property key to store the index of the corresponding output mesh edge points.
   const ::std::string kPropVertexIndexOutputE =
-    "e:result_mesh_vertex_index";
+    "e:vertex_index_output_mesh";
 
 
   /// Property with the key @c kPropVertexIndexOutputV.
