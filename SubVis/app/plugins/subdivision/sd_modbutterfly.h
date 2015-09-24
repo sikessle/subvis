@@ -34,8 +34,6 @@
  *    - both vertices of the edge are extraordinary: average the results of using the above extraordinary stencil
  *  2. Replace each triangle face (equal to Butterfly).
  *
- * @todo implement boundary cases
- *
  * Sources that helped to implement the algorithm.
  * <a href="http://www.gamasutra.com/view/feature/131584/implementing_subdivision_surface_.php?print=1">Implementing Subdivision Surface Theory</a>
  * <a href="http://mrl.nyu.edu/~dzorin/papers/zorin1996ism.pdf">Interpolating Subdivision for Meshes with Arbitrary Topology</a>
