@@ -87,7 +87,7 @@ void SdLoop::compute_even_vertex_boundary(Point& even_vertex,
   even_vertex = 3. / 4. * v_points_[vertex];
   for (const auto& halfedge : input_mesh_->halfedges(vertex)) {
     if (input_mesh_->is_boundary(input_mesh_->edge(halfedge))) {
-      even_vertex += (1. / 8. * v_points_[input_mesh_->to_vertex(halfedge)]);
+      even_vertex += 1. / 8. * v_points_[input_mesh_->to_vertex(halfedge)];
     }
   }
 }
