@@ -19,7 +19,7 @@
  *    - Q: average of the surrounding face points
  *    - R: average of all surround edge midpoints
  *    - S: old control point
- *     Boundary case: Average between mid points of boundary edges and the old vertex coordinate
+ *      Boundary case: 1/8----3/4----1/8
  *  4. Replace each face by new faces. Ever face is splitted from the face point
  *    - triangle:
  *      +----------+      +----------+
