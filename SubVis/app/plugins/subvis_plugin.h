@@ -8,9 +8,7 @@
 
 namespace subvis {
 
-/**
- * @brief Interface for plugins
- */
+/// Interface for plugins
 class SubVisPlugin {
  public:
   virtual ~SubVisPlugin() {}

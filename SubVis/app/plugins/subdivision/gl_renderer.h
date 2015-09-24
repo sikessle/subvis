@@ -11,15 +11,10 @@ class GLRenderer {
   virtual ~GLRenderer();
 
   void render_mesh_opengl();
-  /**
-  * @brief Is called once before render_mesh_opengl()
-  * Override for specific settings (background color etc.)
-  */
+  /// Is called once before render_mesh_opengl().
+  /// Override for specific settings (background color etc.)
   virtual void init_opengl();
-  /**
-   * @brief Extracts the data required to render to a custom data structure.
-   * @param mesh
-   */
+  /// Extracts the data required to render to a custom data structure.
   virtual void mesh_updated(const surface_mesh::Surface_mesh& mesh);
 
  protected:
