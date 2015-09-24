@@ -36,8 +36,6 @@
  *      |       |      |   |   |
  *      +-------+      +---+---+
  *
- * @todo implement boundary cases
- *
  * Sources that helped to implement the algorithm.
  * <a href="http://rosettacode.org/wiki/Catmull%E2%80%93Clark_subdivision_surface">Catmull-Clark Subdivision Surface</a>
  * <a href="http://yoshihitoyagi.com/projects/mesh/subdiv/catmull/">Catmull–Clark subdivision surface</a>

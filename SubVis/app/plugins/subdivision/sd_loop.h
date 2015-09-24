@@ -50,9 +50,6 @@
  *           \/                \/
  *           e                 e
  *
- *
- * @todo implement boundary cases
- *
  * Sources that helped to implement the algorithm.
  * <a href="https://graphics.stanford.edu/~mdfisher/subdivision.html">Matt's Webcorner</a>
  * <a href="http://www.cs.cmu.edu/afs/cs/academic/class/15462-s14/www/lec_slides/Subdivision.pdf">Subdivision</a>
