@@ -8,19 +8,23 @@ namespace subdivision {
 
 void SdModButterfly::compute_edge_point(Point& edge_point,
                                         const Surface_mesh::Edge& edge) {
-  const unsigned int ordinaryValence = 6;
-  const unsigned int valence0 = input_mesh_->valence(input_mesh_->vertex(edge,
-                                0));
-  const unsigned int valence1 = input_mesh_->valence(input_mesh_->vertex(edge,
-                                1));
-  if (valence0 == ordinaryValence && valence1 == ordinaryValence) {
-    this->compute_edge_point_ordinary(edge_point, edge);
-  } else if (valence0 == ordinaryValence || valence1 == ordinaryValence) {
-    const Surface_mesh::Halfedge halfedge = valence0 == ordinaryValence ?
-                                            input_mesh_->halfedge(edge, 0) : input_mesh_->halfedge(edge, 1);
-    this->compute_edge_point_one_extraordinary(edge_point, halfedge);
+  if (input_mesh_->is_boundary(edge)) {
+    this->compute_edge_point_boundary(edge_point, edge);
   } else {
-    this->compute_edge_point_two_extraordinary(edge_point, edge);
+    const unsigned int ordinaryValence = 6;
+    const unsigned int valence0 = input_mesh_->valence(input_mesh_->vertex(edge,
+                                  0));
+    const unsigned int valence1 = input_mesh_->valence(input_mesh_->vertex(edge,
+                                  1));
+    if (valence0 == ordinaryValence && valence1 == ordinaryValence) {
+      this->compute_edge_point_ordinary(edge_point, edge);
+    } else if (valence0 == ordinaryValence || valence1 == ordinaryValence) {
+      const Surface_mesh::Halfedge halfedge = valence0 == ordinaryValence ?
+                                              input_mesh_->halfedge(edge, 0) : input_mesh_->halfedge(edge, 1);
+      this->compute_edge_point_one_extraordinary(edge_point, halfedge);
+    } else {
+      this->compute_edge_point_two_extraordinary(edge_point, edge);
+    }
   }
 }
 
