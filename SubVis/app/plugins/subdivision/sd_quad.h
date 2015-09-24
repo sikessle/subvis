@@ -49,10 +49,6 @@ class SdQuad : public SdAlgorithm {
   Surface_mesh::Vertex_property<Point> v_points_updated_;
 
 
-  /// Compute the mid point of the @c edge (average of the two vertices)
-  /// and store the computed coordinates in @c mid_edge.
-  void compute_mid_edge(Point& mid_edge, const Surface_mesh::Edge& edge);
-
   /// Compute the average of all the points of the @c face and store the result in @c face_point.
   void compute_face_point(Point& face_point, const Surface_mesh::Face& face);
 };

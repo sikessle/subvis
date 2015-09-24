@@ -43,4 +43,12 @@ void SdAlgorithm::deinit_mesh_members() {
   // vertex point property with key kPropVertexPoint is maintained by default
 }
 
+void SdAlgorithm::compute_mid_edge(Point& mid_edge,
+                              const Surface_mesh::Edge& edge) {
+  const Surface_mesh::Vertex edge_vertex0 = input_mesh_->vertex(edge, 0);
+  const Surface_mesh::Vertex edge_vertex1 = input_mesh_->vertex(edge, 1);
+  mid_edge = v_points_[edge_vertex0] + v_points_[edge_vertex1];
+  mid_edge /= 2.;
+}
+
 } // namespace subdivision

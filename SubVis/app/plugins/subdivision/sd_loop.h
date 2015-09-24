@@ -24,6 +24,7 @@
  *          \  /
  *           \/
  *           1/8
+ *     Boundary case: 1/2----o----1/2
  *  2. Update all vertices of the input mesh (these updated vertex points are also called even vertices)
  *      b----------b
  *       \        / \
@@ -39,6 +40,7 @@
  *      /         \  /
  *                 \/
  *      ------------b
+ *      Boundary case: 1/8----e: 3/4----1/8
  *   3. Replace each triangle face by 4 new triangle faces. (e: even vertex, o: odd vertex)
  *      e----o-----e      e----o-----e
  *       \        /        \   /\   /
@@ -81,11 +83,31 @@ class SdLoop : public SdTriangle {
   void compute_all_even_vertices();
 
   /// Compute the odd vertex point of an @c edge.
+  /// @sa compute_odd_vertex_regular(Point& odd_vertex, const Surface_mesh::Edge& edge),
+  /// compute_odd_vertex_boundary(Point& odd_vertex, const Surface_mesh::Edge& edge)
   void compute_odd_vertex(Point& odd_vertex, const Surface_mesh::Edge& edge);
 
+  /// Compute the odd vertex point of an @c edge using the regular subdivision scheme.
+  void compute_odd_vertex_regular(Point& odd_vertex,
+                                  const Surface_mesh::Edge& edge);
+
+  /// Compute the odd vertex point of an @c edge using the scheme for boundary cases.
+  void compute_odd_vertex_boundary(Point& odd_vertex,
+                                   const Surface_mesh::Edge& edge);
+
   /// Compute the even vertex point of a @c vertex.
+  /// @sa compute_even_vertex_regular(Point& even_vertex, const Surface_mesh::Vertex& vertex),
+  /// compute_even_vertex_boundary(Point& even_vertex, const Surface_mesh::Vertex& vertex)
   void compute_even_vertex(Point& even_vertex,
                            const Surface_mesh::Vertex& vertex);
+
+  /// Compute the even vertex point of a @c vertex using the regular subdivision scheme.
+  void compute_even_vertex_regular(Point& even_vertex,
+                                   const Surface_mesh::Vertex& vertex);
+
+  /// Compute the even vertex point of a @c vertex using the scheme for boundary cases.
+  void compute_even_vertex_boundary(Point& even_vertex,
+                                    const Surface_mesh::Vertex& vertex);
 
   /// Compute the constante beta (proposed by Warren) for a vertex with valence @c n.
   double compute_beta(unsigned int n) const;

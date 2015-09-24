@@ -34,7 +34,15 @@ void SdLoop::compute_all_even_vertices() {
 
 void SdLoop::compute_odd_vertex(Point& odd_vertex,
                                 const Surface_mesh::Edge& edge) {
-  odd_vertex = Point(0);
+  if (input_mesh_->is_boundary(edge)) {
+    this->compute_odd_vertex_boundary(odd_vertex, edge);
+  } else {
+    this->compute_odd_vertex_regular(odd_vertex, edge);
+  }
+}
+
+void SdLoop::compute_odd_vertex_regular(Point& odd_vertex,
+                                        const Surface_mesh::Edge& edge) {
   const Surface_mesh::Vertex edge_vertex0 = input_mesh_->vertex(edge, 0);
   const Surface_mesh::Vertex edge_vertex1 = input_mesh_->vertex(edge, 1);
   const Surface_mesh::Vertex outer_vertex0 = this->get_outer_vertex_triangle(
@@ -46,9 +54,22 @@ void SdLoop::compute_odd_vertex(Point& odd_vertex,
   odd_vertex /= 8.;
 }
 
+void SdLoop::compute_odd_vertex_boundary(Point& odd_vertex,
+    const Surface_mesh::Edge& edge) {
+  this->compute_mid_edge(odd_vertex, edge);
+}
+
 void SdLoop::compute_even_vertex(Point& even_vertex,
                                  const Surface_mesh::Vertex& vertex) {
-  even_vertex = Point(0);
+  if (input_mesh_->is_boundary(vertex)) {
+    this->compute_even_vertex_boundary(even_vertex, vertex);
+  } else {
+    this->compute_even_vertex_regular(even_vertex, vertex);
+  }
+}
+
+void SdLoop::compute_even_vertex_regular(Point& even_vertex,
+    const Surface_mesh::Vertex& vertex) {
   Point sum_surrounding_vertices = Point(0);
   // n - number of surrounding vertices connected to the vertex by an edge
   unsigned int n = 0;
@@ -59,6 +80,16 @@ void SdLoop::compute_even_vertex(Point& even_vertex,
   const double beta = this->compute_beta(n);
   even_vertex = v_points_[vertex] * (1 - n * beta) + sum_surrounding_vertices *
                 beta;
+}
+
+void SdLoop::compute_even_vertex_boundary(Point& even_vertex,
+    const Surface_mesh::Vertex& vertex) {
+  even_vertex = 3. / 4. * v_points_[vertex];
+  for (const auto& halfedge : input_mesh_->halfedges(vertex)) {
+    if (input_mesh_->is_boundary(input_mesh_->edge(halfedge))) {
+      even_vertex += (1. / 8. * v_points_[input_mesh_->to_vertex(halfedge)]);
+    }
+  }
 }
 
 double SdLoop::compute_beta(unsigned int n) const {
