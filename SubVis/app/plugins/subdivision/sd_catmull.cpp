@@ -84,19 +84,29 @@ void SdCatmull::add_all_faces_output_mesh() {
 
 void SdCatmull::compute_edge_point(Point& edge_point,
                                    const Surface_mesh::Edge& edge) {
-  // init result with zero
-  edge_point = Point(0);
-  const Surface_mesh::Vertex edge_vertex0 = input_mesh_->vertex(edge, 0);
-  const Surface_mesh::Vertex edge_vertex1 = input_mesh_->vertex(edge, 1);
-  const Surface_mesh::Face edge_face0 = input_mesh_->face(edge, 0);
-  const Surface_mesh::Face edge_face1 = input_mesh_->face(edge, 1);
-  // compute edge point
-  edge_point = v_points_[edge_vertex0] + v_points_[edge_vertex1] +
-               f_points_[edge_face0] + f_points_[edge_face1];
-  edge_point /= 4;
+  if (input_mesh_->is_boundary(edge)) {
+    this->compute_mid_edge(edge_point, edge);
+  } else {
+    const Surface_mesh::Vertex edge_vertex0 = input_mesh_->vertex(edge, 0);
+    const Surface_mesh::Vertex edge_vertex1 = input_mesh_->vertex(edge, 1);
+    const Surface_mesh::Face edge_face0 = input_mesh_->face(edge, 0);
+    const Surface_mesh::Face edge_face1 = input_mesh_->face(edge, 1);
+    edge_point = v_points_[edge_vertex0] + v_points_[edge_vertex1] +
+                 f_points_[edge_face0] + f_points_[edge_face1];
+    edge_point /= 4;
+  }
 }
 
 void SdCatmull::compute_updated_vertex_point(Point& new_vertex_point,
+    const Surface_mesh::Vertex& vertex) {
+  if (input_mesh_->is_boundary(vertex)) {
+    this->compute_updated_vertex_point_boundary(new_vertex_point, vertex);
+  } else {
+    this->compute_updated_vertex_point_regular(new_vertex_point, vertex);
+  }
+}
+
+void SdCatmull::compute_updated_vertex_point_regular(Point& new_vertex_point,
     const Surface_mesh::Vertex& vertex) {
   // (Q/n) + (2R/n) + (S(n-3)/n)
   Point q, r, s;
@@ -106,6 +116,16 @@ void SdCatmull::compute_updated_vertex_point(Point& new_vertex_point,
   s = v_points_[vertex];
   new_vertex_point = (q / vertex_valence) + (2 * r / vertex_valence) + (s *
                      (vertex_valence - 3) / vertex_valence);
+}
+
+void SdCatmull::compute_updated_vertex_point_boundary(Point& new_vertex_point,
+    const Surface_mesh::Vertex& vertex) {
+  new_vertex_point = 1. / 2. * v_points_[vertex];
+  for (const auto& halfedge : input_mesh_->halfedges(vertex)) {
+    if (input_mesh_->is_boundary(input_mesh_->edge(halfedge))) {
+      new_vertex_point += 1. / 4. * v_points_[input_mesh_->to_vertex(halfedge)];
+    }
+  }
 }
 
 void SdCatmull::add_splitted_face_to_output_mesh(const Surface_mesh::Face&

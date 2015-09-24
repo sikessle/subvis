@@ -12,12 +12,14 @@
  * The subdivision scheme:
  *  1. Compute face points for each face (average of all vertices of a face).
  *  2. Compute edge points for each edge (average of the center of the edge and
- * the center of face points of the two adjacent faces).
+ *     the center of face points of the two adjacent faces).
+ *     Boundary case: edge point is the middle of the edge
  *  3. Update the coordinates of all vertices: /f$(Q/n) + (2R/n) + (S(n-3)/n)/f$
  *    - n: valence
  *    - Q: average of the surrounding face points
  *    - R: average of all surround edge midpoints
  *    - S: old control point
+ *     Boundary case: Average between mid points of boundary edges and the old vertex coordinate
  *  4. Replace each face by new faces. Ever face is splitted from the face point
  *    - triangle:
  *      +----------+      +----------+
@@ -116,6 +118,14 @@ class SdCatmull : public SdQuad {
    */
   void compute_edge_point(Point& edge_point, const Surface_mesh::Edge& edge);
 
+
+  /// Compute the updated vertex point. Choose the appropriate subdivision rule whether it is a boundary vertex or not.
+  /// @attention All face points have to be computed and stored as property before usage! (call @c compute_all_face_points())
+  /// @sa compute_updated_vertex_point_regular(Point& new_vertex_point, const Surface_mesh::Vertex& vertex),
+  /// void compute_updated_vertex_point_boundary(Point& new_vertex_point, const Surface_mesh::Vertex& vertex)
+  void compute_updated_vertex_point(Point& new_vertex_point,
+                                    const Surface_mesh::Vertex& vertex);
+
   /**
    * @brief Compute the updated coordinate @c new_vertex_point of the @c vertex.
    *
@@ -126,10 +136,13 @@ class SdCatmull : public SdQuad {
    *    - S: old control point
    * @param[out] new_vertex_point The updated vertex coordinate.
    * @param[in]  vertex           The vertex for which the updated vertex point has to be computed.
-   * @attention All face points have to be computed and stored as property before usage! (call @c compute_all_face_points())
    */
-  void compute_updated_vertex_point(Point& new_vertex_point,
-                                    const Surface_mesh::Vertex& vertex);
+  void compute_updated_vertex_point_regular(Point& new_vertex_point,
+      const Surface_mesh::Vertex& vertex);
+
+  /// Compute the updated coordinate @c new_vertex_point of the @c vertex for boundary cases.
+  void compute_updated_vertex_point_boundary(Point& new_vertex_point,
+      const Surface_mesh::Vertex& vertex);
 
   /// Split the @c face (quad or triangle face) and add the splitted faces to the output mesh.
   void add_splitted_face_to_output_mesh(const Surface_mesh::Face& face);
