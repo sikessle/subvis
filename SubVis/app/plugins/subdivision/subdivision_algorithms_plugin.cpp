@@ -18,7 +18,7 @@ namespace subdivision {
 
 SubdivisionAlgorithmsPlugin::SubdivisionAlgorithmsPlugin() {
   // Add all special renderers here to share them among the algorithms
-  std::shared_ptr<GLRenderer> bspline_renderer {new BSplineGLRenderer};
+  std::shared_ptr<GLRenderer> bspline_renderer {new GLBSplineRenderer};
 
   // Add here all the algorithms and their special renderer
 
