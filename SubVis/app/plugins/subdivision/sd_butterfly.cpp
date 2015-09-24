@@ -31,12 +31,15 @@ void SdButterfly::compute_all_edge_points() {
 
 void SdButterfly::compute_edge_point(Point& edge_point,
                                      const Surface_mesh::Edge& edge) {
-  this->compute_edge_point_ordinary(edge_point, edge);
+  if (input_mesh_->is_boundary(edge)) {
+    this->compute_edge_point_boundary(edge_point, edge);
+  } else {
+    this->compute_edge_point_ordinary(edge_point, edge);
+  }
 }
 
 void SdButterfly::compute_edge_point_ordinary(Point& edge_point,
     const Surface_mesh::Edge& edge) {
-  edge_point = Point(0);
   const Surface_mesh::Halfedge h0 = input_mesh_->halfedge(edge, 0);
   const Surface_mesh::Halfedge h1 = input_mesh_->halfedge(edge, 1);
   const Surface_mesh::Vertex a0 = input_mesh_->vertex(edge, 0);
@@ -54,6 +57,34 @@ void SdButterfly::compute_edge_point_ordinary(Point& edge_point,
   edge_point = 1. / 2. * (v_points_[a0] + v_points_[a1]) + 1. / 8. *
                (v_points_[b0] + v_points_[b1])
                - 1. / 16. * (v_points_[c0] + v_points_[c1] + v_points_[c2] + v_points_[c3]);
+}
+
+void SdButterfly::compute_edge_point_boundary(Point& edge_point,
+    const Surface_mesh::Edge& edge) {
+  Surface_mesh::Halfedge h0 = this->get_next_boundary_halfedge(
+                                input_mesh_->halfedge(edge, 0));
+  const Surface_mesh::Halfedge h1 = this->get_next_boundary_halfedge(
+                                      input_mesh_->halfedge(edge, 1));
+  const Surface_mesh::Vertex vertex0 = input_mesh_->vertex(edge, 0);
+  const Surface_mesh::Vertex vertex1 = input_mesh_->vertex(edge, 1);
+  edge_point = -1. / 16. * (v_points_[input_mesh_->to_vertex(
+                                        h0)] + v_points_[input_mesh_->to_vertex(h1)]) + 9. / 16. *
+               (v_points_[vertex0] + v_points_[vertex1]);
+}
+
+surface_mesh::Surface_mesh::Halfedge SdButterfly::get_next_boundary_halfedge(
+  const Surface_mesh::Halfedge halfedge) {
+  // get opposite halfedge to rotate around vertex
+  Surface_mesh::Halfedge rotated_halfedge = input_mesh_->opposite_halfedge(
+        halfedge);
+  // rotate counter-clockwise around start vertex
+  do {
+    if (input_mesh_->is_boundary(rotated_halfedge)) { // halfedge found
+      break;
+    }
+    rotated_halfedge = input_mesh_->ccw_rotated_halfedge(rotated_halfedge);
+  } while (rotated_halfedge != halfedge);
+  return rotated_halfedge;
 }
 
 } // namespace subdivision
