@@ -4,6 +4,12 @@
 
 namespace subdivision {
 
+using Surface_mesh = surface_mesh::Surface_mesh;
+
+bool SdTriangle::is_subdividable(const Surface_mesh& mesh) const {
+  return mesh.is_triangle_mesh();
+}
+
 void SdTriangle::init_mesh_members() {
   SdAlgorithm::init_mesh_members();
   input_mesh_->add_vertex_property<Surface_mesh::Vertex>
@@ -47,7 +53,7 @@ void SdTriangle::add_splitted_face_output_mesh(const Surface_mesh::Face&
   result_mesh_->add_triangle(v_index_list[2], e_index_list[2], e_index_list[1]);
 }
 
-surface_mesh::Surface_mesh::Vertex SdTriangle::get_outer_vertex_triangle(
+Surface_mesh::Vertex SdTriangle::get_outer_vertex_triangle(
   const Surface_mesh::Halfedge& halfedge) const {
   return input_mesh_->to_vertex(input_mesh_->next_halfedge(halfedge));
 }

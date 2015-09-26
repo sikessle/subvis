@@ -10,8 +10,13 @@
 
 namespace subdivision {
 
-using surface_mesh::Surface_mesh;
-using surface_mesh::Point;
+bool SdCatmull::is_subdividable(const Surface_mesh& mesh) const {
+  for (const auto& face : mesh.faces())
+    if (!(mesh.valence(face) == 4 || mesh.valence(face) == 3)) {
+      return false;
+    }
+  return true;
+}
 
 void SdCatmull::subdivide_input_mesh_write_output_mesh() {
   this->init_mesh_members();

@@ -69,7 +69,7 @@ class SdButterfly : public SdTriangle {
                                    const Surface_mesh::Edge& edge) const;
 
   /// Returns the next boundary halfedge. If there is no next halfedge the @c halfedge passed as argument is returned.
-  surface_mesh::Surface_mesh::Halfedge get_next_boundary_halfedge(
+  Surface_mesh::Halfedge get_next_boundary_halfedge(
     const Surface_mesh::Halfedge halfedge) const;
 
  private:

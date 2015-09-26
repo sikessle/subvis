@@ -59,6 +59,9 @@ namespace subdivision {
 
 
 class SdDooSabin : public SdQuad {
+ public:
+  bool is_subdividable(const Surface_mesh& mesh) const override;
+
  protected:
   void subdivide_input_mesh_write_output_mesh() override;
   void init_mesh_members() override;

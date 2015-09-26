@@ -39,6 +39,9 @@ class SdAlgorithm {
    */
   virtual const Surface_mesh& get_result_mesh();
 
+  /// Test if the @c mesh can be subdivided with the subdivision algorithm.
+  virtual bool is_subdividable(const Surface_mesh& mesh) const = 0;
+
  protected:
 
   /// Property key to access the coordinate of the vertex points.

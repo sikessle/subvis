@@ -21,6 +21,9 @@ namespace subdivision {
 
 
 class SdTriangle : public SdAlgorithm {
+ public:
+  bool is_subdividable(const Surface_mesh& mesh) const override;
+
  protected:
   void subdivide_input_mesh_write_output_mesh() override = 0;
   void init_mesh_members() override;
@@ -55,7 +58,7 @@ class SdTriangle : public SdAlgorithm {
   /// Get the outer vertex of the triangle face.
   /// If triagnel face with vertieces A, B and C and the @c halfedge connects A to B
   /// the vertex C is returned.
-  surface_mesh::Surface_mesh::Vertex get_outer_vertex_triangle(
+  Surface_mesh::Vertex get_outer_vertex_triangle(
     const Surface_mesh::Halfedge& halfedge) const;
 };
 

@@ -6,6 +6,8 @@
 
 namespace subdivision {
 
+using Surface_mesh = surface_mesh::Surface_mesh;
+
 void SdButterfly::subdivide_input_mesh_write_output_mesh() {
   this->init_mesh_members();
   this->add_all_vertices_output_mesh();
@@ -72,7 +74,7 @@ void SdButterfly::compute_edge_point_boundary(Point& edge_point,
                (v_points_[vertex0] + v_points_[vertex1]);
 }
 
-surface_mesh::Surface_mesh::Halfedge SdButterfly::get_next_boundary_halfedge(
+Surface_mesh::Halfedge SdButterfly::get_next_boundary_halfedge(
   const Surface_mesh::Halfedge halfedge) const {
   // get opposite halfedge to rotate around vertex
   Surface_mesh::Halfedge rotated_halfedge = input_mesh_->opposite_halfedge(
