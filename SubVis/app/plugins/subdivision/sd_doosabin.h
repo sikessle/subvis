@@ -21,7 +21,7 @@
  *      |   f   e -->  | | F | |   new face can be arbitrary polygon face
  *      |     V |      | V---V |
  *      v---e---v      +-------+
- *    - for each vertex (if vertex valence < 3):
+ *    - for each vertex (if number of surrounding faces < 2):
  *      v-------v-------v     v-------v-------v
  *      |       |       |     |       |       |
  *      |       |       |     |       |       |
