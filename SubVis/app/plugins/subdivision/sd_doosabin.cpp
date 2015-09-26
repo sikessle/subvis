@@ -115,7 +115,9 @@ void SdDooSabin::add_all_faces_output_mesh_vertex() {
     for (const auto& face : input_mesh_->faces(vertex)) {
       vertices_vec.push_back(f_vertex_index_map_[face].at(vertex));
     }
-    result_mesh_->add_face(vertices_vec);
+    if (vertices_vec.size() > 2) {
+      result_mesh_->add_face(vertices_vec);
+    }
     vertices_vec.clear();
   }
 }
