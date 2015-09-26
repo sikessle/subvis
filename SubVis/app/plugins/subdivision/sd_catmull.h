@@ -114,7 +114,8 @@ class SdCatmull : public SdQuad {
    * @param[in]  edge       The edge for which the edge point has to be computed.
    * @attention All face points have to be computed and stored as property before usage! (call @c compute_all_face_points())
    */
-  void compute_edge_point(Point& edge_point, const Surface_mesh::Edge& edge);
+  void compute_edge_point(Point& edge_point,
+                          const Surface_mesh::Edge& edge) const;
 
 
   /// Compute the updated vertex point. Choose the appropriate subdivision rule whether it is a boundary vertex or not.
@@ -122,7 +123,7 @@ class SdCatmull : public SdQuad {
   /// @sa compute_updated_vertex_point_regular(Point& new_vertex_point, const Surface_mesh::Vertex& vertex),
   /// void compute_updated_vertex_point_boundary(Point& new_vertex_point, const Surface_mesh::Vertex& vertex)
   void compute_updated_vertex_point(Point& new_vertex_point,
-                                    const Surface_mesh::Vertex& vertex);
+                                    const Surface_mesh::Vertex& vertex) const;
 
   /**
    * @brief Compute the updated coordinate @c new_vertex_point of the @c vertex.
@@ -136,21 +137,22 @@ class SdCatmull : public SdQuad {
    * @param[in]  vertex           The vertex for which the updated vertex point has to be computed.
    */
   void compute_updated_vertex_point_regular(Point& new_vertex_point,
-      const Surface_mesh::Vertex& vertex);
+      const Surface_mesh::Vertex& vertex) const;
 
   /// Compute the updated coordinate @c new_vertex_point of the @c vertex for boundary cases.
   void compute_updated_vertex_point_boundary(Point& new_vertex_point,
-      const Surface_mesh::Vertex& vertex);
+      const Surface_mesh::Vertex& vertex) const;
 
   /// Split the @c face (quad or triangle face) and add the splitted faces to the output mesh.
   void add_splitted_face_to_output_mesh(const Surface_mesh::Face& face);
 
   /// Compute the average of all surrounding face points of the @c vertex and store the output in @c avg_face_points.
   void avg_face_points(Point& avg_face_points,
-                       const Surface_mesh::Vertex& vertex);
+                       const Surface_mesh::Vertex& vertex) const;
 
   /// Compute the average of all surrounding edge midpoints of the @c vertex and store the output in @c avg_mid_edges.
-  void avg_mid_edges(Point& avg_mid_edges, const Surface_mesh::Vertex& vertex);
+  void avg_mid_edges(Point& avg_mid_edges,
+                     const Surface_mesh::Vertex& vertex) const;
 };
 
 } // namespace subdivision

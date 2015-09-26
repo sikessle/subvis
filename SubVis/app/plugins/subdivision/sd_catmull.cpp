@@ -83,7 +83,7 @@ void SdCatmull::add_all_faces_output_mesh() {
 }
 
 void SdCatmull::compute_edge_point(Point& edge_point,
-                                   const Surface_mesh::Edge& edge) {
+                                   const Surface_mesh::Edge& edge) const {
   if (input_mesh_->is_boundary(edge)) {
     this->compute_mid_edge(edge_point, edge);
   } else {
@@ -98,7 +98,7 @@ void SdCatmull::compute_edge_point(Point& edge_point,
 }
 
 void SdCatmull::compute_updated_vertex_point(Point& new_vertex_point,
-    const Surface_mesh::Vertex& vertex) {
+    const Surface_mesh::Vertex& vertex) const {
   if (input_mesh_->is_boundary(vertex)) {
     this->compute_updated_vertex_point_boundary(new_vertex_point, vertex);
   } else {
@@ -107,7 +107,7 @@ void SdCatmull::compute_updated_vertex_point(Point& new_vertex_point,
 }
 
 void SdCatmull::compute_updated_vertex_point_regular(Point& new_vertex_point,
-    const Surface_mesh::Vertex& vertex) {
+    const Surface_mesh::Vertex& vertex) const {
   // (Q/n) + (2R/n) + (S(n-3)/n)
   Point q, r, s;
   const unsigned int vertex_valence = input_mesh_->valence(vertex);
@@ -119,7 +119,7 @@ void SdCatmull::compute_updated_vertex_point_regular(Point& new_vertex_point,
 }
 
 void SdCatmull::compute_updated_vertex_point_boundary(Point& new_vertex_point,
-    const Surface_mesh::Vertex& vertex) {
+    const Surface_mesh::Vertex& vertex) const {
   new_vertex_point = 3. / 4. * v_points_[vertex];
   for (const auto& halfedge : input_mesh_->halfedges(vertex)) {
     if (input_mesh_->is_boundary(input_mesh_->edge(halfedge))) {
@@ -165,7 +165,7 @@ void SdCatmull::add_splitted_face_to_output_mesh(const Surface_mesh::Face&
 }
 
 void SdCatmull::avg_face_points(Point& avg_face_points,
-                                const Surface_mesh::Vertex& vertex) {
+                                const Surface_mesh::Vertex& vertex) const {
   avg_face_points = Point(0);
   int i = 0;
   for (const auto& face : input_mesh_->faces(vertex)) {
@@ -178,7 +178,7 @@ void SdCatmull::avg_face_points(Point& avg_face_points,
 }
 
 void SdCatmull::avg_mid_edges(Point& avg_mid_edges,
-                              const Surface_mesh::Vertex& vertex) {
+                              const Surface_mesh::Vertex& vertex) const {
   avg_mid_edges = Point(0);
   int i = 0;
   Point mid_edge;

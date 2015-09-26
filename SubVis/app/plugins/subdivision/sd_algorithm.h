@@ -76,7 +76,7 @@ class SdAlgorithm {
 
   /// Compute the mid point of the @c edge (average of the two vertices)
   /// and store the computed coordinates in @c mid_edge.
-  void compute_mid_edge(Point& mid_edge, const Surface_mesh::Edge& edge);
+  void compute_mid_edge(Point& mid_edge, const Surface_mesh::Edge& edge) const;
 };
 
 } // namespace subdivision
