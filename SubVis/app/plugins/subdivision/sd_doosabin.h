@@ -103,7 +103,7 @@ class SdDooSabin : public SdQuad {
    * @attention The @c vertex has to be a vertex of the @c face.
    */
   void compute_new_vertex_point(Point& new_vertex_point,
-                                const Surface_mesh::Vertex& vertex, const Surface_mesh::Face& face);
+                                const Surface_mesh::Vertex& vertex, const Surface_mesh::Face& face) const;
 
   /// Loop over all faces, edges, and vertieces to create the new faces and add them to the output mesh.
   /// @sa add_all_faces_output_mesh_face(), add_all_faces_output_mesh_edge(), add_all_faces_output_mesh_vertex()
