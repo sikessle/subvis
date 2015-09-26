@@ -7,7 +7,7 @@
 namespace subdivision {
 
 void SdModButterfly::compute_edge_point(Point& edge_point,
-                                        const Surface_mesh::Edge& edge) {
+                                        const Surface_mesh::Edge& edge) const {
   if (input_mesh_->is_boundary(edge)) {
     this->compute_edge_point_boundary(edge_point, edge);
   } else {
@@ -29,7 +29,7 @@ void SdModButterfly::compute_edge_point(Point& edge_point,
 }
 
 void SdModButterfly::compute_edge_point_one_extraordinary(Point& edge_point,
-    const Surface_mesh::Halfedge& halfedge) {
+    const Surface_mesh::Halfedge& halfedge) const {
   edge_point = (3. / 4. * v_points_[input_mesh_->from_vertex(halfedge)]);
   const unsigned int valence = input_mesh_->valence(input_mesh_->from_vertex(
                                  halfedge));
@@ -61,7 +61,7 @@ void SdModButterfly::compute_edge_point_one_extraordinary(Point& edge_point,
 }
 
 void SdModButterfly::compute_edge_point_two_extraordinary(Point& edge_point,
-    const Surface_mesh::Edge& edge) {
+    const Surface_mesh::Edge& edge) const {
   Point point0, point1;
   this->compute_edge_point_one_extraordinary(point0, input_mesh_->halfedge(edge,
       0));

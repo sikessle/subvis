@@ -56,16 +56,16 @@ class SdModButterfly : public SdButterfly {
 
   /// Compute the new interpolated vertex point of the @c edge with appropriate stencil.
   void compute_edge_point(Point& edge_point,
-                          const Surface_mesh::Edge& edge) override;
+                          const Surface_mesh::Edge& edge) const override;
 
  private:
   /// Compute the new interpolated vertex point of the edge if there is one extraordinary vertex (from vertex of the @c halfedge).
   void compute_edge_point_one_extraordinary(Point& edge_point,
-      const Surface_mesh::Halfedge& halfedge);
+      const Surface_mesh::Halfedge& halfedge) const;
 
   /// Compute the new interpolated vertex point of the @c edge with two extraordinary vertices.
   void compute_edge_point_two_extraordinary(Point& edge_point,
-      const Surface_mesh::Edge& edge);
+      const Surface_mesh::Edge& edge) const;
 };
 
 } // namespace subdivision

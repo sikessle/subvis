@@ -9,7 +9,7 @@ namespace subdivision {
 void SdButterfly::subdivide_input_mesh_write_output_mesh() {
   this->init_mesh_members();
   this->add_all_vertices_output_mesh();
-  this->compute_all_edge_points();
+  this->add_all_edge_points_output_mesh();
   this->add_all_faces_output_mesh();
   this->deinit_mesh_members();
 }
@@ -20,7 +20,7 @@ void SdButterfly::add_all_vertices_output_mesh() {
   }
 }
 
-void SdButterfly::compute_all_edge_points() {
+void SdButterfly::add_all_edge_points_output_mesh() {
   Point edge_point;
   for (const auto& edge : input_mesh_->edges()) {
     this->compute_edge_point(edge_point, edge);
@@ -30,7 +30,7 @@ void SdButterfly::compute_all_edge_points() {
 }
 
 void SdButterfly::compute_edge_point(Point& edge_point,
-                                     const Surface_mesh::Edge& edge) {
+                                     const Surface_mesh::Edge& edge) const {
   if (input_mesh_->is_boundary(edge)) {
     this->compute_edge_point_boundary(edge_point, edge);
   } else {
@@ -39,7 +39,7 @@ void SdButterfly::compute_edge_point(Point& edge_point,
 }
 
 void SdButterfly::compute_edge_point_ordinary(Point& edge_point,
-    const Surface_mesh::Edge& edge) {
+    const Surface_mesh::Edge& edge) const {
   const Surface_mesh::Halfedge h0 = input_mesh_->halfedge(edge, 0);
   const Surface_mesh::Halfedge h1 = input_mesh_->halfedge(edge, 1);
   const Surface_mesh::Vertex a0 = input_mesh_->vertex(edge, 0);
@@ -60,7 +60,7 @@ void SdButterfly::compute_edge_point_ordinary(Point& edge_point,
 }
 
 void SdButterfly::compute_edge_point_boundary(Point& edge_point,
-    const Surface_mesh::Edge& edge) {
+    const Surface_mesh::Edge& edge) const {
   Surface_mesh::Halfedge h0 = this->get_next_boundary_halfedge(
                                 input_mesh_->halfedge(edge, 0));
   const Surface_mesh::Halfedge h1 = this->get_next_boundary_halfedge(
@@ -73,7 +73,7 @@ void SdButterfly::compute_edge_point_boundary(Point& edge_point,
 }
 
 surface_mesh::Surface_mesh::Halfedge SdButterfly::get_next_boundary_halfedge(
-  const Surface_mesh::Halfedge halfedge) {
+  const Surface_mesh::Halfedge halfedge) const {
   // get opposite halfedge to rotate around vertex
   Surface_mesh::Halfedge rotated_halfedge = input_mesh_->opposite_halfedge(
         halfedge);

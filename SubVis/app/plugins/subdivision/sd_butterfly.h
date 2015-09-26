@@ -55,21 +55,22 @@ class SdButterfly : public SdTriangle {
   /// Compute the new interpolated vertex point of the @c edge with the 8 point stencil.
   /** This function calls only @c compute_edge_point_ordinary or @c compute_edge_point_boundary.
    *  To implement the Modified Butterfly algorithm,
-   *  simply inherit from this class and overwrite this method.
+   *  simply inherit from this class and overrite this method.
    */
   virtual void compute_edge_point(Point& edge_point,
-                                  const Surface_mesh::Edge& edge);
+                                  const Surface_mesh::Edge& edge) const;
 
   /// Compute the new interpolated vertex point of the @c edge with the 8 point stencil.
   void compute_edge_point_ordinary(Point& edge_point,
-                                   const Surface_mesh::Edge& edge);
+                                   const Surface_mesh::Edge& edge) const;
 
   /// Compute the new interpolated vertex point of the @c edge with the 1-dimensional 4 point stencil for boundaries.
   void compute_edge_point_boundary(Point& edge_point,
-                                   const Surface_mesh::Edge& edge);
+                                   const Surface_mesh::Edge& edge) const;
 
   /// Returns the next boundary halfedge. If there is no next halfedge the @c halfedge passed as argument is returned.
-  surface_mesh::Surface_mesh::Halfedge get_next_boundary_halfedge(const Surface_mesh::Halfedge halfedge);
+  surface_mesh::Surface_mesh::Halfedge get_next_boundary_halfedge(
+    const Surface_mesh::Halfedge halfedge) const;
 
  private:
   /// Copy all vertices from the input mesh to the output mesh and store the vertex index in @c v_index_output_v_prop_.
@@ -77,7 +78,7 @@ class SdButterfly : public SdTriangle {
 
   /// Loop over all edges and compute the new inteprolated vertices.
   /// @sa compute_edge_point_ordinary(Point& edge_point,const Surface_mesh::Edge& edge)
-  void compute_all_edge_points();
+  void add_all_edge_points_output_mesh();
 };
 
 } // namespace subdivision
