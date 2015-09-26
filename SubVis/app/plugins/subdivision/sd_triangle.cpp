@@ -24,11 +24,11 @@ void SdTriangle::deinit_mesh_members() {
 
 void SdTriangle::add_all_faces_output_mesh() {
   for (const auto& face : input_mesh_->faces()) {
-    this->add_splitted_face_to_output_mesh(face);
+    this->add_splitted_face_output_mesh(face);
   }
 }
 
-void SdTriangle::add_splitted_face_to_output_mesh(const Surface_mesh::Face&
+void SdTriangle::add_splitted_face_output_mesh(const Surface_mesh::Face&
     face) {
   const int kArraySize = 3;
   Surface_mesh::Vertex v_index_list[kArraySize];

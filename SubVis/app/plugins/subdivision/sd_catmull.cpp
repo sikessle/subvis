@@ -78,7 +78,7 @@ void SdCatmull::add_all_updated_vertex_points_output_mesh() {
 
 void SdCatmull::add_all_faces_output_mesh() {
   for (const auto& face : input_mesh_->faces()) {
-    this->add_splitted_face_to_output_mesh(face);
+    this->add_splitted_face_output_mesh(face);
   }
 }
 
@@ -128,7 +128,7 @@ void SdCatmull::compute_updated_vertex_point_boundary(Point& new_vertex_point,
   }
 }
 
-void SdCatmull::add_splitted_face_to_output_mesh(const Surface_mesh::Face&
+void SdCatmull::add_splitted_face_output_mesh(const Surface_mesh::Face&
     face) {
   const int arraySize = 4;
   Surface_mesh::Vertex v_index_list[arraySize];

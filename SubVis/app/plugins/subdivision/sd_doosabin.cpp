@@ -7,9 +7,9 @@ namespace subdivision {
 
 void SdDooSabin::subdivide_input_mesh_write_output_mesh() {
   this->init_mesh_members();
-  this->compute_all_face_points();
-  this->compute_all_edge_points();
-  this->compute_all_new_vertex_points();
+  this->add_all_face_points_output_mesh();
+  this->add_all_edge_points_output_mesh();
+  this->add_all_new_vertex_points_output_mesh();
   this->add_all_faces_output_mesh();
   this->deinit_mesh_members();
 }
@@ -27,7 +27,7 @@ void SdDooSabin::deinit_mesh_members() {
   input_mesh_->remove_face_property(f_vertex_index_map_);
 }
 
-void SdDooSabin::compute_all_face_points() {
+void SdDooSabin::add_all_face_points_output_mesh() {
   Point face_point;
   for (const auto& face : input_mesh_->faces()) {
     this->compute_face_point(face_point, face);
@@ -37,7 +37,7 @@ void SdDooSabin::compute_all_face_points() {
   }
 }
 
-void SdDooSabin::compute_all_edge_points() {
+void SdDooSabin::add_all_edge_points_output_mesh() {
   Point edge_point;
   for (const auto& edge : input_mesh_->edges()) {
     this->compute_mid_edge(edge_point, edge);
@@ -47,7 +47,7 @@ void SdDooSabin::compute_all_edge_points() {
   }
 }
 
-void SdDooSabin::compute_all_new_vertex_points() {
+void SdDooSabin::add_all_new_vertex_points_output_mesh() {
   Point new_vertex_point;
   for (const auto& face : input_mesh_->faces()) {
     for (const auto& vertex : input_mesh_->vertices(face)) {
