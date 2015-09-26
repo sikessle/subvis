@@ -15,7 +15,7 @@
  *  3. Compute the new vertex point (average of face point, two edge points and vertex).
  *  4. Create the faces with the new vertex points
  *     (f: face point, e: edge point, v: vertex point, V: new vertex point, F: new Face)
- *    - for each face
+ *    - for each face:
  *      v-------v      +-------+
  *      |       |      | V---V |
  *      |   f   e -->  | | F | |   new face can be arbitrary polygon face
@@ -32,7 +32,7 @@
  *      |       |       |     |       |       |
  *      v-------v-------v     v-------v-------v
  *
- *    - for each edge:
+ *    - for each edge (if edge is not a boundary edge):
  *      +-------v-------+     +-------+-------+
  *      |    V  | V     |     |     V---V     |
  *      |       |       | --> |     | F |     |  new face is always quad face

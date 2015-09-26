@@ -67,7 +67,8 @@ void SdDooSabin::compute_new_vertex_point(Point& new_vertex_point,
     if (input_mesh_->from_vertex(halfedge) == vertex) {
       // halfedge found - do computation
       const Surface_mesh::Edge e1 = input_mesh_->edge(halfedge);
-      const Surface_mesh::Edge e2 = input_mesh_->edge(input_mesh_->prev_halfedge(halfedge));
+      const Surface_mesh::Edge e2 = input_mesh_->edge(input_mesh_->prev_halfedge(
+                                      halfedge));
       new_vertex_point = (v_points_[vertex] + f_points_[face] + e_points_[e1] +
                           e_points_[e2] ) / 4;
       break;
@@ -96,13 +97,15 @@ void SdDooSabin::add_all_faces_output_mesh_edge() {
   Surface_mesh::Face f0, f1;
   Surface_mesh::Vertex v0, v1;
   for (const auto& edge : input_mesh_->edges()) {
-    f0 = input_mesh_->face(edge, 0);
-    f1 = input_mesh_->face(edge, 1);
-    v0 = input_mesh_->vertex(edge, 0);
-    v1 = input_mesh_->vertex(edge, 1);
-    result_mesh_->add_quad(f_vertex_index_map_[f0].at(v0),
-                           f_vertex_index_map_[f0].at(v1), f_vertex_index_map_[f1].at(v1),
-                           f_vertex_index_map_[f1].at(v0));
+    if (!input_mesh_->is_boundary(edge)) {
+      f0 = input_mesh_->face(edge, 0);
+      f1 = input_mesh_->face(edge, 1);
+      v0 = input_mesh_->vertex(edge, 0);
+      v1 = input_mesh_->vertex(edge, 1);
+      result_mesh_->add_quad(f_vertex_index_map_[f0].at(v0),
+                             f_vertex_index_map_[f0].at(v1), f_vertex_index_map_[f1].at(v1),
+                             f_vertex_index_map_[f1].at(v0));
+    }
   }
 }
 
