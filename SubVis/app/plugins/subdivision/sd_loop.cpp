@@ -8,13 +8,13 @@ namespace subdivision {
 
 void SdLoop::subdivide_input_mesh_write_output_mesh() {
   this->init_mesh_members();
-  this->compute_all_odd_vertices();
-  this->compute_all_even_vertices();
+  this->add_all_odd_vertices_output_mesh();
+  this->add_all_even_vertices_output_mesh();
   this->add_all_faces_output_mesh();
   this->deinit_mesh_members();
 }
 
-void SdLoop::compute_all_odd_vertices() {
+void SdLoop::add_all_odd_vertices_output_mesh() {
   Point odd_vertex_point;
   for (const auto& edge : input_mesh_->edges()) {
     this->compute_odd_vertex(odd_vertex_point, edge);
@@ -23,7 +23,7 @@ void SdLoop::compute_all_odd_vertices() {
   }
 }
 
-void SdLoop::compute_all_even_vertices() {
+void SdLoop::add_all_even_vertices_output_mesh() {
   Point even_vertex_point;
   for (const auto& vertex : input_mesh_->vertices()) {
     this->compute_even_vertex(even_vertex_point, vertex);

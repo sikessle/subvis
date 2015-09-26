@@ -70,14 +70,13 @@ class SdLoop : public SdTriangle {
   void subdivide_input_mesh_write_output_mesh() override;
 
  private:
-
   /// Loop over all edges, compute odd vertices and add them to the output mesh.
   /// @sa compute_odd_vertex(Point& odd_vertex, const Surface_mesh::Edge& edge)
-  void compute_all_odd_vertices();
+  void add_all_odd_vertices_output_mesh();
 
   /// Loop over all vertices, compute even vertices and add them to the output mesh.
   /// @sa void compute_even_vertex(Point& even_vertex, const Surface_mesh::Vertex& vertex)
-  void compute_all_even_vertices();
+  void add_all_even_vertices_output_mesh();
 
   /// Compute the odd vertex point of an @c edge.
   /// @sa compute_odd_vertex_regular(Point& odd_vertex, const Surface_mesh::Edge& edge),
