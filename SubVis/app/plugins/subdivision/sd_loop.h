@@ -82,29 +82,29 @@ class SdLoop : public SdTriangle {
   /// Compute the odd vertex point of an @c edge.
   /// @sa compute_odd_vertex_regular(Point& odd_vertex, const Surface_mesh::Edge& edge),
   /// compute_odd_vertex_boundary(Point& odd_vertex, const Surface_mesh::Edge& edge)
-  void compute_odd_vertex(Point& odd_vertex, const Surface_mesh::Edge& edge);
+  void compute_odd_vertex(Point& odd_vertex, const Surface_mesh::Edge& edge) const;
 
   /// Compute the odd vertex point of an @c edge using the regular subdivision scheme.
   void compute_odd_vertex_regular(Point& odd_vertex,
-                                  const Surface_mesh::Edge& edge);
+                                  const Surface_mesh::Edge& edge) const;
 
   /// Compute the odd vertex point of an @c edge using the scheme for boundary cases.
   void compute_odd_vertex_boundary(Point& odd_vertex,
-                                   const Surface_mesh::Edge& edge);
+                                   const Surface_mesh::Edge& edge) const;
 
   /// Compute the even vertex point of a @c vertex.
   /// @sa compute_even_vertex_regular(Point& even_vertex, const Surface_mesh::Vertex& vertex),
   /// compute_even_vertex_boundary(Point& even_vertex, const Surface_mesh::Vertex& vertex)
   void compute_even_vertex(Point& even_vertex,
-                           const Surface_mesh::Vertex& vertex);
+                           const Surface_mesh::Vertex& vertex) const;
 
   /// Compute the even vertex point of a @c vertex using the regular subdivision scheme.
   void compute_even_vertex_regular(Point& even_vertex,
-                                   const Surface_mesh::Vertex& vertex);
+                                   const Surface_mesh::Vertex& vertex) const;
 
   /// Compute the even vertex point of a @c vertex using the scheme for boundary cases.
   void compute_even_vertex_boundary(Point& even_vertex,
-                                    const Surface_mesh::Vertex& vertex);
+                                    const Surface_mesh::Vertex& vertex) const;
 
   /// Compute the constante beta (proposed by Warren) for a vertex with valence @c n.
   double compute_beta(unsigned int n) const;

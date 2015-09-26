@@ -33,7 +33,7 @@ void SdLoop::compute_all_even_vertices() {
 }
 
 void SdLoop::compute_odd_vertex(Point& odd_vertex,
-                                const Surface_mesh::Edge& edge) {
+                                const Surface_mesh::Edge& edge) const {
   if (input_mesh_->is_boundary(edge)) {
     this->compute_odd_vertex_boundary(odd_vertex, edge);
   } else {
@@ -42,7 +42,7 @@ void SdLoop::compute_odd_vertex(Point& odd_vertex,
 }
 
 void SdLoop::compute_odd_vertex_regular(Point& odd_vertex,
-                                        const Surface_mesh::Edge& edge) {
+                                        const Surface_mesh::Edge& edge) const {
   const Surface_mesh::Vertex edge_vertex0 = input_mesh_->vertex(edge, 0);
   const Surface_mesh::Vertex edge_vertex1 = input_mesh_->vertex(edge, 1);
   const Surface_mesh::Vertex outer_vertex0 = this->get_outer_vertex_triangle(
@@ -55,12 +55,12 @@ void SdLoop::compute_odd_vertex_regular(Point& odd_vertex,
 }
 
 void SdLoop::compute_odd_vertex_boundary(Point& odd_vertex,
-    const Surface_mesh::Edge& edge) {
+    const Surface_mesh::Edge& edge) const {
   this->compute_mid_edge(odd_vertex, edge);
 }
 
 void SdLoop::compute_even_vertex(Point& even_vertex,
-                                 const Surface_mesh::Vertex& vertex) {
+                                 const Surface_mesh::Vertex& vertex) const {
   if (input_mesh_->is_boundary(vertex)) {
     this->compute_even_vertex_boundary(even_vertex, vertex);
   } else {
@@ -69,7 +69,7 @@ void SdLoop::compute_even_vertex(Point& even_vertex,
 }
 
 void SdLoop::compute_even_vertex_regular(Point& even_vertex,
-    const Surface_mesh::Vertex& vertex) {
+    const Surface_mesh::Vertex& vertex) const {
   Point sum_surrounding_vertices = Point(0);
   // n - number of surrounding vertices connected to the vertex by an edge
   unsigned int n = 0;
@@ -83,7 +83,7 @@ void SdLoop::compute_even_vertex_regular(Point& even_vertex,
 }
 
 void SdLoop::compute_even_vertex_boundary(Point& even_vertex,
-    const Surface_mesh::Vertex& vertex) {
+    const Surface_mesh::Vertex& vertex) const {
   even_vertex = 3. / 4. * v_points_[vertex];
   for (const auto& halfedge : input_mesh_->halfedges(vertex)) {
     if (input_mesh_->is_boundary(input_mesh_->edge(halfedge))) {

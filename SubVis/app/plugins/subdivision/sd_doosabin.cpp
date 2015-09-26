@@ -60,7 +60,7 @@ void SdDooSabin::compute_all_new_vertex_points() {
 }
 
 void SdDooSabin::compute_new_vertex_point(Point& new_vertex_point,
-    const Surface_mesh::Vertex& vertex, const Surface_mesh::Face& face) {
+    const Surface_mesh::Vertex& vertex, const Surface_mesh::Face& face) const {
   new_vertex_point = Point(0);
   // find halfedge with from vertex == vertex
   for (const Surface_mesh::Halfedge& halfedge : input_mesh_->halfedges(face)) {
