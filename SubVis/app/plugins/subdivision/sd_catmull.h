@@ -89,17 +89,17 @@ class SdCatmull : public SdQuad {
   /// Loop over all faces of the input mesh and compute all face points.
   /// The face points are stored as property in the input mesh and added as vertex to the output mesh.
   /// @sa compute_face_point(Point& face_point, const Surface_mesh::Face& face);
-  void compute_all_face_points();
+  void add_all_face_points_output_mesh();
 
   /// Loop over all edges of the input mesh and compute all edge points
   /// The edge points are stored as property in the input mesh and added as vertex to the output mesh.
   /// @sa compute_edge_point(Point& edge_point, const Surface_mesh::Edge& edge)
-  void compute_all_edge_points();
+  void add_all_edge_points_output_mesh();
 
   /// Loop over all vertices and update the coordinates.
   /// The updated vertex points are stored as property in the input mesh and added as vertex to the output mesh.
   /// @sa compute_updated_vertex_point(Point& new_vertex_point, const Surface_mesh::Vertex& vertex)
-  void compute_all_updated_vertex_points();
+  void add_all_updated_vertex_points_output_mesh();
 
   /// Loop over all faces, split them and add the splitted faces to the output mesh.
   /// @sa add_splitted_face_to_output_mesh(const Surface_mesh::Face& face)
@@ -144,7 +144,7 @@ class SdCatmull : public SdQuad {
       const Surface_mesh::Vertex& vertex) const;
 
   /// Split the @c face (quad or triangle face) and add the splitted faces to the output mesh.
-  void add_splitted_face_to_output_mesh(const Surface_mesh::Face& face);
+  void add_splitted_face_output_mesh(const Surface_mesh::Face& face);
 
   /// Compute the average of all surrounding face points of the @c vertex and store the output in @c avg_face_points.
   void avg_face_points(Point& avg_face_points,

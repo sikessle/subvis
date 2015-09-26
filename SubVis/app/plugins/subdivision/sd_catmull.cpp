@@ -15,9 +15,9 @@ using surface_mesh::Point;
 
 void SdCatmull::subdivide_input_mesh_write_output_mesh() {
   this->init_mesh_members();
-  this->compute_all_face_points();
-  this->compute_all_edge_points();
-  this->compute_all_updated_vertex_points();
+  this->add_all_face_points_output_mesh();
+  this->add_all_edge_points_output_mesh();
+  this->add_all_updated_vertex_points_output_mesh();
   this->add_all_faces_output_mesh();
   this->deinit_mesh_members();
 }
@@ -42,7 +42,7 @@ void SdCatmull::deinit_mesh_members() {
   input_mesh_->remove_vertex_property(v_index_output_v_prop_);
 }
 
-void SdCatmull::compute_all_face_points() {
+void SdCatmull::add_all_face_points_output_mesh() {
   Point face_point;
   for (const auto& face : input_mesh_->faces()) {
     this->compute_face_point(face_point, face);
@@ -53,7 +53,7 @@ void SdCatmull::compute_all_face_points() {
   }
 }
 
-void SdCatmull::compute_all_edge_points() {
+void SdCatmull::add_all_edge_points_output_mesh() {
   Point edge_point;
   for (const auto& edge : input_mesh_->edges()) {
     this->compute_edge_point(edge_point, edge);
@@ -64,7 +64,7 @@ void SdCatmull::compute_all_edge_points() {
   }
 }
 
-void SdCatmull::compute_all_updated_vertex_points() {
+void SdCatmull::add_all_updated_vertex_points_output_mesh() {
   Point new_vertex_point;
   for (const auto& vertex : input_mesh_->vertices()) {
     this->compute_updated_vertex_point(new_vertex_point, vertex);
