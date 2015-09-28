@@ -56,7 +56,7 @@ class SdTriangle : public SdAlgorithm {
   void add_splitted_face_output_mesh(const Surface_mesh::Face& face);
 
   /// Get the outer vertex of the triangle face.
-  /// If triagnel face with vertieces A, B and C and the @c halfedge connects A to B
+  /// If there is a triagnel face with vertices A, B and C and the @c halfedge connects A to B
   /// the vertex C is returned.
   Surface_mesh::Vertex get_outer_vertex_triangle(
     const Surface_mesh::Halfedge& halfedge) const;
