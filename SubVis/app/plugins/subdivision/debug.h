@@ -1,3 +1,4 @@
+
 #ifndef SUBVIS_PLUGINS_SUBDIVISION_UTILS_H
 #define SUBVIS_PLUGINS_SUBDIVISION_UTILS_H
 
@@ -10,13 +11,11 @@ namespace subdivision {
 // uncomment to disable debug output
 //#define DEBUG_SUBDIV
 
-/**
- * @brief utils_q_debug_mesh Print basic information (Vertices, Edges and Faces) of mesh with QDebug.
- * @param mesh
- * @param title
- */
+/// Print basic information (Vertices, Edges and Faces) of the @c mesh with QDebug.
 void debug_mesh(const surface_mesh::Surface_mesh& mesh,
-                      const QString& title);
+                const QString& title);
+
+/// Print the coordinates of the 3-D @c point with QDebug.
 void debug_point(const surface_mesh::Point point, const QString& title);
 
 #ifdef DEBUG_SUBDIV
