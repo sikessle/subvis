@@ -25,7 +25,7 @@ void SdQuad::deinit_mesh_members() {
 }
 
 void SdQuad::compute_face_point(Point& face_point,
-                                const Surface_mesh::Face& face) {
+                                const Surface_mesh::Face& face) const {
   face_point = Point(0);
   int i = 0;
   for (const auto& vertex : input_mesh_->vertices(face)) {

@@ -53,7 +53,7 @@ class SdQuad : public SdAlgorithm {
 
 
   /// Compute the average of all the points of the @c face and store the result in @c face_point.
-  void compute_face_point(Point& face_point, const Surface_mesh::Face& face);
+  void compute_face_point(Point& face_point, const Surface_mesh::Face& face) const;
 };
 
 
