@@ -106,7 +106,7 @@ class SdLoop : public SdTriangle {
   void compute_even_vertex_boundary(Point& even_vertex,
                                     const Surface_mesh::Vertex& vertex) const;
 
-  /// Compute the constante beta (proposed by Warren) for a vertex with valence @c n.
+  /// Compute the constante beta (as proposed by Warren) for a vertex with valence @c n.
   double compute_beta(unsigned int n) const;
 
 };
