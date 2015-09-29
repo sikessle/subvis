@@ -18,7 +18,7 @@ void SdButterfly::subdivide_input_mesh_write_output_mesh() {
 
 void SdButterfly::add_all_vertices_output_mesh() {
   for (const auto& vertex : input_mesh_->vertices()) {
-    v_index_output_v_prop_[vertex] = result_mesh_->add_vertex(v_points_[vertex]);
+    v_index_output_v_prop_[vertex] = output_mesh_->add_vertex(v_points_[vertex]);
   }
 }
 
@@ -26,7 +26,7 @@ void SdButterfly::add_all_edge_points_output_mesh() {
   Point edge_point;
   for (const auto& edge : input_mesh_->edges()) {
     this->compute_edge_point(edge_point, edge);
-    v_index_output_e_prop_[edge] = result_mesh_->add_vertex(edge_point);
+    v_index_output_e_prop_[edge] = output_mesh_->add_vertex(edge_point);
     DEBUG_POINT(edge_point, "New Interpolated Point");
   }
 }

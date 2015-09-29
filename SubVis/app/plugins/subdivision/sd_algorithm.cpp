@@ -13,26 +13,26 @@ SdAlgorithm::~SdAlgorithm() {
 std::unique_ptr<Surface_mesh> SdAlgorithm::subdivide(
   const Surface_mesh& mesh,
   int steps) {
-  result_mesh_.reset(new Surface_mesh);
+  output_mesh_.reset(new Surface_mesh);
   input_mesh_.reset(new Surface_mesh{mesh});
 
   for (int i = 0; i < steps; i++) {
-    result_mesh_->clear();
+    output_mesh_->clear();
     DEBUG_MESH(*input_mesh_.get(), "input mesh")
     subdivide_input_mesh_write_output_mesh();
-    DEBUG_MESH(*result_mesh_.get(), "result mesh")
+    DEBUG_MESH(*output_mesh_.get(), "result mesh")
     // input mesh is now the previous result mesh
-    input_mesh_.reset(new Surface_mesh{ *result_mesh_.get()});
+    input_mesh_.reset(new Surface_mesh{ *output_mesh_.get()});
   }
 
   // free memory
   input_mesh_.reset(nullptr);
 
-  return std::move(result_mesh_);
+  return std::move(output_mesh_);
 }
 
 const Surface_mesh& SdAlgorithm::get_result_mesh() {
-  return *result_mesh_.get();
+  return *output_mesh_.get();
 }
 
 void SdAlgorithm::init_mesh_members() {

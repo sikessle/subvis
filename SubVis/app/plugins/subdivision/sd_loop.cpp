@@ -18,7 +18,7 @@ void SdLoop::add_all_odd_vertices_output_mesh() {
   Point odd_vertex_point;
   for (const auto& edge : input_mesh_->edges()) {
     this->compute_odd_vertex(odd_vertex_point, edge);
-    v_index_output_e_prop_[edge] = result_mesh_->add_vertex(odd_vertex_point);
+    v_index_output_e_prop_[edge] = output_mesh_->add_vertex(odd_vertex_point);
     DEBUG_POINT(odd_vertex_point, "Odd Vertex Point");
   }
 }
@@ -27,7 +27,7 @@ void SdLoop::add_all_even_vertices_output_mesh() {
   Point even_vertex_point;
   for (const auto& vertex : input_mesh_->vertices()) {
     this->compute_even_vertex(even_vertex_point, vertex);
-    v_index_output_v_prop_[vertex] = result_mesh_->add_vertex(even_vertex_point);
+    v_index_output_v_prop_[vertex] = output_mesh_->add_vertex(even_vertex_point);
     DEBUG_POINT(even_vertex_point, "Even Vertex Point");
   }
 }

@@ -48,7 +48,7 @@ class SdAlgorithm {
   const ::std::string kPropVertexPoint = "v:point";
 
   /// Put the resulting mesh in here.
-  std::unique_ptr<Surface_mesh> result_mesh_;
+  std::unique_ptr<Surface_mesh> output_mesh_;
 
   /// Get the input mesh from here. The mesh may be modified freely,
   /// as this is only a copy of the original mesh (i.e. if special properties
