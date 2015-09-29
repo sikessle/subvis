@@ -53,7 +53,7 @@ void SdCatmull::add_all_face_points_output_mesh() {
     this->compute_face_point(face_point, face);
     // store face point as property
     f_points_[face] = face_point;
-    v_index_output_f_prop_[face] = result_mesh_->add_vertex(f_points_[face]);
+    v_index_output_f_prop_[face] = output_mesh_->add_vertex(f_points_[face]);
     DEBUG_POINT(face_point, "Face Point")
   }
 }
@@ -64,7 +64,7 @@ void SdCatmull::add_all_edge_points_output_mesh() {
     this->compute_edge_point(edge_point, edge);
     // store edge_point as property
     e_points_[edge] = edge_point;
-    v_index_output_e_prop_[edge] = result_mesh_->add_vertex(e_points_[edge]);
+    v_index_output_e_prop_[edge] = output_mesh_->add_vertex(e_points_[edge]);
     DEBUG_POINT(edge_point, "Edge Point");
   }
 }
@@ -75,7 +75,7 @@ void SdCatmull::add_all_updated_vertex_points_output_mesh() {
     this->compute_updated_vertex_point(new_vertex_point, vertex);
     // store new_vertex_point as property
     v_points_updated_[vertex] = new_vertex_point;
-    v_index_output_v_prop_[vertex] = result_mesh_->add_vertex(
+    v_index_output_v_prop_[vertex] = output_mesh_->add_vertex(
                                        v_points_updated_[vertex]);
     DEBUG_POINT(new_vertex_point, "New Vertex Point");
   }
@@ -148,20 +148,20 @@ void SdCatmull::add_splitted_face_output_mesh(const Surface_mesh::Face&
   }
   const Surface_mesh::Vertex f_index = v_index_output_f_prop_[face];
   if (i == 3) { // triangle face
-    result_mesh_->add_quad(v_index_list[0], e_index_list[0], f_index,
+    output_mesh_->add_quad(v_index_list[0], e_index_list[0], f_index,
                            e_index_list[2]);
-    result_mesh_->add_quad(v_index_list[1], e_index_list[1], f_index,
+    output_mesh_->add_quad(v_index_list[1], e_index_list[1], f_index,
                            e_index_list[0]);
-    result_mesh_->add_quad(v_index_list[2], e_index_list[2], f_index,
+    output_mesh_->add_quad(v_index_list[2], e_index_list[2], f_index,
                            e_index_list[1]);
   } else if (i == 4) { // quad face
-    result_mesh_->add_quad(v_index_list[0], e_index_list[0], f_index,
+    output_mesh_->add_quad(v_index_list[0], e_index_list[0], f_index,
                            e_index_list[3]);
-    result_mesh_->add_quad(v_index_list[1], e_index_list[1], f_index,
+    output_mesh_->add_quad(v_index_list[1], e_index_list[1], f_index,
                            e_index_list[0]);
-    result_mesh_->add_quad(v_index_list[2], e_index_list[2], f_index,
+    output_mesh_->add_quad(v_index_list[2], e_index_list[2], f_index,
                            e_index_list[1]);
-    result_mesh_->add_quad(v_index_list[3], e_index_list[3], f_index,
+    output_mesh_->add_quad(v_index_list[3], e_index_list[3], f_index,
                            e_index_list[2]);
   } else { // error
     /// @todo error handling

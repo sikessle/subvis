@@ -47,10 +47,10 @@ void SdTriangle::add_splitted_face_output_mesh(const Surface_mesh::Face&
     }
     ++i;
   }
-  result_mesh_->add_triangle(e_index_list[0], e_index_list[1], e_index_list[2]);
-  result_mesh_->add_triangle(v_index_list[0], e_index_list[0], e_index_list[2]);
-  result_mesh_->add_triangle(v_index_list[1], e_index_list[1], e_index_list[0]);
-  result_mesh_->add_triangle(v_index_list[2], e_index_list[2], e_index_list[1]);
+  output_mesh_->add_triangle(e_index_list[0], e_index_list[1], e_index_list[2]);
+  output_mesh_->add_triangle(v_index_list[0], e_index_list[0], e_index_list[2]);
+  output_mesh_->add_triangle(v_index_list[1], e_index_list[1], e_index_list[0]);
+  output_mesh_->add_triangle(v_index_list[2], e_index_list[2], e_index_list[1]);
 }
 
 Surface_mesh::Vertex SdTriangle::get_outer_vertex_triangle(

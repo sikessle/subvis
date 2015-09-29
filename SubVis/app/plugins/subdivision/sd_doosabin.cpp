@@ -58,7 +58,7 @@ void SdDooSabin::add_all_new_vertex_points_output_mesh() {
     for (const auto& vertex : input_mesh_->vertices(face)) {
       this->compute_new_vertex_point(new_vertex_point, vertex, face);
       // add new vertex to result mesh and store the index of the vertex as property in the input mesh
-      f_vertex_index_map_[face][vertex] = result_mesh_->add_vertex(new_vertex_point);
+      f_vertex_index_map_[face][vertex] = output_mesh_->add_vertex(new_vertex_point);
       DEBUG_POINT(new_vertex_point, "New Vertex Point");
     }
   }
@@ -93,7 +93,7 @@ void SdDooSabin::add_all_faces_output_mesh_face() {
     for (const auto& vertex : input_mesh_->vertices(face)) {
       vertices_vec.push_back(f_vertex_index_map_[face].at(vertex));
     }
-    result_mesh_->add_face(vertices_vec);
+    output_mesh_->add_face(vertices_vec);
     vertices_vec.clear();
   }
 }
@@ -107,7 +107,7 @@ void SdDooSabin::add_all_faces_output_mesh_edge() {
       f1 = input_mesh_->face(edge, 1);
       v0 = input_mesh_->vertex(edge, 0);
       v1 = input_mesh_->vertex(edge, 1);
-      result_mesh_->add_quad(f_vertex_index_map_[f0].at(v0),
+      output_mesh_->add_quad(f_vertex_index_map_[f0].at(v0),
                              f_vertex_index_map_[f0].at(v1), f_vertex_index_map_[f1].at(v1),
                              f_vertex_index_map_[f1].at(v0));
     }
@@ -121,7 +121,7 @@ void SdDooSabin::add_all_faces_output_mesh_vertex() {
       vertices_vec.push_back(f_vertex_index_map_[face].at(vertex));
     }
     if (vertices_vec.size() > 2) {
-      result_mesh_->add_face(vertices_vec);
+      output_mesh_->add_face(vertices_vec);
     }
     vertices_vec.clear();
   }
