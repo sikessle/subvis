@@ -55,7 +55,7 @@ class SdAlgorithm {
   /// are needed).
   std::unique_ptr<Surface_mesh> input_mesh_;
 
-  /// Property with the key kPropVertexPoint.
+  /// Property with the key @c kPropVertexPoint.
   /// Use @c init_mesh_members() and @c deinit_mesh_members() to initialize and release.
   Surface_mesh::Vertex_property<Point> v_points_;
 
@@ -74,7 +74,7 @@ class SdAlgorithm {
   /// Allocate memory for surface mesh properties and init the class members.
   virtual void init_mesh_members();
 
-  /// Release allocated memory of init_mesh_members().
+  /// Release allocated memory of @c init_mesh_members().
   virtual void deinit_mesh_members();
 
   /// Compute the mid point of the @c edge (average of the two vertices)
