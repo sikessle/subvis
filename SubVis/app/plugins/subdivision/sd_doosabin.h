@@ -13,8 +13,14 @@
  *  1. Compute face points for each face (average of all vertices of a face).
  *  2. Compute edge points for each edge (midpoint of the edge).
  *  3. Compute the new vertex point (average of face point, two edge points and vertex).
- *  4. Create the faces with the new vertex points
  *     (f: face point, e: edge point, v: vertex point, V: new vertex point, F: new Face)
+ *      v-------v      +-------+
+ *      |       |      | V   V |
+ *      |   f   e -->  |       |
+ *      |     V |      | V   V |
+ *      v---e---v      +-------+
+ *     Boundary case: add 2 vertices for every edge 3/4--V------1/4 and 1/4------V--3/4
+ *  4. Create the faces with the new vertex points
  *    - for each face:
  *      v-------v      +-------+
  *      |       |      | V---V |
@@ -31,7 +37,6 @@
  *      |       |       |     |       |       |
  *      |       |       |     |       |       |
  *      v-------v-------v     v-------v-------v
- *
  *    - for each edge (if edge is not a boundary edge):
  *      +-------v-------+     +-------+-------+
  *      |    V  | V     |     |     V---V     |
@@ -39,7 +44,6 @@
  *      |    V  | V     |     |     V---V     |
  *      +-------v-------+     +-------+-------+
  *
- * @todo implement boundary cases
  *
  * Sources that helped to implement the algorithm.
  * <a href="http://yoshihitoyagi.com/projects/mesh/subdiv/doo/index.html">Doo-Sabin Subdivision Surface</a>
