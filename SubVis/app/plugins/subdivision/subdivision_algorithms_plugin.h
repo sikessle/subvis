@@ -5,6 +5,7 @@
 #include <QComboBox>
 #include <QSpinBox>
 #include <QPushButton>
+#include <QStandardItemModel>
 #include <string>
 
 #include "plugins/subvis_plugin.h"
@@ -50,9 +51,17 @@ class SubdivisionAlgorithmsPlugin : public QObject,
   QComboBox* dropdown_{nullptr};
 
   AlgorithmRenderer& active_algorithm_renderer_pair();
+  void update_valid_dropdown_items(const surface_mesh::Surface_mesh& mesh);
+  /// Enables dropdown items (algorithms) if they can subdivide the current mesh.
+  /// Returns the first enabled item index after enabling/disabling the items.
+  int enable_applicable_algorithms_dropdown(const surface_mesh::Surface_mesh&
+      mesh, QStandardItemModel* model);
+  void ensure_current_dropdown_item_is_enabled(QStandardItemModel* model,
+      int first_enabled_item);
 
  private slots:
   void subdivide_clicked(bool);
+
 };
 
 } // namespace subdivision
