@@ -88,12 +88,12 @@ class SdDooSabin : public SdQuad {
   /// Loop over all faces of the input mesh and compute all face points.
   /// The face points are stored as property in the input mesh.
   /// @sa compute_face_point(Point& face_point, const Surface_mesh::Face& face);
-  void add_all_face_points_output_mesh();
+  void compute_all_face_points();
 
   /// Loop over all edges of the input mesh and compute all edge points
   /// The edge points are stored as property in the input mesh.
   /// @sa compute_mid_edge(Point& mid_edge, const Surface_mesh::Edge& edge)
-  void add_all_edge_points_output_mesh();
+  void compute_all_edge_points();
 
   /// Loop over every vertex of all faces and compute the new vertex points.
   /// The coordinates are stored as property in the @c VertexToVertexMap (@c f_vertex_index_map_).
