@@ -9,5 +9,9 @@ MeshData& DrawController::get_mesh_data() {
   return mesh_data_;
 }
 
+void DrawController::triangulate_mesh() {
+  mesh_data_.triangulate();
+}
+
 } // namespace subvis
 

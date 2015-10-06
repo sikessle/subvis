@@ -13,11 +13,13 @@ MainWindow::MainWindow(DrawController& draw_controller,
   : QMainWindow{0},
     ui_{new Ui::MainWindow},
 io_controller_(io_controller),
+draw_controller_(draw_controller),
 plugins_(plugins) {
+
   ui_->setupUi(this);
 
   setup_status_bar();
-  setup_viewer_tabs(draw_controller);
+  setup_viewer_tabs();
   setup_toolbar();
   setup_plugin_guis();
 }
@@ -30,9 +32,9 @@ void MainWindow::setup_status_bar() {
   ui_->statusbar->setStyleSheet("QStatusBar::item { border: 0; }");
 }
 
-void MainWindow::setup_viewer_tabs(DrawController& draw_controller) {
-  ui_->tab_viewer_mesh->set_draw_controller(draw_controller);
-  ui_->tab_viewer_plugin->set_draw_controller(draw_controller);
+void MainWindow::setup_viewer_tabs() {
+  ui_->tab_viewer_mesh->set_draw_controller(draw_controller_);
+  ui_->tab_viewer_plugin->set_draw_controller(draw_controller_);
 }
 
 void MainWindow::setup_plugin_guis() {
@@ -67,6 +69,8 @@ void MainWindow::setup_toolbar() {
                    SLOT(show_save_dialog()));
   QObject::connect(ui_->action_snapshot, SIGNAL(triggered(bool)),
                    ui_->tab_viewer_mesh, SLOT(saveSnapshot(bool)));
+  QObject::connect(ui_->action_triangulate, SIGNAL(triggered(bool)),
+                   &draw_controller_, SLOT(triangulate_mesh(void)));
 }
 
 void MainWindow::show_load_dialog() {

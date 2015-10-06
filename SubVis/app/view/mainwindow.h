@@ -29,6 +29,7 @@ class MainWindow : public QMainWindow {
  private:
   Ui::MainWindow* ui_;
   IOController& io_controller_;
+  DrawController& draw_controller_;
   const std::map<const QString, PluginWrapper>& plugins_;
   // memory managed by Qt's parent-relationship (ui)
   QLabel* status_label_;
@@ -38,7 +39,7 @@ class MainWindow : public QMainWindow {
   const QString kLoadDialogCaption {"Load model file"};
 
   void setup_status_bar();
-  void setup_viewer_tabs(DrawController& draw_controller);
+  void setup_viewer_tabs();
   void setup_toolbar();
   void setup_plugin_guis();
 

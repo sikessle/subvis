@@ -37,6 +37,12 @@ bool MeshData::persist(const std::string& filename) const {
   return mesh_object_->write(filename);
 }
 
+void MeshData::triangulate() {
+  mesh_object_->triangulate();
+
+  emit updated(*mesh_object_.get());
+}
+
 const std::string& MeshData::get_load_file_formats() const {
   return kLoadFileFormats;
 }

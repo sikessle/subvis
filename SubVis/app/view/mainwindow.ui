@@ -106,6 +106,7 @@
    <addaction name="action_load"/>
    <addaction name="action_save"/>
    <addaction name="action_snapshot"/>
+   <addaction name="action_triangulate"/>
    <addaction name="action_edit"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -162,6 +163,17 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+E</string>
+   </property>
+  </action>
+  <action name="action_triangulate">
+   <property name="icon">
+    <iconset theme="document-page-setup"/>
+   </property>
+   <property name="text">
+    <string>Triangulate</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
    </property>
   </action>
  </widget>

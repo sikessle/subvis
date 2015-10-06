@@ -14,6 +14,9 @@ class DrawController : public Controller {
   DrawController(MeshData& mesh_data);
 
   MeshData& get_mesh_data();
+
+ public slots:
+  void triangulate_mesh();
 };
 
 } // namespace subvis
