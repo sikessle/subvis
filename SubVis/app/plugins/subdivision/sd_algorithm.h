@@ -80,6 +80,10 @@ class SdAlgorithm {
   /// Compute the mid point of the @c edge (average of the two vertices)
   /// and store the computed coordinates in @c mid_edge.
   void compute_mid_edge(Point& mid_edge, const Surface_mesh::Edge& edge) const;
+
+  /// Return the valid @c halfedge of a boundary @edge.
+  Surface_mesh::Halfedge get_valid_halfedge_of_boundary_edge(const Surface_mesh::Edge&
+      edge) const;
 };
 
 } // namespace subdivision

@@ -51,4 +51,10 @@ void SdAlgorithm::compute_mid_edge(Point& mid_edge,
   mid_edge /= 2.;
 }
 
+Surface_mesh::Halfedge SdAlgorithm::get_valid_halfedge_of_boundary_edge(
+  const Surface_mesh::Edge& edge) const {
+  return input_mesh_->is_boundary(input_mesh_->halfedge(edge,
+                                  0)) ? input_mesh_->halfedge(edge, 1) : input_mesh_->halfedge(edge, 0);
+}
+
 } // namespace subdivision

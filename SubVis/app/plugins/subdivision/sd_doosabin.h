@@ -87,7 +87,7 @@ class SdDooSabin : public SdQuad {
     "e:vertex_index_output_mesh";
 
   /// The face property with the key @c kPropVertexIndexOutputMapF stores the new vertices in a map with the old vertices as key.
-  Surface_mesh::Face_property<VertexToVertexMap> v_index_map_f_prop_;
+  Surface_mesh::Face_property<VertexToVertexMap> v_index_map_output_f_prop_;
 
   /// Property with the key @c kPropVertexIndexOutputBoundaryE.
   Surface_mesh::Edge_property<VertexPair> v_index_output_e_prop_;
@@ -107,6 +107,10 @@ class SdDooSabin : public SdQuad {
   /// @sa compute_new_vertex_point(Point& new_vertex_point, const Surface_mesh::Vertex& vertex, const Surface_mesh::Face& face)
   void add_all_new_vertex_points_output_mesh();
 
+  /// Loop over every boundary edges, compute the new vertex point and add it as vertex to the output mesh.
+  /// @sa compute_boundary_vertex_point(Point& new_vertex_point, const Surface_mesh::Halfedge& halfedge)
+  void add_all_new_boundary_vertex_points_output_mesh();
+
   /**
    * @brief Compute the new vertex point of a @c vertex that belongs to the @c face.
    *
@@ -118,6 +122,15 @@ class SdDooSabin : public SdQuad {
    */
   void compute_new_vertex_point(Point& new_vertex_point,
                                 const Surface_mesh::Vertex& vertex, const Surface_mesh::Face& face) const;
+
+  /**
+   * @brief Compute the new boundary vertex point of the edge (from vertex of the @c halfedge).
+   *
+   * @param[out] new_vertex_point The computed vertex point coordinate.
+   * @param[in]  halfedge         Compute the new vertex of the from vertex of the @c halfedge.
+   */
+  void compute_boundary_vertex_point(Point& new_vertex_point,
+                                     const Surface_mesh::Halfedge& halfedge) const;
 
   /// Loop over all faces, edges, and vertieces to create the new faces and add them to the output mesh.
   /// @sa add_all_faces_output_mesh_face(), add_all_faces_output_mesh_edge(), add_all_faces_output_mesh_vertex()
