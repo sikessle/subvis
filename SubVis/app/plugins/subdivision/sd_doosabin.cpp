@@ -12,8 +12,8 @@ bool SdDooSabin::is_subdividable(const Surface_mesh& mesh) const {
 
 void SdDooSabin::subdivide_input_mesh_write_output_mesh() {
   this->init_mesh_members();
-  this->add_all_face_points_output_mesh();
-  this->add_all_edge_points_output_mesh();
+  this->compute_all_face_points();
+  this->compute_all_edge_points();
   this->add_all_new_vertex_points_output_mesh();
   this->add_all_faces_output_mesh();
   this->deinit_mesh_members();
@@ -21,18 +21,21 @@ void SdDooSabin::subdivide_input_mesh_write_output_mesh() {
 
 void SdDooSabin::init_mesh_members() {
   SdQuad::init_mesh_members();
-  input_mesh_->add_face_property<VertexToVertexMap>
-  (kPropVertexIndexOutputMapF);
-  f_vertex_index_map_ = input_mesh_->get_face_property<VertexToVertexMap>
+  input_mesh_->add_face_property<VertexToVertexMap>(kPropVertexIndexOutputMapF);
+  input_mesh_->add_edge_property<VertexPair>(kPropVertexIndexOutputBoundaryE);
+  v_index_map_f_prop_ = input_mesh_->get_face_property<VertexToVertexMap>
                         (kPropVertexIndexOutputMapF);
+  v_index_output_e_prop_ = input_mesh_->get_edge_property<VertexPair>
+                           (kPropVertexIndexOutputBoundaryE);
 }
 
 void SdDooSabin::deinit_mesh_members() {
   SdQuad::deinit_mesh_members();
-  input_mesh_->remove_face_property(f_vertex_index_map_);
+  input_mesh_->remove_face_property(v_index_map_f_prop_);
+  input_mesh_->remove_edge_property(v_index_output_e_prop_);
 }
 
-void SdDooSabin::add_all_face_points_output_mesh() {
+void SdDooSabin::compute_all_face_points() {
   Point face_point;
   for (const auto& face : input_mesh_->faces()) {
     this->compute_face_point(face_point, face);
@@ -42,7 +45,7 @@ void SdDooSabin::add_all_face_points_output_mesh() {
   }
 }
 
-void SdDooSabin::add_all_edge_points_output_mesh() {
+void SdDooSabin::compute_all_edge_points() {
   Point edge_point;
   for (const auto& edge : input_mesh_->edges()) {
     this->compute_mid_edge(edge_point, edge);
@@ -58,7 +61,8 @@ void SdDooSabin::add_all_new_vertex_points_output_mesh() {
     for (const auto& vertex : input_mesh_->vertices(face)) {
       this->compute_new_vertex_point(new_vertex_point, vertex, face);
       // add new vertex to result mesh and store the index of the vertex as property in the input mesh
-      f_vertex_index_map_[face][vertex] = output_mesh_->add_vertex(new_vertex_point);
+      v_index_map_f_prop_[face][vertex] = output_mesh_->add_vertex(
+                                            new_vertex_point);
       DEBUG_POINT(new_vertex_point, "New Vertex Point");
     }
   }
@@ -91,7 +95,7 @@ void SdDooSabin::add_all_faces_output_mesh_face() {
   std::vector<Surface_mesh::Vertex> vertices_vec;
   for (const auto& face : input_mesh_->faces()) {
     for (const auto& vertex : input_mesh_->vertices(face)) {
-      vertices_vec.push_back(f_vertex_index_map_[face].at(vertex));
+      vertices_vec.push_back(v_index_map_f_prop_[face].at(vertex));
     }
     output_mesh_->add_face(vertices_vec);
     vertices_vec.clear();
@@ -107,9 +111,9 @@ void SdDooSabin::add_all_faces_output_mesh_edge() {
       f1 = input_mesh_->face(edge, 1);
       v0 = input_mesh_->vertex(edge, 0);
       v1 = input_mesh_->vertex(edge, 1);
-      output_mesh_->add_quad(f_vertex_index_map_[f0].at(v0),
-                             f_vertex_index_map_[f0].at(v1), f_vertex_index_map_[f1].at(v1),
-                             f_vertex_index_map_[f1].at(v0));
+      output_mesh_->add_quad(v_index_map_f_prop_[f0].at(v0),
+                             v_index_map_f_prop_[f0].at(v1), v_index_map_f_prop_[f1].at(v1),
+                             v_index_map_f_prop_[f1].at(v0));
     }
   }
 }
@@ -118,7 +122,7 @@ void SdDooSabin::add_all_faces_output_mesh_vertex() {
   std::vector<Surface_mesh::Vertex> vertices_vec;
   for (const auto& vertex : input_mesh_->vertices()) {
     for (const auto& face : input_mesh_->faces(vertex)) {
-      vertices_vec.push_back(f_vertex_index_map_[face].at(vertex));
+      vertices_vec.push_back(v_index_map_f_prop_[face].at(vertex));
     }
     if (vertices_vec.size() > 2) {
       output_mesh_->add_face(vertices_vec);

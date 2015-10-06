@@ -57,6 +57,7 @@
 #define SUBVIS_PLUGINS_SUBDIVISION_SD_DOO_SABIN_H
 
 #include <map>
+#include <array>
 #include "plugins/subdivision/sd_quad.h"
 
 namespace subdivision {
@@ -75,15 +76,21 @@ class SdDooSabin : public SdQuad {
   using VertexToVertexMap =
     std::map<Surface_mesh::Vertex, Surface_mesh::Vertex>;
 
+  using VertexPair = std::array<Surface_mesh::Vertex, 2>;
 
   /// Property key to store the index of the corresponding vertex to vertex map of every face.
   const ::std::string kPropVertexIndexOutputMapF =
     "f:vertex_index_map_output_mesh";
 
+  /// Property key to store the index of the corresponding output mesh boundary vertex points.
+  const ::std::string kPropVertexIndexOutputBoundaryE =
+    "e:vertex_index_output_mesh";
 
-  /// The face property stores the new vertices in a map with the old vertices as key.
-  Surface_mesh::Face_property<VertexToVertexMap> f_vertex_index_map_;
+  /// The face property with the key @c kPropVertexIndexOutputMapF stores the new vertices in a map with the old vertices as key.
+  Surface_mesh::Face_property<VertexToVertexMap> v_index_map_f_prop_;
 
+  /// Property with the key @c kPropVertexIndexOutputBoundaryE.
+  Surface_mesh::Edge_property<VertexPair> v_index_output_e_prop_;
 
   /// Loop over all faces of the input mesh and compute all face points.
   /// The face points are stored as property in the input mesh.
