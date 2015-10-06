@@ -3,7 +3,7 @@
  *
  * @brief Implementation of the Modified Butterfly subdivision algorithm.
  *
- * The algorithm was devised by Dennis Zorin and Peter Schröder.
+ * The algorithm was devised by Denis Zorin and Peter Schröder.
  * It is related to the Butterfly subdivision.
  * If there is a vertex with valence == 6 the Modified Butterfly behaves equal to the Butterfly.
  * The difference is if there are vertices with valence != 6 (extraordinary).
