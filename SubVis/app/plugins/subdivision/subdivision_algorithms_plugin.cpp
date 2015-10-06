@@ -61,6 +61,7 @@ void SubdivisionAlgorithmsPlugin::mesh_updated(const surface_mesh::Surface_mesh&
     mesh) {
   auto& renderer = active_algorithm_renderer_pair().renderer;
   renderer->mesh_updated(mesh);
+  update_valid_dropdown_items(mesh);
 }
 
 void SubdivisionAlgorithmsPlugin::init_opengl() {
@@ -122,6 +123,51 @@ void SubdivisionAlgorithmsPlugin::subdivide_clicked(bool) {
   auto result = algorithm->subdivide(mesh_data.get_mesh(), steps);
 
   mesh_data.load(std::move(result));
+}
+
+void SubdivisionAlgorithmsPlugin::update_valid_dropdown_items(
+  const surface_mesh::Surface_mesh& mesh) {
+
+
+  QStandardItemModel* model = qobject_cast<QStandardItemModel*>
+                              (dropdown_->model());
+
+  int first_enabled_item = enable_applicable_algorithms_dropdown(mesh, model);
+  ensure_current_dropdown_item_is_enabled(model, first_enabled_item);
+}
+
+int SubdivisionAlgorithmsPlugin::enable_applicable_algorithms_dropdown(
+  const surface_mesh::Surface_mesh& mesh, QStandardItemModel* model) {
+
+  QStandardItem* item {nullptr};
+  int first_enabled_item_index { -1};
+
+  for (int i = 0; i < dropdown_->count(); i++) {
+    QModelIndex index = model->index(i, dropdown_->modelColumn(),
+                                     dropdown_->rootModelIndex());
+    item = model->itemFromIndex(index);
+
+    if (algorithms_.at(item->text()).algorithm->is_subdividable(mesh)) {
+      item->setEnabled(true);
+      if (first_enabled_item_index == -1) {
+        first_enabled_item_index = i;
+      }
+    } else {
+      item->setEnabled(false);
+    }
+  }
+
+  return first_enabled_item_index;
+}
+
+
+void SubdivisionAlgorithmsPlugin::ensure_current_dropdown_item_is_enabled(
+  QStandardItemModel* model, int first_enabled_item_index) {
+  QModelIndex current_index = model->index(dropdown_->currentIndex(),
+                              dropdown_->modelColumn(), dropdown_->rootModelIndex());
+  if (!model->itemFromIndex(current_index)->isEnabled()) {
+    dropdown_->setCurrentIndex(first_enabled_item_index);
+  }
 }
 
 } // namespace subdivision
