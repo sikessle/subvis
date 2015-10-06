@@ -82,8 +82,12 @@ class SdAlgorithm {
   void compute_mid_edge(Point& mid_edge, const Surface_mesh::Edge& edge) const;
 
   /// Return the valid @c halfedge of a boundary @edge.
-  Surface_mesh::Halfedge get_valid_halfedge_of_boundary_edge(const Surface_mesh::Edge&
-      edge) const;
+  Surface_mesh::Halfedge get_valid_halfedge_of_boundary_edge(
+    const Surface_mesh::Edge& edge) const;
+
+  /// Returns the next boundary halfedge. If there is no next halfedge the @c halfedge passed as argument is returned.
+  Surface_mesh::Halfedge get_next_boundary_halfedge(
+    const Surface_mesh::Halfedge halfedge) const;
 };
 
 } // namespace subdivision

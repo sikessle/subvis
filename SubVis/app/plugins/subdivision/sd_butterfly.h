@@ -68,10 +68,6 @@ class SdButterfly : public SdTriangle {
   void compute_edge_point_boundary(Point& edge_point,
                                    const Surface_mesh::Edge& edge) const;
 
-  /// Returns the next boundary halfedge. If there is no next halfedge the @c halfedge passed as argument is returned.
-  Surface_mesh::Halfedge get_next_boundary_halfedge(
-    const Surface_mesh::Halfedge halfedge) const;
-
  private:
   /// Copy all vertices from the input mesh to the output mesh and store the vertex index in @c v_index_output_v_prop_.
   void add_all_vertices_output_mesh();

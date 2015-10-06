@@ -74,19 +74,4 @@ void SdButterfly::compute_edge_point_boundary(Point& edge_point,
                (v_points_[vertex0] + v_points_[vertex1]);
 }
 
-Surface_mesh::Halfedge SdButterfly::get_next_boundary_halfedge(
-  const Surface_mesh::Halfedge halfedge) const {
-  // get opposite halfedge to rotate around vertex
-  Surface_mesh::Halfedge rotated_halfedge = input_mesh_->opposite_halfedge(
-        halfedge);
-  // rotate counter-clockwise around start vertex
-  do {
-    if (input_mesh_->is_boundary(rotated_halfedge)) { // halfedge found
-      break;
-    }
-    rotated_halfedge = input_mesh_->ccw_rotated_halfedge(rotated_halfedge);
-  } while (rotated_halfedge != halfedge);
-  return rotated_halfedge;
-}
-
 } // namespace subdivision

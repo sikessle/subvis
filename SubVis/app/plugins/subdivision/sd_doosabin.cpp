@@ -5,6 +5,8 @@
 
 namespace subdivision {
 
+using Surface_mesh = surface_mesh::Surface_mesh;
+
 bool SdDooSabin::is_subdividable(const Surface_mesh& mesh) const {
   /// @todo
   return true;
@@ -132,7 +134,6 @@ void SdDooSabin::add_all_faces_output_mesh_edge() {
     if (input_mesh_->is_boundary(edge)) {
       const Surface_mesh::Face face = input_mesh_->face(
                                         this->get_valid_halfedge_of_boundary_edge(edge));
-
       output_mesh_->add_quad(v_index_map_output_f_prop_[face].at(v0),
                              v_index_map_output_f_prop_[face].at(v1),
                              v_index_output_e_prop_[edge][0],
@@ -154,11 +155,32 @@ void SdDooSabin::add_all_faces_output_mesh_vertex() {
     for (const auto& face : input_mesh_->faces(vertex)) {
       vertices_vec.push_back(v_index_map_output_f_prop_[face].at(vertex));
     }
-    if (vertices_vec.size() > 2) {
-      output_mesh_->add_face(vertices_vec);
+    if (input_mesh_->is_boundary(vertex)) {
+      /*const Surface_mesh::Halfedge boundary_halfedge
+      const Surface_mesh::Face face = input_mesh_.face()
+      vertices_vec.push_back(v_index_output_e_prop_[face].at(vertex));
+      vertices_vec.push_back(v_index_output_e_prop_[face].at(vertex));
+      */
+      /// @todo
+    } else {
+      if (vertices_vec.size() > 2) {
+        output_mesh_->add_face(vertices_vec);
+      }
     }
     vertices_vec.clear();
   }
+}
+
+Surface_mesh::Halfedge SdDooSabin::get_boundary_halfedge(
+  const Surface_mesh::Vertex& vertex) const {
+  for (auto const& halfedge : input_mesh_->halfedges(vertex)) {
+    if (input_mesh_->is_boundary(halfedge)) {
+      ;
+      /// @todo
+    }
+  }
+  /// @todo error handling
+  throw new std::runtime_error("No boundary halfedge");
 }
 
 } // namespace subdivision

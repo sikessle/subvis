@@ -144,6 +144,10 @@ class SdDooSabin : public SdQuad {
 
   /// Loop over all vertices, create new faces and add them to the output mesh. Arbitrary polygon faces can be created.
   void add_all_faces_output_mesh_vertex();
+
+  /// Get a boundary halfedge that is connected with the @c vertex.
+  Surface_mesh::Halfedge get_boundary_halfedge(const Surface_mesh::Vertex&
+      vertex) const;
 };
 
 
