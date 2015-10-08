@@ -64,11 +64,11 @@ Surface_mesh::Halfedge SdAlgorithm::get_next_boundary(
         halfedge);
   // rotate counter-clockwise around start vertex
   do {
+    rotated_halfedge = input_mesh_->ccw_rotated_halfedge(rotated_halfedge);
     if (input_mesh_->is_boundary(input_mesh_->edge(rotated_halfedge))) {
       // boundary found
       break;
     }
-    rotated_halfedge = input_mesh_->ccw_rotated_halfedge(rotated_halfedge);
   } while (rotated_halfedge != halfedge);
   return rotated_halfedge;
 }

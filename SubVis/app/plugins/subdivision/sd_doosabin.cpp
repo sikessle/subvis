@@ -76,15 +76,17 @@ void SdDooSabin::add_all_new_boundary_vertex_points_output_mesh() {
   Point new_vertex_point;
   for (const auto& edge : input_mesh_->edges()) {
     if (input_mesh_->is_boundary(edge)) {
-      this->compute_boundary_vertex_point(new_vertex_point,
-                                          input_mesh_->halfedge(edge, 0));
-      v_index_map_output_e_prop_[edge][input_mesh_->vertex(edge,
-                                       0)] = output_mesh_->add_vertex(new_vertex_point);
+      const Surface_mesh::Halfedge halfedge = input_mesh_->halfedge(edge, 0);
+      const Surface_mesh::Vertex from_vertex = input_mesh_->from_vertex(halfedge);
+      const Surface_mesh::Vertex to_vertex = input_mesh_->to_vertex(halfedge);
+      this->compute_boundary_vertex_point(new_vertex_point, halfedge);
+      v_index_map_output_e_prop_[edge][from_vertex] = output_mesh_->add_vertex(
+            new_vertex_point);
       DEBUG_POINT(new_vertex_point, "New Boundary Vertex Point 0");
       this->compute_boundary_vertex_point(new_vertex_point,
-                                          input_mesh_->halfedge(edge, 1));
-      v_index_map_output_e_prop_[edge][input_mesh_->vertex(edge,
-                                       1)] = output_mesh_->add_vertex(new_vertex_point);
+                                          input_mesh_->opposite_halfedge(halfedge));
+      v_index_map_output_e_prop_[edge][to_vertex] = output_mesh_->add_vertex(
+            new_vertex_point);
       DEBUG_POINT(new_vertex_point, "New Boundary Vertex Point 1");
     }
   }
@@ -158,18 +160,23 @@ void SdDooSabin::add_all_faces_output_mesh_vertex() {
     for (const auto& face : input_mesh_->faces(vertex)) {
       vertices_vec.push_back(v_index_map_output_f_prop_[face].at(vertex));
     }
-    if (input_mesh_->is_boundary(
-          vertex)) { // if boundary case add boundary vertices
-      const Surface_mesh::Halfedge boundary_halfedge0 = this->get_boundary_halfedge(
-            vertex);
+    if (input_mesh_->is_boundary(vertex)) {
+      // if boundary case, add boundary vertices
+      // find halfedge with boundary 'to_vertex'
+      const Surface_mesh::Halfedge boundary_halfedge0 =
+        input_mesh_->opposite_halfedge(this->get_boundary_halfedge(vertex));
+      // get next halfedge that belongs to a boundary edge
       const Surface_mesh::Halfedge boundary_halfedge1 = this->get_next_boundary(
-            input_mesh_->opposite_halfedge(boundary_halfedge0));
-      const Surface_mesh::Vertex v0 = input_mesh_->to_vertex(boundary_halfedge0);
-      const Surface_mesh::Vertex v1 = input_mesh_->from_vertex(boundary_halfedge1);
-      vertices_vec.push_back(v_index_map_output_e_prop_[input_mesh_->edge(
-                               boundary_halfedge1)].at(v0));
-      vertices_vec.push_back(v_index_map_output_e_prop_[input_mesh_->edge(
-                               boundary_halfedge0)].at(v1));
+            boundary_halfedge0);
+      const Surface_mesh::Vertex v0 = v_index_map_output_e_prop_[input_mesh_->edge(
+                                        boundary_halfedge0)].at(vertex);
+
+      const Surface_mesh::Vertex v1 = v_index_map_output_e_prop_[input_mesh_->edge(
+                                        boundary_halfedge1)].at(vertex);
+      vertices_vec.push_back(v1);
+      vertices_vec.push_back(v0);
+      DEBUG_POINT(output_mesh_->position(v0), "Boundary Vertex 0");
+      DEBUG_POINT(output_mesh_->position(v1), "Boundary Vertex 1");
       /// @todo fix error
     }
     if (vertices_vec.size() > 2) {
