@@ -141,8 +141,8 @@ void SdDooSabin::add_all_faces_output_mesh_edge() {
                                         this->get_valid_halfedge_of_boundary_edge(edge));
       output_mesh_->add_quad(v_index_map_output_f_prop_[face].at(v0),
                              v_index_map_output_f_prop_[face].at(v1),
-                             v_index_map_output_e_prop_[edge].at(v0),
-                             v_index_map_output_e_prop_[edge].at(v1));
+                             v_index_map_output_e_prop_[edge].at(v1),
+                             v_index_map_output_e_prop_[edge].at(v0));
     } else {
       const Surface_mesh::Face f0 = input_mesh_->face(edge, 0);
       const Surface_mesh::Face f1 = input_mesh_->face(edge, 1);
@@ -173,8 +173,8 @@ void SdDooSabin::add_all_faces_output_mesh_vertex() {
 
       const Surface_mesh::Vertex v1 = v_index_map_output_e_prop_[input_mesh_->edge(
                                         boundary_halfedge1)].at(vertex);
-      vertices_vec.push_back(v1);
       vertices_vec.push_back(v0);
+      vertices_vec.push_back(v1);
       DEBUG_POINT(output_mesh_->position(v0), "Boundary Vertex 0");
       DEBUG_POINT(output_mesh_->position(v1), "Boundary Vertex 1");
       /// @todo fix error
