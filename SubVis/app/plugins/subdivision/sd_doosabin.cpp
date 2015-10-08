@@ -177,7 +177,6 @@ void SdDooSabin::add_all_faces_output_mesh_vertex() {
       vertices_vec.push_back(v1);
       DEBUG_POINT(output_mesh_->position(v0), "Boundary Vertex 0");
       DEBUG_POINT(output_mesh_->position(v1), "Boundary Vertex 1");
-      /// @todo fix error
     }
     if (vertices_vec.size() > 2) {
       output_mesh_->add_face(vertices_vec);
