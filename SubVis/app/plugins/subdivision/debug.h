@@ -9,7 +9,7 @@
 namespace subdivision {
 
 // uncomment to disable debug output
-#define DEBUG_SUBDIV
+//#define DEBUG_SUBDIV
 
 /// Print basic information (Vertices, Edges and Faces) of the @c mesh with QDebug.
 void debug_mesh(const surface_mesh::Surface_mesh& mesh,
