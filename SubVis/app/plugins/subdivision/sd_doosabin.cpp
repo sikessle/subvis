@@ -155,17 +155,19 @@ void SdDooSabin::add_all_faces_output_mesh_vertex() {
     for (const auto& face : input_mesh_->faces(vertex)) {
       vertices_vec.push_back(v_index_map_output_f_prop_[face].at(vertex));
     }
-    if (input_mesh_->is_boundary(vertex)) {
-      /*const Surface_mesh::Halfedge boundary_halfedge
-      const Surface_mesh::Face face = input_mesh_.face()
-      vertices_vec.push_back(v_index_output_e_prop_[face].at(vertex));
-      vertices_vec.push_back(v_index_output_e_prop_[face].at(vertex));
-      */
-      /// @todo
-    } else {
-      if (vertices_vec.size() > 2) {
-        output_mesh_->add_face(vertices_vec);
-      }
+    if (input_mesh_->is_boundary(vertex)) { // if boundary case add boundary vertices
+      const Surface_mesh::Halfedge boundary_halfedge0 = this->get_boundary_halfedge(
+            vertex);
+      const Surface_mesh::Halfedge boundary_halfedge1 = this->get_next_boundary(
+            input_mesh_->opposite_halfedge(boundary_halfedge0));
+      vertices_vec.push_back(v_index_output_e_prop_[input_mesh_->edge(
+                               boundary_halfedge1)][1]);
+      vertices_vec.push_back(v_index_output_e_prop_[input_mesh_->edge(
+                               boundary_halfedge0)][0]);
+      /// @todo fix error
+    }
+    if (vertices_vec.size() > 2) {
+      output_mesh_->add_face(vertices_vec);
     }
     vertices_vec.clear();
   }
@@ -175,8 +177,7 @@ Surface_mesh::Halfedge SdDooSabin::get_boundary_halfedge(
   const Surface_mesh::Vertex& vertex) const {
   for (auto const& halfedge : input_mesh_->halfedges(vertex)) {
     if (input_mesh_->is_boundary(halfedge)) {
-      ;
-      /// @todo
+      return halfedge;
     }
   }
   /// @todo error handling
