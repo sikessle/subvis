@@ -85,8 +85,9 @@ class SdAlgorithm {
   Surface_mesh::Halfedge get_valid_halfedge_of_boundary_edge(
     const Surface_mesh::Edge& edge) const;
 
-  /// Returns the next boundary halfedge. If there is no next halfedge the @c halfedge passed as argument is returned.
-  Surface_mesh::Halfedge get_next_boundary_halfedge(
+  /// Returns the next halfedge that is part of a boundary edge (Doesn't have to be a boundary halfedge!).
+  /// If there is no next boundary edge the @c halfedge passed as argument is returned.
+  Surface_mesh::Halfedge get_next_boundary(
     const Surface_mesh::Halfedge halfedge) const;
 };
 
