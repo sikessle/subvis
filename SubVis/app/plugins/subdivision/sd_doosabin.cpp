@@ -162,19 +162,18 @@ void SdDooSabin::add_all_faces_output_mesh_vertex() {
     }
     if (input_mesh_->is_boundary(vertex)) {
       // if boundary case, add boundary vertices
-      // find halfedge with boundary 'to_vertex'
       const Surface_mesh::Halfedge boundary_halfedge0 =
-        input_mesh_->opposite_halfedge(this->get_boundary_halfedge(vertex));
+        this->find_halfedge_of_boundary_edge_ccw(vertex);
       // get next halfedge that belongs to a boundary edge
-      const Surface_mesh::Halfedge boundary_halfedge1 = this->get_next_boundary(
-            boundary_halfedge0);
+      const Surface_mesh::Halfedge boundary_halfedge1 =
+        this->find_halfedge_of_boundary_edge_ccw(boundary_halfedge0);
       const Surface_mesh::Vertex v0 = v_index_map_output_e_prop_[input_mesh_->edge(
                                         boundary_halfedge0)].at(vertex);
 
       const Surface_mesh::Vertex v1 = v_index_map_output_e_prop_[input_mesh_->edge(
                                         boundary_halfedge1)].at(vertex);
-      vertices_vec.push_back(v0);
       vertices_vec.push_back(v1);
+      vertices_vec.push_back(v0);
       DEBUG_POINT(output_mesh_->position(v0), "Boundary Vertex 0");
       DEBUG_POINT(output_mesh_->position(v1), "Boundary Vertex 1");
     }
@@ -183,17 +182,6 @@ void SdDooSabin::add_all_faces_output_mesh_vertex() {
     }
     vertices_vec.clear();
   }
-}
-
-Surface_mesh::Halfedge SdDooSabin::get_boundary_halfedge(
-  const Surface_mesh::Vertex& vertex) const {
-  for (auto const& halfedge : input_mesh_->halfedges(vertex)) {
-    if (input_mesh_->is_boundary(halfedge)) {
-      return halfedge;
-    }
-  }
-  /// @todo error handling
-  throw new std::runtime_error("No boundary halfedge");
 }
 
 } // namespace subdivision

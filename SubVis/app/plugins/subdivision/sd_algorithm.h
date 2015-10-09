@@ -81,14 +81,25 @@ class SdAlgorithm {
   /// and store the computed coordinates in @c mid_edge.
   void compute_mid_edge(Point& mid_edge, const Surface_mesh::Edge& edge) const;
 
+  /// Compute the new vertex coordinate of the boundary @c vertex using the weights 1/8----3/4----1/8.
+  void compute_new_boundary_vertex_coordinate(Point& new_vertex_point,
+      const Surface_mesh::Vertex& vertex) const;
+
   /// Return the valid @c halfedge of a boundary @edge.
   Surface_mesh::Halfedge get_valid_halfedge_of_boundary_edge(
     const Surface_mesh::Edge& edge) const;
 
-  /// Returns the next halfedge that is part of a boundary edge (Doesn't have to be a boundary halfedge!).
-  /// If there is no next boundary edge the @c halfedge passed as argument is returned.
-  Surface_mesh::Halfedge get_next_boundary(
-    const Surface_mesh::Halfedge halfedge) const;
+  /// Find a halfedge that is connected with the @c vertex and belongs to a boundary edge
+  /// (Doesn't have to be a boundary halfedge!).
+  /// It is the same as @c find_halfedge_of_boundary_edge_ccw(input_mesh_->halfedge(vertex))
+  Surface_mesh::Halfedge find_halfedge_of_boundary_edge_ccw(
+    const Surface_mesh::Vertex& vertex) const;
+
+  /// Find a halfedge that is connected with the @c vertex and belongs to a boundary edge
+  /// (Doesn't have to be a boundary halfedge!).
+  /// Start search with the @c start_halfedge and rotate counter clockwise.
+  Surface_mesh::Halfedge find_halfedge_of_boundary_edge_ccw(
+    const Surface_mesh::Halfedge start_halfedge) const;
 };
 
 } // namespace subdivision

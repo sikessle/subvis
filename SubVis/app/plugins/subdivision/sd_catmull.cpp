@@ -125,12 +125,7 @@ void SdCatmull::compute_updated_vertex_point_regular(Point& new_vertex_point,
 
 void SdCatmull::compute_updated_vertex_point_boundary(Point& new_vertex_point,
     const Surface_mesh::Vertex& vertex) const {
-  new_vertex_point = 3. / 4. * v_points_[vertex];
-  for (const auto& halfedge : input_mesh_->halfedges(vertex)) {
-    if (input_mesh_->is_boundary(input_mesh_->edge(halfedge))) {
-      new_vertex_point += 1. / 8. * v_points_[input_mesh_->to_vertex(halfedge)];
-    }
-  }
+  this->compute_new_boundary_vertex_coordinate(new_vertex_point, vertex);
 }
 
 void SdCatmull::add_splitted_face_output_mesh(const Surface_mesh::Face&

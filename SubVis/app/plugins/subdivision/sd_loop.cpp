@@ -84,12 +84,7 @@ void SdLoop::compute_even_vertex_regular(Point& even_vertex,
 
 void SdLoop::compute_even_vertex_boundary(Point& even_vertex,
     const Surface_mesh::Vertex& vertex) const {
-  even_vertex = 3. / 4. * v_points_[vertex];
-  for (const auto& halfedge : input_mesh_->halfedges(vertex)) {
-    if (input_mesh_->is_boundary(input_mesh_->edge(halfedge))) {
-      even_vertex += 1. / 8. * v_points_[input_mesh_->to_vertex(halfedge)];
-    }
-  }
+  this->compute_new_boundary_vertex_coordinate(even_vertex, vertex);
 }
 
 double SdLoop::compute_beta(unsigned int n) const {

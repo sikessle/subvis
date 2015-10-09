@@ -51,26 +51,41 @@ void SdAlgorithm::compute_mid_edge(Point& mid_edge,
   mid_edge /= 2.;
 }
 
+void SdAlgorithm::compute_new_boundary_vertex_coordinate(
+  Point& new_vertex_point,
+  const Surface_mesh::Vertex& vertex) const {
+  new_vertex_point = 3. / 4. * v_points_[vertex];
+  for (const auto& halfedge : input_mesh_->halfedges(vertex)) {
+    if (input_mesh_->is_boundary(input_mesh_->edge(halfedge))) {
+      new_vertex_point += 1. / 8. * v_points_[input_mesh_->to_vertex(halfedge)];
+    }
+  }
+}
+
 Surface_mesh::Halfedge SdAlgorithm::get_valid_halfedge_of_boundary_edge(
   const Surface_mesh::Edge& edge) const {
   return input_mesh_->is_boundary(input_mesh_->halfedge(edge,
                                   0)) ? input_mesh_->halfedge(edge, 1) : input_mesh_->halfedge(edge, 0);
 }
 
-Surface_mesh::Halfedge SdAlgorithm::get_next_boundary(
-  const Surface_mesh::Halfedge halfedge) const {
-  // get opposite halfedge to rotate around vertex
-  Surface_mesh::Halfedge rotated_halfedge = input_mesh_->opposite_halfedge(
-        halfedge);
-  // rotate counter-clockwise around start vertex
+
+Surface_mesh::Halfedge SdAlgorithm::find_halfedge_of_boundary_edge_ccw(
+  const Surface_mesh::Vertex& vertex) const {
+  return this->find_halfedge_of_boundary_edge_ccw(input_mesh_->halfedge(vertex));
+}
+
+Surface_mesh::Halfedge SdAlgorithm::find_halfedge_of_boundary_edge_ccw(
+  const Surface_mesh::Halfedge start_halfedge) const {
+  Surface_mesh::Halfedge rotated_halfedge = start_halfedge;
   do {
     rotated_halfedge = input_mesh_->ccw_rotated_halfedge(rotated_halfedge);
     if (input_mesh_->is_boundary(input_mesh_->edge(rotated_halfedge))) {
       // boundary found
-      break;
+      return rotated_halfedge;
     }
-  } while (rotated_halfedge != halfedge);
-  return rotated_halfedge;
+  } while (rotated_halfedge != start_halfedge);
+  /// @todo error handling
+  throw new std::runtime_error("No boundary halfedge");
 }
 
 } // namespace subdivision
