@@ -54,12 +54,10 @@ void SdAlgorithm::compute_mid_edge(Point& mid_edge,
 void SdAlgorithm::compute_new_boundary_vertex_coordinate(
   Point& new_vertex_point,
   const Surface_mesh::Vertex& vertex) const {
-  new_vertex_point = 3. / 4. * v_points_[vertex];
-  for (const auto& halfedge : input_mesh_->halfedges(vertex)) {
-    if (input_mesh_->is_boundary(input_mesh_->edge(halfedge))) {
-      new_vertex_point += 1. / 8. * v_points_[input_mesh_->to_vertex(halfedge)];
-    }
-  }
+  const Surface_mesh::Halfedge h0 = find_halfedge_of_boundary_edge_ccw(vertex);
+  const Surface_mesh::Halfedge h1 = find_halfedge_of_boundary_edge_ccw(h0);
+  new_vertex_point = 3. / 4. * v_points_[vertex] + 1. / 8. *
+                     (v_points_[input_mesh_->to_vertex(h0)] + v_points_[input_mesh_->to_vertex(h1)]);
 }
 
 Surface_mesh::Halfedge SdAlgorithm::get_valid_halfedge_of_boundary_edge(
