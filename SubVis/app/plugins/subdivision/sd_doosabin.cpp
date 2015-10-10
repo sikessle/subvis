@@ -8,7 +8,8 @@ namespace subdivision {
 using Surface_mesh = surface_mesh::Surface_mesh;
 
 bool SdDooSabin::is_subdividable(const Surface_mesh& mesh) const {
-  /// @todo
+  (void) mesh;
+  // Doo Sabin can handle arbitrary polygons
   return true;
 }
 
