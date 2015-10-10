@@ -83,7 +83,7 @@ Surface_mesh::Halfedge SdAlgorithm::find_halfedge_of_boundary_edge_ccw(
     }
   } while (rotated_halfedge != start_halfedge);
   /// @todo error handling
-  throw std::runtime_error("No boundary halfedge");
+  throw std::runtime_error("No boundary edge.");
 }
 
 } // namespace subdivision
