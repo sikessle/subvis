@@ -160,7 +160,7 @@ void SdCatmull::add_splitted_face_output_mesh(const Surface_mesh::Face&
                            e_index_list[2]);
   } else { // error
     /// @todo error handling
-    throw new std::runtime_error("Invalid mesh topology: " + i);
+    throw std::runtime_error("Invalid mesh topology: " + i);
   }
 }
 
