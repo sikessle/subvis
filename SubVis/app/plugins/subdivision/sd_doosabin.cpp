@@ -104,7 +104,7 @@ void SdDooSabin::compute_new_vertex_point(Point& new_vertex_point,
       const Surface_mesh::Edge e2 = input_mesh_->edge(input_mesh_->prev_halfedge(
                                       halfedge));
       new_vertex_point = (v_points_[vertex] + f_points_[face] + e_points_[e1] +
-                          e_points_[e2] ) / 4;
+                          e_points_[e2] ) / 4.;
       break;
     }
   }
