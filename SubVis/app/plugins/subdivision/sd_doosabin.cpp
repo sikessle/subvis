@@ -158,21 +158,15 @@ void SdDooSabin::add_all_faces_output_mesh_edge() {
 void SdDooSabin::add_all_faces_output_mesh_vertex() {
   std::vector<Surface_mesh::Vertex> vertices_vec;
   for (const auto& vertex : input_mesh_->vertices()) {
-    if (input_mesh_->is_boundary(vertex)) {
-      for (const auto& halfedge : input_mesh_->halfedges(vertex)) {
-        const Surface_mesh::Edge boundary_edge = input_mesh_->edge(halfedge);
-        if (input_mesh_->is_boundary(boundary_edge)) {
-          vertices_vec.push_back(v_index_map_output_e_prop_[boundary_edge].at(vertex));
-        }
-        // only use halfedges that belong to a valid face
-        if (!input_mesh_->is_boundary(halfedge)) {
-          vertices_vec.push_back(v_index_map_output_f_prop_[input_mesh_->face(
-                                   halfedge)].at(vertex));
-        }
+    for (const auto& halfedge : input_mesh_->halfedges(vertex)) {
+      const Surface_mesh::Edge boundary_edge = input_mesh_->edge(halfedge);
+      if (input_mesh_->is_boundary(boundary_edge)) {
+        vertices_vec.push_back(v_index_map_output_e_prop_[boundary_edge].at(vertex));
       }
-    } else {
-      for (const auto& face : input_mesh_->faces(vertex)) {
-        vertices_vec.push_back(v_index_map_output_f_prop_[face].at(vertex));
+      // only use halfedges that belong to a valid face
+      if (!input_mesh_->is_boundary(halfedge)) {
+        vertices_vec.push_back(v_index_map_output_f_prop_[input_mesh_->face(
+                                 halfedge)].at(vertex));
       }
     }
     if (vertices_vec.size() > 2) {
