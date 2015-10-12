@@ -158,25 +158,22 @@ void SdDooSabin::add_all_faces_output_mesh_edge() {
 void SdDooSabin::add_all_faces_output_mesh_vertex() {
   std::vector<Surface_mesh::Vertex> vertices_vec;
   for (const auto& vertex : input_mesh_->vertices()) {
-    for (const auto& face : input_mesh_->faces(vertex)) {
-      vertices_vec.push_back(v_index_map_output_f_prop_[face].at(vertex));
-    }
     if (input_mesh_->is_boundary(vertex)) {
-      // if boundary case, add boundary vertices
-      const Surface_mesh::Halfedge boundary_halfedge0 =
-        this->find_halfedge_of_boundary_edge_ccw(vertex);
-      // get next halfedge that belongs to a boundary edge
-      const Surface_mesh::Halfedge boundary_halfedge1 =
-        this->find_halfedge_of_boundary_edge_ccw(boundary_halfedge0);
-      const Surface_mesh::Vertex v0 = v_index_map_output_e_prop_[input_mesh_->edge(
-                                        boundary_halfedge0)].at(vertex);
-
-      const Surface_mesh::Vertex v1 = v_index_map_output_e_prop_[input_mesh_->edge(
-                                        boundary_halfedge1)].at(vertex);
-      vertices_vec.push_back(v1);
-      vertices_vec.push_back(v0);
-      DEBUG_POINT(output_mesh_->position(v0), "Boundary Vertex 0");
-      DEBUG_POINT(output_mesh_->position(v1), "Boundary Vertex 1");
+      for (const auto& halfedge : input_mesh_->halfedges(vertex)) {
+        const Surface_mesh::Edge boundary_edge = input_mesh_->edge(halfedge);
+        if (input_mesh_->is_boundary(boundary_edge)) {
+          vertices_vec.push_back(v_index_map_output_e_prop_[boundary_edge].at(vertex));
+        }
+        // only use halfedges that belong to a valid face
+        if (!input_mesh_->is_boundary(halfedge)) {
+          vertices_vec.push_back(v_index_map_output_f_prop_[input_mesh_->face(
+                                   halfedge)].at(vertex));
+        }
+      }
+    } else {
+      for (const auto& face : input_mesh_->faces(vertex)) {
+        vertices_vec.push_back(v_index_map_output_f_prop_[face].at(vertex));
+      }
     }
     if (vertices_vec.size() > 2) {
       output_mesh_->add_face(vertices_vec);
