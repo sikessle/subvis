@@ -93,7 +93,8 @@ double SdLoop::compute_beta(unsigned int n) const {
   } else if (n > 3) {
     return 3. / (8. * n);
   } else { // Error
-    throw std::runtime_error("Invalid number of surrounding vertices: " + n);
+    throw std::runtime_error("Invalid number of surrounding vertices: " +
+                             std::to_string(n));
   }
 }
 

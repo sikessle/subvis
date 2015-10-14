@@ -2,7 +2,6 @@
 #ifndef SUBVIS_PLUGINS_SUBDIVISION_UTILS_H
 #define SUBVIS_PLUGINS_SUBDIVISION_UTILS_H
 
-#include <string>
 #include <QString>
 #include "surface_mesh/Surface_mesh.h"
 
