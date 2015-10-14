@@ -52,12 +52,16 @@ void SdAlgorithm::compute_mid_edge(Point& mid_edge,
 }
 
 void SdAlgorithm::compute_new_boundary_vertex_coordinate(
-  Point& new_vertex_point,
-  const Surface_mesh::Vertex& vertex) const {
-  const Surface_mesh::Halfedge h0 = find_halfedge_of_boundary_edge_ccw(vertex);
-  const Surface_mesh::Halfedge h1 = find_next_halfedge_of_boundary_edge_ccw(h0);
-  new_vertex_point = 3. / 4. * v_points_[vertex] + 1. / 8. *
-                     (v_points_[input_mesh_->to_vertex(h0)] + v_points_[input_mesh_->to_vertex(h1)]);
+  Point& new_vertex_point, const Surface_mesh::Vertex& vertex) const {
+  // check if vertex is connected to edges
+  if (input_mesh_->valence(vertex) > 1) {
+    const Surface_mesh::Halfedge h0 = find_halfedge_of_boundary_edge_ccw(vertex);
+    const Surface_mesh::Halfedge h1 = find_next_halfedge_of_boundary_edge_ccw(h0);
+    new_vertex_point = 3. / 4. * v_points_[vertex] + 1. / 8. *
+                       (v_points_[input_mesh_->to_vertex(h0)] + v_points_[input_mesh_->to_vertex(h1)]);
+  } else {
+    new_vertex_point = v_points_[vertex];
+  }
 }
 
 Surface_mesh::Halfedge SdAlgorithm::get_valid_halfedge_of_boundary_edge(
@@ -82,7 +86,6 @@ Surface_mesh::Halfedge SdAlgorithm::find_next_halfedge_of_boundary_edge_ccw(
       return rotated_halfedge;
     }
   } while (rotated_halfedge != start_halfedge);
-  /// @todo error handling
   throw std::runtime_error("No boundary edge.");
 }
 
