@@ -53,8 +53,8 @@ void SdAlgorithm::compute_mid_edge(Point& mid_edge,
 
 void SdAlgorithm::compute_new_boundary_vertex_coordinate(
   Point& new_vertex_point, const Surface_mesh::Vertex& vertex) const {
-  // check if vertex is connected to edges
-  if (input_mesh_->valence(vertex) > 1) {
+  // check if vertex belongs to a face
+  if (input_mesh_->valence(vertex) > 0) {
     const Surface_mesh::Halfedge h0 = find_halfedge_of_boundary_edge_ccw(vertex);
     const Surface_mesh::Halfedge h1 = find_next_halfedge_of_boundary_edge_ccw(h0);
     new_vertex_point = 3. / 4. * v_points_[vertex] + 1. / 8. *
