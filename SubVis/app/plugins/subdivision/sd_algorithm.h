@@ -98,7 +98,7 @@ class SdAlgorithm {
   /// Find a halfedge that is connected with the @c vertex and belongs to a boundary edge
   /// (Doesn't have to be a boundary halfedge!).
   /// Start search with the @c start_halfedge and rotate counter clockwise.
-  Surface_mesh::Halfedge find_halfedge_of_boundary_edge_ccw(
+  Surface_mesh::Halfedge find_next_halfedge_of_boundary_edge_ccw(
     const Surface_mesh::Halfedge start_halfedge) const;
 };
 
