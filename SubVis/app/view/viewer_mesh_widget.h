@@ -18,6 +18,7 @@ class ViewerMeshWidget : public ViewerWidget {
  protected:
   void draw() override;
   void init() override;
+  void mousePressEvent(QMouseEvent* e) override;
 
  private:
   // TODO placeholder, here we should use a custom data structure to hold vertices

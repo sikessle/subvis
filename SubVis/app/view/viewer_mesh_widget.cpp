@@ -77,5 +77,9 @@ void ViewerMeshWidget::draw_mesh() {
   }
 }
 
+void ViewerMeshWidget::mousePressEvent(QMouseEvent* e) {
+  std::cerr << "mouse pressed" << std::endl;
+}
+
 } // namespace subvis
 
