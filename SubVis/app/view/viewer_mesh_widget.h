@@ -1,5 +1,5 @@
-#ifndef SUBVIS_VIEWER_MESH_WIDGET_H
-#define SUBVIS_VIEWER_MESH_WIDGET_H
+#ifndef SUBVIS_VIEW_VIEWER_MESH_WIDGET_H
+#define SUBVIS_VIEW_VIEWER_MESH_WIDGET_H
 
 #include "surface_mesh/Surface_mesh.h"
 

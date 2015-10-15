@@ -1,5 +1,5 @@
-#ifndef SUBVIS_MAINWINDOW_H
-#define SUBVIS_MAINWINDOW_H
+#ifndef SUBVIS_VIEW_MAINWINDOW_H
+#define SUBVIS_VIEW_MAINWINDOW_H
 
 #include <QMainWindow>
 #include <QLabel>
@@ -49,4 +49,4 @@ class MainWindow : public QMainWindow {
 
 
 } // namespace subvis
-#endif // SUBVIS_MAINWINDOW_H
+#endif // SUBVIS_VIEW_MAINWINDOW_H

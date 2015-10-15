@@ -1,5 +1,5 @@
-#ifndef SUBVIS_VIEWER_PLUGIN_WIDGET_H
-#define SUBVIS_VIEWER_PLUGIN_WIDGET_H
+#ifndef SUBVIS_VIEW_VIEWER_PLUGIN_WIDGET_H
+#define SUBVIS_VIEW_VIEWER_PLUGIN_WIDGET_H
 
 #include "plugins/subvis_plugin.h"
 #include "view/viewer_widget.h"
@@ -26,4 +26,4 @@ class ViewerPluginWidget : public ViewerWidget {
 };
 
 } // namespace subvis
-#endif // SUBVIS_VIEWER_PLUGIN_WIDGET_H
+#endif // SUBVIS_VIEW_VIEWER_PLUGIN_WIDGET_H

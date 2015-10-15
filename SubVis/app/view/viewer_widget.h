@@ -1,5 +1,5 @@
-#ifndef SUBVIS_VIEWER_WIDGET_H
-#define SUBVIS_VIEWER_WIDGET_H
+#ifndef SUBVIS_VIEW_VIEWER_WIDGET_H
+#define SUBVIS_VIEW_VIEWER_WIDGET_H
 
 #include "QGLViewer/qglviewer.h"
 
@@ -24,4 +24,4 @@ class ViewerWidget : public QGLViewer {
 };
 
 } // namespace subvis
-#endif // SUBVIS_VIEWER_WIDGET_H
+#endif // SUBVIS_VIEW_VIEWER_WIDGET_H

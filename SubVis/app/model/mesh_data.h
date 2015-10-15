@@ -1,5 +1,5 @@
-#ifndef SUBVIS_MESH_DATA_H
-#define SUBVIS_MESH_DATA_H
+#ifndef SUBVIS_MODEL_MESH_DATA_H
+#define SUBVIS_MODEL_MESH_DATA_H
 
 #include <string>
 #include <memory>
@@ -32,4 +32,4 @@ class MeshData : public QObject {
 };
 
 } // namespace subvis
-#endif // SUBVIS_MESH_DATA_H
+#endif // SUBVIS_MODEL_MESH_DATA_H

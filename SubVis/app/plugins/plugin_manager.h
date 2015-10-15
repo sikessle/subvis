@@ -1,5 +1,5 @@
-#ifndef SUBVIS_PLUGIN_MANAGER_H
-#define SUBVIS_PLUGIN_MANAGER_H
+#ifndef SUBVIS_PLUGINS_PLUGIN_MANAGER_H
+#define SUBVIS_PLUGINS_PLUGIN_MANAGER_H
 
 #include <memory>
 #include <map>
@@ -34,4 +34,4 @@ class PluginManager {
 };
 
 } // namespace subvis
-#endif // SUBVIS_PLUGIN_MANAGER_H
+#endif // SUBVIS_PLUGINS_PLUGIN_MANAGER_H
