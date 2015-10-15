@@ -16,13 +16,16 @@ class ViewerMeshWidget : public ViewerWidget {
  protected:
   void draw() override;
   void init() override;
-  //void mousePressEvent(QMouseEvent* e) override;
+  void mousePressEvent(QMouseEvent* e) override;
 
  private:
   // TODO placeholder, here we should use a custom data structure to hold vertices
   const surface_mesh::Surface_mesh* mesh_ {nullptr};
 
   void draw_mesh();
+  /// RGB color values will be stored in rgb array
+  void index_to_rgb(int index, int rgb[3]);
+  int rgb_to_index(int rgb[3]);
 
  public slots:
   void mesh_updated(const surface_mesh::Surface_mesh& mesh) override;

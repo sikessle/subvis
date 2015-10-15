@@ -1,5 +1,6 @@
 #include <GL/glut.h>
 #include <QDebug>
+#include <QMouseEvent>
 
 #include "view/viewer_mesh_widget.h"
 
@@ -69,9 +70,24 @@ void ViewerMeshWidget::draw_mesh() {
   }
 }
 
-/*void ViewerMeshWidget::mousePressEvent(QMouseEvent* e) {
-  std::cerr << "mouse pressed" << std::endl;
-}*/
+void ViewerMeshWidget::index_to_rgb(int index, int rgb[3]) {
+  rgb[0] = (index & 0x000000FF) >>  0;
+  rgb[1] = (index & 0x0000FF00) >>  8;
+  rgb[2] = (index & 0x00FF0000) >> 16;
+}
+
+int ViewerMeshWidget::rgb_to_index(int rgb[4]) {
+  return
+    rgb[0] +
+    rgb[1] * 256 +
+    rgb[2] * 256 * 256;
+}
+
+void ViewerMeshWidget::mousePressEvent(QMouseEvent* e) {
+  // TODO pick by color
+
+  ViewerWidget::mousePressEvent(e);
+}
 
 } // namespace subvis
 
