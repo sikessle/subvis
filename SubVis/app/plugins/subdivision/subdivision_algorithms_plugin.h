@@ -31,15 +31,14 @@ class SubdivisionAlgorithmsPlugin : public QObject,
 
   const QString id() const override;
   const QString name() const override;
-  void set_draw_controller(subvis::DrawController& draw_controller)
-  override;
+  void set_model(subvis::MeshData& mesh_data) override;
   void mesh_updated(const surface_mesh::Surface_mesh& mesh) override;
   void init_opengl() override;
   void draw_opengl() override;
   void create_gui(QWidget* parent) override;
 
  private:
-  subvis::DrawController* draw_controller_{nullptr};
+  subvis::MeshData* mesh_data_{nullptr};
   /**
    * @brief name->(algorithm, renderer)
    */

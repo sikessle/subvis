@@ -3,7 +3,7 @@
 
 #include "QGLViewer/qglviewer.h"
 
-#include "controller/draw_controller.h"
+#include "model/mesh_data.h"
 
 namespace subvis {
 
@@ -11,14 +11,16 @@ class ViewerWidget : public QGLViewer {
  public:
   ViewerWidget(QWidget* parent = 0);
 
-  virtual void set_draw_controller(DrawController& draw_controller);
+  void set_model(MeshData& mesh_data);
 
  protected:
+  MeshData* mesh_data_{nullptr};
+
   void draw() override = 0;
   void init() override = 0;
 
- protected:
-  DrawController* draw_controller_{nullptr};
+ public slots:
+  virtual void mesh_updated(const surface_mesh::Surface_mesh& mesh);
 };
 
 } // namespace subvis

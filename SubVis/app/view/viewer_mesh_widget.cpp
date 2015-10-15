@@ -8,14 +8,6 @@ namespace subvis {
 ViewerMeshWidget::ViewerMeshWidget(QWidget* parent) : ViewerWidget{parent} {
 }
 
-void ViewerMeshWidget::set_draw_controller(DrawController& draw_controller) {
-  ViewerWidget::set_draw_controller(draw_controller);
-
-  // listen to mesh updates
-  QObject::connect(&draw_controller.get_mesh_data(),
-                   SIGNAL(updated(const surface_mesh::Surface_mesh&)), this,
-                   SLOT(mesh_updated(const surface_mesh::Surface_mesh&)));
-}
 
 void ViewerMeshWidget::mesh_updated(const surface_mesh::Surface_mesh& mesh) {
   // placeholder for custom data structure
@@ -77,9 +69,9 @@ void ViewerMeshWidget::draw_mesh() {
   }
 }
 
-void ViewerMeshWidget::mousePressEvent(QMouseEvent* e) {
+/*void ViewerMeshWidget::mousePressEvent(QMouseEvent* e) {
   std::cerr << "mouse pressed" << std::endl;
-}
+}*/
 
 } // namespace subvis
 

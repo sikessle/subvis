@@ -44,9 +44,6 @@ HEADERS  += view/mainwindow.h \
     view/viewer_plugin_widget.h \
     view/viewer_mesh_widget.h \
     model/mesh_data.h \
-    controller/io_controller.h \
-    controller/draw_controller.h \
-    controller/controller.h \
     subvis_app.h \
     plugins/subvis_plugin.h \
     plugins/plugin_manager.h \
@@ -69,9 +66,6 @@ SOURCES += main.cpp \
     view/viewer_plugin_widget.cpp \
     view/viewer_mesh_widget.cpp \
     model/mesh_data.cpp \
-    controller/io_controller.cpp \
-    controller/draw_controller.cpp \
-    controller/controller.cpp \
     subvis_app.cpp \
     plugins/plugin_manager.cpp \
     plugins/subdivision/sd_catmull.cpp \

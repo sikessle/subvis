@@ -8,7 +8,7 @@
 #include <QDir>
 
 #include "plugins/subvis_plugin.h"
-#include "controller/draw_controller.h"
+#include "model/mesh_data.h"
 
 namespace subvis {
 
@@ -19,6 +19,7 @@ struct PluginWrapper {
 
 class PluginManager {
  public:
+  PluginManager(MeshData& mesh_data);
   void register_plugin(std::unique_ptr<SubVisPlugin> plugin);
 
   /**
@@ -26,9 +27,9 @@ class PluginManager {
    * @return id->(name, plugin)
    */
   const std::map<const QString, PluginWrapper>& get_plugins() const;
-  void set_draw_controller_on_plugins(DrawController& draw_controller);
 
  private:
+  MeshData& mesh_data_;
   std::map<const QString, PluginWrapper> plugins_;
 };
 

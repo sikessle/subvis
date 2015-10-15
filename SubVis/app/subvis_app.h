@@ -19,7 +19,8 @@ class SubVisApp : protected QApplication {
   int run();
 
  private:
-  PluginManager plugin_manager_;
+  MeshData mesh_data_;
+  PluginManager plugin_manager_{mesh_data_};
   QPixmap splash_image_{":/media/splash.png"};
 
   std::unique_ptr<QSplashScreen> create_splash();

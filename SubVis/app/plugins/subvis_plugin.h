@@ -4,7 +4,7 @@
 #include <string>
 #include <QWidget>
 
-#include "controller/draw_controller.h"
+#include "model/mesh_data.h"
 
 namespace subvis {
 
@@ -15,7 +15,7 @@ class SubVisPlugin {
 
   virtual const QString id() const = 0;
   virtual const QString name() const = 0;
-  virtual void set_draw_controller(DrawController& draw_controller) = 0;
+  virtual void set_model(MeshData& mesh_data) = 0;
   virtual void mesh_updated(const surface_mesh::Surface_mesh& mesh) = 0;
   virtual void init_opengl() = 0;
   virtual void draw_opengl() = 0;

@@ -7,14 +7,12 @@
 
 namespace subvis {
 
-MainWindow::MainWindow(DrawController& draw_controller,
-                       IOController& io_controller,
+MainWindow::MainWindow(MeshData& mesh_data,
                        const std::map<const QString, PluginWrapper>& plugins)
   : QMainWindow{0},
     ui_{new Ui::MainWindow},
-io_controller_(io_controller),
-draw_controller_(draw_controller),
-plugins_(plugins) {
+    mesh_data_(mesh_data),
+    plugins_(plugins) {
 
   ui_->setupUi(this);
 
@@ -33,8 +31,8 @@ void MainWindow::setup_status_bar() {
 }
 
 void MainWindow::setup_viewer_tabs() {
-  ui_->tab_viewer_mesh->set_draw_controller(draw_controller_);
-  ui_->tab_viewer_plugin->set_draw_controller(draw_controller_);
+  ui_->tab_viewer_mesh->set_model(mesh_data_);
+  ui_->tab_viewer_plugin->set_model(mesh_data_);
 }
 
 void MainWindow::setup_plugin_guis() {
@@ -70,17 +68,21 @@ void MainWindow::setup_toolbar() {
   QObject::connect(ui_->action_snapshot, SIGNAL(triggered(bool)),
                    ui_->tab_viewer_mesh, SLOT(saveSnapshot(bool)));
   QObject::connect(ui_->action_triangulate, SIGNAL(triggered(bool)),
-                   &draw_controller_, SLOT(triangulate_mesh(void)));
+                   this, SLOT(triangulate_mesh(void)));
+}
+
+void MainWindow::triangulate_mesh() {
+  mesh_data_.triangulate();
 }
 
 void MainWindow::show_load_dialog() {
-  QString file_filter{QString::fromStdString(io_controller_.get_load_file_formats())};
+  QString file_filter{QString::fromStdString(mesh_data_.get_load_file_formats())};
   QString fn{QFileDialog::getOpenFileName(this, kLoadDialogCaption,
                                           QDir::home().absolutePath(), file_filter)};
 
   if (!fn.isNull()) {
     const std::string filename = fn.toStdString();
-    if (!io_controller_.load_mesh(filename)) {
+    if (!mesh_data_.load(filename)) {
       QString msg = "Failed to load file " + fn;
       QMessageBox::warning(this, "Error", msg);
     }
@@ -88,13 +90,13 @@ void MainWindow::show_load_dialog() {
 }
 
 void MainWindow::show_save_dialog() {
-  QString file_filter{QString::fromStdString(io_controller_.get_persist_file_formats())};
+  QString file_filter{QString::fromStdString(mesh_data_.get_persist_file_formats())};
   QString fn{QFileDialog::getSaveFileName(this, kSaveDialogCaption,
                                           QDir::home().absolutePath(), file_filter)};
 
   if (!fn.isNull()) {
     const std::string filename = fn.toStdString();
-    if (!io_controller_.persist_mesh(filename)) {
+    if (!mesh_data_.persist(filename)) {
       QString msg = "Failed to save to file " + fn;
       QMessageBox::warning(this, "Error", msg);
     }

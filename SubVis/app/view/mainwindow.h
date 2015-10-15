@@ -7,8 +7,7 @@
 
 #include "view/viewer_mesh_widget.h"
 #include "view/viewer_plugin_widget.h"
-#include "controller/draw_controller.h"
-#include "controller/io_controller.h"
+#include "model/mesh_data.h"
 #include "plugins/plugin_manager.h"
 
 namespace subvis {
@@ -21,15 +20,13 @@ class MainWindow : public QMainWindow {
   Q_OBJECT
 
  public:
-  MainWindow(DrawController& draw_controller,
-             IOController& io_controller,
+  MainWindow(MeshData& mesh_data,
              const std::map<const QString, PluginWrapper>& plugins);
   ~MainWindow();
 
  private:
   Ui::MainWindow* ui_;
-  IOController& io_controller_;
-  DrawController& draw_controller_;
+  MeshData& mesh_data_;
   const std::map<const QString, PluginWrapper>& plugins_;
   // memory managed by Qt's parent-relationship (ui)
   QLabel* status_label_;
@@ -46,6 +43,7 @@ class MainWindow : public QMainWindow {
  public slots:
   void show_load_dialog();
   void show_save_dialog();
+  void triangulate_mesh();
   void plugin_tab_changed(int current);
 };
 

@@ -3,8 +3,6 @@
 
 #include "view/mainwindow.h"
 #include "model/mesh_data.h"
-#include "controller/io_controller.h"
-#include "controller/draw_controller.h"
 #include "plugins/plugin_manager.h"
 #include "plugins/subvis_plugin.h"
 #include "plugins/subdivision/subdivision_algorithms_plugin.h"
@@ -26,18 +24,7 @@ int SubVisApp::run() {
   splash->show();
   processEvents();
 
-  // Model layer
-  MeshData mesh_data;
-
-  // Controller layer
-  IOController io_controller{mesh_data};
-  DrawController draw_controller{mesh_data};
-
-  // Plugins
-  plugin_manager_.set_draw_controller_on_plugins(draw_controller);
-
-  // View layer
-  MainWindow mainwindow{draw_controller, io_controller, plugin_manager_.get_plugins()};
+  MainWindow mainwindow{mesh_data_, plugin_manager_.get_plugins()};
 
   mainwindow.show();
   splash->finish(&mainwindow);

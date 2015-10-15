@@ -52,9 +52,9 @@ const QString SubdivisionAlgorithmsPlugin::name() const {
   return "Subdivision";
 }
 
-void SubdivisionAlgorithmsPlugin::set_draw_controller(subvis::DrawController&
-    draw_controller) {
-  draw_controller_ = &draw_controller;
+void SubdivisionAlgorithmsPlugin::set_model(subvis::MeshData&
+    mesh_data) {
+  mesh_data_ = &mesh_data;
 }
 
 void SubdivisionAlgorithmsPlugin::mesh_updated(const surface_mesh::Surface_mesh&
@@ -117,12 +117,11 @@ void SubdivisionAlgorithmsPlugin::create_gui(QWidget* parent) {
 
 void SubdivisionAlgorithmsPlugin::subdivide_clicked(bool) {
   const int steps = steps_->value();
-  auto& mesh_data = draw_controller_->get_mesh_data();
   auto& algorithm = active_algorithm_renderer_pair().algorithm;
 
-  auto result = algorithm->subdivide(mesh_data.get_mesh(), steps);
+  auto result = algorithm->subdivide(mesh_data_->get_mesh(), steps);
 
-  mesh_data.load(std::move(result));
+  mesh_data_->load(std::move(result));
 }
 
 void SubdivisionAlgorithmsPlugin::update_valid_dropdown_items(
