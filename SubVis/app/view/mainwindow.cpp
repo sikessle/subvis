@@ -7,12 +7,11 @@
 
 namespace subvis {
 
-MainWindow::MainWindow(MeshData& mesh_data,
-                       const std::map<const QString, PluginWrapper>& plugins)
+MainWindow::MainWindow(MeshData& mesh_data, PluginManager& plugin_manager)
   : QMainWindow{0},
     ui_{new Ui::MainWindow},
     mesh_data_(mesh_data),
-    plugins_(plugins) {
+    plugin_manager_(plugin_manager) {
 
   ui_->setupUi(this);
 
@@ -36,7 +35,8 @@ void MainWindow::setup_viewer_tabs() {
 }
 
 void MainWindow::setup_plugin_guis() {
-  for (const auto& it : plugins_) {
+  auto& plugins = plugin_manager_.get_plugins();
+  for (const auto& it : plugins) {
     const auto& wrapper = it.second;
     QWidget* plugin_container = new QWidget(this);
     ui_->tabs_plugins->addTab(plugin_container, wrapper.name);
@@ -45,13 +45,13 @@ void MainWindow::setup_plugin_guis() {
                      this, SLOT(plugin_tab_changed(int)));
   }
 
-  if (plugins_.size() > 0) {
+  if (plugins.size() > 0) {
     plugin_tab_changed(0);
   }
 }
 
 void MainWindow::plugin_tab_changed(int current) {
-  auto it = plugins_.begin();
+  auto it = plugin_manager_.get_plugins().begin();
 
   for (int i = 0; i < current; i++) {
     it++;

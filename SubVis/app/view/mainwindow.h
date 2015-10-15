@@ -21,13 +21,13 @@ class MainWindow : public QMainWindow {
 
  public:
   MainWindow(MeshData& mesh_data,
-             const std::map<const QString, PluginWrapper>& plugins);
+             PluginManager& plugin_manager);
   ~MainWindow();
 
  private:
   Ui::MainWindow* ui_;
   MeshData& mesh_data_;
-  const std::map<const QString, PluginWrapper>& plugins_;
+  PluginManager& plugin_manager_;
   // memory managed by Qt's parent-relationship (ui)
   QLabel* status_label_;
 

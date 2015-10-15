@@ -24,7 +24,7 @@ int SubVisApp::run() {
   splash->show();
   processEvents();
 
-  MainWindow mainwindow{mesh_data_, plugin_manager_.get_plugins()};
+  MainWindow mainwindow{mesh_data_, plugin_manager_};
 
   mainwindow.show();
   splash->finish(&mainwindow);
