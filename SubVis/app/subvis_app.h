@@ -19,6 +19,7 @@ class SubVisApp : protected QApplication {
   int run();
 
  private:
+  // Model layer
   MeshData mesh_data_;
   PluginManager plugin_manager_{mesh_data_};
   QPixmap splash_image_{":/media/splash.png"};
