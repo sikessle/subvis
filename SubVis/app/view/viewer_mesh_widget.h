@@ -25,7 +25,8 @@ class ViewerMeshWidget : public ViewerWidget {
   void draw_mesh();
   /// RGB color values will be stored in rgb array
   void index_to_rgb(const int index, int rgb[3]);
-  int rgb_to_index(const int rgb[3]);
+  /// Allows rgba values (4), whereat the a value is not used.
+  int rgb_to_index(const int rgb[4]);
 
  public slots:
   void mesh_updated(const surface_mesh::Surface_mesh& mesh) override;
