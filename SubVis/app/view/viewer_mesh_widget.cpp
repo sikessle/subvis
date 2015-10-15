@@ -70,13 +70,13 @@ void ViewerMeshWidget::draw_mesh() {
   }
 }
 
-void ViewerMeshWidget::index_to_rgb(int index, int rgb[3]) {
+void ViewerMeshWidget::index_to_rgb(const int index, int rgb[3]) {
   rgb[0] = (index & 0x000000FF) >>  0;
   rgb[1] = (index & 0x0000FF00) >>  8;
   rgb[2] = (index & 0x00FF0000) >> 16;
 }
 
-int ViewerMeshWidget::rgb_to_index(int rgb[4]) {
+int ViewerMeshWidget::rgb_to_index(const int rgb[4]) {
   return
     rgb[0] +
     rgb[1] * 256 +
@@ -85,6 +85,7 @@ int ViewerMeshWidget::rgb_to_index(int rgb[4]) {
 
 void ViewerMeshWidget::mousePressEvent(QMouseEvent* e) {
   // TODO pick by color
+  // id: surface_mesh::Surface_mesh::Vertex v; =>  v.idx()
 
   ViewerWidget::mousePressEvent(e);
 }
