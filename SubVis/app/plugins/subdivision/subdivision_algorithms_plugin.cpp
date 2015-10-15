@@ -1,7 +1,3 @@
-#include <exception>
-#include <QLabel>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
 #include "surface_mesh/Surface_mesh.h"
 
 #include "plugins/subdivision/gl_bspline_renderer.h"
@@ -21,7 +17,6 @@ SubdivisionAlgorithmsPlugin::SubdivisionAlgorithmsPlugin() {
   std::shared_ptr<GLRenderer> bspline_renderer {new GLBSplineRenderer};
 
   // Add here all the algorithms and their special renderer
-
   algorithms_["Catmull-Clark"] = {
     std::unique_ptr<SdAlgorithm>{new SdCatmull},
     bspline_renderer
@@ -54,119 +49,24 @@ const QString SubdivisionAlgorithmsPlugin::name() const {
 
 void SubdivisionAlgorithmsPlugin::set_model(subvis::MeshData&
     mesh_data) {
-  mesh_data_ = &mesh_data;
+  gui_.set_model(mesh_data);
 }
 
 void SubdivisionAlgorithmsPlugin::mesh_updated(const surface_mesh::Surface_mesh&
     mesh) {
-  auto& renderer = active_algorithm_renderer_pair().renderer;
-  renderer->mesh_updated(mesh);
-  update_valid_dropdown_items(mesh);
+  gui_.mesh_updated(mesh);
 }
 
 void SubdivisionAlgorithmsPlugin::init_opengl() {
-  auto& renderer = active_algorithm_renderer_pair().renderer;
-  renderer->init_opengl();
+  gui_.init_opengl();
 }
 
 void SubdivisionAlgorithmsPlugin::draw_opengl() {
-  auto& renderer = active_algorithm_renderer_pair().renderer;
-  renderer->render_mesh_opengl();
-}
-
-AlgorithmRenderer&
-SubdivisionAlgorithmsPlugin::active_algorithm_renderer_pair() {
-  if (dropdown_->count() == 0) {
-    throw std::logic_error{"no algorithms loaded. ensure that at least one is loaded in the constructor."};
-  }
-  const QString name = dropdown_->currentText();
-
-  return algorithms_.at(name);
+  gui_.draw_opengl();
 }
 
 void SubdivisionAlgorithmsPlugin::create_gui(QWidget* parent) {
-  // Gui creation
-  QVBoxLayout* layout = new QVBoxLayout(parent);
-  layout->setAlignment(Qt::AlignTop);
-
-  layout->addWidget(new QLabel("Algorithm:"));
-
-  dropdown_ = new QComboBox(parent);
-  for (const auto& it : algorithms_) {
-    // using name from map's entries as label
-    dropdown_->addItem(it.first);
-  }
-  layout->addWidget(dropdown_);
-
-  QHBoxLayout* layout_steps = new QHBoxLayout;
-  layout_steps->setAlignment(Qt::AlignTop);
-
-  layout_steps->addWidget(new QLabel("Steps:"));
-  steps_ = new QSpinBox(parent);
-  steps_->setRange(1, 100);
-  layout_steps->addWidget(steps_);
-
-  layout->addLayout(layout_steps);
-
-  subdivide_ = new QPushButton("subdivide", parent);
-  layout->addWidget(subdivide_);
-
-  QObject::connect(subdivide_, SIGNAL(clicked(bool)),
-                   this, SLOT(subdivide_clicked(bool)));
-}
-
-void SubdivisionAlgorithmsPlugin::subdivide_clicked(bool) {
-  const int steps = steps_->value();
-  auto& algorithm = active_algorithm_renderer_pair().algorithm;
-
-  auto result = algorithm->subdivide(mesh_data_->get_mesh(), steps);
-
-  mesh_data_->load(std::move(result));
-}
-
-void SubdivisionAlgorithmsPlugin::update_valid_dropdown_items(
-  const surface_mesh::Surface_mesh& mesh) {
-
-
-  QStandardItemModel* model = qobject_cast<QStandardItemModel*>
-                              (dropdown_->model());
-
-  int first_enabled_item = enable_applicable_algorithms_dropdown(mesh, model);
-  ensure_current_dropdown_item_is_enabled(model, first_enabled_item);
-}
-
-int SubdivisionAlgorithmsPlugin::enable_applicable_algorithms_dropdown(
-  const surface_mesh::Surface_mesh& mesh, QStandardItemModel* model) {
-
-  QStandardItem* item {nullptr};
-  int first_enabled_item_index { -1};
-
-  for (int i = 0; i < dropdown_->count(); i++) {
-    QModelIndex index = model->index(i, dropdown_->modelColumn(),
-                                     dropdown_->rootModelIndex());
-    item = model->itemFromIndex(index);
-
-    if (algorithms_.at(item->text()).algorithm->is_subdividable(mesh)) {
-      item->setEnabled(true);
-      if (first_enabled_item_index == -1) {
-        first_enabled_item_index = i;
-      }
-    } else {
-      item->setEnabled(false);
-    }
-  }
-
-  return first_enabled_item_index;
-}
-
-
-void SubdivisionAlgorithmsPlugin::ensure_current_dropdown_item_is_enabled(
-  QStandardItemModel* model, int first_enabled_item_index) {
-  QModelIndex current_index = model->index(dropdown_->currentIndex(),
-                              dropdown_->modelColumn(), dropdown_->rootModelIndex());
-  if (!model->itemFromIndex(current_index)->isEnabled()) {
-    dropdown_->setCurrentIndex(first_enabled_item_index);
-  }
+  gui_.create(parent, algorithms_);
 }
 
 } // namespace subdivision

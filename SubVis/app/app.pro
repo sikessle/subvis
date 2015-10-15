@@ -58,7 +58,9 @@ HEADERS  += view/mainwindow.h \
     plugins/subdivision/debug.h \
     plugins/subdivision/sd_quad.h \
     plugins/subdivision/sd_triangle.h \
-    plugins/subdivision/sd_modbutterfly.h
+    plugins/subdivision/sd_modbutterfly.h \
+    plugins/subdivision/gui_controls.h \
+    plugins/subdivision/algorithm_renderer.h
 
 SOURCES += main.cpp \
     view/mainwindow.cpp \
@@ -79,7 +81,8 @@ SOURCES += main.cpp \
     plugins/subdivision/debug.cpp \
     plugins/subdivision/sd_quad.cpp \
     plugins/subdivision/sd_triangle.cpp \
-    plugins/subdivision/sd_modbutterfly.cpp
+    plugins/subdivision/sd_modbutterfly.cpp \
+    plugins/subdivision/gui_controls.cpp
 
 FORMS    += view/mainwindow.ui
 
