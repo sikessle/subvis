@@ -45,9 +45,9 @@ void SdLoop::compute_odd_vertex_regular(Point& odd_vertex,
                                         const Surface_mesh::Edge& edge) const {
   const Surface_mesh::Vertex edge_vertex0 = input_mesh_->vertex(edge, 0);
   const Surface_mesh::Vertex edge_vertex1 = input_mesh_->vertex(edge, 1);
-  const Surface_mesh::Vertex outer_vertex0 = this->get_outer_vertex_triangle(
+  const Surface_mesh::Vertex outer_vertex0 = this->get_exterior_vertex_triangle(
         input_mesh_->halfedge(edge, 0));
-  const Surface_mesh::Vertex outer_vertex1 = this->get_outer_vertex_triangle(
+  const Surface_mesh::Vertex outer_vertex1 = this->get_exterior_vertex_triangle(
         input_mesh_->halfedge(edge, 1));
   odd_vertex = 3. * (v_points_[edge_vertex0] + v_points_[edge_vertex1]) +
                (v_points_[outer_vertex0] + v_points_[outer_vertex1]);

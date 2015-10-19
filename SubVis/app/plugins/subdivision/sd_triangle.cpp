@@ -53,7 +53,7 @@ void SdTriangle::add_splitted_face_output_mesh(const Surface_mesh::Face&
   output_mesh_->add_triangle(v_index_list[2], e_index_list[2], e_index_list[1]);
 }
 
-Surface_mesh::Vertex SdTriangle::get_outer_vertex_triangle(
+Surface_mesh::Vertex SdTriangle::get_exterior_vertex_triangle(
   const Surface_mesh::Halfedge& halfedge) const {
   return input_mesh_->to_vertex(input_mesh_->next_halfedge(halfedge));
 }
