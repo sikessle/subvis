@@ -30,20 +30,20 @@ void SdModButterfly::compute_edge_point(Point& edge_point,
 
 void SdModButterfly::compute_edge_point_one_extraordinary(Point& edge_point,
     const Surface_mesh::Halfedge& halfedge) const {
-  edge_point = (3. / 4. * v_points_[input_mesh_->from_vertex(halfedge)]);
+  edge_point = 3. / 4. * v_points_[input_mesh_->from_vertex(halfedge)];
   const unsigned int valence = input_mesh_->valence(input_mesh_->from_vertex(
                                  halfedge));
   if (valence == 3) {
     const Surface_mesh::Halfedge h1 = input_mesh_->ccw_rotated_halfedge(halfedge);
     const Surface_mesh::Halfedge h2 = input_mesh_->cw_rotated_halfedge(halfedge);
-    edge_point += (5. / 12. * v_points_[input_mesh_->to_vertex(halfedge)]
-                   - 1. / 12. * (v_points_[input_mesh_->to_vertex(h1)] +
-                                 v_points_[input_mesh_->to_vertex(h2)]));
+    edge_point += 5. / 12. * v_points_[input_mesh_->to_vertex(halfedge)]
+                  - 1. / 12. * (v_points_[input_mesh_->to_vertex(h1)] +
+                                v_points_[input_mesh_->to_vertex(h2)]);
   } else if (valence == 4) {
     const Surface_mesh::Halfedge h2 = input_mesh_->cw_rotated_halfedge(
                                         input_mesh_->cw_rotated_halfedge(halfedge));
-    edge_point += (3. / 8. * v_points_[input_mesh_->to_vertex(
-                                         halfedge)] - 1. / 8. * v_points_[input_mesh_->to_vertex(h2)]);
+    edge_point += 3. / 8. * v_points_[input_mesh_->to_vertex(
+                                        halfedge)] - 1. / 8. * v_points_[input_mesh_->to_vertex(h2)];
   } else if (valence >= 5) {
     Surface_mesh::Halfedge rotated_halfedge = halfedge;
     unsigned int j = 0;
