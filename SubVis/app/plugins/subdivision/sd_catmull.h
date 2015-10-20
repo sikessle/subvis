@@ -5,7 +5,7 @@
  *
  * The algorithm was devised by Edwin Catmull and Jim Clark.
  * Catmull–Clark subdivision is a generalization of bi-cubic uniform B-spline surfaces and
- * operates on meshes with arbitrary topology (with quad and triangle faces).
+ * operates on meshes with arbitrary topology.
  * The subdivided output mesh contains always quad faces.
  * The control points are approximated.
  *
