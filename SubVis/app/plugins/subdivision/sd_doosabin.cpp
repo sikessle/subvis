@@ -7,11 +7,6 @@ namespace subdivision {
 
 using Surface_mesh = surface_mesh::Surface_mesh;
 
-bool SdDooSabin::is_subdividable(const Surface_mesh& /*mesh*/) const {
-  // Doo Sabin can handle arbitrary polygons
-  return true;
-}
-
 void SdDooSabin::subdivide_input_mesh_write_output_mesh() {
   this->init_mesh_members();
   this->compute_all_face_points();

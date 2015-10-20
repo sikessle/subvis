@@ -4,6 +4,11 @@
 
 namespace subdivision {
 
+bool SdQuad::is_subdividable(const Surface_mesh& /*mesh*/) const {
+  // Catmull–Clark and Doo Sabin can handle arbitrary polygons
+  return true;
+}
+
 void SdQuad::init_mesh_members() {
   SdAlgorithm::init_mesh_members();
   // add properties to mesh

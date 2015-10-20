@@ -10,11 +10,6 @@
 
 namespace subdivision {
 
-bool SdCatmull::is_subdividable(const Surface_mesh& /*mesh*/) const {
-  // Catmull–Clark can handle arbitrary polygons
-  return true;
-}
-
 void SdCatmull::subdivide_input_mesh_write_output_mesh() {
   this->init_mesh_members();
   this->add_all_face_points_output_mesh();
