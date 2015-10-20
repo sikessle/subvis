@@ -55,7 +55,7 @@ namespace subdivision {
 
 class SdCatmull : public SdQuad {
  public:
-  bool is_subdividable(const Surface_mesh& mesh) const override;
+  bool is_subdividable(const Surface_mesh&) const override;
 
  protected:
   void subdivide_input_mesh_write_output_mesh() override;

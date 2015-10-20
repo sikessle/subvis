@@ -1,6 +1,6 @@
 
-#include <QDebug>
 #include <exception>
+#include <QDebug>
 
 #include "surface_mesh/IO.h"
 
@@ -10,11 +10,8 @@
 
 namespace subdivision {
 
-bool SdCatmull::is_subdividable(const Surface_mesh& mesh) const {
-  for (const auto& face : mesh.faces())
-    if (!(mesh.valence(face) == 4 || mesh.valence(face) == 3)) {
-      return false;
-    }
+bool SdCatmull::is_subdividable(const Surface_mesh& /*mesh*/) const {
+  // Catmull–Clark can handle arbitrary polygons
   return true;
 }
 
@@ -130,36 +127,15 @@ void SdCatmull::compute_updated_vertex_point_boundary(Point& new_vertex_point,
 
 void SdCatmull::add_splitted_face_output_mesh(const Surface_mesh::Face&
     face) {
-  const int arraySize = 4;
-  Surface_mesh::Vertex v_index_list[arraySize];
-  Surface_mesh::Vertex e_index_list[arraySize];
-  int i = 0;
-  for (const auto& halfedge : input_mesh_->halfedges(face)) {
-    if (i < arraySize) { // check if in array bounds
-      v_index_list[i] = v_index_output_v_prop_[input_mesh_->from_vertex(halfedge)];
-      e_index_list[i] = v_index_output_e_prop_[input_mesh_->edge(halfedge)];
-    }
-    ++i; // increment to compute face valence
-  }
   const Surface_mesh::Vertex f_index = v_index_output_f_prop_[face];
-  if (i == 3) { // triangle face
-    output_mesh_->add_quad(v_index_list[0], e_index_list[0], f_index,
-                           e_index_list[2]);
-    output_mesh_->add_quad(v_index_list[1], e_index_list[1], f_index,
-                           e_index_list[0]);
-    output_mesh_->add_quad(v_index_list[2], e_index_list[2], f_index,
-                           e_index_list[1]);
-  } else if (i == 4) { // quad face
-    output_mesh_->add_quad(v_index_list[0], e_index_list[0], f_index,
-                           e_index_list[3]);
-    output_mesh_->add_quad(v_index_list[1], e_index_list[1], f_index,
-                           e_index_list[0]);
-    output_mesh_->add_quad(v_index_list[2], e_index_list[2], f_index,
-                           e_index_list[1]);
-    output_mesh_->add_quad(v_index_list[3], e_index_list[3], f_index,
-                           e_index_list[2]);
-  } else { // error
-    throw std::runtime_error("Invalid mesh topology: " + std::to_string(i));
+  for (const auto& halfedge : input_mesh_->halfedges(face)) {
+    const Surface_mesh::Vertex v_index =
+      v_index_output_v_prop_[input_mesh_->from_vertex(halfedge)];
+    const Surface_mesh::Vertex h0_index = v_index_output_e_prop_[input_mesh_->edge(
+                                            halfedge)];
+    const Surface_mesh::Vertex h2_index = v_index_output_e_prop_[input_mesh_->edge(
+                                            input_mesh_->prev_halfedge(halfedge))];
+    output_mesh_->add_quad(v_index, h0_index, f_index, h2_index);
   }
 }
 
