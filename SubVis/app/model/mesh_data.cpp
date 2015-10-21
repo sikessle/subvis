@@ -2,16 +2,21 @@
 
 namespace subvis {
 
+  using Surface_mesh = surface_mesh::Surface_mesh;
+  using UniqueMeshPtr = std::unique_ptr<Surface_mesh>;
+  using MeshPair = std::pair<Surface_mesh&, Surface_mesh&>;
+  using MeshPairUniquePtrs = std::pair<UniqueMeshPtr, UniqueMeshPtr>;
+
 MeshData::MeshData() {
-  auto mesh = std::unique_ptr<surface_mesh::Surface_mesh> {new surface_mesh::Surface_mesh};
-  history_.push_back(std::move(mesh));
+  auto mesh = UniqueMeshPtr {new surface_mesh::Surface_mesh};
+  history_.push_back({std::move(mesh)});
 }
 
-const surface_mesh::Surface_mesh& MeshData::get_mesh() const {
+const Surface_mesh& MeshData::get_mesh() const {
   return *(history_.at(history_index_).get());
 }
 
-void MeshData::load(std::unique_ptr<surface_mesh::Surface_mesh> mesh) {
+void MeshData::load(UniqueMeshPtr mesh) {
   history_push(std::move(mesh));
   emit_updated_signal();
 }
@@ -22,7 +27,7 @@ bool MeshData::load(const std::string& filename) {
   }
 
   // create new mesh
-  auto mesh = std::unique_ptr<surface_mesh::Surface_mesh> {new surface_mesh::Surface_mesh};
+  auto mesh = UniqueMeshPtr {new Surface_mesh};
   bool success = mesh->read(filename);
   history_push(std::move(mesh));
   emit_updated_signal();
@@ -31,7 +36,7 @@ bool MeshData::load(const std::string& filename) {
 }
 
 void MeshData::triangulate() {
-  auto copy = std::unique_ptr<surface_mesh::Surface_mesh> {new surface_mesh::Surface_mesh(get_mesh())};
+  auto copy = UniqueMeshPtr {new Surface_mesh(get_mesh())};
   copy->triangulate();
   history_push(std::move(copy));
 
@@ -66,7 +71,7 @@ void MeshData::history_purge() {
   history_.erase(history_.begin() + 1, history_.end());
 }
 
-void MeshData::history_push(std::unique_ptr<surface_mesh::Surface_mesh> mesh) {
+void MeshData::history_push(UniqueMeshPtr mesh) {
   // Case 1: history is pointing to an entry before the last element
   if (history_index_ < history_.size() - 1) {
     // Erase everything from the history_index on to the end.

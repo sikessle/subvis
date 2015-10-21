@@ -12,12 +12,17 @@ namespace subvis {
 class MeshData : public QObject {
   Q_OBJECT
 
+  using Surface_mesh = ::surface_mesh::Surface_mesh;
+  using UniqueMeshPtr = std::unique_ptr<Surface_mesh>;
+  using MeshPair = std::pair<Surface_mesh&, Surface_mesh&>;
+  using MeshPairUniquePtrs = std::pair<UniqueMeshPtr, UniqueMeshPtr>;
+
  public:
   MeshData();
 
-  const surface_mesh::Surface_mesh& get_mesh() const;
+  const Surface_mesh& get_mesh() const;
   bool load(const std::string& filename);
-  void load(std::unique_ptr<surface_mesh::Surface_mesh> mesh);
+  void load(UniqueMeshPtr mesh);
   void history_step_back();
   void history_step_forward();
   void history_purge();
@@ -29,17 +34,17 @@ class MeshData : public QObject {
   void triangulate();
 
  private:
-  std::vector<std::unique_ptr<surface_mesh::Surface_mesh>> history_;
+  std::vector<UniqueMeshPtr> history_;
   unsigned int history_index_{0};
   const std::string kLoadFileFormats {"*.obj *.off *.stl"};
   const std::string kPersistFileFormats {"*.off"};
   const unsigned int kHistorySize {15};
   void emit_updated_signal();
 
-  void history_push(std::unique_ptr<surface_mesh::Surface_mesh> mesh);
+  void history_push(UniqueMeshPtr mesh);
 
  signals:
-  void updated(const surface_mesh::Surface_mesh& mesh);
+  void updated(const Surface_mesh& meshes);
 };
 
 } // namespace subvis
