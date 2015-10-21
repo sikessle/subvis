@@ -36,6 +36,9 @@ class SdAlgorithm : public QObject {
                           std::function<void(std::unique_ptr<Surface_mesh>)> callback,
                           int steps = 1);
 
+  /// Stops after the current subdivision step and executes the callback.
+  void stop_subdivide_threaded();
+
   /**
    * @brief Returns result mesh for testing.
    * @return A view on the mesh, but ownership stays in this class.

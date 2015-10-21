@@ -28,6 +28,7 @@ class GuiControls : public QObject {
 
  private:
   subvis::MeshData* mesh_data_{nullptr};
+  SdAlgorithm* active_algorithm_{nullptr};
   std::map<const QString, AlgorithmRenderer>* algorithms_{nullptr};
   // memory managed by Qt's parent-relationship
   QPushButton* subdivide_{nullptr};
@@ -44,10 +45,11 @@ class GuiControls : public QObject {
       mesh, QStandardItemModel* model);
   void ensure_current_dropdown_item_is_enabled(QStandardItemModel* model,
       int first_enabled_item);
-  void set_progress_visible(bool visible);
+  void set_progress_controls_visible(bool visible);
 
  private slots:
   void subdivide_clicked(bool);
+  void stop_clicked(bool);
 };
 
 } // namespace subdivision

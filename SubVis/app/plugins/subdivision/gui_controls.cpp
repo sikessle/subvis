@@ -64,11 +64,21 @@ void GuiControls::create(QWidget* parent,
 
   layout->addLayout(layout_steps);
 
+  QHBoxLayout* layout_start_stop = new QHBoxLayout;
+
   subdivide_ = new QPushButton("subdivide", parent);
-  layout->addWidget(subdivide_);
+  layout_start_stop->addWidget(subdivide_);
+
+  stop_ = new QPushButton("stop", parent);
+  layout_start_stop->addWidget(stop_);
+
+  layout->addLayout(layout_start_stop);
 
   QObject::connect(subdivide_, SIGNAL(clicked(bool)),
                    this, SLOT(subdivide_clicked(bool)));
+
+  QObject::connect(stop_, SIGNAL(clicked(bool)),
+                   this, SLOT(stop_clicked(bool)));
 
   progress_ = new QProgressBar(parent);
   // busy indicator with max=min=0
@@ -76,26 +86,27 @@ void GuiControls::create(QWidget* parent,
   progress_->setMaximum(0);
   layout->addWidget(progress_);
 
-  stop_ = new QPushButton("stop", parent);
-  layout->addWidget(stop_);
-
-  set_progress_visible(false);
+  set_progress_controls_visible(false);
 }
 
 void GuiControls::subdivide_clicked(bool) {
   const int steps = steps_->value();
-  auto& algorithm = current_algo_render_pair().algorithm;
+  active_algorithm_ = current_algo_render_pair().algorithm.get();
   auto callback = [this] (std::unique_ptr<surface_mesh::Surface_mesh> mesh) {
     mesh_data_->load(std::move(mesh));
-    set_progress_visible(false);
+    set_progress_controls_visible(false);
   };
 
-  set_progress_visible(true);
-  //algorithm->subdivide_threaded(mesh_data_->get_mesh(), callback, steps);
+  set_progress_controls_visible(true);
+  //active_algorithm_->subdivide_threaded(mesh_data_->get_mesh(), callback, steps);
 }
 
-void GuiControls::set_progress_visible(bool visible) {
-  stop_->setVisible(visible);
+void GuiControls::stop_clicked(bool) {
+  active_algorithm_->stop_subdivide_threaded();
+}
+
+void GuiControls::set_progress_controls_visible(bool visible) {
+  stop_->setEnabled(visible);
   progress_->setVisible(visible);
 }
 

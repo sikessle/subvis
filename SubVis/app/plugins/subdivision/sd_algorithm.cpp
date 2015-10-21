@@ -32,6 +32,10 @@ void SdAlgorithm::subdivide_threaded(const Surface_mesh& mesh,
   callback_(std::move(output_mesh_));
 }
 
+void SdAlgorithm::stop_subdivide_threaded() {
+  // TODO set stop flag
+}
+
 const Surface_mesh& SdAlgorithm::get_result_mesh() {
   return *output_mesh_.get();
 }
