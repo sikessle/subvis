@@ -85,7 +85,13 @@ void MainWindow::setup_viewer_tabs() {
 }
 
 void MainWindow::sync_viewers(QGLViewer* viewer1, QGLViewer* viewer2) {
+  // Warning: This connection must be disconnected before the objects are garbage collected.
   viewer2->setCamera(viewer1->camera());
+}
+
+void MainWindow::unsync_viewers(QGLViewer* viewer1, QGLViewer* viewer2) {
+  viewer1->setCamera(new qglviewer::Camera);
+  viewer2->setCamera(new qglviewer::Camera);
 }
 
 void MainWindow::setup_viewer_tab(QWidget* tab, ViewerWidget* viewer1,
@@ -104,6 +110,9 @@ void MainWindow::setup_viewer_tab(QWidget* tab, ViewerWidget* viewer1,
 
   viewer1->set_model(mesh_data_);
   viewer2->set_model(mesh_data_);
+
+  viewer1->resize(viewer1->geometry().width(), viewer1->geometry().height());
+  viewer2->resize(viewer2->geometry().width(), viewer2->geometry().height());
 }
 
 void MainWindow::setup_plugin_guis() {
@@ -198,6 +207,8 @@ void MainWindow::show_save_dialog() {
 }
 
 MainWindow::~MainWindow() {
+  unsync_viewers(viewer_mesh1_, viewer_mesh2_);
+  unsync_viewers(viewer_plugin1_, viewer_plugin2_);
   delete ui_;
 }
 
