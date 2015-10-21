@@ -37,7 +37,8 @@ void GuiControls::set_model(subvis::MeshData& mesh_data) {
 void GuiControls::mesh_updated(const surface_mesh::Surface_mesh& mesh,
                                int mesh_id) {
   current_algo_render_pair(mesh_id).renderer->mesh_updated(mesh);
-  update_valid_dropdown_items(mesh, mesh_id);
+  update_valid_dropdown_items(mesh, 0);
+  update_valid_dropdown_items(mesh, 1);
 }
 
 void GuiControls::init_opengl(int mesh_id) {
@@ -121,20 +122,34 @@ void GuiControls::subdivide_clicked(bool) {
   mesh_id_active_algorithm_[0] = current_algo_render_pair(0).algorithm.get();
   mesh_id_active_algorithm_[1] = current_algo_render_pair(1).algorithm.get();
   auto callback = [this] (std::unique_ptr<surface_mesh::Surface_mesh> mesh) {
-    // TODO pair!: mesh_data_->load(std::move(mesh));
-    set_progress_controls_visible(false);
+    if (!result_.first) {
+      result_.first = std::move(mesh);
+    } else if (!result_.second) {
+      result_.second = std::move(mesh);
+    }
+
+    if (result_.first && result_.second) {
+      mesh_data_->load(
+        std::pair<std::unique_ptr<surface_mesh::Surface_mesh>, std::unique_ptr<surface_mesh::Surface_mesh>>
+      {std::move(result_.first), std::move(result_.second)});
+      set_progress_controls_visible(false);
+    }
   };
 
   set_progress_controls_visible(true);
-  // TODO get both meshes
+
+  result_ = {nullptr, nullptr};
+
   mesh_id_active_algorithm_[0]->subdivide_threaded(mesh_data_->get_mesh(),
       callback, steps);
-  //mesh_id_active_algorithm_[1]->subdivide_threaded(mesh_data_->get_mesh(),  callback, steps);
+  mesh_id_active_algorithm_[1]->subdivide_threaded(mesh_data_->get_mesh(),
+      callback, steps);
 }
 
 void GuiControls::stop_clicked(bool) {
-  // TODO get all...
-  mesh_id_active_algorithm_.at(0)->stop_subdivide_threaded();
+  for (auto it : mesh_id_active_algorithm_) {
+    it.second->stop_subdivide_threaded();
+  }
 }
 
 void GuiControls::set_progress_controls_visible(bool visible) {

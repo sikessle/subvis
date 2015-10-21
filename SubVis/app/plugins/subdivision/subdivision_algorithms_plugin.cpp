@@ -13,32 +13,30 @@
 namespace subdivision {
 
 SubdivisionAlgorithmsPlugin::SubdivisionAlgorithmsPlugin() {
-  // Add all special renderers here to share them among the algorithms
-  GLRenderer* bspline_renderer1 {new GLBSplineRenderer};
-  GLRenderer* bspline_renderer2 {new GLBSplineRenderer};
-
   // Add here all the algorithms and their special renderer
-  // Add them twice for each display
-  init_algorithm(0, "Catmull-Clark", new SdCatmull, bspline_renderer1);
-  init_algorithm(1, "Catmull-Clark", new SdCatmull, bspline_renderer2);
+  // Add them twice for each mesh
+  init_algorithm(0, "Catmull-Clark", new SdCatmull, new GLBSplineRenderer);
+  init_algorithm(1, "Catmull-Clark", new SdCatmull, new GLBSplineRenderer);
 
-  init_algorithm(0, "Doo-Sabin", new SdDooSabin, bspline_renderer1);
-  init_algorithm(1, "Doo-Sabin", new SdDooSabin, bspline_renderer2);
+  init_algorithm(0, "Doo-Sabin", new SdDooSabin, new GLBSplineRenderer);
+  init_algorithm(1, "Doo-Sabin", new SdDooSabin, new GLBSplineRenderer);
 
-  init_algorithm(0, "Loop", new SdLoop, bspline_renderer1);
-  init_algorithm(1, "Loop", new SdLoop, bspline_renderer2);
+  init_algorithm(0, "Loop", new SdLoop, new GLBSplineRenderer);
+  init_algorithm(1, "Loop", new SdLoop, new GLBSplineRenderer);
 
-  init_algorithm(0, "Butterfly", new SdButterfly, bspline_renderer1);
-  init_algorithm(1, "Butterfly", new SdButterfly, bspline_renderer2);
+  init_algorithm(0, "Butterfly", new SdButterfly, new GLBSplineRenderer);
+  init_algorithm(1, "Butterfly", new SdButterfly, new GLBSplineRenderer);
 
-  init_algorithm(0, "Modified Butterfly", new SdModButterfly, bspline_renderer1);
-  init_algorithm(1, "Modified Butterfly", new SdModButterfly, bspline_renderer2);
+  init_algorithm(0, "Modified Butterfly", new SdModButterfly,
+                 new GLBSplineRenderer);
+  init_algorithm(1, "Modified Butterfly", new SdModButterfly,
+                 new GLBSplineRenderer);
 }
 
 void SubdivisionAlgorithmsPlugin::init_algorithm(int mesh_id,
     const QString name, SdAlgorithm* algorithm, GLRenderer* renderer) {
-  std::pair<int, QString> key1 = {mesh_id, name};
-  algorithms_[key1] = {
+  std::pair<int, QString> key = {mesh_id, name};
+  algorithms_[key] = {
     std::unique_ptr<SdAlgorithm>{algorithm},
     std::shared_ptr<GLRenderer> {renderer}
   };

@@ -30,6 +30,8 @@ class GuiControls : public QObject {
   subvis::MeshData* mesh_data_{nullptr};
   std::map<int, SdAlgorithm*> mesh_id_active_algorithm_;
   std::map<std::pair<const int, const QString>, AlgorithmRenderer>* algorithms_{nullptr};
+  std::pair<std::unique_ptr<surface_mesh::Surface_mesh>, std::unique_ptr<surface_mesh::Surface_mesh>>
+      result_{nullptr, nullptr};
   // memory managed by Qt's parent-relationship
   QPushButton* subdivide_{nullptr};
   QPushButton* stop_{nullptr};
@@ -46,9 +48,11 @@ class GuiControls : public QObject {
                                    int mesh_id);
   /// Enables dropdown items (algorithms) if they can subdivide the current mesh.
   /// Returns the first enabled item index after enabling/disabling the items.
-  int enable_applicable_algorithms_dropdown(QComboBox* dropdown, const surface_mesh::Surface_mesh&
+  int enable_applicable_algorithms_dropdown(QComboBox* dropdown,
+      const surface_mesh::Surface_mesh&
       mesh, int mesh_id, QStandardItemModel* model);
-  void ensure_current_dropdown_item_is_enabled(QComboBox* dropdown, QStandardItemModel* model,
+  void ensure_current_dropdown_item_is_enabled(QComboBox* dropdown,
+      QStandardItemModel* model,
       int first_enabled_item);
   void set_progress_controls_visible(bool visible);
 
