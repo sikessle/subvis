@@ -103,15 +103,41 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="action_load"/>
-   <addaction name="action_save"/>
-   <addaction name="action_snapshot"/>
-   <addaction name="action_triangulate"/>
-   <addaction name="action_edit"/>
    <addaction name="action_undo"/>
    <addaction name="action_redo"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QMenuBar" name="menu_bar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>900</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_file">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="action_load"/>
+    <addaction name="action_save"/>
+    <addaction name="separator"/>
+    <addaction name="action_snapshot"/>
+   </widget>
+   <widget class="QMenu" name="menu_edit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="action_edit"/>
+    <addaction name="action_triangulate"/>
+    <addaction name="separator"/>
+    <addaction name="action_undo"/>
+    <addaction name="action_redo"/>
+   </widget>
+   <addaction name="menu_file"/>
+   <addaction name="menu_edit"/>
+  </widget>
   <action name="action_load">
    <property name="icon">
     <iconset theme="document-open">
@@ -119,7 +145,7 @@
     </iconset>
    </property>
    <property name="text">
-    <string>Load</string>
+    <string>Open File...</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
@@ -132,7 +158,7 @@
     </iconset>
    </property>
    <property name="text">
-    <string>Save</string>
+    <string>Save as...</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
@@ -145,7 +171,7 @@
     </iconset>
    </property>
    <property name="text">
-    <string>Snapshot</string>
+    <string>Snapshot...</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+M</string>
@@ -161,7 +187,7 @@
     </iconset>
    </property>
    <property name="text">
-    <string>Edit</string>
+    <string>Toggle Edit Mode</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+E</string>
@@ -174,7 +200,7 @@
     </iconset>
    </property>
    <property name="text">
-    <string>Triangulate</string>
+    <string>Triangulate Mesh</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+T</string>
