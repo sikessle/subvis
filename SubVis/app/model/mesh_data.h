@@ -3,6 +3,7 @@
 
 #include <string>
 #include <memory>
+#include <vector>
 #include <QObject>
 #include "surface_mesh/Surface_mesh.h"
 
@@ -17,15 +18,22 @@ class MeshData : public QObject {
   const surface_mesh::Surface_mesh& get_mesh() const;
   bool load(const std::string& filename);
   void load(std::unique_ptr<surface_mesh::Surface_mesh> mesh);
+  void history_step_back();
+  void history_step_forward();
   bool persist(const std::string& filename) const;
   const std::string& get_load_file_formats() const;
   const std::string& get_persist_file_formats() const;
   void triangulate();
 
  private:
-  std::unique_ptr<surface_mesh::Surface_mesh> mesh_object_{new surface_mesh::Surface_mesh};
+  std::vector<std::unique_ptr<surface_mesh::Surface_mesh>> history_;
+  unsigned int history_index_{0};
   const std::string kLoadFileFormats {"*.obj *.off *.stl"};
   const std::string kPersistFileFormats {"*.off"};
+  const unsigned int kHistorySize {10};
+  void emit_updated_signal();
+
+  void push_history(std::unique_ptr<surface_mesh::Surface_mesh> mesh);
 
  signals:
   void updated(const surface_mesh::Surface_mesh& mesh);
