@@ -192,7 +192,7 @@
     <string>Snapshot (left side)...</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+M</string>
+    <string>Ctrl+M, 1</string>
    </property>
   </action>
   <action name="action_edit">
@@ -282,7 +282,7 @@
     <string>Snapshot (right side)...</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+M</string>
+    <string>Ctrl+M, 2</string>
    </property>
   </action>
  </widget>
