@@ -72,7 +72,6 @@ void MeshData::history_push(std::unique_ptr<surface_mesh::Surface_mesh> mesh) {
     // Erase everything from the history_index on to the end.
     // This also ensures, that the history has now at least one free bucket.
     history_.erase(history_.begin() + history_index_ + 1, history_.end());
-    history_index_--;
   }
   // Case 2: history is full
   else if (history_.size() == kHistorySize) {
