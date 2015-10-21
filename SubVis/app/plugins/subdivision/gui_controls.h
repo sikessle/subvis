@@ -30,6 +30,7 @@ class GuiControls : public QObject {
   std::map<const QString, AlgorithmRenderer>* algorithms_{nullptr};
   // memory managed by Qt's parent-relationship
   QPushButton* subdivide_{nullptr};
+  QPushButton* stop_{nullptr};
   QSpinBox* steps_{nullptr};
   QComboBox* dropdown_{nullptr};
 

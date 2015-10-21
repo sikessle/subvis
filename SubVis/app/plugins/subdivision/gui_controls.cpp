@@ -69,12 +69,16 @@ void GuiControls::create(QWidget* parent,
 
   QObject::connect(subdivide_, SIGNAL(clicked(bool)),
                    this, SLOT(subdivide_clicked(bool)));
+
+  stop_ = new QPushButton("stop", parent);
+  layout->addWidget(stop_);
 }
 
 void GuiControls::subdivide_clicked(bool) {
   const int steps = steps_->value();
   auto& algorithm = current_algo_render_pair().algorithm;
 
+  // TODO start in new thread, copy mesh before
   auto result = algorithm->subdivide(mesh_data_->get_mesh(), steps);
 
   mesh_data_->load(std::move(result));
