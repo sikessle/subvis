@@ -91,6 +91,9 @@
    <property name="windowTitle">
     <string>toolBar</string>
    </property>
+   <property name="layoutDirection">
+    <enum>Qt::RightToLeft</enum>
+   </property>
    <property name="movable">
     <bool>false</bool>
    </property>
@@ -124,6 +127,8 @@
     <addaction name="action_save"/>
     <addaction name="separator"/>
     <addaction name="action_snapshot"/>
+    <addaction name="separator"/>
+    <addaction name="action_quit"/>
    </widget>
    <widget class="QMenu" name="menu_edit">
     <property name="title">
@@ -236,6 +241,20 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+Z</string>
+   </property>
+  </action>
+  <action name="action_quit">
+   <property name="icon">
+    <iconset theme="application-exit"/>
+   </property>
+   <property name="text">
+    <string>Quit</string>
+   </property>
+   <property name="toolTip">
+    <string>Quit SubVis</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
    </property>
   </action>
  </widget>

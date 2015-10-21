@@ -17,7 +17,7 @@ plugin_manager_(plugin_manager) {
 
   setup_status_bar();
   setup_viewer_tabs();
-  setup_toolbar();
+  setup_menus();
   setup_plugin_guis();
 }
 
@@ -60,13 +60,15 @@ void MainWindow::plugin_tab_changed(int current) {
   ui_->tabs_viewer->setTabText(1, it->second.name);
 }
 
-void MainWindow::setup_toolbar() {
+void MainWindow::setup_menus() {
   QObject::connect(ui_->action_load, SIGNAL(triggered(bool)), this,
                    SLOT(show_load_dialog()));
   QObject::connect(ui_->action_save, SIGNAL(triggered(bool)), this,
                    SLOT(show_save_dialog()));
   QObject::connect(ui_->action_snapshot, SIGNAL(triggered(bool)),
                    ui_->tab_viewer_mesh, SLOT(saveSnapshot(bool)));
+  QObject::connect(ui_->action_quit, SIGNAL(triggered(bool)),
+                   QApplication::instance(), SLOT(quit()));
   QObject::connect(ui_->action_triangulate, SIGNAL(triggered(bool)),
                    this, SLOT(triangulate_mesh(void)));
   QObject::connect(ui_->action_undo, SIGNAL(triggered(bool)),

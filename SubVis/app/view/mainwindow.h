@@ -37,7 +37,7 @@ class MainWindow : public QMainWindow {
 
   void setup_status_bar();
   void setup_viewer_tabs();
-  void setup_toolbar();
+  void setup_menus();
   void setup_plugin_guis();
 
  public slots:
