@@ -120,6 +120,8 @@
    </attribute>
    <addaction name="action_redo"/>
    <addaction name="action_undo"/>
+   <addaction name="separator"/>
+   <addaction name="action_sync_views"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menu_bar">
@@ -283,6 +285,28 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+M, 2</string>
+   </property>
+  </action>
+  <action name="action_sync_views">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="zoom-best-fit">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Sync Views</string>
+   </property>
+   <property name="toolTip">
+    <string>Synchronize Views</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
    </property>
   </action>
  </widget>

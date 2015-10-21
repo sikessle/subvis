@@ -76,22 +76,23 @@ void MainWindow::setup_viewer_tabs() {
   viewer_mesh1_ = new ViewerMeshWidget(ui_->tab_viewer_mesh, 0);
   viewer_mesh2_ = new ViewerMeshWidget(ui_->tab_viewer_mesh, 1);
   setup_viewer_tab(ui_->tab_viewer_mesh, viewer_mesh1_, viewer_mesh2_);
-  sync_viewers(viewer_mesh1_, viewer_mesh2_);
 
   viewer_plugin1_ = new ViewerPluginWidget(ui_->tab_viewer_plugin, 0);
   viewer_plugin2_ = new ViewerPluginWidget(ui_->tab_viewer_plugin, 1);
   setup_viewer_tab(ui_->tab_viewer_plugin, viewer_plugin1_, viewer_plugin2_);
-  sync_viewers(viewer_plugin1_, viewer_plugin2_);
+
+  toggle_sync_views(true);
 }
 
 void MainWindow::sync_viewers(QGLViewer* viewer1, QGLViewer* viewer2) {
   // Warning: This connection must be disconnected before the objects are garbage collected.
   viewer2->setCamera(viewer1->camera());
+  viewer2->updateGL();
 }
 
 void MainWindow::unsync_viewers(QGLViewer* viewer1, QGLViewer* viewer2) {
-  viewer1->setCamera(new qglviewer::Camera);
-  viewer2->setCamera(new qglviewer::Camera);
+  viewer1->setCamera(new qglviewer::Camera(*viewer1->camera()));
+  viewer2->setCamera(new qglviewer::Camera(*viewer2->camera()));
 }
 
 void MainWindow::setup_viewer_tab(QWidget* tab, ViewerWidget* viewer1,
@@ -149,6 +150,8 @@ void MainWindow::setup_menus() {
                    QApplication::instance(), SLOT(quit()));
   QObject::connect(ui_->action_triangulate, SIGNAL(triggered(bool)),
                    this, SLOT(triangulate_mesh(void)));
+  QObject::connect(ui_->action_sync_views, SIGNAL(toggled(bool)),
+                   this, SLOT(toggle_sync_views(bool)));
   QObject::connect(ui_->action_undo, SIGNAL(triggered(bool)),
                    this, SLOT(undo(void)));
   QObject::connect(ui_->action_redo, SIGNAL(triggered(bool)),
@@ -157,6 +160,16 @@ void MainWindow::setup_menus() {
   // On startup redo/undo is not available
   ui_->action_redo->setEnabled(false);
   ui_->action_undo->setEnabled(false);
+}
+
+void MainWindow::toggle_sync_views(bool sync) {
+  if (sync) {
+    sync_viewers(viewer_mesh1_, viewer_mesh2_);
+    sync_viewers(viewer_plugin1_, viewer_plugin2_);
+  } else {
+    unsync_viewers(viewer_mesh1_, viewer_mesh2_);
+    unsync_viewers(viewer_plugin1_, viewer_plugin2_);
+  }
 }
 
 void MainWindow::undo() {
@@ -201,8 +214,7 @@ void MainWindow::show_save_dialog() {
 }
 
 MainWindow::~MainWindow() {
-  unsync_viewers(viewer_mesh1_, viewer_mesh2_);
-  unsync_viewers(viewer_plugin1_, viewer_plugin2_);
+  toggle_sync_views(false);
   delete ui_;
 }
 

@@ -56,6 +56,7 @@ class MainWindow : public QMainWindow {
   void triangulate_mesh();
   void undo();
   void redo();
+  void toggle_sync_views(bool sync);
   void plugin_tab_changed(int current);
   void mesh_updated(
     std::pair<const surface_mesh::Surface_mesh&, const surface_mesh::Surface_mesh&>
