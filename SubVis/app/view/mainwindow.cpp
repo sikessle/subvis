@@ -111,8 +111,7 @@ void MainWindow::setup_viewer_tab(QWidget* tab, ViewerWidget* viewer1,
   viewer1->set_model(mesh_data_);
   viewer2->set_model(mesh_data_);
 
-  viewer1->resize(viewer1->geometry().width(), viewer1->geometry().height());
-  viewer2->resize(viewer2->geometry().width(), viewer2->geometry().height());
+  splitter->refresh();
 }
 
 void MainWindow::setup_plugin_guis() {
