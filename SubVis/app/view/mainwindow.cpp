@@ -111,7 +111,12 @@ void MainWindow::setup_viewer_tab(QWidget* tab, ViewerWidget* viewer1,
   viewer1->set_model(mesh_data_);
   viewer2->set_model(mesh_data_);
 
+  // To resize correctly
   splitter->refresh();
+
+  // Fix the width to the defaults 50%
+  viewer1->setMinimumWidth(viewer1->width());
+  viewer2->setMinimumWidth(viewer2->width());
 }
 
 void MainWindow::setup_plugin_guis() {
