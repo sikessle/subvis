@@ -121,29 +121,34 @@ void GuiControls::subdivide_clicked(bool) {
   mesh_id_active_algorithm_[0] = current_algo_render_pair(0).algorithm.get();
   mesh_id_active_algorithm_[1] = current_algo_render_pair(1).algorithm.get();
 
-  auto callback = [this] (std::unique_ptr<surface_mesh::Surface_mesh> mesh) {
-    if (!result_.first) {
-      result_.first = std::move(mesh);
-    } else if (!result_.second) {
-      result_.second = std::move(mesh);
-    }
-
-    if (result_.first && result_.second) {
-      mesh_data_->load(
-        std::pair<std::unique_ptr<surface_mesh::Surface_mesh>, std::unique_ptr<surface_mesh::Surface_mesh>>
-      {std::move(result_.first), std::move(result_.second)});
-      set_progress_controls_visible(false);
-    }
+  auto callback1 = [this] (std::unique_ptr<surface_mesh::Surface_mesh> mesh) {
+    callback(std::move(mesh), result1_);
+  };
+  auto callback2 = [this] (std::unique_ptr<surface_mesh::Surface_mesh> mesh) {
+    callback(std::move(mesh), result2_);
   };
 
   set_progress_controls_visible(true);
 
-  result_ = {nullptr, nullptr};
+  result1_ = nullptr;
+  result2_ = nullptr;
 
   mesh_id_active_algorithm_[0]->subdivide_threaded(mesh_data_->get_mesh(0),
-      callback, steps);
+      callback1, steps);
   mesh_id_active_algorithm_[1]->subdivide_threaded(mesh_data_->get_mesh(1),
-      callback, steps);
+      callback2, steps);
+}
+
+void GuiControls::callback(std::unique_ptr<surface_mesh::Surface_mesh> mesh,
+                           std::unique_ptr<surface_mesh::Surface_mesh>& result_target) {
+  result_target = std::move(mesh);
+
+  if (result1_ && result2_) {
+    mesh_data_->load(
+      std::pair<std::unique_ptr<surface_mesh::Surface_mesh>, std::unique_ptr<surface_mesh::Surface_mesh>>
+    {std::move(result1_), std::move(result2_)});
+    set_progress_controls_visible(false);
+  }
 }
 
 void GuiControls::stop_clicked(bool) {

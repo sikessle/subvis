@@ -30,8 +30,8 @@ class GuiControls : public QObject {
   subvis::MeshData* mesh_data_{nullptr};
   std::map<int, SdAlgorithm*> mesh_id_active_algorithm_;
   std::map<std::pair<const int, const QString>, AlgorithmRenderer>* algorithms_{nullptr};
-  std::pair<std::unique_ptr<surface_mesh::Surface_mesh>, std::unique_ptr<surface_mesh::Surface_mesh>>
-      result_{nullptr, nullptr};
+  std::unique_ptr<surface_mesh::Surface_mesh> result1_{nullptr};
+  std::unique_ptr<surface_mesh::Surface_mesh> result2_{nullptr};
   // memory managed by Qt's parent-relationship
   QPushButton* subdivide_{nullptr};
   QPushButton* stop_{nullptr};
@@ -55,6 +55,8 @@ class GuiControls : public QObject {
       QStandardItemModel* model,
       int first_enabled_item);
   void set_progress_controls_visible(bool visible);
+  void callback(std::unique_ptr<surface_mesh::Surface_mesh> mesh,
+                std::unique_ptr<surface_mesh::Surface_mesh>& result_target);
 
  private slots:
   void subdivide_clicked(bool);
