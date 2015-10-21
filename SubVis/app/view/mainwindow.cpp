@@ -19,13 +19,32 @@ plugin_manager_(plugin_manager) {
   setup_viewer_tabs();
   setup_menus();
   setup_plugin_guis();
+
+  QObject::connect(&mesh_data_, SIGNAL(updated(const surface_mesh::Surface_mesh)),
+                   this, SLOT(mesh_updated(const surface_mesh::Surface_mesh&)));
+}
+
+void MainWindow::mesh_updated(const surface_mesh::Surface_mesh& mesh) {
+  QString info;
+  info += "Vertices: ";
+  info += QString::number(mesh.n_vertices());
+  info += " | Edges: ";
+  info += QString::number(mesh.n_edges());
+  info += " | Faces: ";
+  info += QString::number(mesh.n_faces());
+
+  mesh_information_label_->setText(info);
 }
 
 void MainWindow::setup_status_bar() {
-  status_label_ = new QLabel;
-  status_label_->setText(kStatusText);
-  ui_->statusbar->addPermanentWidget(status_label_);
-  // remove border around label
+  mesh_information_label_ = new QLabel;
+  build_date_label_ = new QLabel;
+  build_date_label_->setText(kStatusText);
+
+  ui_->statusbar->addWidget(mesh_information_label_);
+  ui_->statusbar->addPermanentWidget(build_date_label_);
+
+  // Remove border around label
   ui_->statusbar->setStyleSheet("QStatusBar::item { border: 0; }");
 }
 

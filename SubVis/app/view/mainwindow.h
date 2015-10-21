@@ -29,7 +29,8 @@ class MainWindow : public QMainWindow {
   MeshData& mesh_data_;
   PluginManager& plugin_manager_;
   // memory managed by Qt's parent-relationship (ui)
-  QLabel* status_label_;
+  QLabel* build_date_label_;
+  QLabel* mesh_information_label_;
 
   const QString kStatusText {"Build: " __DATE__ " " __TIME__};
   const QString kSaveDialogCaption {"Save model file"};
@@ -47,6 +48,7 @@ class MainWindow : public QMainWindow {
   void undo();
   void redo();
   void plugin_tab_changed(int current);
+  void mesh_updated(const surface_mesh::Surface_mesh& mesh);
 };
 
 
