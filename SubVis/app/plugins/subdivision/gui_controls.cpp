@@ -121,6 +121,7 @@ void GuiControls::subdivide_clicked(bool) {
   const int steps = steps_->value();
   mesh_id_active_algorithm_[0] = current_algo_render_pair(0).algorithm.get();
   mesh_id_active_algorithm_[1] = current_algo_render_pair(1).algorithm.get();
+
   auto callback = [this] (std::unique_ptr<surface_mesh::Surface_mesh> mesh) {
     if (!result_.first) {
       result_.first = std::move(mesh);

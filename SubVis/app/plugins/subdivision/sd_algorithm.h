@@ -31,6 +31,7 @@ class SdAlgorithm : public QObject {
   /**
    * @brief Subdivides the given mesh object in n steps.
    * @param callback The function which will be called when the computation is done.
+   * This function will be called in the single GUI thread, so it has not to be thread safe.
    * @param steps The number of subdivision steps.
    */
   void subdivide_threaded(const Surface_mesh& mesh,
