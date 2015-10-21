@@ -1,6 +1,7 @@
 #include <QLabel>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QHBoxLayout>
 
 #include "ui_mainwindow.h"
 #include "view/mainwindow.h"
@@ -72,8 +73,22 @@ void MainWindow::setup_status_bar() {
 }
 
 void MainWindow::setup_viewer_tabs() {
-  ui_->tab_viewer_mesh->set_model(mesh_data_);
-  ui_->tab_viewer_plugin->set_model(mesh_data_);
+  setup_viewer_tab(ui_->tab_viewer_mesh,
+                   new ViewerMeshWidget(ui_->tab_viewer_mesh, 0),
+                   new ViewerMeshWidget(ui_->tab_viewer_mesh, 1));
+
+  viewer_plugin1_ = new ViewerPluginWidget(ui_->tab_viewer_plugin, 0);
+  viewer_plugin2_ = new ViewerPluginWidget(ui_->tab_viewer_plugin, 1);
+  setup_viewer_tab(ui_->tab_viewer_plugin, viewer_plugin1_, viewer_plugin2_);
+}
+
+void MainWindow::setup_viewer_tab(QWidget* tab, ViewerWidget* viewer1,
+                                  ViewerWidget* viewer2) {
+  auto layout = new QHBoxLayout(tab);
+  layout->addWidget(viewer1);
+  layout->addWidget(viewer2);
+  viewer1->set_model(mesh_data_);
+  viewer2->set_model(mesh_data_);
 }
 
 void MainWindow::setup_plugin_guis() {
@@ -98,7 +113,8 @@ void MainWindow::plugin_tab_changed(int current) {
   for (int i = 0; i < current; i++) {
     it++;
   }
-  ui_->tab_viewer_plugin->set_drawing_plugin(it->second.plugin.get());
+  viewer_plugin1_->set_drawing_plugin(it->second.plugin.get());
+  viewer_plugin2_->set_drawing_plugin(it->second.plugin.get());
   ui_->tabs_viewer->setTabText(1, it->second.name);
 }
 
