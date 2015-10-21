@@ -21,6 +21,8 @@ class MeshData : public QObject {
   void history_step_back();
   void history_step_forward();
   void history_purge();
+  bool history_can_step_back();
+  bool history_can_step_forward();
   bool persist(const std::string& filename) const;
   const std::string& get_load_file_formats() const;
   const std::string& get_persist_file_formats() const;

@@ -39,17 +39,25 @@ void MeshData::triangulate() {
 }
 
 void MeshData::history_step_back() {
-  if (history_index_ > 0) {
+  if (history_can_step_back()) {
     history_index_--;
   }
   emit_updated_signal();
 }
 
 void MeshData::history_step_forward() {
-  if (history_index_ < history_.size() - 1) {
+  if (history_can_step_forward()) {
     history_index_++;
   }
   emit_updated_signal();
+}
+
+bool MeshData::history_can_step_back() {
+  return history_index_ > 0;
+}
+
+bool MeshData::history_can_step_forward() {
+  return history_index_ < history_.size() - 1;
 }
 
 void MeshData::history_purge() {

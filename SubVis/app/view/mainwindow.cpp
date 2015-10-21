@@ -34,6 +34,9 @@ void MainWindow::mesh_updated(const surface_mesh::Surface_mesh& mesh) {
   info += QString::number(mesh.n_faces());
 
   mesh_information_label_->setText(info);
+
+  ui_->action_undo->setEnabled(mesh_data_.history_can_step_back());
+  ui_->action_redo->setEnabled(mesh_data_.history_can_step_forward());
 }
 
 void MainWindow::setup_status_bar() {
@@ -98,6 +101,10 @@ void MainWindow::setup_menus() {
                    this, SLOT(undo(void)));
   QObject::connect(ui_->action_redo, SIGNAL(triggered(bool)),
                    this, SLOT(redo(void)));
+
+  // On startup redo/undo is not available
+  ui_->action_redo->setEnabled(false);
+  ui_->action_undo->setEnabled(false);
 }
 
 void MainWindow::undo() {
