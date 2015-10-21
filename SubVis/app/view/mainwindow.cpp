@@ -41,6 +41,10 @@ void MainWindow::setup_status_bar() {
   build_date_label_ = new QLabel;
   build_date_label_->setText(kStatusText);
 
+  auto icon = new QLabel;
+  icon->setTextFormat(Qt::RichText);
+  icon->setText("<img src=\"image://theme/dialog-information\" />");
+  ui_->statusbar->addWidget(icon);
   ui_->statusbar->addWidget(mesh_information_label_);
   ui_->statusbar->addPermanentWidget(build_date_label_);
 
