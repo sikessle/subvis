@@ -31,6 +31,8 @@ class MainWindow : public QMainWindow {
   // memory managed by Qt's parent-relationship (ui)
   QLabel* build_date_label_{nullptr};
   QLabel* mesh_information_label_{nullptr};
+  ViewerMeshWidget* viewer_mesh1_{nullptr};
+  ViewerMeshWidget* viewer_mesh2_{nullptr};
   ViewerPluginWidget* viewer_plugin1_{nullptr};
   ViewerPluginWidget* viewer_plugin2_{nullptr};
 
@@ -40,7 +42,9 @@ class MainWindow : public QMainWindow {
 
   void setup_status_bar();
   void setup_viewer_tabs();
-  void setup_viewer_tab(QWidget* tab, ViewerWidget *viewer1, ViewerWidget* viewer2);
+  void setup_viewer_tab(QWidget* tab, ViewerWidget* viewer1,
+                        ViewerWidget* viewer2);
+  void sync_viewers(QGLViewer* viewer1, QGLViewer* viewer2);
   void setup_menus();
   void setup_plugin_guis();
   QString get_stats(const surface_mesh::Surface_mesh& mesh);

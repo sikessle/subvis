@@ -1,7 +1,7 @@
 #include <QLabel>
 #include <QFileDialog>
 #include <QMessageBox>
-#include <QHBoxLayout>
+#include <QSplitter>
 
 #include "ui_mainwindow.h"
 #include "view/mainwindow.h"
@@ -73,20 +73,35 @@ void MainWindow::setup_status_bar() {
 }
 
 void MainWindow::setup_viewer_tabs() {
-  setup_viewer_tab(ui_->tab_viewer_mesh,
-                   new ViewerMeshWidget(ui_->tab_viewer_mesh, 0),
-                   new ViewerMeshWidget(ui_->tab_viewer_mesh, 1));
+  viewer_mesh1_ = new ViewerMeshWidget(ui_->tab_viewer_mesh, 0);
+  viewer_mesh2_ = new ViewerMeshWidget(ui_->tab_viewer_mesh, 1);
+  setup_viewer_tab(ui_->tab_viewer_mesh, viewer_mesh1_, viewer_mesh2_);
+  sync_viewers(viewer_mesh1_, viewer_mesh2_);
 
   viewer_plugin1_ = new ViewerPluginWidget(ui_->tab_viewer_plugin, 0);
   viewer_plugin2_ = new ViewerPluginWidget(ui_->tab_viewer_plugin, 1);
   setup_viewer_tab(ui_->tab_viewer_plugin, viewer_plugin1_, viewer_plugin2_);
+  sync_viewers(viewer_plugin1_, viewer_plugin2_);
+}
+
+void MainWindow::sync_viewers(QGLViewer* viewer1, QGLViewer* viewer2) {
+  viewer2->setCamera(viewer1->camera());
 }
 
 void MainWindow::setup_viewer_tab(QWidget* tab, ViewerWidget* viewer1,
                                   ViewerWidget* viewer2) {
-  auto layout = new QHBoxLayout(tab);
-  layout->addWidget(viewer1);
-  layout->addWidget(viewer2);
+  auto splitter = new QSplitter;
+
+  splitter->addWidget(viewer1);
+  splitter->addWidget(viewer2);
+
+  splitter->setStretchFactor(0, 1);
+  splitter->setStretchFactor(1, 1);
+
+  auto tab_layout = new QVBoxLayout;
+  tab->setLayout(tab_layout);
+  tab_layout->addWidget(splitter);
+
   viewer1->set_model(mesh_data_);
   viewer2->set_model(mesh_data_);
 }
@@ -123,8 +138,10 @@ void MainWindow::setup_menus() {
                    SLOT(show_load_dialog()));
   QObject::connect(ui_->action_save, SIGNAL(triggered(bool)), this,
                    SLOT(show_save_dialog()));
-  QObject::connect(ui_->action_snapshot, SIGNAL(triggered(bool)),
-                   ui_->tab_viewer_mesh, SLOT(saveSnapshot(bool)));
+  QObject::connect(ui_->action_snapshot_left, SIGNAL(triggered(bool)),
+                   viewer_mesh1_, SLOT(saveSnapshot(bool)));
+  QObject::connect(ui_->action_snapshot_right, SIGNAL(triggered(bool)),
+                   viewer_mesh2_, SLOT(saveSnapshot(bool)));
   QObject::connect(ui_->action_quit, SIGNAL(triggered(bool)),
                    QApplication::instance(), SLOT(quit()));
   QObject::connect(ui_->action_triangulate, SIGNAL(triggered(bool)),

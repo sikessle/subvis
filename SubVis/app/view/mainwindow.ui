@@ -44,11 +44,23 @@
         <bool>true</bool>
        </property>
        <widget class="QWidget" name="tab_viewer_mesh">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <attribute name="title">
          <string>Mesh</string>
         </attribute>
        </widget>
        <widget class="QWidget" name="tab_viewer_plugin">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <attribute name="title">
          <string>Plugin</string>
         </attribute>
@@ -126,7 +138,8 @@
     <addaction name="action_load"/>
     <addaction name="action_save"/>
     <addaction name="separator"/>
-    <addaction name="action_snapshot"/>
+    <addaction name="action_snapshot_left"/>
+    <addaction name="action_snapshot_right"/>
     <addaction name="separator"/>
     <addaction name="action_quit"/>
    </widget>
@@ -169,14 +182,14 @@
     <string>Ctrl+S</string>
    </property>
   </action>
-  <action name="action_snapshot">
+  <action name="action_snapshot_left">
    <property name="icon">
     <iconset theme="camera">
      <normaloff/>
     </iconset>
    </property>
    <property name="text">
-    <string>Snapshot...</string>
+    <string>Snapshot (left side)...</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+M</string>
@@ -257,6 +270,19 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="action_snapshot_right">
+   <property name="icon">
+    <iconset theme="camera">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Snapshot (right side)...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+M</string>
    </property>
   </action>
  </widget>
