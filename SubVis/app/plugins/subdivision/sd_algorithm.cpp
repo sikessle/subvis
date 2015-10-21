@@ -1,3 +1,4 @@
+#include <QtConcurrent/QtConcurrent>
 
 #include "plugins/subdivision/debug.h"
 #include "plugins/subdivision/sd_algorithm.h"
@@ -7,17 +8,30 @@ namespace subdivision {
 using Surface_mesh = surface_mesh::Surface_mesh;
 using Point = surface_mesh::Point;
 
+SdAlgorithm::SdAlgorithm() {
+  QObject::connect(this, SIGNAL(subdivide_worker_finished()),
+                   this, SLOT(subdivide_worker_cleanup()));
+}
+
 SdAlgorithm::~SdAlgorithm() {
 }
 
 void SdAlgorithm::subdivide_threaded(const Surface_mesh& mesh,
-  std::function<void(std::unique_ptr<Surface_mesh>)> callback,
-  int steps) {
-  output_mesh_.reset(new Surface_mesh);
-  input_mesh_.reset(new Surface_mesh{mesh});
-  callback_ = callback;
+                                     std::function<void(std::unique_ptr<Surface_mesh>)> callback,
+                                     const int steps) {
+  if (!thread_running_) {
+    thread_running_ = true;
+    stop_subdivide_ = false;
+    output_mesh_.reset(new Surface_mesh);
+    input_mesh_.reset(new Surface_mesh{mesh});
+    callback_ = callback;
 
-  for (int i = 0; i < steps; i++) {
+    QtConcurrent::run(this, &SdAlgorithm::subdivide_worker, steps);
+  }
+}
+
+void SdAlgorithm::subdivide_worker(const int steps) {
+  for (int i = 0; i < steps && !stop_subdivide_; i++) {
     output_mesh_->clear();
     DEBUG_MESH(*input_mesh_.get(), "input mesh")
     subdivide_input_mesh_write_output_mesh();
@@ -25,15 +39,17 @@ void SdAlgorithm::subdivide_threaded(const Surface_mesh& mesh,
     // input mesh is now the previous result mesh
     input_mesh_.reset(new Surface_mesh{ *output_mesh_.get()});
   }
+  emit subdivide_worker_finished();
+}
 
-  // free memory
-  input_mesh_.reset(nullptr);
-
+void SdAlgorithm::subdivide_worker_cleanup() {
+  input_mesh_.reset(nullptr); // free memory
   callback_(std::move(output_mesh_));
+  thread_running_ = false;
 }
 
 void SdAlgorithm::stop_subdivide_threaded() {
-  // TODO set stop flag
+  stop_subdivide_ = true;
 }
 
 const Surface_mesh& SdAlgorithm::get_result_mesh() {

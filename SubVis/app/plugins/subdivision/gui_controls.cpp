@@ -59,7 +59,7 @@ void GuiControls::create(QWidget* parent,
 
   layout_steps->addWidget(new QLabel("Steps:"));
   steps_ = new QSpinBox(parent);
-  steps_->setRange(1, 100);
+  steps_->setRange(1, 20);
   layout_steps->addWidget(steps_);
 
   layout->addLayout(layout_steps);

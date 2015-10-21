@@ -25,6 +25,7 @@ class SdAlgorithm : public QObject {
   using Surface_mesh = surface_mesh::Surface_mesh;
   using Point = surface_mesh::Point;
 
+  SdAlgorithm();
   virtual ~SdAlgorithm();
 
   /**
@@ -34,7 +35,7 @@ class SdAlgorithm : public QObject {
    */
   void subdivide_threaded(const Surface_mesh& mesh,
                           std::function<void(std::unique_ptr<Surface_mesh>)> callback,
-                          int steps = 1);
+                          const int steps = 1);
 
   /// Stops after the current subdivision step and executes the callback.
   void stop_subdivide_threaded();
@@ -108,7 +109,17 @@ class SdAlgorithm : public QObject {
     const Surface_mesh::Halfedge start_halfedge) const;
 
  private:
+  bool thread_running_{false};
+  volatile bool stop_subdivide_{false};
   std::function<void(std::unique_ptr<Surface_mesh>)> callback_;
+
+  void subdivide_worker(const int steps);
+
+ signals:
+  void subdivide_worker_finished();
+
+ private slots:
+  void subdivide_worker_cleanup();
 };
 
 } // namespace subdivision
