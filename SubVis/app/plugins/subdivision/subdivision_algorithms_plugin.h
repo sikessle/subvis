@@ -20,9 +20,9 @@ class SubdivisionAlgorithmsPlugin : public QObject,
   const QString id() const override;
   const QString name() const override;
   void set_model(subvis::MeshData& mesh_data) override;
-  void mesh_updated(const surface_mesh::Surface_mesh& mesh) override;
-  void init_opengl() override;
-  void draw_opengl() override;
+  void mesh_updated(const surface_mesh::Surface_mesh& mesh, int mesh_id) override;
+  void init_opengl(int mesh_id) override;
+  void draw_opengl(int mesh_id) override;
   void create_gui(QWidget* parent) override;
 
  private:

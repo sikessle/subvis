@@ -20,12 +20,31 @@ plugin_manager_(plugin_manager) {
   setup_menus();
   setup_plugin_guis();
 
-  QObject::connect(&mesh_data_, SIGNAL(updated(const surface_mesh::Surface_mesh)),
-                   this, SLOT(mesh_updated(const surface_mesh::Surface_mesh&)));
+  QObject::connect(&mesh_data_,
+                   SIGNAL(updated(
+                            std::pair<const surface_mesh::Surface_mesh&, const surface_mesh::Surface_mesh&>)),
+                   this,
+                   SLOT(mesh_updated(
+                          std::pair<const surface_mesh::Surface_mesh&, const surface_mesh::Surface_mesh&>)));
 }
 
-void MainWindow::mesh_updated(const surface_mesh::Surface_mesh& mesh) {
+void MainWindow::mesh_updated(
+  std::pair<const surface_mesh::Surface_mesh&, const surface_mesh::Surface_mesh&>
+  meshes) {
+  QString info = "[0]: ";
+  info += get_stats(meshes.first);
+  info += " ---- [1]: ";
+  info += get_stats(meshes.second);
+
+  mesh_information_label_->setText(info);
+
+  ui_->action_undo->setEnabled(mesh_data_.history_can_step_back());
+  ui_->action_redo->setEnabled(mesh_data_.history_can_step_forward());
+}
+
+QString MainWindow::get_stats(const surface_mesh::Surface_mesh& mesh) {
   QString info;
+
   info += "Vertices: ";
   info += QString::number(mesh.n_vertices());
   info += " | Edges: ";
@@ -33,10 +52,7 @@ void MainWindow::mesh_updated(const surface_mesh::Surface_mesh& mesh) {
   info += " | Faces: ";
   info += QString::number(mesh.n_faces());
 
-  mesh_information_label_->setText(info);
-
-  ui_->action_undo->setEnabled(mesh_data_.history_can_step_back());
-  ui_->action_redo->setEnabled(mesh_data_.history_can_step_forward());
+  return info;
 }
 
 void MainWindow::setup_status_bar() {

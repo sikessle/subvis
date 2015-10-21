@@ -6,7 +6,9 @@
 
 namespace subvis {
 
-ViewerMeshWidget::ViewerMeshWidget(QWidget* parent) : ViewerWidget{parent} {
+ViewerMeshWidget::ViewerMeshWidget(QWidget* parent,
+                                   int mesh_id) :
+  ViewerWidget{parent, mesh_id} {
 }
 
 

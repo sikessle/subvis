@@ -2,22 +2,27 @@
 
 namespace subvis {
 
-  using Surface_mesh = surface_mesh::Surface_mesh;
-  using UniqueMeshPtr = std::unique_ptr<Surface_mesh>;
-  using MeshPair = std::pair<Surface_mesh&, Surface_mesh&>;
-  using MeshPairUniquePtrs = std::pair<UniqueMeshPtr, UniqueMeshPtr>;
+using Surface_mesh = ::surface_mesh::Surface_mesh;
+using MeshPairRef = std::pair<const Surface_mesh&, const Surface_mesh&>;
+using MeshPairUniquePtrs =
+  std::pair<std::unique_ptr<Surface_mesh>, std::unique_ptr<Surface_mesh>>;
 
 MeshData::MeshData() {
-  auto mesh = UniqueMeshPtr {new surface_mesh::Surface_mesh};
-  history_.push_back({std::move(mesh)});
+  auto mesh1 = std::unique_ptr<Surface_mesh> {new surface_mesh::Surface_mesh};
+  auto mesh2 = std::unique_ptr<Surface_mesh> {new surface_mesh::Surface_mesh};
+  history_.push_back({std::move(mesh1), std::move(mesh2)});
 }
 
-const Surface_mesh& MeshData::get_mesh() const {
-  return *(history_.at(history_index_).get());
+const Surface_mesh& MeshData::get_mesh(int idx) const {
+  if (idx == 0) {
+    return *(history_.at(history_index_).first.get());
+  } else {
+    return *(history_.at(history_index_).second.get());
+  }
 }
 
-void MeshData::load(UniqueMeshPtr mesh) {
-  history_push(std::move(mesh));
+void MeshData::load(MeshPairUniquePtrs meshes) {
+  history_push({std::move(meshes.first), std::move(meshes.second)});
   emit_updated_signal();
 }
 
@@ -27,18 +32,21 @@ bool MeshData::load(const std::string& filename) {
   }
 
   // create new mesh
-  auto mesh = UniqueMeshPtr {new Surface_mesh};
+  auto mesh = std::unique_ptr<Surface_mesh> {new Surface_mesh};
   bool success = mesh->read(filename);
-  history_push(std::move(mesh));
+  auto copy = std::unique_ptr<Surface_mesh> {new Surface_mesh(*mesh.get())};
+  history_push({std::move(mesh), std::move(copy)});
   emit_updated_signal();
 
   return success;
 }
 
 void MeshData::triangulate() {
-  auto copy = UniqueMeshPtr {new Surface_mesh(get_mesh())};
-  copy->triangulate();
-  history_push(std::move(copy));
+  auto copy1 = std::unique_ptr<Surface_mesh> {new Surface_mesh(get_mesh(0))};
+  copy1->triangulate();
+  auto copy2 = std::unique_ptr<Surface_mesh> {new Surface_mesh(get_mesh(1))};
+  copy2->triangulate();
+  history_push({std::move(copy1), std::move(copy2)});
 
   emit_updated_signal();
 }
@@ -71,7 +79,7 @@ void MeshData::history_purge() {
   history_.erase(history_.begin() + 1, history_.end());
 }
 
-void MeshData::history_push(UniqueMeshPtr mesh) {
+void MeshData::history_push(MeshPairUniquePtrs meshes) {
   // Case 1: history is pointing to an entry before the last element
   if (history_index_ < history_.size() - 1) {
     // Erase everything from the history_index on to the end.
@@ -86,13 +94,14 @@ void MeshData::history_push(UniqueMeshPtr mesh) {
   }
 
   // Store entry at next position
-  mesh->garbage_collection();
-  history_.push_back(std::move(mesh));
+  meshes.first->garbage_collection();
+  meshes.second->garbage_collection();
+  history_.push_back({std::move(meshes.first), std::move(meshes.second)});
   history_index_++;
 }
 
 void MeshData::emit_updated_signal() {
-  emit updated(get_mesh());
+  emit updated({get_mesh(0), get_mesh(1)});
 }
 
 bool MeshData::persist(const std::string& filename) const {
@@ -100,7 +109,7 @@ bool MeshData::persist(const std::string& filename) const {
     return false;
   }
 
-  return get_mesh().write(filename);
+  return get_mesh(0).write(filename);
 }
 
 const std::string& MeshData::get_load_file_formats() const {

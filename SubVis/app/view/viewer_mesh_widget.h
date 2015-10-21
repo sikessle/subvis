@@ -11,25 +11,23 @@ class ViewerMeshWidget : public ViewerWidget {
   Q_OBJECT
 
  public:
-  ViewerMeshWidget(QWidget* parent = 0);
+  ViewerMeshWidget(QWidget* parent = 0, int mesh_id = 0);
 
  protected:
   void draw() override;
   void init() override;
+  void mesh_updated(const surface_mesh::Surface_mesh& mesh) override;
   void mousePressEvent(QMouseEvent* e) override;
 
  private:
   // TODO placeholder, here we should use a custom data structure to hold vertices
-  const surface_mesh::Surface_mesh* mesh_ {nullptr};
+  const surface_mesh::Surface_mesh* mesh_{nullptr};
 
   void draw_mesh();
   /// RGB color values will be stored in rgb array
   void index_to_rgb(const int index, int rgb[3]);
   /// Allows rgba values (4), whereat the a value is not used.
   int rgb_to_index(const int rgb[4]);
-
- public slots:
-  void mesh_updated(const surface_mesh::Surface_mesh& mesh) override;
 };
 
 

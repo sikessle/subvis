@@ -22,9 +22,9 @@ class GuiControls : public QObject {
   void set_model(subvis::MeshData& mesh_data);
   void create(QWidget* parent,
               std::map<const QString, AlgorithmRenderer>& algorithms);
-  void mesh_updated(const surface_mesh::Surface_mesh& mesh);
-  void init_opengl();
-  void draw_opengl();
+  void mesh_updated(const surface_mesh::Surface_mesh& mesh, int mesh_id);
+  void init_opengl(int mesh_id);
+  void draw_opengl(int mesh_id);
 
  private:
   subvis::MeshData* mesh_data_{nullptr};

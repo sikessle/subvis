@@ -53,16 +53,16 @@ void SubdivisionAlgorithmsPlugin::set_model(subvis::MeshData&
 }
 
 void SubdivisionAlgorithmsPlugin::mesh_updated(const surface_mesh::Surface_mesh&
-    mesh) {
-  gui_.mesh_updated(mesh);
+    mesh, int mesh_id) {
+  gui_.mesh_updated(mesh, mesh_id);
 }
 
-void SubdivisionAlgorithmsPlugin::init_opengl() {
-  gui_.init_opengl();
+void SubdivisionAlgorithmsPlugin::init_opengl(int mesh_id) {
+  gui_.init_opengl(mesh_id);
 }
 
-void SubdivisionAlgorithmsPlugin::draw_opengl() {
-  gui_.draw_opengl();
+void SubdivisionAlgorithmsPlugin::draw_opengl(int mesh_id) {
+  gui_.draw_opengl(mesh_id);
 }
 
 void SubdivisionAlgorithmsPlugin::create_gui(QWidget* parent) {

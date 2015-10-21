@@ -25,16 +25,17 @@ void GuiControls::set_model(subvis::MeshData& mesh_data) {
   mesh_data_ = &mesh_data;
 }
 
-void GuiControls::mesh_updated(const surface_mesh::Surface_mesh& mesh) {
-  current_algo_render_pair().renderer->mesh_updated(mesh);
+void GuiControls::mesh_updated(const surface_mesh::Surface_mesh& mesh, int mesh_id) {
+  // TODO select
+  //current_algo_render_pair().renderer->mesh_updated(meshes);
   update_valid_dropdown_items(mesh);
 }
 
-void GuiControls::init_opengl() {
+void GuiControls::init_opengl(int mesh_id) {
   current_algo_render_pair().renderer->init_opengl();
 }
 
-void GuiControls::draw_opengl() {
+void GuiControls::draw_opengl(int mesh_id) {
   current_algo_render_pair().renderer->render_mesh_opengl();
 }
 
@@ -93,7 +94,7 @@ void GuiControls::subdivide_clicked(bool) {
   const int steps = steps_->value();
   active_algorithm_ = current_algo_render_pair().algorithm.get();
   auto callback = [this] (std::unique_ptr<surface_mesh::Surface_mesh> mesh) {
-    mesh_data_->load(std::move(mesh));
+    // TODO pair!: mesh_data_->load(std::move(mesh));
     set_progress_controls_visible(false);
   };
 

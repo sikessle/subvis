@@ -40,6 +40,7 @@ class MainWindow : public QMainWindow {
   void setup_viewer_tabs();
   void setup_menus();
   void setup_plugin_guis();
+  QString get_stats(const surface_mesh::Surface_mesh& mesh);
 
  public slots:
   void show_load_dialog();
@@ -48,7 +49,9 @@ class MainWindow : public QMainWindow {
   void undo();
   void redo();
   void plugin_tab_changed(int current);
-  void mesh_updated(const surface_mesh::Surface_mesh& mesh);
+  void mesh_updated(
+    std::pair<const surface_mesh::Surface_mesh&, const surface_mesh::Surface_mesh&>
+    meshes);
 };
 
 
