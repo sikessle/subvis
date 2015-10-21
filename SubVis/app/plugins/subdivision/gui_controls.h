@@ -21,29 +21,34 @@ class GuiControls : public QObject {
 
   void set_model(subvis::MeshData& mesh_data);
   void create(QWidget* parent,
-              std::map<const QString, AlgorithmRenderer>& algorithms);
+              std::map<std::pair<const int, const QString>, AlgorithmRenderer>& algorithms);
   void mesh_updated(const surface_mesh::Surface_mesh& mesh, int mesh_id);
   void init_opengl(int mesh_id);
   void draw_opengl(int mesh_id);
 
  private:
   subvis::MeshData* mesh_data_{nullptr};
-  SdAlgorithm* active_algorithm_{nullptr};
-  std::map<const QString, AlgorithmRenderer>* algorithms_{nullptr};
+  std::map<int, SdAlgorithm*> mesh_id_active_algorithm_;
+  std::map<std::pair<const int, const QString>, AlgorithmRenderer>* algorithms_{nullptr};
   // memory managed by Qt's parent-relationship
   QPushButton* subdivide_{nullptr};
   QPushButton* stop_{nullptr};
   QSpinBox* steps_{nullptr};
-  QComboBox* dropdown_{nullptr};
+  QComboBox* dropdown1_{nullptr};
+  QComboBox* dropdown2_{nullptr};
   QProgressBar* progress_{nullptr};
 
-  AlgorithmRenderer& current_algo_render_pair();
-  void update_valid_dropdown_items(const surface_mesh::Surface_mesh& mesh);
+  AlgorithmRenderer& selected_algo_renderer(QComboBox* dropdown, int mesh_id);
+  AlgorithmRenderer& current_algo_render_pair(int mesh_id);
+  void update_valid_items(QComboBox* dropdown, int mesh_id,
+                          const surface_mesh::Surface_mesh& mesh);
+  void update_valid_dropdown_items(const surface_mesh::Surface_mesh& mesh,
+                                   int mesh_id);
   /// Enables dropdown items (algorithms) if they can subdivide the current mesh.
   /// Returns the first enabled item index after enabling/disabling the items.
-  int enable_applicable_algorithms_dropdown(const surface_mesh::Surface_mesh&
-      mesh, QStandardItemModel* model);
-  void ensure_current_dropdown_item_is_enabled(QStandardItemModel* model,
+  int enable_applicable_algorithms_dropdown(QComboBox* dropdown, const surface_mesh::Surface_mesh&
+      mesh, int mesh_id, QStandardItemModel* model);
+  void ensure_current_dropdown_item_is_enabled(QComboBox* dropdown, QStandardItemModel* model,
       int first_enabled_item);
   void set_progress_controls_visible(bool visible);
 

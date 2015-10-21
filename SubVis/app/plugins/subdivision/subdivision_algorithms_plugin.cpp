@@ -14,28 +14,33 @@ namespace subdivision {
 
 SubdivisionAlgorithmsPlugin::SubdivisionAlgorithmsPlugin() {
   // Add all special renderers here to share them among the algorithms
-  std::shared_ptr<GLRenderer> bspline_renderer {new GLBSplineRenderer};
+  GLRenderer* bspline_renderer1 {new GLBSplineRenderer};
+  GLRenderer* bspline_renderer2 {new GLBSplineRenderer};
 
   // Add here all the algorithms and their special renderer
-  algorithms_["Catmull-Clark"] = {
-    std::unique_ptr<SdAlgorithm>{new SdCatmull},
-    bspline_renderer
-  };
-  algorithms_["Doo-Sabin"] = {
-    std::unique_ptr<SdAlgorithm>{new SdDooSabin},
-    bspline_renderer
-  };
-  algorithms_["Loop"] = {
-    std::unique_ptr<SdAlgorithm>{new SdLoop},
-    bspline_renderer
-  };
-  algorithms_["Butterfly"] = {
-    std::unique_ptr<SdAlgorithm>{new SdButterfly},
-    bspline_renderer
-  };
-  algorithms_["Modified Butterfly"] = {
-    std::unique_ptr<SdAlgorithm>{new SdModButterfly},
-    bspline_renderer
+  // Add them twice for each display
+  init_algorithm(0, "Catmull-Clark", new SdCatmull, bspline_renderer1);
+  init_algorithm(1, "Catmull-Clark", new SdCatmull, bspline_renderer2);
+
+  init_algorithm(0, "Doo-Sabin", new SdDooSabin, bspline_renderer1);
+  init_algorithm(1, "Doo-Sabin", new SdDooSabin, bspline_renderer2);
+
+  init_algorithm(0, "Loop", new SdLoop, bspline_renderer1);
+  init_algorithm(1, "Loop", new SdLoop, bspline_renderer2);
+
+  init_algorithm(0, "Butterfly", new SdButterfly, bspline_renderer1);
+  init_algorithm(1, "Butterfly", new SdButterfly, bspline_renderer2);
+
+  init_algorithm(0, "Modified Butterfly", new SdModButterfly, bspline_renderer1);
+  init_algorithm(1, "Modified Butterfly", new SdModButterfly, bspline_renderer2);
+}
+
+void SubdivisionAlgorithmsPlugin::init_algorithm(int mesh_id,
+    const QString name, SdAlgorithm* algorithm, GLRenderer* renderer) {
+  std::pair<int, QString> key1 = {mesh_id, name};
+  algorithms_[key1] = {
+    std::unique_ptr<SdAlgorithm>{algorithm},
+    std::shared_ptr<GLRenderer> {renderer}
   };
 }
 

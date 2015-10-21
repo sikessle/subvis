@@ -26,9 +26,12 @@ class SubdivisionAlgorithmsPlugin : public QObject,
   void create_gui(QWidget* parent) override;
 
  private:
-  /// name->(algorithm, renderer)
-  std::map<const QString, AlgorithmRenderer> algorithms_;
+  /// (mesh_id, name)->(algorithm, renderer)
+  std::map<std::pair<const int, const QString>, AlgorithmRenderer> algorithms_;
   GuiControls gui_;
+
+  void init_algorithm(int mesh_id, const QString name, SdAlgorithm* algorithm,
+                      GLRenderer* renderer);
 
 };
 

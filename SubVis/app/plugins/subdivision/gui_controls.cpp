@@ -12,48 +12,74 @@ GuiControls::GuiControls() {
 }
 
 AlgorithmRenderer&
-GuiControls::current_algo_render_pair() {
-  if (dropdown_->count() == 0) {
+GuiControls::selected_algo_renderer(QComboBox* dropdown, int mesh_id) {
+  if (dropdown->count() == 0) {
     throw std::logic_error{"no algorithms loaded. ensure that at least one is loaded in the constructor."};
   }
-  const QString name = dropdown_->currentText();
+  const QString name = dropdown->currentText();
 
-  return algorithms_->at(name);
+  return algorithms_->at({mesh_id, name});
+}
+
+AlgorithmRenderer&
+GuiControls::current_algo_render_pair(int mesh_id) {
+  if (mesh_id == 0) {
+    return selected_algo_renderer(dropdown1_, mesh_id);
+  } else {
+    return selected_algo_renderer(dropdown2_, mesh_id);
+  }
 }
 
 void GuiControls::set_model(subvis::MeshData& mesh_data) {
   mesh_data_ = &mesh_data;
 }
 
-void GuiControls::mesh_updated(const surface_mesh::Surface_mesh& mesh, int mesh_id) {
-  // TODO select
-  //current_algo_render_pair().renderer->mesh_updated(meshes);
-  update_valid_dropdown_items(mesh);
+void GuiControls::mesh_updated(const surface_mesh::Surface_mesh& mesh,
+                               int mesh_id) {
+  current_algo_render_pair(mesh_id).renderer->mesh_updated(mesh);
+  update_valid_dropdown_items(mesh, mesh_id);
 }
 
 void GuiControls::init_opengl(int mesh_id) {
-  current_algo_render_pair().renderer->init_opengl();
+  current_algo_render_pair(mesh_id).renderer->init_opengl();
 }
 
 void GuiControls::draw_opengl(int mesh_id) {
-  current_algo_render_pair().renderer->render_mesh_opengl();
+  current_algo_render_pair(mesh_id).renderer->render_mesh_opengl();
 }
 
 void GuiControls::create(QWidget* parent,
-                         std::map<const QString, AlgorithmRenderer>& algorithms) {
+                         std::map<std::pair<const int, const QString>, AlgorithmRenderer>& algorithms) {
   algorithms_ = &algorithms;
   // Gui creation
   QVBoxLayout* layout = new QVBoxLayout(parent);
   layout->setAlignment(Qt::AlignTop);
 
-  layout->addWidget(new QLabel("Algorithm:"));
+  layout->addWidget(new QLabel("Algorithms:"));
 
-  dropdown_ = new QComboBox(parent);
+  QHBoxLayout* layout_dropdown1 = new QHBoxLayout;
+  layout_dropdown1->setAlignment(Qt::AlignTop);
+  QHBoxLayout* layout_dropdown2 = new QHBoxLayout;
+  layout_dropdown2->setAlignment(Qt::AlignTop);
+
+  layout_dropdown1->addWidget(new QLabel("[0]"));
+  layout_dropdown2->addWidget(new QLabel("[1]"));
+
+  dropdown1_ = new QComboBox(parent);
+  dropdown2_ = new QComboBox(parent);
   for (const auto& it : *algorithms_) {
     // using name from map's entries as label
-    dropdown_->addItem(it.first);
+    if (it.first.first == 0) {
+      dropdown1_->addItem(it.first.second);
+    } else {
+      dropdown2_->addItem(it.first.second);
+    }
   }
-  layout->addWidget(dropdown_);
+  layout_dropdown1->addWidget(dropdown1_, 1);
+  layout_dropdown2->addWidget(dropdown2_, 1);
+
+  layout->addLayout(layout_dropdown1);
+  layout->addLayout(layout_dropdown2);
 
   QHBoxLayout* layout_steps = new QHBoxLayout;
   layout_steps->setAlignment(Qt::AlignTop);
@@ -92,18 +118,23 @@ void GuiControls::create(QWidget* parent,
 
 void GuiControls::subdivide_clicked(bool) {
   const int steps = steps_->value();
-  active_algorithm_ = current_algo_render_pair().algorithm.get();
+  mesh_id_active_algorithm_[0] = current_algo_render_pair(0).algorithm.get();
+  mesh_id_active_algorithm_[1] = current_algo_render_pair(1).algorithm.get();
   auto callback = [this] (std::unique_ptr<surface_mesh::Surface_mesh> mesh) {
     // TODO pair!: mesh_data_->load(std::move(mesh));
     set_progress_controls_visible(false);
   };
 
   set_progress_controls_visible(true);
-  active_algorithm_->subdivide_threaded(mesh_data_->get_mesh(), callback, steps);
+  // TODO get both meshes
+  mesh_id_active_algorithm_[0]->subdivide_threaded(mesh_data_->get_mesh(),
+      callback, steps);
+  //mesh_id_active_algorithm_[1]->subdivide_threaded(mesh_data_->get_mesh(),  callback, steps);
 }
 
 void GuiControls::stop_clicked(bool) {
-  active_algorithm_->stop_subdivide_threaded();
+  // TODO get all...
+  mesh_id_active_algorithm_.at(0)->stop_subdivide_threaded();
 }
 
 void GuiControls::set_progress_controls_visible(bool visible) {
@@ -111,29 +142,40 @@ void GuiControls::set_progress_controls_visible(bool visible) {
   progress_->setVisible(visible);
 }
 
-void GuiControls::update_valid_dropdown_items(
-  const surface_mesh::Surface_mesh& mesh) {
-
+void GuiControls::update_valid_items(QComboBox* dropdown, int mesh_id,
+                                     const surface_mesh::Surface_mesh& mesh) {
 
   QStandardItemModel* model = qobject_cast<QStandardItemModel*>
-                              (dropdown_->model());
+                              (dropdown->model());
 
-  int first_enabled_item = enable_applicable_algorithms_dropdown(mesh, model);
-  ensure_current_dropdown_item_is_enabled(model, first_enabled_item);
+  int first_enabled_item = enable_applicable_algorithms_dropdown(dropdown, mesh,
+                           mesh_id, model);
+  ensure_current_dropdown_item_is_enabled(dropdown, model, first_enabled_item);
 }
 
-int GuiControls::enable_applicable_algorithms_dropdown(
-  const surface_mesh::Surface_mesh& mesh, QStandardItemModel* model) {
+void GuiControls::update_valid_dropdown_items(
+  const surface_mesh::Surface_mesh& mesh, int mesh_id) {
+
+  if (mesh_id == 0) {
+    update_valid_items(dropdown1_, mesh_id, mesh);
+  } else {
+    update_valid_items(dropdown2_, mesh_id, mesh);
+  }
+}
+
+int GuiControls::enable_applicable_algorithms_dropdown(QComboBox* dropdown,
+    const surface_mesh::Surface_mesh& mesh, int mesh_id,
+    QStandardItemModel* model) {
 
   QStandardItem* item {nullptr};
   int first_enabled_item_index { -1};
 
-  for (int i = 0; i < dropdown_->count(); i++) {
-    QModelIndex index = model->index(i, dropdown_->modelColumn(),
-                                     dropdown_->rootModelIndex());
+  for (int i = 0; i < dropdown->count(); i++) {
+    QModelIndex index = model->index(i, dropdown->modelColumn(),
+                                     dropdown->rootModelIndex());
     item = model->itemFromIndex(index);
 
-    if (algorithms_->at(item->text()).algorithm->is_subdividable(mesh)) {
+    if (algorithms_->at({mesh_id, item->text()}).algorithm->is_subdividable(mesh)) {
       item->setEnabled(true);
       if (first_enabled_item_index == -1) {
         first_enabled_item_index = i;
@@ -147,12 +189,12 @@ int GuiControls::enable_applicable_algorithms_dropdown(
 }
 
 
-void GuiControls::ensure_current_dropdown_item_is_enabled(
-  QStandardItemModel* model, int first_enabled_item_index) {
-  QModelIndex current_index = model->index(dropdown_->currentIndex(),
-                              dropdown_->modelColumn(), dropdown_->rootModelIndex());
+void GuiControls::ensure_current_dropdown_item_is_enabled(QComboBox* dropdown,
+    QStandardItemModel* model, int first_enabled_item_index) {
+  QModelIndex current_index = model->index(dropdown->currentIndex(),
+                              dropdown->modelColumn(), dropdown->rootModelIndex());
   if (!model->itemFromIndex(current_index)->isEnabled()) {
-    dropdown_->setCurrentIndex(first_enabled_item_index);
+    dropdown->setCurrentIndex(first_enabled_item_index);
   }
 }
 
