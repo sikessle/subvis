@@ -52,6 +52,7 @@ void MeshData::history_step_forward() {
   emit_updated_signal();
 }
 
+// TODO ensure index 0 and 1 are never overwritten
 void MeshData::push_history(std::unique_ptr<surface_mesh::Surface_mesh> mesh) {
   if (history_.size() == kHistorySize) {
     history_.erase(history_.begin() + 1);

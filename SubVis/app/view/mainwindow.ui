@@ -108,6 +108,8 @@
    <addaction name="action_snapshot"/>
    <addaction name="action_triangulate"/>
    <addaction name="action_edit"/>
+   <addaction name="action_undo"/>
+   <addaction name="action_redo"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_load">
@@ -167,13 +169,43 @@
   </action>
   <action name="action_triangulate">
    <property name="icon">
-    <iconset theme="document-page-setup"/>
+    <iconset theme="document-page-setup">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Triangulate</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+T</string>
+   </property>
+  </action>
+  <action name="action_undo">
+   <property name="icon">
+    <iconset theme="edit-undo"/>
+   </property>
+   <property name="text">
+    <string>Undo</string>
+   </property>
+   <property name="toolTip">
+    <string>Undo</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
+  </action>
+  <action name="action_redo">
+   <property name="icon">
+    <iconset theme="edit-redo"/>
+   </property>
+   <property name="text">
+    <string>Redo</string>
+   </property>
+   <property name="toolTip">
+    <string>Redo</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+Z</string>
    </property>
   </action>
  </widget>

@@ -44,6 +44,8 @@ class MainWindow : public QMainWindow {
   void show_load_dialog();
   void show_save_dialog();
   void triangulate_mesh();
+  void undo();
+  void redo();
   void plugin_tab_changed(int current);
 };
 

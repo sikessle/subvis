@@ -69,6 +69,18 @@ void MainWindow::setup_toolbar() {
                    ui_->tab_viewer_mesh, SLOT(saveSnapshot(bool)));
   QObject::connect(ui_->action_triangulate, SIGNAL(triggered(bool)),
                    this, SLOT(triangulate_mesh(void)));
+  QObject::connect(ui_->action_undo, SIGNAL(triggered(bool)),
+                   this, SLOT(undo(void)));
+  QObject::connect(ui_->action_redo, SIGNAL(triggered(bool)),
+                   this, SLOT(redo(void)));
+}
+
+void MainWindow::undo() {
+  mesh_data_.history_step_back();
+}
+
+void MainWindow::redo() {
+ mesh_data_.history_step_forward();
 }
 
 void MainWindow::triangulate_mesh() {
