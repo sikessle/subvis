@@ -96,27 +96,15 @@ void MainWindow::unsync_viewers(QGLViewer* viewer1, QGLViewer* viewer2) {
 
 void MainWindow::setup_viewer_tab(QWidget* tab, ViewerWidget* viewer1,
                                   ViewerWidget* viewer2) {
-  auto splitter = new QSplitter;
+  auto layout = new QHBoxLayout;
 
-  splitter->addWidget(viewer1);
-  splitter->addWidget(viewer2);
+  layout->addWidget(viewer1);
+  layout->addWidget(viewer2);
 
-  splitter->setStretchFactor(0, 1);
-  splitter->setStretchFactor(1, 1);
-
-  auto tab_layout = new QVBoxLayout;
-  tab->setLayout(tab_layout);
-  tab_layout->addWidget(splitter);
+  tab->setLayout(layout);
 
   viewer1->set_model(mesh_data_);
   viewer2->set_model(mesh_data_);
-
-  // To resize correctly
-  splitter->refresh();
-
-  // Fix the width to the defaults 50%
-  viewer1->setMinimumWidth(viewer1->width());
-  viewer2->setMinimumWidth(viewer2->width());
 }
 
 void MainWindow::setup_plugin_guis() {
