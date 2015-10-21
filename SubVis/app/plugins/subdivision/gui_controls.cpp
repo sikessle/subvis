@@ -70,18 +70,33 @@ void GuiControls::create(QWidget* parent,
   QObject::connect(subdivide_, SIGNAL(clicked(bool)),
                    this, SLOT(subdivide_clicked(bool)));
 
+  progress_ = new QProgressBar(parent);
+  // busy indicator with max=min=0
+  progress_->setMinimum(0);
+  progress_->setMaximum(0);
+  layout->addWidget(progress_);
+
   stop_ = new QPushButton("stop", parent);
   layout->addWidget(stop_);
+
+  set_progress_visible(false);
 }
 
 void GuiControls::subdivide_clicked(bool) {
   const int steps = steps_->value();
   auto& algorithm = current_algo_render_pair().algorithm;
+  auto callback = [this] (std::unique_ptr<surface_mesh::Surface_mesh> mesh) {
+    mesh_data_->load(std::move(mesh));
+    set_progress_visible(false);
+  };
 
-  // TODO start in new thread, copy mesh before
-  auto result = algorithm->subdivide(mesh_data_->get_mesh(), steps);
+  set_progress_visible(true);
+  //algorithm->subdivide_threaded(mesh_data_->get_mesh(), callback, steps);
+}
 
-  mesh_data_->load(std::move(result));
+void GuiControls::set_progress_visible(bool visible) {
+  stop_->setVisible(visible);
+  progress_->setVisible(visible);
 }
 
 void GuiControls::update_valid_dropdown_items(

@@ -6,6 +6,7 @@
 #include <QSpinBox>
 #include <QPushButton>
 #include <QStandardItemModel>
+#include <QProgressBar>
 
 #include "plugins/subvis_plugin.h"
 #include "plugins/subdivision/algorithm_renderer.h"
@@ -33,6 +34,7 @@ class GuiControls : public QObject {
   QPushButton* stop_{nullptr};
   QSpinBox* steps_{nullptr};
   QComboBox* dropdown_{nullptr};
+  QProgressBar* progress_{nullptr};
 
   AlgorithmRenderer& current_algo_render_pair();
   void update_valid_dropdown_items(const surface_mesh::Surface_mesh& mesh);
@@ -42,6 +44,7 @@ class GuiControls : public QObject {
       mesh, QStandardItemModel* model);
   void ensure_current_dropdown_item_is_enabled(QStandardItemModel* model,
       int first_enabled_item);
+  void set_progress_visible(bool visible);
 
  private slots:
   void subdivide_clicked(bool);

@@ -13,12 +13,14 @@
 
 #include <memory>
 #include <string>
+#include <QObject>
 #include <QString>
 #include "surface_mesh/Surface_mesh.h"
 
 namespace subdivision {
 
-class SdAlgorithm {
+class SdAlgorithm : public QObject {
+  Q_OBJECT
  public:
   using Surface_mesh = surface_mesh::Surface_mesh;
   using Point = surface_mesh::Point;
@@ -27,11 +29,12 @@ class SdAlgorithm {
 
   /**
    * @brief Subdivides the given mesh object in n steps.
+   * @param callback The function which will be called when the computation is done.
    * @param steps The number of subdivision steps.
-   * @return The subdivided mesh
    */
-  virtual std::unique_ptr<Surface_mesh> subdivide(const Surface_mesh& mesh,
-      int steps = 1);
+  void subdivide_threaded(const Surface_mesh& mesh,
+                          std::function<void(std::unique_ptr<Surface_mesh>)> callback,
+                          int steps = 1);
 
   /**
    * @brief Returns result mesh for testing.
@@ -100,6 +103,9 @@ class SdAlgorithm {
   /// Start search with the @c start_halfedge and rotate counter clockwise.
   Surface_mesh::Halfedge find_next_halfedge_of_boundary_edge_ccw(
     const Surface_mesh::Halfedge start_halfedge) const;
+
+ private:
+  std::function<void(std::unique_ptr<Surface_mesh>)> callback_;
 };
 
 } // namespace subdivision

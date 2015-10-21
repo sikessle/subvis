@@ -10,11 +10,12 @@ using Point = surface_mesh::Point;
 SdAlgorithm::~SdAlgorithm() {
 }
 
-std::unique_ptr<Surface_mesh> SdAlgorithm::subdivide(
-  const Surface_mesh& mesh,
+void SdAlgorithm::subdivide_threaded(const Surface_mesh& mesh,
+  std::function<void(std::unique_ptr<Surface_mesh>)> callback,
   int steps) {
   output_mesh_.reset(new Surface_mesh);
   input_mesh_.reset(new Surface_mesh{mesh});
+  callback_ = callback;
 
   for (int i = 0; i < steps; i++) {
     output_mesh_->clear();
@@ -28,7 +29,7 @@ std::unique_ptr<Surface_mesh> SdAlgorithm::subdivide(
   // free memory
   input_mesh_.reset(nullptr);
 
-  return std::move(output_mesh_);
+  callback_(std::move(output_mesh_));
 }
 
 const Surface_mesh& SdAlgorithm::get_result_mesh() {
