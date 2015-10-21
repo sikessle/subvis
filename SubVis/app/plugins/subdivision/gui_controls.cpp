@@ -37,8 +37,7 @@ void GuiControls::set_model(subvis::MeshData& mesh_data) {
 void GuiControls::mesh_updated(const surface_mesh::Surface_mesh& mesh,
                                int mesh_id) {
   current_algo_render_pair(mesh_id).renderer->mesh_updated(mesh);
-  update_valid_dropdown_items(mesh, 0);
-  update_valid_dropdown_items(mesh, 1);
+  update_valid_dropdown_items(mesh, mesh_id);
 }
 
 void GuiControls::init_opengl(int mesh_id) {
@@ -141,9 +140,9 @@ void GuiControls::subdivide_clicked(bool) {
 
   result_ = {nullptr, nullptr};
 
-  mesh_id_active_algorithm_[0]->subdivide_threaded(mesh_data_->get_mesh(),
+  mesh_id_active_algorithm_[0]->subdivide_threaded(mesh_data_->get_mesh(0),
       callback, steps);
-  mesh_id_active_algorithm_[1]->subdivide_threaded(mesh_data_->get_mesh(),
+  mesh_id_active_algorithm_[1]->subdivide_threaded(mesh_data_->get_mesh(1),
       callback, steps);
 }
 

@@ -17,7 +17,7 @@ class MeshData : public QObject {
  public:
   MeshData();
 
-  const Surface_mesh& get_mesh(int idx = 0) const;
+  const Surface_mesh& get_mesh(int idx) const;
   bool load(const std::string& filename);
   void load(
     std::pair<std::unique_ptr<Surface_mesh>, std::unique_ptr<Surface_mesh>> meshes);
