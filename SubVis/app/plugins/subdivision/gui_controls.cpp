@@ -98,7 +98,7 @@ void GuiControls::subdivide_clicked(bool) {
   };
 
   set_progress_controls_visible(true);
-  //active_algorithm_->subdivide_threaded(mesh_data_->get_mesh(), callback, steps);
+  active_algorithm_->subdivide_threaded(mesh_data_->get_mesh(), callback, steps);
 }
 
 void GuiControls::stop_clicked(bool) {
