@@ -10,8 +10,8 @@ namespace subvis {
 MainWindow::MainWindow(MeshData& mesh_data, PluginManager& plugin_manager)
   : QMainWindow{0},
     ui_{new Ui::MainWindow},
-    mesh_data_(mesh_data),
-    plugin_manager_(plugin_manager) {
+mesh_data_(mesh_data),
+plugin_manager_(plugin_manager) {
 
   ui_->setupUi(this);
 
@@ -80,7 +80,7 @@ void MainWindow::undo() {
 }
 
 void MainWindow::redo() {
- mesh_data_.history_step_forward();
+  mesh_data_.history_step_forward();
 }
 
 void MainWindow::triangulate_mesh() {
@@ -94,6 +94,7 @@ void MainWindow::show_load_dialog() {
 
   if (!fn.isNull()) {
     const std::string filename = fn.toStdString();
+    mesh_data_.history_purge();
     if (!mesh_data_.load(filename)) {
       QString msg = "Failed to load file " + fn;
       QMessageBox::warning(this, "Error", msg);

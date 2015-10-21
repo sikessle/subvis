@@ -20,6 +20,7 @@ class MeshData : public QObject {
   void load(std::unique_ptr<surface_mesh::Surface_mesh> mesh);
   void history_step_back();
   void history_step_forward();
+  void history_purge();
   bool persist(const std::string& filename) const;
   const std::string& get_load_file_formats() const;
   const std::string& get_persist_file_formats() const;
@@ -30,10 +31,10 @@ class MeshData : public QObject {
   unsigned int history_index_{0};
   const std::string kLoadFileFormats {"*.obj *.off *.stl"};
   const std::string kPersistFileFormats {"*.off"};
-  const unsigned int kHistorySize {10};
+  const unsigned int kHistorySize {15};
   void emit_updated_signal();
 
-  void push_history(std::unique_ptr<surface_mesh::Surface_mesh> mesh);
+  void history_push(std::unique_ptr<surface_mesh::Surface_mesh> mesh);
 
  signals:
   void updated(const surface_mesh::Surface_mesh& mesh);
