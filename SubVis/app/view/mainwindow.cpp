@@ -141,7 +141,8 @@ void MainWindow::plugin_tab_changed(int current) {
   }
   viewer_plugin0_->set_drawing_plugin(it->second.plugin.get());
   viewer_plugin1_->set_drawing_plugin(it->second.plugin.get());
-  ui_->tabs_viewer->setTabText(1, it->second.name);
+  ui_->tabs_viewer->setTabText(1,
+                               it->second.name + ": " + it->second.plugin->viewer_tab_text());
 }
 
 void MainWindow::setup_menus() {

@@ -63,6 +63,10 @@ const QString SubdivisionAlgorithmsPlugin::name() const {
   return "Subdivision";
 }
 
+const QString SubdivisionAlgorithmsPlugin::viewer_tab_text() const {
+  return "Limit Surface";
+}
+
 void SubdivisionAlgorithmsPlugin::set_model(subvis::MeshData&
     mesh_data) {
   gui_.set_model(mesh_data);

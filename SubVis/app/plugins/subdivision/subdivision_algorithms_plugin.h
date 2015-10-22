@@ -18,6 +18,7 @@ class SubdivisionAlgorithmsPlugin : public subvis::SubVisPlugin {
 
   const QString id() const override;
   const QString name() const override;
+  const QString viewer_tab_text() const override;
   void set_model(subvis::MeshData& mesh_data) override;
   void mesh_updated(const surface_mesh::Surface_mesh& mesh, int mesh_id) override;
   void init_opengl(int mesh_id) override;

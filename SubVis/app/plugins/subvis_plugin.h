@@ -16,6 +16,7 @@ class SubVisPlugin : public QObject {
 
   virtual const QString id() const = 0;
   virtual const QString name() const = 0;
+  virtual const QString viewer_tab_text() const = 0;
   virtual void set_model(MeshData& mesh_data) = 0;
   virtual void mesh_updated(const surface_mesh::Surface_mesh& mesh,
                             int mesh_id) = 0;
