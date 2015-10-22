@@ -84,6 +84,19 @@ void MainWindow::setup_viewer_tabs() {
   toggle_sync_views(true);
 }
 
+void MainWindow::setup_viewer_tab(QWidget* tab, ViewerWidget* viewer1,
+                                  ViewerWidget* viewer2) {
+  auto layout = new QHBoxLayout;
+
+  viewer1->set_model(mesh_data_);
+  viewer2->set_model(mesh_data_);
+
+  layout->addWidget(viewer1);
+  layout->addWidget(viewer2);
+
+  tab->setLayout(layout);
+}
+
 void MainWindow::sync_viewers(QGLViewer* viewer1, QGLViewer* viewer2) {
   // Warning: This connection must be disconnected before the objects are garbage collected.
   auto old_cam = viewer2->camera();
@@ -106,19 +119,6 @@ void MainWindow::unsync_viewers(QGLViewer* viewer1, QGLViewer* viewer2) {
 void MainWindow::toggle_splitscreen(bool show) {
   viewer_mesh2_->setVisible(show);
   viewer_plugin2_->setVisible(show);
-}
-
-void MainWindow::setup_viewer_tab(QWidget* tab, ViewerWidget* viewer1,
-                                  ViewerWidget* viewer2) {
-  auto layout = new QHBoxLayout;
-
-  viewer1->set_model(mesh_data_);
-  viewer2->set_model(mesh_data_);
-
-  layout->addWidget(viewer1);
-  layout->addWidget(viewer2);
-
-  tab->setLayout(layout);
 }
 
 void MainWindow::setup_plugin_guis() {
