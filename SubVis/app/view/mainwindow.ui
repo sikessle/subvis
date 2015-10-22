@@ -59,6 +59,17 @@
         <attribute name="title">
          <string>Mesh</string>
         </attribute>
+        <widget class="QWidget" name="horizontalLayoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>20</y>
+           <width>160</width>
+           <height>80</height>
+          </rect>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_2"/>
+        </widget>
        </widget>
        <widget class="QWidget" name="tab_viewer_plugin">
         <property name="sizePolicy">

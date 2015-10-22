@@ -110,7 +110,6 @@ void MainWindow::toggle_splitscreen(bool show) {
 
 void MainWindow::setup_viewer_tab(QWidget* tab, ViewerWidget* viewer1,
                                   ViewerWidget* viewer2) {
-  auto tab_layout = new QVBoxLayout(tab);
   auto layout = new QHBoxLayout;
 
   viewer1->set_model(mesh_data_);
@@ -119,9 +118,7 @@ void MainWindow::setup_viewer_tab(QWidget* tab, ViewerWidget* viewer1,
   layout->addWidget(viewer1);
   layout->addWidget(viewer2);
 
-  tab_layout->addLayout(layout);
-  tab->setLayout(tab_layout);
-
+  tab->setLayout(layout);
 }
 
 void MainWindow::setup_plugin_guis() {
