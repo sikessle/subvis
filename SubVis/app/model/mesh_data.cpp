@@ -8,8 +8,8 @@ using MeshPairUniquePtrs =
   std::pair<std::unique_ptr<Surface_mesh>, std::unique_ptr<Surface_mesh>>;
 
 MeshData::MeshData() {
-  auto mesh1 = std::unique_ptr<Surface_mesh> {new surface_mesh::Surface_mesh};
-  auto mesh2 = std::unique_ptr<Surface_mesh> {new surface_mesh::Surface_mesh};
+  auto mesh1 = std::unique_ptr<Surface_mesh> {new Surface_mesh};
+  auto mesh2 = std::unique_ptr<Surface_mesh> {new Surface_mesh};
   history_.push_back({std::move(mesh1), std::move(mesh2)});
 }
 
