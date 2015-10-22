@@ -198,6 +198,7 @@ void MainWindow::toggle_edit(bool edit) {
   } else {
     ui_->tabs_viewer->setTabEnabled(1, true);
   }
+  ui_->tabs_plugins->setHidden(edit);
   ui_->action_sync_views->setChecked(!edit);
   ui_->action_sync_views->setEnabled(!edit);
   ui_->action_toggle_splitscreen->setChecked(!edit);
