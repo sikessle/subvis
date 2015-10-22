@@ -121,6 +121,7 @@ void MainWindow::setup_viewer_tab(QWidget* tab, ViewerWidget* viewer1,
 
   tab_layout->addLayout(layout);
   tab->setLayout(tab_layout);
+
 }
 
 void MainWindow::setup_plugin_guis() {
