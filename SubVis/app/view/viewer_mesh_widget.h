@@ -21,13 +21,13 @@ class ViewerMeshWidget : public ViewerWidget {
 
  private:
   // TODO placeholder, here we should use a custom data structure to hold vertices
-  const surface_mesh::Surface_mesh* mesh_{nullptr};
+  const surface_mesh::Surface_mesh* mesh_ {nullptr};
 
   void draw_mesh();
   /// RGB color values will be stored in rgb array
-  void index_to_rgb(const int index, int rgb[3]);
+  void index_to_rgb(const int index, int rgb[3]) const;
   /// Allows rgba values (4), whereat the a value is not used.
-  int rgb_to_index(const int rgb[4]);
+  int rgb_to_index(const int rgb[4]) const;
 };
 
 

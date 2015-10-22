@@ -8,6 +8,9 @@
 
 namespace subvis {
 
+using MeshPairRef =
+  std::pair<const surface_mesh::Surface_mesh&, const surface_mesh::Surface_mesh&>;
+
 MainWindow::MainWindow(MeshData& mesh_data, PluginManager& plugin_manager)
   : QMainWindow{0},
     ui_{new Ui::MainWindow},
@@ -21,20 +24,13 @@ plugin_manager_(plugin_manager) {
   setup_menus();
   setup_plugin_guis();
 
-  QObject::connect(&mesh_data_,
-                   SIGNAL(updated(
-                            std::pair<const surface_mesh::Surface_mesh&, const surface_mesh::Surface_mesh&>)),
-                   this,
-                   SLOT(mesh_updated(
-                          std::pair<const surface_mesh::Surface_mesh&, const surface_mesh::Surface_mesh&>)));
+  connect(&mesh_data_, &MeshData::updated, this, &MainWindow::mesh_updated);
 }
 
-void MainWindow::mesh_updated(
-  std::pair<const surface_mesh::Surface_mesh&, const surface_mesh::Surface_mesh&>
-  meshes) {
+void MainWindow::mesh_updated(MeshPairRef meshes) {
   QString info = "[0]: ";
   info += get_stats(meshes.first);
-  info += " ---- [1]: ";
+  info += "       [1]: ";
   info += get_stats(meshes.second);
 
   mesh_information_label_->setText(info);
@@ -73,54 +69,52 @@ void MainWindow::setup_status_bar() {
 }
 
 void MainWindow::setup_viewer_tabs() {
-  viewer_mesh1_ = new ViewerMeshWidget(ui_->tab_viewer_mesh, 0);
-  viewer_mesh2_ = new ViewerMeshWidget(ui_->tab_viewer_mesh, 1);
-  setup_viewer_tab(ui_->tab_viewer_mesh, viewer_mesh1_, viewer_mesh2_);
+  viewer_mesh0_ = new ViewerMeshWidget(ui_->tab_viewer_mesh, 0);
+  viewer_mesh1_ = new ViewerMeshWidget(ui_->tab_viewer_mesh, 1);
+  setup_viewer_tab(ui_->tab_viewer_mesh, viewer_mesh0_, viewer_mesh1_);
 
-  viewer_plugin1_ = new ViewerPluginWidget(ui_->tab_viewer_plugin, 0);
-  viewer_plugin2_ = new ViewerPluginWidget(ui_->tab_viewer_plugin, 1);
-  setup_viewer_tab(ui_->tab_viewer_plugin, viewer_plugin1_, viewer_plugin2_);
+  viewer_plugin0_ = new ViewerPluginWidget(ui_->tab_viewer_plugin, 0);
+  viewer_plugin1_ = new ViewerPluginWidget(ui_->tab_viewer_plugin, 1);
+  setup_viewer_tab(ui_->tab_viewer_plugin, viewer_plugin0_, viewer_plugin1_);
 
   toggle_sync_views(true);
 }
 
-
-
-void MainWindow::setup_viewer_tab(QWidget* tab, ViewerWidget* viewer1,
-                                  ViewerWidget* viewer2) {
+void MainWindow::setup_viewer_tab(QWidget* tab, ViewerWidget* viewer0,
+                                  ViewerWidget* viewer1) {
   auto layout = new QHBoxLayout;
 
+  viewer0->set_model(mesh_data_);
   viewer1->set_model(mesh_data_);
-  viewer2->set_model(mesh_data_);
 
+  layout->addWidget(viewer0);
   layout->addWidget(viewer1);
-  layout->addWidget(viewer2);
 
   tab->setLayout(layout);
 }
 
-void MainWindow::sync_viewers(QGLViewer* viewer1, QGLViewer* viewer2) {
+void MainWindow::sync_viewers(QGLViewer* viewer0, QGLViewer* viewer1) {
   // Warning: This connection must be disconnected before the objects are garbage collected.
-  auto old_cam = viewer2->camera();
-  viewer2->setCamera(viewer1->camera());
+  auto old_cam = viewer1->camera();
+  viewer1->setCamera(viewer0->camera());
   delete old_cam;
-  viewer2->updateGL();
+  viewer1->updateGL();
 }
 
-void MainWindow::unsync_viewers(QGLViewer* viewer1, QGLViewer* viewer2) {
+void MainWindow::unsync_viewers(QGLViewer* viewer0, QGLViewer* viewer1) {
+  auto old_cam0 = viewer0->camera();
   auto old_cam1 = viewer1->camera();
-  auto old_cam2 = viewer2->camera();
+  viewer0->setCamera(new qglviewer::Camera(*old_cam0));
   viewer1->setCamera(new qglviewer::Camera(*old_cam1));
-  viewer2->setCamera(new qglviewer::Camera(*old_cam2));
-  delete old_cam1;
-  if (old_cam1 != old_cam2) {
-    delete old_cam2;
+  delete old_cam0;
+  if (old_cam0 != old_cam1) {
+    delete old_cam1;
   }
 }
 
 void MainWindow::toggle_splitscreen(bool show) {
-  viewer_mesh2_->setVisible(show);
-  viewer_plugin2_->setVisible(show);
+  viewer_mesh1_->setVisible(show);
+  viewer_plugin1_->setVisible(show);
 }
 
 void MainWindow::setup_plugin_guis() {
@@ -130,8 +124,8 @@ void MainWindow::setup_plugin_guis() {
     QWidget* plugin_container = new QWidget(this);
     ui_->tabs_plugins->addTab(plugin_container, wrapper.name);
     wrapper.plugin->create_gui(plugin_container);
-    QObject::connect(ui_->tabs_plugins, SIGNAL(currentChanged(int)),
-                     this, SLOT(plugin_tab_changed(int)));
+    connect(ui_->tabs_plugins, &QTabWidget::currentChanged,
+            this, &MainWindow::plugin_tab_changed);
   }
 
   if (plugins.size() > 0) {
@@ -145,45 +139,51 @@ void MainWindow::plugin_tab_changed(int current) {
   for (int i = 0; i < current; i++) {
     it++;
   }
+  viewer_plugin0_->set_drawing_plugin(it->second.plugin.get());
   viewer_plugin1_->set_drawing_plugin(it->second.plugin.get());
-  viewer_plugin2_->set_drawing_plugin(it->second.plugin.get());
   ui_->tabs_viewer->setTabText(1, it->second.name);
 }
 
 void MainWindow::setup_menus() {
-  QObject::connect(ui_->action_load, SIGNAL(triggered(bool)), this,
-                   SLOT(show_load_dialog()));
-  QObject::connect(ui_->action_save, SIGNAL(triggered(bool)), this,
-                   SLOT(show_save_dialog()));
-  QObject::connect(ui_->action_snapshot_left, SIGNAL(triggered(bool)),
-                   viewer_mesh1_, SLOT(saveSnapshot(bool)));
-  QObject::connect(ui_->action_snapshot_right, SIGNAL(triggered(bool)),
-                   viewer_mesh2_, SLOT(saveSnapshot(bool)));
-  QObject::connect(ui_->action_quit, SIGNAL(triggered(bool)),
-                   QApplication::instance(), SLOT(quit()));
-  QObject::connect(ui_->action_triangulate, SIGNAL(triggered(bool)),
-                   this, SLOT(triangulate_mesh(void)));
-  QObject::connect(ui_->action_sync_views, SIGNAL(toggled(bool)),
-                   this, SLOT(toggle_sync_views(bool)));
-  QObject::connect(ui_->action_toggle_splitscreen, SIGNAL(toggled(bool)),
-                   this, SLOT(toggle_splitscreen(bool)));
-  QObject::connect(ui_->action_undo, SIGNAL(triggered(bool)),
-                   this, SLOT(undo(void)));
-  QObject::connect(ui_->action_redo, SIGNAL(triggered(bool)),
-                   this, SLOT(redo(void)));
+  connect(ui_->action_load, &QAction::triggered, this,
+          &MainWindow::show_load_dialog);
+  connect(ui_->action_save, &QAction::triggered, this,
+          &MainWindow::show_save_dialog);
+  connect(ui_->action_snapshot_left, &QAction::triggered, this,
+          &MainWindow::save_snapshot0);
+  connect(ui_->action_snapshot_right, &QAction::triggered, this,
+          &MainWindow::save_snapshot1);
+  connect(ui_->action_quit, &QAction::triggered, QApplication::instance(),
+          &QApplication::quit);
+  connect(ui_->action_triangulate, &QAction::triggered, this,
+          &MainWindow::triangulate_mesh);
+  connect(ui_->action_sync_views, &QAction::toggled, this,
+          &MainWindow::toggle_sync_views);
+  connect(ui_->action_toggle_splitscreen, &QAction::toggled, this,
+          &MainWindow::toggle_splitscreen);
+  connect(ui_->action_undo,  &QAction::triggered, this, &MainWindow::undo);
+  connect(ui_->action_redo,  &QAction::triggered, this, &MainWindow::redo);
 
   // On startup redo/undo is not available
   ui_->action_redo->setEnabled(false);
   ui_->action_undo->setEnabled(false);
 }
 
+void MainWindow::save_snapshot0() {
+  viewer_mesh0_->saveSnapshot();
+}
+
+void MainWindow::save_snapshot1() {
+  viewer_mesh1_->saveSnapshot();
+}
+
 void MainWindow::toggle_sync_views(bool sync) {
   if (sync) {
-    sync_viewers(viewer_mesh1_, viewer_mesh2_);
-    sync_viewers(viewer_plugin1_, viewer_plugin2_);
+    sync_viewers(viewer_mesh0_, viewer_mesh1_);
+    sync_viewers(viewer_plugin0_, viewer_plugin1_);
   } else {
-    unsync_viewers(viewer_mesh1_, viewer_mesh2_);
-    unsync_viewers(viewer_plugin1_, viewer_plugin2_);
+    unsync_viewers(viewer_mesh0_, viewer_mesh1_);
+    unsync_viewers(viewer_plugin0_, viewer_plugin1_);
   }
 }
 

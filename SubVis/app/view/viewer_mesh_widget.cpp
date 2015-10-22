@@ -72,13 +72,13 @@ void ViewerMeshWidget::draw_mesh() {
   }
 }
 
-void ViewerMeshWidget::index_to_rgb(const int index, int rgb[3]) {
+void ViewerMeshWidget::index_to_rgb(const int index, int rgb[3]) const {
   rgb[0] = (index & 0x000000FF) >>  0; // r: least significant 2 bits of index
   rgb[1] = (index & 0x0000FF00) >>  8; // b: next two bits
   rgb[2] = (index & 0x00FF0000) >> 16; // g: next two bits
 }
 
-int ViewerMeshWidget::rgb_to_index(const int rgb[4]) {
+int ViewerMeshWidget::rgb_to_index(const int rgb[4]) const {
   // rebuild index from r, g and b values.
   // inverse function of index_to_rgb.
   return

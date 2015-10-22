@@ -2,13 +2,12 @@
 
 namespace subvis {
 
+using MeshPairRef =
+  std::pair<const surface_mesh::Surface_mesh&, const surface_mesh::Surface_mesh&>;
+
 ViewerWidget::ViewerWidget(QWidget* parent, int mesh_id)
   : QGLViewer{parent},
     mesh_id_{mesh_id} {
-}
-
-void ViewerWidget::set_mesh_id(int mesh_id) {
-  mesh_id_ = mesh_id;
 }
 
 void ViewerWidget::draw() {
@@ -27,18 +26,10 @@ void ViewerWidget::set_model(const MeshData& mesh_data) {
   mesh_data_ = &mesh_data;
 
   // listen to mesh updates
-  QObject::connect(mesh_data_,
-                   SIGNAL(updated(
-                            std::pair<const surface_mesh::Surface_mesh&, const surface_mesh::Surface_mesh&>)),
-                   this,
-                   SLOT(mesh_updated(
-                          std::pair<const surface_mesh::Surface_mesh&, const surface_mesh::Surface_mesh&>)));
+  connect(mesh_data_, &MeshData::updated, this, &ViewerWidget::mesh_updated_self);
 }
 
-void ViewerWidget::mesh_updated(
-  std::pair<const surface_mesh::Surface_mesh&, const surface_mesh::Surface_mesh&>
-  meshes) {
-
+void ViewerWidget::mesh_updated_self(MeshPairRef meshes) {
   if (mesh_id_ == 0) {
     mesh_updated(meshes.first);
   } else {

@@ -14,7 +14,9 @@ class ViewerWidget : public QGLViewer {
   ViewerWidget(QWidget* parent = 0, int mesh_id = 0);
 
   void set_model(const MeshData& mesh_data);
-  void set_mesh_id(int mesh_id);
+  void mesh_updated_self(
+    std::pair<const surface_mesh::Surface_mesh&, const surface_mesh::Surface_mesh&>
+    meshes);
 
  protected:
   const MeshData* mesh_data_ {nullptr};
@@ -25,11 +27,6 @@ class ViewerWidget : public QGLViewer {
   virtual void draw_gl() = 0;
   virtual void init_gl() = 0;
   virtual void mesh_updated(const surface_mesh::Surface_mesh& mesh) = 0;
-
- public slots:
-  void mesh_updated(
-    std::pair<const surface_mesh::Surface_mesh&, const surface_mesh::Surface_mesh&>
-    meshes);
 };
 
 } // namespace subvis
