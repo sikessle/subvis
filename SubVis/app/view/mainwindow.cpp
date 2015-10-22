@@ -86,13 +86,21 @@ void MainWindow::setup_viewer_tabs() {
 
 void MainWindow::sync_viewers(QGLViewer* viewer1, QGLViewer* viewer2) {
   // Warning: This connection must be disconnected before the objects are garbage collected.
+  auto old_cam = viewer2->camera();
   viewer2->setCamera(viewer1->camera());
+  delete old_cam;
   viewer2->updateGL();
 }
 
 void MainWindow::unsync_viewers(QGLViewer* viewer1, QGLViewer* viewer2) {
-  viewer1->setCamera(new qglviewer::Camera(*viewer1->camera()));
-  viewer2->setCamera(new qglviewer::Camera(*viewer2->camera()));
+  auto old_cam1 = viewer1->camera();
+  auto old_cam2 = viewer2->camera();
+  viewer1->setCamera(new qglviewer::Camera(*old_cam1));
+  viewer2->setCamera(new qglviewer::Camera(*old_cam2));
+  delete old_cam1;
+  if (old_cam1 != old_cam2) {
+    delete old_cam2;
+  }
 }
 
 void MainWindow::toggle_splitscreen(bool show) {
