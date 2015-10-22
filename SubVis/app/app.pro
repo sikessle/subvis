@@ -84,9 +84,7 @@ SOURCES += main.cpp \
     plugins/subdivision/sd_quad.cpp \
     plugins/subdivision/sd_triangle.cpp \
     plugins/subdivision/sd_modbutterfly.cpp \
-    plugins/subdivision/gui_controls.cpp \
-    plugins/subdivision/sd_none.cpp \
-    plugins/subdivision/gl_none_renderer.cpp
+    plugins/subdivision/gui_controls.cpp
 
 FORMS    += view/mainwindow.ui
 

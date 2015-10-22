@@ -11,12 +11,17 @@ class SdNone : public SdAlgorithm {
 
   void subdivide_threaded(const Surface_mesh& mesh,
                           std::function<void(std::unique_ptr<Surface_mesh>)> callback,
-                          const int steps = 1) override;
+                          int /*steps = 1*/) override {
+    output_mesh_.reset(new Surface_mesh{mesh});
+    callback(std::move(output_mesh_));
+  }
 
-  bool is_subdividable(const Surface_mesh& mesh) const override;
+  bool is_subdividable(const Surface_mesh& /*mesh*/) const override {
+    return true;
+  }
 
  protected:
-  void subdivide_input_mesh_write_output_mesh() override;
+  void subdivide_input_mesh_write_output_mesh() override {}
 };
 
 } // namespace subdivision
