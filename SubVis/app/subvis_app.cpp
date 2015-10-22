@@ -1,7 +1,7 @@
 #include <QPixmap>
 #include <exception>
+#include <QtConcurrent/QtConcurrent>
 
-#include "view/mainwindow.h"
 #include "model/mesh_data.h"
 #include "plugins/plugin_manager.h"
 #include "plugins/subvis_plugin.h"
@@ -26,10 +26,25 @@ int SubVisApp::run() {
 
   MainWindow mainwindow{mesh_data_, plugin_manager_};
 
+  QEventLoop loop;
+
+  QtConcurrent::run(this, &SubVisApp::sleep);
+  // Start thread
+  connect(this, &SubVisApp::sleep_finished, &loop, &QEventLoop::quit);
+
+  // Blocks until thread is finished
+  loop.exec();
+
   mainwindow.show();
   splash->finish(&mainwindow);
 
   return exec();
+}
+
+void SubVisApp::sleep() {
+  QThread::msleep(1500);
+
+  emit sleep_finished();
 }
 
 std::unique_ptr<QSplashScreen> SubVisApp::create_splash() {

@@ -5,12 +5,13 @@
 #include <QSplashScreen>
 #include <QApplication>
 
+#include "view/mainwindow.h"
 #include "plugins/plugin_manager.h"
 #include "plugins/subvis_plugin.h"
 
 namespace subvis {
 
-class SubVisApp : protected QApplication {
+class SubVisApp : public QApplication {
   Q_OBJECT
 
  public:
@@ -25,6 +26,10 @@ class SubVisApp : protected QApplication {
   QPixmap splash_image_{":/media/splash.png"};
 
   std::unique_ptr<QSplashScreen> create_splash();
+  void sleep();
+
+ signals:
+  void sleep_finished();
 };
 
 } // namespace subvis
