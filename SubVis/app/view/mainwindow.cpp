@@ -95,6 +95,11 @@ void MainWindow::unsync_viewers(QGLViewer* viewer1, QGLViewer* viewer2) {
   viewer2->setCamera(new qglviewer::Camera(*viewer2->camera()));
 }
 
+void MainWindow::toggle_splitscreen(bool show) {
+  viewer_mesh2_->setVisible(show);
+  viewer_plugin2_->setVisible(show);
+}
+
 void MainWindow::setup_viewer_tab(QWidget* tab, ViewerWidget* viewer1,
                                   ViewerWidget* viewer2) {
   auto tab_layout = new QVBoxLayout(tab);
@@ -152,6 +157,8 @@ void MainWindow::setup_menus() {
                    this, SLOT(triangulate_mesh(void)));
   QObject::connect(ui_->action_sync_views, SIGNAL(toggled(bool)),
                    this, SLOT(toggle_sync_views(bool)));
+  QObject::connect(ui_->action_toggle_splitscreen, SIGNAL(toggled(bool)),
+                   this, SLOT(toggle_splitscreen(bool)));
   QObject::connect(ui_->action_undo, SIGNAL(triggered(bool)),
                    this, SLOT(undo(void)));
   QObject::connect(ui_->action_redo, SIGNAL(triggered(bool)),
