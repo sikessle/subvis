@@ -9,7 +9,8 @@
 namespace subvis {
 
 /// Interface for plugins
-class SubVisPlugin {
+class SubVisPlugin : public QObject {
+  Q_OBJECT
  public:
   virtual ~SubVisPlugin() {}
 
@@ -21,9 +22,11 @@ class SubVisPlugin {
   virtual void init_opengl(int mesh_id) = 0;
   virtual void draw_opengl(int mesh_id) = 0;
   virtual void create_gui(QWidget* parent) = 0;
+
+ signals:
+  void needs_redraw();
 };
 
 } // namespace subvis
-
 #endif // SUBVIS_SUBVIS_PLUGIN_H
 

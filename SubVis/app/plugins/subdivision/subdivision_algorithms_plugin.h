@@ -10,8 +10,7 @@
 
 namespace subdivision {
 
-class SubdivisionAlgorithmsPlugin : public QObject,
-  public subvis::SubVisPlugin {
+class SubdivisionAlgorithmsPlugin : public subvis::SubVisPlugin {
   Q_OBJECT
 
  public:
@@ -24,6 +23,7 @@ class SubdivisionAlgorithmsPlugin : public QObject,
   void init_opengl(int mesh_id) override;
   void draw_opengl(int mesh_id) override;
   void create_gui(QWidget* parent) override;
+  void request_redraw();
 
  private:
   /// (mesh_id, name)->(algorithm, renderer)
@@ -32,7 +32,6 @@ class SubdivisionAlgorithmsPlugin : public QObject,
 
   void init_algorithm(int mesh_id, const QString name, SdAlgorithm* algorithm,
                       GLRenderer* renderer);
-
 };
 
 } // namespace subdivision

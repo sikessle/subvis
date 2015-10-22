@@ -15,6 +15,9 @@
 namespace subdivision {
 
 SubdivisionAlgorithmsPlugin::SubdivisionAlgorithmsPlugin() {
+  connect(&gui_, &GuiControls::needs_redraw, this,
+          &SubdivisionAlgorithmsPlugin::request_redraw);
+
   // Add here all the algorithms and their special renderer
   // Add them twice for each mesh
 
@@ -46,6 +49,10 @@ void SubdivisionAlgorithmsPlugin::init_algorithm(int mesh_id,
     std::unique_ptr<SdAlgorithm>{algorithm},
     std::shared_ptr<GLRenderer> {renderer}
   };
+}
+
+void SubdivisionAlgorithmsPlugin::request_redraw() {
+  emit needs_redraw();
 }
 
 const QString SubdivisionAlgorithmsPlugin::id() const {

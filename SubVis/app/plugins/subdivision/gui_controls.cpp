@@ -86,9 +86,15 @@ void GuiControls::create(QWidget* parent,
   set_progress_controls_visible(false);
 }
 
-void GuiControls::dropdown_changed() {
+void GuiControls::collect_selected_algorithms() {
   active_algo0_ = current_algo_render_pair(0).algorithm.get();
   active_algo1_ = current_algo_render_pair(1).algorithm.get();
+}
+
+void GuiControls::dropdown_changed() {
+  collect_selected_algorithms();
+
+  emit needs_redraw();
 }
 
 AlgorithmRenderer&
@@ -129,6 +135,7 @@ void GuiControls::draw_opengl(int mesh_id) {
 
 void GuiControls::subdivide_clicked(bool) {
   const int steps = steps_->value();
+  collect_selected_algorithms();
 
   auto callback1 = [this] (std::unique_ptr<Surface_mesh> mesh) {
     subdivide_finished(std::move(mesh), result0_);
