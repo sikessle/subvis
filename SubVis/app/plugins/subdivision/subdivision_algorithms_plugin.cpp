@@ -2,6 +2,7 @@
 
 #include "plugins/subdivision/gl_bspline_renderer.h"
 
+#include "plugins/subdivision/sd_none.h"
 #include "plugins/subdivision/sd_catmull.h"
 #include "plugins/subdivision/sd_doosabin.h"
 #include "plugins/subdivision/sd_loop.h"
@@ -15,6 +16,10 @@ namespace subdivision {
 SubdivisionAlgorithmsPlugin::SubdivisionAlgorithmsPlugin() {
   // Add here all the algorithms and their special renderer
   // Add them twice for each mesh
+
+  init_algorithm(0, "-- None --", new SdNone, new GLBSplineRenderer);
+  init_algorithm(1, "-- None --", new SdNone, new GLBSplineRenderer);
+
   init_algorithm(0, "Catmull-Clark", new SdCatmull, new GLBSplineRenderer);
   init_algorithm(1, "Catmull-Clark", new SdCatmull, new GLBSplineRenderer);
 

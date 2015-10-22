@@ -34,12 +34,12 @@ class SdAlgorithm : public QObject {
    * This function will be called in the single GUI thread, so it has not to be thread safe.
    * @param steps The number of subdivision steps.
    */
-  void subdivide_threaded(const Surface_mesh& mesh,
+  virtual void subdivide_threaded(const Surface_mesh& mesh,
                           std::function<void(std::unique_ptr<Surface_mesh>)> callback,
                           const int steps = 1);
 
   /// Stops after the current subdivision step and executes the callback.
-  void stop_subdivide_threaded();
+  virtual void stop_subdivide_threaded();
 
   /**
    * @brief Returns result mesh for testing.
