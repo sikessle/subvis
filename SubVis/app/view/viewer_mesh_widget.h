@@ -14,8 +14,8 @@ class ViewerMeshWidget : public ViewerWidget {
   ViewerMeshWidget(QWidget* parent = 0, int mesh_id = 0);
 
  protected:
-  void draw() override;
-  void init() override;
+  void draw_gl() override;
+  void init_gl() override;
   void mesh_updated(const surface_mesh::Surface_mesh& mesh) override;
   void mousePressEvent(QMouseEvent* e) override;
 

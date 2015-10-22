@@ -21,7 +21,7 @@ void ViewerMeshWidget::mesh_updated(const surface_mesh::Surface_mesh& mesh) {
   updateGL();
 }
 
-void ViewerMeshWidget::init() {
+void ViewerMeshWidget::init_gl() {
   // black background
   glClearColor(0, 0, 0, 0);
   glClear(GL_COLOR_BUFFER_BIT);
@@ -34,7 +34,7 @@ void ViewerMeshWidget::init() {
   //glEnable(GL_DEPTH_TEST);
 }
 
-void ViewerMeshWidget::draw() {
+void ViewerMeshWidget::draw_gl() {
   // WIREFRAME
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   // dark blue color

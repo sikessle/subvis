@@ -8,7 +8,7 @@
 namespace subvis {
 
 class ViewerWidget : public QGLViewer {
-    Q_OBJECT
+  Q_OBJECT
 
  public:
   ViewerWidget(QWidget* parent = 0, int mesh_id = 0);
@@ -17,11 +17,13 @@ class ViewerWidget : public QGLViewer {
   void set_mesh_id(int mesh_id);
 
  protected:
-  const MeshData* mesh_data_{nullptr};
+  const MeshData* mesh_data_ {nullptr};
   int mesh_id_{0};
 
-  void draw() override = 0;
-  void init() override = 0;
+  void draw() override;
+  void init() override;
+  virtual void draw_gl() = 0;
+  virtual void init_gl() = 0;
   virtual void mesh_updated(const surface_mesh::Surface_mesh& mesh) = 0;
 
  public slots:

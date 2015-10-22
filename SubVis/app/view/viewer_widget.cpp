@@ -11,6 +11,18 @@ void ViewerWidget::set_mesh_id(int mesh_id) {
   mesh_id_ = mesh_id;
 }
 
+void ViewerWidget::draw() {
+  // To keep layout in full size
+  updateGeometry();
+  // Call subclasses draw method
+  draw_gl();
+}
+
+void ViewerWidget::init() {
+  // Call subclasses draw method
+  init_gl();
+}
+
 void ViewerWidget::set_model(const MeshData& mesh_data) {
   mesh_data_ = &mesh_data;
 

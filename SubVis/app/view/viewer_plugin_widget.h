@@ -15,8 +15,8 @@ class ViewerPluginWidget : public ViewerWidget {
   void set_drawing_plugin(SubVisPlugin* plugin);
 
  protected:
-  void draw() override;
-  void init() override;
+  void draw_gl() override;
+  void init_gl() override;
   void mesh_updated(const surface_mesh::Surface_mesh& mesh) override;
 
  private:

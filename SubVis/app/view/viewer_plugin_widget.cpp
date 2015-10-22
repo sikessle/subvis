@@ -14,13 +14,13 @@ void ViewerPluginWidget::mesh_updated(
   updateGL();
 }
 
-void ViewerPluginWidget::init() {
+void ViewerPluginWidget::init_gl() {
   if (drawing_plugin_) {
     drawing_plugin_->init_opengl(mesh_id_);
   }
 }
 
-void ViewerPluginWidget::draw() {
+void ViewerPluginWidget::draw_gl() {
   if (drawing_plugin_) {
     drawing_plugin_->draw_opengl(mesh_id_);
   }

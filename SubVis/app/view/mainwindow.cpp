@@ -84,6 +84,8 @@ void MainWindow::setup_viewer_tabs() {
   toggle_sync_views(true);
 }
 
+
+
 void MainWindow::setup_viewer_tab(QWidget* tab, ViewerWidget* viewer1,
                                   ViewerWidget* viewer2) {
   auto layout = new QHBoxLayout;
