@@ -21,9 +21,7 @@ class GLRenderer {
   // TODO placeholder, here we should use a custom data structure to hold vertices
   const surface_mesh::Surface_mesh* mesh_ {nullptr};
 
-  /**
-   * @brief Called with the custom data structure TODO!!
-   */
+  /// Called with the custom data structure TODO!
   virtual void render(const surface_mesh::Surface_mesh& mesh) = 0;
 };
 

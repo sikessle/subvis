@@ -93,7 +93,8 @@ void GuiControls::collect_selected_algorithms() {
 
 void GuiControls::dropdown_changed() {
   collect_selected_algorithms();
-
+  current_algo_render_pair(0).renderer->mesh_updated(mesh_data_->get_mesh(0));
+  current_algo_render_pair(1).renderer->mesh_updated(mesh_data_->get_mesh(1));
   emit needs_redraw();
 }
 
