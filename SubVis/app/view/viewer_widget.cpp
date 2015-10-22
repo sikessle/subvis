@@ -11,7 +11,7 @@ void ViewerWidget::set_mesh_id(int mesh_id) {
   mesh_id_ = mesh_id;
 }
 
-void ViewerWidget::set_model(MeshData& mesh_data) {
+void ViewerWidget::set_model(const MeshData& mesh_data) {
   mesh_data_ = &mesh_data;
 
   // listen to mesh updates

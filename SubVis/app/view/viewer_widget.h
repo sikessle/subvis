@@ -13,11 +13,11 @@ class ViewerWidget : public QGLViewer {
  public:
   ViewerWidget(QWidget* parent = 0, int mesh_id = 0);
 
-  void set_model(MeshData& mesh_data);
+  void set_model(const MeshData& mesh_data);
   void set_mesh_id(int mesh_id);
 
  protected:
-  MeshData* mesh_data_{nullptr};
+  const MeshData* mesh_data_{nullptr};
   int mesh_id_{0};
 
   void draw() override = 0;
