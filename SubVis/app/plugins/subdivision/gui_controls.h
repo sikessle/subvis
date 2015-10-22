@@ -25,8 +25,7 @@ class GuiControls : public QObject {
   void mesh_updated(const surface_mesh::Surface_mesh& mesh, int mesh_id);
   void init_opengl(int mesh_id);
   void draw_opengl(int mesh_id);
-  void subdivide_clicked(bool);
-  void stop_clicked(bool);
+
 
  private:
   subvis::MeshData* mesh_data_{nullptr};
@@ -43,6 +42,9 @@ class GuiControls : public QObject {
   QComboBox* dropdown1_{nullptr};
   QProgressBar* progress_{nullptr};
 
+  void dropdown_changed();
+  void subdivide_clicked(bool);
+  void stop_clicked(bool);
   AlgorithmRenderer& selected_algo_renderer(QComboBox* dropdown, int mesh_id);
   AlgorithmRenderer& current_algo_render_pair(int mesh_id);
   void update_valid_items(QComboBox* dropdown, int mesh_id,
@@ -59,7 +61,7 @@ class GuiControls : public QObject {
       int first_enabled_item);
   void set_progress_controls_visible(bool visible);
   void subdivide_finished(std::unique_ptr<surface_mesh::Surface_mesh> mesh,
-                std::unique_ptr<surface_mesh::Surface_mesh>& result_target);
+                          std::unique_ptr<surface_mesh::Surface_mesh>& result_target);
 };
 
 } // namespace subdivision

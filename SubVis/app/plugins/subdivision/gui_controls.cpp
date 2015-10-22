@@ -48,6 +48,11 @@ void GuiControls::create(QWidget* parent,
   layout->addLayout(layout_dropdown0);
   layout->addLayout(layout_dropdown1);
 
+  connect(dropdown0_, &QComboBox::currentTextChanged, this,
+          &GuiControls::dropdown_changed);
+  connect(dropdown1_, &QComboBox::currentTextChanged, this,
+          &GuiControls::dropdown_changed);
+
   QHBoxLayout* layout_steps = new QHBoxLayout;
   layout_steps->setAlignment(Qt::AlignTop);
 
@@ -79,6 +84,11 @@ void GuiControls::create(QWidget* parent,
   layout->addWidget(progress_);
 
   set_progress_controls_visible(false);
+}
+
+void GuiControls::dropdown_changed() {
+  active_algo0_ = current_algo_render_pair(0).algorithm.get();
+  active_algo1_ = current_algo_render_pair(1).algorithm.get();
 }
 
 AlgorithmRenderer&
@@ -119,8 +129,6 @@ void GuiControls::draw_opengl(int mesh_id) {
 
 void GuiControls::subdivide_clicked(bool) {
   const int steps = steps_->value();
-  active_algo0_ = current_algo_render_pair(0).algorithm.get();
-  active_algo1_ = current_algo_render_pair(1).algorithm.get();
 
   auto callback1 = [this] (std::unique_ptr<Surface_mesh> mesh) {
     subdivide_finished(std::move(mesh), result0_);
