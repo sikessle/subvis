@@ -29,7 +29,7 @@ class MeshData : public QObject {
   bool persist(const std::string& filename) const;
   const std::string& get_load_file_formats() const;
   const std::string& get_persist_file_formats() const;
-  void triangulate();
+  void triangulate(int idx);
 
  private:
   std::vector<std::pair<std::unique_ptr<Surface_mesh>, std::unique_ptr<Surface_mesh>>>

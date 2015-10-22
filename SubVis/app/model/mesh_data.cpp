@@ -8,9 +8,9 @@ using MeshPairUniquePtrs =
   std::pair<std::unique_ptr<Surface_mesh>, std::unique_ptr<Surface_mesh>>;
 
 MeshData::MeshData() {
+  auto mesh0 = std::unique_ptr<Surface_mesh> {new Surface_mesh};
   auto mesh1 = std::unique_ptr<Surface_mesh> {new Surface_mesh};
-  auto mesh2 = std::unique_ptr<Surface_mesh> {new Surface_mesh};
-  history_.push_back({std::move(mesh1), std::move(mesh2)});
+  history_.push_back({std::move(mesh0), std::move(mesh1)});
 }
 
 const Surface_mesh& MeshData::get_mesh(int idx) const {
@@ -41,12 +41,16 @@ bool MeshData::load(const std::string& filename) {
   return success;
 }
 
-void MeshData::triangulate() {
-  auto copy1 = std::unique_ptr<Surface_mesh> {new Surface_mesh(get_mesh(0))};
-  copy1->triangulate();
-  auto copy2 = std::unique_ptr<Surface_mesh> {new Surface_mesh(get_mesh(1))};
-  copy2->triangulate();
-  history_push({std::move(copy1), std::move(copy2)});
+void MeshData::triangulate(int idx) {
+  auto copy0 = std::unique_ptr<Surface_mesh> {new Surface_mesh(get_mesh(0))};
+  auto copy1 = std::unique_ptr<Surface_mesh> {new Surface_mesh(get_mesh(1))};
+
+  if (idx == 0) {
+    copy0->triangulate();
+  } else {
+    copy1->triangulate();
+  }
+  history_push({std::move(copy0), std::move(copy1)});
 
   emit_updated_signal();
 }

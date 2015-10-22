@@ -155,8 +155,10 @@ void MainWindow::setup_menus() {
           &MainWindow::save_snapshot1);
   connect(ui_->action_quit, &QAction::triggered, QApplication::instance(),
           &QApplication::quit);
-  connect(ui_->action_triangulate, &QAction::triggered, this,
-          &MainWindow::triangulate_mesh);
+  connect(ui_->action_triangulate_left, &QAction::triggered, this,
+          &MainWindow::triangulate_mesh0);
+  connect(ui_->action_triangulate_right, &QAction::triggered, this,
+          &MainWindow::triangulate_mesh1);
   connect(ui_->action_sync_views, &QAction::toggled, this,
           &MainWindow::toggle_sync_views);
   connect(ui_->action_toggle_splitscreen, &QAction::toggled, this,
@@ -195,8 +197,12 @@ void MainWindow::redo() {
   mesh_data_.history_step_forward();
 }
 
-void MainWindow::triangulate_mesh() {
-  mesh_data_.triangulate();
+void MainWindow::triangulate_mesh0() {
+  mesh_data_.triangulate(0);
+}
+
+void MainWindow::triangulate_mesh1() {
+  mesh_data_.triangulate(1);
 }
 
 void MainWindow::show_load_dialog() {
