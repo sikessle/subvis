@@ -21,23 +21,26 @@ class GuiControls : public QObject {
 
   void set_model(subvis::MeshData& mesh_data);
   void create(QWidget* parent,
-              std::map<std::pair<const int, const QString>, AlgorithmRenderer>& algorithms);
+              std::map<std::pair<int, const QString>, AlgorithmRenderer>& algorithms);
   void mesh_updated(const surface_mesh::Surface_mesh& mesh, int mesh_id);
   void init_opengl(int mesh_id);
   void draw_opengl(int mesh_id);
+  void subdivide_clicked(bool);
+  void stop_clicked(bool);
 
  private:
   subvis::MeshData* mesh_data_{nullptr};
-  std::map<int, SdAlgorithm*> mesh_id_active_algorithm_;
-  std::map<std::pair<const int, const QString>, AlgorithmRenderer>* algorithms_{nullptr};
+  SdAlgorithm* active_algo0_{nullptr};
+  SdAlgorithm* active_algo1_{nullptr};
+  std::map<std::pair<int, const QString>, AlgorithmRenderer>* algorithms_{nullptr};
+  std::unique_ptr<surface_mesh::Surface_mesh> result0_{nullptr};
   std::unique_ptr<surface_mesh::Surface_mesh> result1_{nullptr};
-  std::unique_ptr<surface_mesh::Surface_mesh> result2_{nullptr};
   // memory managed by Qt's parent-relationship
   QPushButton* subdivide_{nullptr};
   QPushButton* stop_{nullptr};
   QSpinBox* steps_{nullptr};
+  QComboBox* dropdown0_{nullptr};
   QComboBox* dropdown1_{nullptr};
-  QComboBox* dropdown2_{nullptr};
   QProgressBar* progress_{nullptr};
 
   AlgorithmRenderer& selected_algo_renderer(QComboBox* dropdown, int mesh_id);
@@ -55,12 +58,8 @@ class GuiControls : public QObject {
       QStandardItemModel* model,
       int first_enabled_item);
   void set_progress_controls_visible(bool visible);
-  void callback(std::unique_ptr<surface_mesh::Surface_mesh> mesh,
+  void subdivide_finished(std::unique_ptr<surface_mesh::Surface_mesh> mesh,
                 std::unique_ptr<surface_mesh::Surface_mesh>& result_target);
-
- private slots:
-  void subdivide_clicked(bool);
-  void stop_clicked(bool);
 };
 
 } // namespace subdivision

@@ -9,8 +9,10 @@ using Surface_mesh = surface_mesh::Surface_mesh;
 using Point = surface_mesh::Point;
 
 SdAlgorithm::SdAlgorithm() {
-  QObject::connect(this, SIGNAL(subdivide_worker_finished()),
-                   this, SLOT(subdivide_worker_cleanup()));
+  // By using signals to handle the callback when the computation is done,
+  // it is ensured, that the callback is run on the main UI thread.
+  connect(this, &SdAlgorithm::subdivide_worker_finished, this,
+          &SdAlgorithm::subdivide_worker_cleanup);
 }
 
 SdAlgorithm::~SdAlgorithm() {
@@ -30,7 +32,7 @@ void SdAlgorithm::subdivide_threaded(const Surface_mesh& mesh,
   }
 }
 
-void SdAlgorithm::subdivide_worker(const int steps) {
+void SdAlgorithm::subdivide_worker(int steps) {
   for (int i = 0; i < steps && !stop_subdivide_; i++) {
     output_mesh_->clear();
     DEBUG_MESH(*input_mesh_.get(), "input mesh")
@@ -52,7 +54,7 @@ void SdAlgorithm::stop_subdivide_threaded() {
   stop_subdivide_ = true;
 }
 
-const Surface_mesh& SdAlgorithm::get_result_mesh() {
+const Surface_mesh& SdAlgorithm::get_result_mesh() const {
   return *output_mesh_.get();
 }
 

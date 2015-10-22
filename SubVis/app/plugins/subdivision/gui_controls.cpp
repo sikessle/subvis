@@ -7,49 +7,16 @@
 
 namespace subdivision {
 
+using Surface_mesh = ::surface_mesh::Surface_mesh;
+using MeshPairUniquePtrs =
+  std::pair<std::unique_ptr<Surface_mesh>, std::unique_ptr<Surface_mesh>>;
+
 GuiControls::GuiControls() {
 
 }
 
-AlgorithmRenderer&
-GuiControls::selected_algo_renderer(QComboBox* dropdown, int mesh_id) {
-  if (dropdown->count() == 0) {
-    throw std::logic_error{"no algorithms loaded. ensure that at least one is loaded in the constructor."};
-  }
-  const QString name = dropdown->currentText();
-
-  return algorithms_->at({mesh_id, name});
-}
-
-AlgorithmRenderer&
-GuiControls::current_algo_render_pair(int mesh_id) {
-  if (mesh_id == 0) {
-    return selected_algo_renderer(dropdown1_, mesh_id);
-  } else {
-    return selected_algo_renderer(dropdown2_, mesh_id);
-  }
-}
-
-void GuiControls::set_model(subvis::MeshData& mesh_data) {
-  mesh_data_ = &mesh_data;
-}
-
-void GuiControls::mesh_updated(const surface_mesh::Surface_mesh& mesh,
-                               int mesh_id) {
-  current_algo_render_pair(mesh_id).renderer->mesh_updated(mesh);
-  update_valid_dropdown_items(mesh, mesh_id);
-}
-
-void GuiControls::init_opengl(int mesh_id) {
-  current_algo_render_pair(mesh_id).renderer->init_opengl();
-}
-
-void GuiControls::draw_opengl(int mesh_id) {
-  current_algo_render_pair(mesh_id).renderer->render_mesh_opengl();
-}
-
 void GuiControls::create(QWidget* parent,
-                         std::map<std::pair<const int, const QString>, AlgorithmRenderer>& algorithms) {
+                         std::map<std::pair<int, const QString>, AlgorithmRenderer>& algorithms) {
   algorithms_ = &algorithms;
   // Gui creation
   QVBoxLayout* layout = new QVBoxLayout(parent);
@@ -57,29 +24,29 @@ void GuiControls::create(QWidget* parent,
 
   layout->addWidget(new QLabel("Algorithms:"));
 
+  QHBoxLayout* layout_dropdown0 = new QHBoxLayout;
+  layout_dropdown0->setAlignment(Qt::AlignTop);
   QHBoxLayout* layout_dropdown1 = new QHBoxLayout;
   layout_dropdown1->setAlignment(Qt::AlignTop);
-  QHBoxLayout* layout_dropdown2 = new QHBoxLayout;
-  layout_dropdown2->setAlignment(Qt::AlignTop);
 
-  layout_dropdown1->addWidget(new QLabel("[0]"));
-  layout_dropdown2->addWidget(new QLabel("[1]"));
+  layout_dropdown0->addWidget(new QLabel("[0]"));
+  layout_dropdown1->addWidget(new QLabel("[1]"));
 
+  dropdown0_ = new QComboBox(parent);
   dropdown1_ = new QComboBox(parent);
-  dropdown2_ = new QComboBox(parent);
   for (const auto& it : *algorithms_) {
     // using name from map's entries as label
     if (it.first.first == 0) {
-      dropdown1_->addItem(it.first.second);
+      dropdown0_->addItem(it.first.second);
     } else {
-      dropdown2_->addItem(it.first.second);
+      dropdown1_->addItem(it.first.second);
     }
   }
+  layout_dropdown0->addWidget(dropdown0_, 1);
   layout_dropdown1->addWidget(dropdown1_, 1);
-  layout_dropdown2->addWidget(dropdown2_, 1);
 
+  layout->addLayout(layout_dropdown0);
   layout->addLayout(layout_dropdown1);
-  layout->addLayout(layout_dropdown2);
 
   QHBoxLayout* layout_steps = new QHBoxLayout;
   layout_steps->setAlignment(Qt::AlignTop);
@@ -101,11 +68,9 @@ void GuiControls::create(QWidget* parent,
 
   layout->addLayout(layout_start_stop);
 
-  QObject::connect(subdivide_, SIGNAL(clicked(bool)),
-                   this, SLOT(subdivide_clicked(bool)));
-
-  QObject::connect(stop_, SIGNAL(clicked(bool)),
-                   this, SLOT(stop_clicked(bool)));
+  connect(subdivide_, &QPushButton::clicked, this,
+          &GuiControls::subdivide_clicked);
+  connect(stop_, &QPushButton::clicked, this, &GuiControls::stop_clicked);
 
   progress_ = new QProgressBar(parent);
   // busy indicator with max=min=0
@@ -116,45 +81,76 @@ void GuiControls::create(QWidget* parent,
   set_progress_controls_visible(false);
 }
 
+AlgorithmRenderer&
+GuiControls::selected_algo_renderer(QComboBox* dropdown, int mesh_id) {
+  if (dropdown->count() == 0) {
+    throw std::logic_error{"no algorithms loaded. ensure that at least one is loaded in the constructor."};
+  }
+  const QString name = dropdown->currentText();
+
+  return algorithms_->at({mesh_id, name});
+}
+
+AlgorithmRenderer&
+GuiControls::current_algo_render_pair(int mesh_id) {
+  if (mesh_id == 0) {
+    return selected_algo_renderer(dropdown0_, mesh_id);
+  } else {
+    return selected_algo_renderer(dropdown1_, mesh_id);
+  }
+}
+
+void GuiControls::set_model(subvis::MeshData& mesh_data) {
+  mesh_data_ = &mesh_data;
+}
+
+void GuiControls::mesh_updated(const Surface_mesh& mesh, int mesh_id) {
+  current_algo_render_pair(mesh_id).renderer->mesh_updated(mesh);
+  update_valid_dropdown_items(mesh, mesh_id);
+}
+
+void GuiControls::init_opengl(int mesh_id) {
+  current_algo_render_pair(mesh_id).renderer->init_opengl();
+}
+
+void GuiControls::draw_opengl(int mesh_id) {
+  current_algo_render_pair(mesh_id).renderer->render_mesh_opengl();
+}
+
 void GuiControls::subdivide_clicked(bool) {
   const int steps = steps_->value();
-  mesh_id_active_algorithm_[0] = current_algo_render_pair(0).algorithm.get();
-  mesh_id_active_algorithm_[1] = current_algo_render_pair(1).algorithm.get();
+  active_algo0_ = current_algo_render_pair(0).algorithm.get();
+  active_algo1_ = current_algo_render_pair(1).algorithm.get();
 
-  auto callback1 = [this] (std::unique_ptr<surface_mesh::Surface_mesh> mesh) {
-    callback(std::move(mesh), result1_);
+  auto callback1 = [this] (std::unique_ptr<Surface_mesh> mesh) {
+    subdivide_finished(std::move(mesh), result0_);
   };
-  auto callback2 = [this] (std::unique_ptr<surface_mesh::Surface_mesh> mesh) {
-    callback(std::move(mesh), result2_);
+  auto callback2 = [this] (std::unique_ptr<Surface_mesh> mesh) {
+    subdivide_finished(std::move(mesh), result1_);
   };
 
   set_progress_controls_visible(true);
 
+  result0_ = nullptr;
   result1_ = nullptr;
-  result2_ = nullptr;
 
-  mesh_id_active_algorithm_[0]->subdivide_threaded(mesh_data_->get_mesh(0),
-      callback1, steps);
-  mesh_id_active_algorithm_[1]->subdivide_threaded(mesh_data_->get_mesh(1),
-      callback2, steps);
+  active_algo0_->subdivide_threaded(mesh_data_->get_mesh(0), callback1, steps);
+  active_algo1_->subdivide_threaded(mesh_data_->get_mesh(1), callback2, steps);
 }
 
-void GuiControls::callback(std::unique_ptr<surface_mesh::Surface_mesh> mesh,
-                           std::unique_ptr<surface_mesh::Surface_mesh>& result_target) {
+void GuiControls::subdivide_finished(std::unique_ptr<Surface_mesh> mesh,
+                                     std::unique_ptr<Surface_mesh>& result_target) {
   result_target = std::move(mesh);
 
-  if (result1_ && result2_) {
-    mesh_data_->load(
-      std::pair<std::unique_ptr<surface_mesh::Surface_mesh>, std::unique_ptr<surface_mesh::Surface_mesh>>
-    {std::move(result1_), std::move(result2_)});
+  if (result0_ && result1_) {
+    mesh_data_->load(MeshPairUniquePtrs{std::move(result0_), std::move(result1_)});
     set_progress_controls_visible(false);
   }
 }
 
 void GuiControls::stop_clicked(bool) {
-  for (auto it : mesh_id_active_algorithm_) {
-    it.second->stop_subdivide_threaded();
-  }
+  active_algo0_->stop_subdivide_threaded();
+  active_algo1_->stop_subdivide_threaded();
 }
 
 void GuiControls::set_progress_controls_visible(bool visible) {
@@ -177,9 +173,9 @@ void GuiControls::update_valid_dropdown_items(
   const surface_mesh::Surface_mesh& mesh, int mesh_id) {
 
   if (mesh_id == 0) {
-    update_valid_items(dropdown1_, mesh_id, mesh);
+    update_valid_items(dropdown0_, mesh_id, mesh);
   } else {
-    update_valid_items(dropdown2_, mesh_id, mesh);
+    update_valid_items(dropdown1_, mesh_id, mesh);
   }
 }
 

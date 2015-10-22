@@ -45,7 +45,7 @@ class SdAlgorithm : public QObject {
    * @brief Returns result mesh for testing.
    * @return A view on the mesh, but ownership stays in this class.
    */
-  virtual const Surface_mesh& get_result_mesh();
+  virtual const Surface_mesh& get_result_mesh() const;
 
   /// Test if the @c mesh can be subdivided with the subdivision algorithm.
   virtual bool is_subdividable(const Surface_mesh& mesh) const = 0;
@@ -114,13 +114,11 @@ class SdAlgorithm : public QObject {
   volatile bool stop_subdivide_{false};
   std::function<void(std::unique_ptr<Surface_mesh>)> callback_;
 
-  void subdivide_worker(const int steps);
+  void subdivide_worker(int steps);
+  void subdivide_worker_cleanup();
 
  signals:
   void subdivide_worker_finished();
-
- private slots:
-  void subdivide_worker_cleanup();
 };
 
 } // namespace subdivision
