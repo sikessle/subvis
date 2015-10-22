@@ -314,7 +314,7 @@
     </iconset>
    </property>
    <property name="text">
-    <string>Sync Views</string>
+    <string>Toggle Sync Views</string>
    </property>
    <property name="toolTip">
     <string>Synchronize Views</string>
