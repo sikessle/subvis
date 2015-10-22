@@ -10,7 +10,7 @@ class GLRenderer {
  public:
   virtual ~GLRenderer();
 
-  void render_mesh_opengl();
+  virtual void render_mesh_opengl();
   /// Is called once before render_mesh_opengl().
   /// Override for specific settings (background color etc.)
   virtual void init_opengl();

@@ -61,7 +61,8 @@ HEADERS  += view/mainwindow.h \
     plugins/subdivision/sd_modbutterfly.h \
     plugins/subdivision/gui_controls.h \
     plugins/subdivision/algorithm_renderer.h \
-    plugins/subdivision/sd_none.h
+    plugins/subdivision/sd_none.h \
+    plugins/subdivision/gl_none_renderer.h
 
 SOURCES += main.cpp \
     view/mainwindow.cpp \
@@ -84,7 +85,8 @@ SOURCES += main.cpp \
     plugins/subdivision/sd_triangle.cpp \
     plugins/subdivision/sd_modbutterfly.cpp \
     plugins/subdivision/gui_controls.cpp \
-    plugins/subdivision/sd_none.cpp
+    plugins/subdivision/sd_none.cpp \
+    plugins/subdivision/gl_none_renderer.cpp
 
 FORMS    += view/mainwindow.ui
 
