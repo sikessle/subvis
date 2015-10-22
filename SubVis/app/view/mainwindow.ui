@@ -24,7 +24,7 @@
    <property name="enabled">
     <bool>true</bool>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QSplitter" name="splitter">
       <property name="orientation">
@@ -325,7 +325,9 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset theme="window-new"/>
+    <iconset theme="window-new">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Toggle Splitscreen</string>
