@@ -165,6 +165,7 @@ void MainWindow::setup_menus() {
           &MainWindow::toggle_splitscreen);
   connect(ui_->action_undo,  &QAction::triggered, this, &MainWindow::undo);
   connect(ui_->action_redo,  &QAction::triggered, this, &MainWindow::redo);
+  connect(ui_->action_edit,  &QAction::toggled, this, &MainWindow::toggle_edit);
 
   // On startup redo/undo is not available
   ui_->action_redo->setEnabled(false);
@@ -189,6 +190,19 @@ void MainWindow::toggle_sync_views(bool sync) {
   }
 }
 
+void MainWindow::toggle_edit(bool edit) {
+  if (edit) {
+    ui_->tabs_viewer->setCurrentIndex(0);
+    ui_->tabs_viewer->setTabEnabled(1, false);
+  } else {
+    ui_->tabs_viewer->setTabEnabled(1, true);
+  }
+  ui_->action_sync_views->setChecked(!edit);
+  ui_->action_sync_views->setEnabled(!edit);
+  ui_->action_toggle_splitscreen->setChecked(!edit);
+  ui_->action_toggle_splitscreen->setEnabled(!edit);
+}
+
 void MainWindow::undo() {
   mesh_data_.history_step_back();
 }
@@ -207,8 +221,7 @@ void MainWindow::triangulate_mesh1() {
 
 void MainWindow::show_load_dialog() {
   QString file_filter{QString::fromStdString(mesh_data_.get_load_file_formats())};
-  QString fn{QFileDialog::getOpenFileName(this, kLoadDialogCaption,
-                                          QDir::home().absolutePath(), file_filter)};
+  QString fn{QFileDialog::getOpenFileName(this, kLoadDialogCaption, "", file_filter)};
 
   if (!fn.isNull()) {
     const std::string filename = fn.toStdString();
@@ -222,8 +235,7 @@ void MainWindow::show_load_dialog() {
 
 void MainWindow::show_save_dialog() {
   QString file_filter{QString::fromStdString(mesh_data_.get_persist_file_formats())};
-  QString fn{QFileDialog::getSaveFileName(this, kSaveDialogCaption,
-                                          QDir::home().absolutePath(), file_filter)};
+  QString fn{QFileDialog::getSaveFileName(this, kSaveDialogCaption, "", file_filter)};
 
   if (!fn.isNull()) {
     const std::string filename = fn.toStdString();

@@ -30,6 +30,7 @@ class MainWindow : public QMainWindow {
   void save_snapshot1();
   void triangulate_mesh0();
   void triangulate_mesh1();
+  void toggle_edit(bool edit);
   void undo();
   void redo();
   void toggle_sync_views(bool sync);
