@@ -63,8 +63,8 @@ void SdButterfly::compute_edge_point_ordinary(Point& edge_point,
 
 void SdButterfly::compute_edge_point_boundary(Point& edge_point,
     const Surface_mesh::Edge& edge) const {
-  Surface_mesh::Halfedge h0 = this->find_next_halfedge_of_boundary_edge_ccw(
-                                input_mesh_->halfedge(edge, 0));
+  const Surface_mesh::Halfedge h0 = this->find_next_halfedge_of_boundary_edge_ccw(
+                                      input_mesh_->halfedge(edge, 0));
   const Surface_mesh::Halfedge h1 = this->find_next_halfedge_of_boundary_edge_ccw(
                                       input_mesh_->halfedge(edge, 1));
   const Surface_mesh::Vertex vertex0 = input_mesh_->vertex(edge, 0);
