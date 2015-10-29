@@ -13,6 +13,9 @@ ViewerMeshWidget::ViewerMeshWidget(QWidget* parent,
 
 void ViewerMeshWidget::set_edit(bool edit) {
   edit_ = edit;
+  setMouseTracking(edit);
+  setMouseGrabberIsEnabled(&mouse_grabber_, edit);
+  mouse_grabber_.set_enabled(edit);
 }
 
 
@@ -76,27 +79,21 @@ void ViewerMeshWidget::draw_mesh() {
   }
 }
 
-void ViewerMeshWidget::index_to_rgb(const int index, int rgb[3]) const {
-  rgb[0] = (index & 0x000000FF) >>  0; // r: least significant 2 bits of index
-  rgb[1] = (index & 0x0000FF00) >>  8; // b: next two bits
-  rgb[2] = (index & 0x00FF0000) >> 16; // g: next two bits
+void ViewerMeshWidget::index_to_rgba(const int index, int rgba[4]) const {
+  rgba[0] = (index & 0x000000FF) >>  0; // r: least significant 2 bytes of index
+  rgba[1] = (index & 0x0000FF00) >>  8; // b: next two bytes
+  rgba[2] = (index & 0x00FF0000) >> 16; // g: next two bytes
+  rgba[3] = (index & 0xFF000000) >> 24; // a: next two bytes
 }
 
-int ViewerMeshWidget::rgb_to_index(const int rgb[4]) const {
+int ViewerMeshWidget::rgba_to_index(const int rgba[4]) const {
   // rebuild index from r, g and b values.
   // inverse function of index_to_rgb.
   return
-    rgb[0] +
-    rgb[1] * 256 +
-    rgb[2] * 256 * 256;
-}
-
-void ViewerMeshWidget::mousePressEvent(QMouseEvent* e) {
-
-  // TODO pick by color
-  // id: surface_mesh::Surface_mesh::Vertex v; =>  v.idx()
-
-  ViewerWidget::mousePressEvent(e);
+    rgba[0] +
+    rgba[1] * 256 +
+    rgba[2] * 256 * 256 +
+    rgba[2] * 256 * 256 * 256;
 }
 
 } // namespace subvis
