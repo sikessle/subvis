@@ -203,6 +203,8 @@ void MainWindow::toggle_edit(bool edit) {
   ui_->action_sync_views->setEnabled(!edit);
   ui_->action_toggle_splitscreen->setChecked(!edit);
   ui_->action_toggle_splitscreen->setEnabled(!edit);
+  // viewer #0 is the editable view
+  viewer_mesh0_->set_edit(edit);
 }
 
 void MainWindow::undo() {

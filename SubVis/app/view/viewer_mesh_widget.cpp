@@ -11,6 +11,10 @@ ViewerMeshWidget::ViewerMeshWidget(QWidget* parent,
   ViewerWidget{parent, mesh_id} {
 }
 
+void ViewerMeshWidget::set_edit(bool edit) {
+  edit_ = edit;
+}
+
 
 void ViewerMeshWidget::mesh_updated(const surface_mesh::Surface_mesh& mesh) {
   // placeholder for custom data structure
@@ -88,6 +92,7 @@ int ViewerMeshWidget::rgb_to_index(const int rgb[4]) const {
 }
 
 void ViewerMeshWidget::mousePressEvent(QMouseEvent* e) {
+
   // TODO pick by color
   // id: surface_mesh::Surface_mesh::Vertex v; =>  v.idx()
 

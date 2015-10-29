@@ -13,6 +13,8 @@ class ViewerMeshWidget : public ViewerWidget {
  public:
   ViewerMeshWidget(QWidget* parent = 0, int mesh_id = 0);
 
+  void set_edit(bool edit);
+
  protected:
   void draw_gl() override;
   void init_gl() override;
@@ -22,6 +24,7 @@ class ViewerMeshWidget : public ViewerWidget {
  private:
   // TODO placeholder, here we should use a custom data structure to hold vertices
   const surface_mesh::Surface_mesh* mesh_ {nullptr};
+  bool edit_{false};
 
   void draw_mesh();
   /// RGB color values will be stored in rgb array
