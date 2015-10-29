@@ -8,6 +8,9 @@ using MeshPairRef =
 ViewerWidget::ViewerWidget(QWidget* parent, int mesh_id)
   : QGLViewer{parent},
     mesh_id_{mesh_id} {
+
+  setMouseBinding(Qt::KeyboardModifier::NoModifier, Qt::MouseButton::LeftButton,
+                  ClickAction::NO_CLICK_ACTION, true);
 }
 
 void ViewerWidget::draw() {
