@@ -167,6 +167,7 @@ void MainWindow::setup_menus() {
   connect(ui_->action_undo,  &QAction::triggered, this, &MainWindow::undo);
   connect(ui_->action_redo,  &QAction::triggered, this, &MainWindow::redo);
   connect(ui_->action_edit,  &QAction::toggled, this, &MainWindow::toggle_edit);
+  connect(ui_->action_edit,  &QAction::toggled, viewer_mesh0_, &ViewerMeshWidget::set_edit);
 
   // On startup redo/undo is not available
   ui_->action_redo->setEnabled(false);
@@ -203,8 +204,6 @@ void MainWindow::toggle_edit(bool edit) {
   ui_->action_sync_views->setEnabled(!edit);
   ui_->action_toggle_splitscreen->setChecked(!edit);
   ui_->action_toggle_splitscreen->setEnabled(!edit);
-  // viewer #0 is the editable view
-  viewer_mesh0_->set_edit(edit);
 }
 
 void MainWindow::undo() {
