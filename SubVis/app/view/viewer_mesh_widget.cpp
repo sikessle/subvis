@@ -32,11 +32,6 @@ void ViewerMeshWidget::mesh_updated(const surface_mesh::Surface_mesh& mesh) {
 }
 
 void ViewerMeshWidget::init_gl() {
-  // black background
-  glClearColor(0, 0, 0, 0);
-  glClear(GL_COLOR_BUFFER_BIT);
-  // no lighting TODO: shadows etc. would be good..
-  glDisable(GL_LIGHTING);
   // TODO compute the correct scene radius and configure camera.
   setSceneRadius(10.0);
   camera()->setZNearCoefficient(0.0001);
@@ -45,6 +40,14 @@ void ViewerMeshWidget::init_gl() {
 }
 
 void ViewerMeshWidget::draw_gl() {
+  if (edit_) {
+    mouse_grabber_.draw_gl();
+  }
+  // black background
+  glClearColor(0, 0, 0, 0);
+  glClear(GL_COLOR_BUFFER_BIT);
+  // no lighting TODO: shadows etc. would be good..
+  glDisable(GL_LIGHTING);
   // WIREFRAME
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   // dark blue color

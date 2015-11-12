@@ -15,6 +15,7 @@ class EditMeshMouseGrabber : public qglviewer::MouseGrabber {
                          const qglviewer::Camera* const camera) override;
   void set_enabled(bool enable);
   void mesh_updated(const surface_mesh::Surface_mesh& mesh);
+  void draw_gl();
 
  protected:
   void mousePressEvent(QMouseEvent* const event,
@@ -22,15 +23,17 @@ class EditMeshMouseGrabber : public qglviewer::MouseGrabber {
 
  private:
   bool enabled_{false};
-  const surface_mesh::Surface_mesh* mesh_{nullptr};
-  const int kClickBoxLength = 4;
-  const int kPixelsBytes = 3;
+  const surface_mesh::Surface_mesh* mesh_ {nullptr};
+  bool unhandled_click_ {false};
+  int click_x_ {0};
+  int click_y_ {0};
+  const int kClickBoxLength {4};
+  const int kPixelsBytes {3};
 
   /// RGBA color values will be stored in rgba array
   void index_to_rgba(const int index, unsigned char rgba[4]) const;
   /// Allows rgba values
   int rgba_to_index(const unsigned char rgba[4]) const;
-  void render_mesh_colored();
 };
 
 } // namespace subvis

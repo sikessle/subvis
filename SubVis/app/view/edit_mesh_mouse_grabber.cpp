@@ -46,17 +46,30 @@ void EditMeshMouseGrabber::mesh_updated(const surface_mesh::Surface_mesh&
   mesh_ = &mesh;
 }
 
-void EditMeshMouseGrabber::render_mesh_colored() {
+void EditMeshMouseGrabber::draw_gl() {
   using Point = surface_mesh::Point;
 
-  if (!mesh_) {
+  if (!mesh_ || !unhandled_click_) {
     return;
   }
 
   glClearColor(255, 255, 255, 255);
   glClear(GL_COLOR_BUFFER_BIT);
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
   unsigned char rgba[4];
+  GLint viewport[4];
+  glGetIntegerv(GL_VIEWPORT, viewport);
+  const int viewport_height = viewport[3];
+
+  // Limit drawing area to the clicked area around the mouse click coordinates.
+  glScissor(click_x_ - kClickBoxLength / 2,
+            viewport_height - click_y_ - kClickBoxLength / 2,
+            kClickBoxLength,
+            kClickBoxLength);
+
+  // Start rendering the mesh with unique colors per vertex
+  glEnable(GL_SCISSOR_TEST);
 
   for (const auto& vertex : mesh_->vertices()) {
     // Set color based on idx
@@ -81,6 +94,22 @@ void EditMeshMouseGrabber::render_mesh_colored() {
 
     glEnd();
   }
+
+  glDisable(GL_SCISSOR_TEST);
+
+  // Get pixel color of mouse click coordinates (1 pixel)
+  glFlush();
+  glFinish();
+  unsigned char pixels[4];
+  glReadPixels(click_x_, viewport_height - click_y_, 1, 1, GL_RGBA,
+               GL_UNSIGNED_BYTE, pixels);
+  // Convert color to vertex idx
+  const unsigned int vertex_idx = rgba_to_index(pixels);
+  std::cerr << "Calculated vertex_idx: " << vertex_idx << std::endl;
+  // Get vertex by id
+  // TODO query mesh by id
+
+  unhandled_click_ = false;
 }
 
 void EditMeshMouseGrabber::mousePressEvent(QMouseEvent* const event,
@@ -89,34 +118,10 @@ void EditMeshMouseGrabber::mousePressEvent(QMouseEvent* const event,
     return;
   }
 
-  const int x = event->x();
-  const int y = event->y();
-  GLint viewport[4];
-  unsigned char pixels[4];
-  glGetIntegerv(GL_VIEWPORT, viewport);
-  const int viewport_height = viewport[3];
+  unhandled_click_ = true;
 
-  // Limit drawing area to the clicked area around the mouse click coordinates.
-  glScissor(x - kClickBoxLength / 2, viewport_height - y - kClickBoxLength / 2,
-            kClickBoxLength,
-            kClickBoxLength);
-
-  // Start rendering the mesh with unique colors per vertex
-  glEnable(GL_SCISSOR_TEST);
-  render_mesh_colored();
-  glDisable(GL_SCISSOR_TEST);
-
-  // Get pixel color of mouse click coordinates (1 pixel)
-  glFlush();
-  glFinish();
-  glReadPixels(x, viewport_height - y, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
-  // Convert color to vertex idx
-  const unsigned int vertex_idx = rgba_to_index(pixels);
-  std::cerr << "Calculated vertex_idx: " << vertex_idx << std::endl;
-  // Get vertex by id
-  // TODO query mesh by id
-
-
+  click_x_ = event->x();
+  click_y_ = event->y();
 }
 
 } // namespace subvis
