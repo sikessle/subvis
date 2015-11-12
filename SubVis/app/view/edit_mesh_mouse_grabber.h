@@ -9,7 +9,7 @@ class EditMeshMouseGrabber : public qglviewer::MouseGrabber {
  public:
   EditMeshMouseGrabber();
 
-  void checkIfGrabsMouse(int x, int y, const qglviewer::Camera* const camera);
+  void checkIfGrabsMouse(int x, int y, const qglviewer::Camera* const camera) override;
   void set_enabled(bool enable);
 
  protected:
