@@ -38,6 +38,7 @@ void ViewerWidget::mesh_updated_self(MeshPairRef meshes) {
   } else {
     mesh_updated(meshes.second);
   }
+
 }
 
 } // namespace subvis

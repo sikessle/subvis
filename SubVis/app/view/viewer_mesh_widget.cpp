@@ -26,6 +26,9 @@ void ViewerMeshWidget::mesh_updated(const surface_mesh::Surface_mesh& mesh) {
 
   // force redraw
   updateGL();
+
+  // Notify the mouse grabber
+  mouse_grabber_.mesh_updated(mesh);
 }
 
 void ViewerMeshWidget::init_gl() {

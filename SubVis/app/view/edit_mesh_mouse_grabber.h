@@ -1,8 +1,10 @@
 #ifndef EDIT_MESH_MOUSE_GRABBER_H
 #define EDIT_MESH_MOUSE_GRABBER_H
 
+#include <map>
 #include <QMouseEvent>
 #include "QGLViewer/mouseGrabber.h"
+#include "surface_mesh/Surface_mesh.h"
 
 namespace subvis {
 
@@ -12,6 +14,7 @@ class EditMeshMouseGrabber : public qglviewer::MouseGrabber {
 
   void checkIfGrabsMouse(int x, int y, const qglviewer::Camera* const camera) override;
   void set_enabled(bool enable);
+  void mesh_updated(const surface_mesh::Surface_mesh& mesh);
 
  protected:
   void mousePressEvent(QMouseEvent* const event,
@@ -19,6 +22,7 @@ class EditMeshMouseGrabber : public qglviewer::MouseGrabber {
 
  private:
   bool enabled_{false};
+  std::map<unsigned int, const surface_mesh::Point*> points_;
   const int kClickBoxLength = 4;
   const int kRgbaBytes = 4;
 
