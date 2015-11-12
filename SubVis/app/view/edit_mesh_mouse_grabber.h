@@ -26,7 +26,7 @@ class EditMeshMouseGrabber : public qglviewer::MouseGrabber {
   const int kClickBoxLength = 4;
   const int kPixelsBytes = 3;
 
-  /// RGBA color values will be stored in rgb array
+  /// RGBA color values will be stored in rgba array
   void index_to_rgba(const unsigned int index, unsigned char rgba[4]) const;
   /// Allows rgba values
   unsigned int rgba_to_index(const unsigned char rgba[4]) const;
