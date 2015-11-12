@@ -30,7 +30,6 @@ void EditMeshMouseGrabber::index_to_rgba(const unsigned int index,
 unsigned int EditMeshMouseGrabber::rgba_to_index(const unsigned char rgba[4]) const {
   // rebuild index from r, g and b values.
   // inverse function of index_to_rgb.
-  std::printf("rgba: %d %d %d %d\n", rgba[0], rgba[1], rgba[2], rgba[3]);
   unsigned int index = 0;
   unsigned char* index_ptr = (unsigned char*) &index;
 
