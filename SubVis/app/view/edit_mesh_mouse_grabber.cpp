@@ -33,7 +33,7 @@ void EditMeshMouseGrabber::index_to_rgba(const unsigned int index,
     unsigned char rgba[4]) const {
   const unsigned char* index_ptr = (const unsigned char*) &index;
 
-  for (int i = 0; i < kRgbaBytes; i++) {
+  for (int i = 0; i < kPixelsBytes; i++) {
     rgba[i] = index_ptr[i];
   }
 }
@@ -45,7 +45,7 @@ const {
   unsigned int index = 0;
   unsigned char* index_ptr = (unsigned char*) &index;
 
-  for (int i = 0; i < kRgbaBytes; i++) {
+  for (int i = 0; i < kPixelsBytes; i++) {
     index_ptr[i] = rgba[i];
   }
 
@@ -60,11 +60,8 @@ void EditMeshMouseGrabber::render_mesh_colored() {
 
   for (const auto& entry : points_) {
     index_to_rgba(entry.first, rgba);
-    glColor4b(rgba[0], rgba[1], rgba[2], rgba[3]);
+    glColor4f(rgba[0] / 255.0f, rgba[1] / 255.0f, rgba[2] / 255.0f, 1.0f);
     const Point p = *entry.second;
-    // TODO remove debug
-    std::printf("Drawing at: %f, %f, %f\n", p[0], p[1], p[2]);
-    std::printf("with RGBA: %d, %d, %d, %d\n", rgba[0], rgba[1], rgba[2], rgba[3]);
 
     glBegin(GL_POLYGON);
 
@@ -95,25 +92,22 @@ void EditMeshMouseGrabber::mousePressEvent(QMouseEvent* const event,
   const int viewport_height = viewport[3];
 
   // Limit drawing area to the clicked area around the mouse click coordinates.
-  //glScissor(x - kClickBoxLength / 2, viewport_height - y - kClickBoxLength / 2,
-  //         kClickBoxLength,
-  //         kClickBoxLength);
+  glScissor(x - kClickBoxLength / 2, viewport_height - y - kClickBoxLength / 2,
+            kClickBoxLength,
+            kClickBoxLength);
 
   // Start rendering the mesh with unique colors per vertex
-  //glEnable(GL_SCISSOR_TEST);
+  glEnable(GL_SCISSOR_TEST);
   render_mesh_colored();
-  //glDisable(GL_SCISSOR_TEST);
+  glDisable(GL_SCISSOR_TEST);
 
   // Get pixel color of mouse click coordinates (1 pixel)
+  glFlush();
+  glFinish();
   glReadPixels(x, viewport_height - y, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
   // Convert color to vertex id
   const unsigned int vertex_id = rgba_to_index(pixels);
   // Get vertex by id
-  // TODO remove debug
-  std::printf("RGBA read value: %d, %d, %d, %d\n", pixels[0], pixels[1],
-              pixels[2], pixels[3]);
-  // TODO remove debug
-  std::cerr << "Possible vertex id: " << vertex_id << std::endl;
   if (points_.find(vertex_id) != points_.end()) {
     const Point& point = *points_[vertex_id];
     // TODO remove debug

@@ -24,9 +24,9 @@ class EditMeshMouseGrabber : public qglviewer::MouseGrabber {
   bool enabled_{false};
   std::map<unsigned int, const surface_mesh::Point*> points_;
   const int kClickBoxLength = 4;
-  const int kRgbaBytes = 4;
+  const int kPixelsBytes = 3;
 
-  /// RGBA color values will be stored in rgba array
+  /// RGBA color values will be stored in rgb array
   void index_to_rgba(const unsigned int index, unsigned char rgba[4]) const;
   /// Allows rgba values
   unsigned int rgba_to_index(const unsigned char rgba[4]) const;
