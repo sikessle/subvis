@@ -79,22 +79,5 @@ void ViewerMeshWidget::draw_mesh() {
   }
 }
 
-void ViewerMeshWidget::index_to_rgba(const int index, int rgba[4]) const {
-  rgba[0] = (index & 0x000000FF) >>  0; // r: least significant 2 bytes of index
-  rgba[1] = (index & 0x0000FF00) >>  8; // b: next two bytes
-  rgba[2] = (index & 0x00FF0000) >> 16; // g: next two bytes
-  rgba[3] = (index & 0xFF000000) >> 24; // a: next two bytes
-}
-
-int ViewerMeshWidget::rgba_to_index(const int rgba[4]) const {
-  // rebuild index from r, g and b values.
-  // inverse function of index_to_rgb.
-  return
-    rgba[0] +
-    rgba[1] * 256 +
-    rgba[2] * 256 * 256 +
-    rgba[2] * 256 * 256 * 256;
-}
-
 } // namespace subvis
 

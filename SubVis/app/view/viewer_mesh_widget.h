@@ -28,10 +28,6 @@ class ViewerMeshWidget : public ViewerWidget {
   EditMeshMouseGrabber mouse_grabber_;
 
   void draw_mesh();
-  /// RGBA color values will be stored in rgba array
-  void index_to_rgba(const int index, int rgba[4]) const;
-  /// Allows rgba values (4)
-  int rgba_to_index(const int rgba[4]) const;
 };
 
 
