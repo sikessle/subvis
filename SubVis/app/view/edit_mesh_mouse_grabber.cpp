@@ -22,7 +22,7 @@ void EditMeshMouseGrabber::index_to_rgba(const int index,
     unsigned char rgba[4]) const {
   const unsigned char* index_ptr = (const unsigned char*) &index;
 
-  for (int i = 1; i <= kPixelsBytes; i++) {
+  for (int i = 0; i < kPixelsBytes; i++) {
     rgba[i] = index_ptr[i];
   }
 }
@@ -34,7 +34,7 @@ const {
   int index = 0;
   unsigned char* index_ptr = (unsigned char*) &index;
 
-  for (int i = 1; i <= kPixelsBytes; i++) {
+  for (int i = 0; i < kPixelsBytes; i++) {
     index_ptr[i] = rgba[i];
   }
 
@@ -49,17 +49,19 @@ void EditMeshMouseGrabber::mesh_updated(const surface_mesh::Surface_mesh&
 void EditMeshMouseGrabber::render_mesh_colored() {
   using Point = surface_mesh::Point;
 
-  if (mesh_) {
+  if (!mesh_) {
     return;
   }
 
-  glClearColor(0, 0, 0, 0);
+  glClearColor(255, 255, 255, 255);
   glClear(GL_COLOR_BUFFER_BIT);
+  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
   unsigned char rgba[4];
 
   for (const auto& vertex : mesh_->vertices()) {
     // Set color based on idx
     index_to_rgba(vertex.idx(), rgba);
+
     glColor4f(rgba[0] / 255.0f, rgba[1] / 255.0f, rgba[2] / 255.0f, 1.0f);
 
     const Point& p = mesh_->get_vertex_property<Point>("v:point")[vertex];
@@ -109,7 +111,8 @@ void EditMeshMouseGrabber::mousePressEvent(QMouseEvent* const event,
   glFinish();
   glReadPixels(x, viewport_height - y, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
   // Convert color to vertex idx
-  // const unsigned int vertex_idx = rgba_to_index(pixels);
+  const unsigned int vertex_idx = rgba_to_index(pixels);
+  std::cerr << "Calculated vertex_idx: " << vertex_idx << std::endl;
   // Get vertex by id
   // TODO query mesh by id
 
