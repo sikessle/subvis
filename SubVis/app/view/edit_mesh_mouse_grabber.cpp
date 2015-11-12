@@ -13,55 +13,56 @@ void EditMeshMouseGrabber::set_enabled(bool enable) {
   enabled_ = enable;
 }
 
-void EditMeshMouseGrabber::mesh_updated(const surface_mesh::Surface_mesh&
-                                        mesh) {
-  using Point = surface_mesh::Point;
-  points_.clear();
-  int index = 1;
-  for (const auto& vertex : mesh.vertices()) {
-    points_[index] = &mesh.get_vertex_property<Point>("v:point")[vertex];
-    index++;
-  }
-}
-
 void EditMeshMouseGrabber::checkIfGrabsMouse(int /*x*/, int /*y*/,
     const qglviewer::Camera* const /*camera*/) {
   setGrabsMouse(enabled_);
 }
 
-void EditMeshMouseGrabber::index_to_rgba(const unsigned int index,
+void EditMeshMouseGrabber::index_to_rgba(const int index,
     unsigned char rgba[4]) const {
   const unsigned char* index_ptr = (const unsigned char*) &index;
 
-  for (int i = 0; i < kPixelsBytes; i++) {
+  for (int i = 1; i <= kPixelsBytes; i++) {
     rgba[i] = index_ptr[i];
   }
 }
 
-unsigned int EditMeshMouseGrabber::rgba_to_index(const unsigned char rgba[4])
+int EditMeshMouseGrabber::rgba_to_index(const unsigned char rgba[4])
 const {
   // rebuild index from r, g and b values.
   // inverse function of index_to_rgb.
-  unsigned int index = 0;
+  int index = 0;
   unsigned char* index_ptr = (unsigned char*) &index;
 
-  for (int i = 0; i < kPixelsBytes; i++) {
+  for (int i = 1; i <= kPixelsBytes; i++) {
     index_ptr[i] = rgba[i];
   }
 
   return index;
 }
 
+void EditMeshMouseGrabber::mesh_updated(const surface_mesh::Surface_mesh&
+                                        mesh) {
+  mesh_ = &mesh;
+}
+
 void EditMeshMouseGrabber::render_mesh_colored() {
   using Point = surface_mesh::Point;
+
+  if (mesh_) {
+    return;
+  }
+
   glClearColor(0, 0, 0, 0);
   glClear(GL_COLOR_BUFFER_BIT);
   unsigned char rgba[4];
 
-  for (const auto& entry : points_) {
-    index_to_rgba(entry.first, rgba);
+  for (const auto& vertex : mesh_->vertices()) {
+    // Set color based on idx
+    index_to_rgba(vertex.idx(), rgba);
     glColor4f(rgba[0] / 255.0f, rgba[1] / 255.0f, rgba[2] / 255.0f, 1.0f);
-    const Point p = *entry.second;
+
+    const Point& p = mesh_->get_vertex_property<Point>("v:point")[vertex];
 
     glBegin(GL_POLYGON);
 
@@ -82,12 +83,14 @@ void EditMeshMouseGrabber::render_mesh_colored() {
 
 void EditMeshMouseGrabber::mousePressEvent(QMouseEvent* const event,
     qglviewer::Camera* const /*camera*/) {
-  using Point = surface_mesh::Point;
+  if (!mesh_) {
+    return;
+  }
+
   const int x = event->x();
   const int y = event->y();
   GLint viewport[4];
   unsigned char pixels[4];
-
   glGetIntegerv(GL_VIEWPORT, viewport);
   const int viewport_height = viewport[3];
 
@@ -105,14 +108,11 @@ void EditMeshMouseGrabber::mousePressEvent(QMouseEvent* const event,
   glFlush();
   glFinish();
   glReadPixels(x, viewport_height - y, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
-  // Convert color to vertex id
-  const unsigned int vertex_id = rgba_to_index(pixels);
+  // Convert color to vertex idx
+  // const unsigned int vertex_idx = rgba_to_index(pixels);
   // Get vertex by id
-  if (points_.find(vertex_id) != points_.end()) {
-    const Point& point = *points_[vertex_id];
-    // TODO remove debug
-    std::printf("Vertex found at: %f, %f, %f\n", point[0], point[1], point[2]);
-  }
+  // TODO query mesh by id
+
 
 }
 
