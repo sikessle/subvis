@@ -14,7 +14,6 @@ ViewerMeshWidget::ViewerMeshWidget(QWidget* parent,
 void ViewerMeshWidget::set_edit(bool edit) {
   edit_ = edit;
   setMouseTracking(edit);
-  setMouseGrabberIsEnabled(&mouse_grabber_, edit);
   mouse_grabber_.set_enabled(edit);
 }
 

@@ -11,6 +11,11 @@ EditMeshMouseGrabber::EditMeshMouseGrabber() {
 
 void EditMeshMouseGrabber::set_enabled(bool enable) {
   enabled_ = enable;
+  if (enabled_) {
+    addInMouseGrabberPool();
+  } else {
+    removeFromMouseGrabberPool();
+  }
 }
 
 void EditMeshMouseGrabber::checkIfGrabsMouse(int /*x*/, int /*y*/,
