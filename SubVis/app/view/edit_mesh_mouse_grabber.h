@@ -22,6 +22,7 @@ class EditMeshMouseGrabber : public qglviewer::MouseGrabber {
 
  private:
   bool enabled_{false};
+  // TODO: Access the custom data structure of viewer mesh!
   std::map<unsigned int, const surface_mesh::Point*> points_;
   const int kClickBoxLength = 4;
   const int kPixelsBytes = 3;
