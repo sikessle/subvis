@@ -49,12 +49,19 @@ const {
 void EditMeshMouseGrabber::mesh_updated(const surface_mesh::Surface_mesh&
                                         mesh) {
   mesh_ = &mesh;
+  id_to_vertex_.clear();
+
+  for (auto vertex : mesh_->vertices()) {
+    //point_id_to_vertex_[vertex.idx()] = &vertex;
+    //std::cerr << vertex << std::endl;
+  }
 }
 
 void EditMeshMouseGrabber::draw_gl() {
   using Point = surface_mesh::Point;
+  using Vertex = surface_mesh::Surface_mesh::Vertex;
 
-  if (!mesh_ || !unhandled_click_) {
+  if (id_to_vertex_.empty() || !unhandled_click_) {
     return;
   }
 
@@ -79,10 +86,10 @@ void EditMeshMouseGrabber::draw_gl() {
   glPointSize(kClickBoxLength);
 
   glBegin(GL_POINTS);
-  for (const auto& vertex : mesh_->vertices()) {
+  for (const auto& id_vertex : id_to_vertex_) {
     // Set color based on idx
-    index_to_rgba(vertex.idx(), rgba);
-    const Point& p = mesh_->get_vertex_property<Point>("v:point")[vertex];
+    index_to_rgba(id_vertex.first, rgba);
+    const Point& p = mesh_->get_vertex_property<Point>("v:point")[*id_vertex.second];
     glColor4f(rgba[0] / 255.0f, rgba[1] / 255.0f, rgba[2] / 255.0f, 1.0f);
     glVertex3f(p[0], p[1], p[2]);
   }
@@ -98,7 +105,11 @@ void EditMeshMouseGrabber::draw_gl() {
   const unsigned int vertex_idx = rgba_to_index(pixels);
   std::cerr << "Calculated vertex_idx: " << vertex_idx << std::endl;
   // Get vertex by id
-  // TODO query mesh by id
+  if (id_to_vertex_.count(vertex_idx) > 0) {
+    //Vertex* vertex = id_to_vertex_[vertex_idx];
+    // TODO query mesh by id
+    // by mesh_->faces(vertex)
+  }
 
   unhandled_click_ = false;
 }

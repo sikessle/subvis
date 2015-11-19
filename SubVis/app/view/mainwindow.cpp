@@ -70,6 +70,7 @@ void MainWindow::setup_status_bar() {
 
 void MainWindow::setup_viewer_tabs() {
   viewer_mesh0_ = new ViewerMeshWidget(ui_->tab_viewer_mesh, 0);
+  viewer_mesh0_->set_editable(true);
   viewer_mesh1_ = new ViewerMeshWidget(ui_->tab_viewer_mesh, 1);
   setup_viewer_tab(ui_->tab_viewer_mesh, viewer_mesh0_, viewer_mesh1_);
 

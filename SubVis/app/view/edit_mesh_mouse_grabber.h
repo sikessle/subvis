@@ -1,6 +1,7 @@
 #ifndef EDIT_MESH_MOUSE_GRABBER_H
 #define EDIT_MESH_MOUSE_GRABBER_H
 
+#include <map>
 #include <QMouseEvent>
 #include "QGLViewer/mouseGrabber.h"
 #include "surface_mesh/Surface_mesh.h"
@@ -23,7 +24,8 @@ class EditMeshMouseGrabber : public qglviewer::MouseGrabber {
 
  private:
   bool enabled_{false};
-  const surface_mesh::Surface_mesh* mesh_ {nullptr};
+  std::map<int, const surface_mesh::Surface_mesh::Vertex*> id_to_vertex_;
+  const surface_mesh::Surface_mesh* mesh_{nullptr};
   bool unhandled_click_ {false};
   int click_x_ {0};
   int click_y_ {0};
