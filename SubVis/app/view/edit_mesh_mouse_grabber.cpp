@@ -76,35 +76,21 @@ void EditMeshMouseGrabber::draw_gl() {
   // Start rendering the mesh with unique colors per vertex
   glEnable(GL_SCISSOR_TEST);
 
+  glPointSize(kClickBoxLength);
+
+  glBegin(GL_POINTS);
   for (const auto& vertex : mesh_->vertices()) {
     // Set color based on idx
     index_to_rgba(vertex.idx(), rgba);
-
-    glColor4f(rgba[0] / 255.0f, rgba[1] / 255.0f, rgba[2] / 255.0f, 1.0f);
-
     const Point& p = mesh_->get_vertex_property<Point>("v:point")[vertex];
-
-    glBegin(GL_POLYGON);
-
-    // TODO vertex must be drawn in size kClickBoxLength!
-    // Calculate correct start and end points (normalized -1 to 1?)
-    glVertex3d(p[0] - 0.1, p[1], p[2]);
-    glVertex3d(p[0] + 0.1, p[1], p[2]);
-
-    glVertex3d(p[0], p[1] + 0.1, p[2]);
-    glVertex3d(p[0], p[1] - 0.1, p[2]);
-
-    glVertex3d(p[0], p[1], p[2] + 0.1);
-    glVertex3d(p[0], p[1], p[2] - 0.1);
-
-    glEnd();
+    glColor4f(rgba[0] / 255.0f, rgba[1] / 255.0f, rgba[2] / 255.0f, 1.0f);
+    glVertex3f(p[0], p[1], p[2]);
   }
+  glEnd();
 
   glDisable(GL_SCISSOR_TEST);
 
   // Get pixel color of mouse click coordinates (1 pixel)
-  glFlush();
-  glFinish();
   unsigned char pixels[4];
   glReadPixels(click_x_, viewport_height - click_y_, 1, 1, GL_RGBA,
                GL_UNSIGNED_BYTE, pixels);
