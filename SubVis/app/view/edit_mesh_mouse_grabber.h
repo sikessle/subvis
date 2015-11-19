@@ -24,12 +24,12 @@ class EditMeshMouseGrabber : public qglviewer::MouseGrabber {
 
  private:
   bool enabled_{false};
-  std::map<int, const surface_mesh::Surface_mesh::Vertex*> id_to_vertex_;
+  std::map<int, const surface_mesh::Surface_mesh::Vertex> id_to_vertex_;
   const surface_mesh::Surface_mesh* mesh_{nullptr};
   bool unhandled_click_ {false};
   int click_x_ {0};
   int click_y_ {0};
-  const int kClickBoxLength {4};
+  const int kClickBoxLength {6};
   const int kPixelsBytes {3};
 
   /// RGBA color values will be stored in rgba array
