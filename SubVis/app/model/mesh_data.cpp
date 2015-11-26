@@ -1,3 +1,5 @@
+#include <QtDebug>
+
 #include "mesh_data.h"
 
 namespace subvis {
@@ -14,6 +16,7 @@ MeshData::MeshData() {
 }
 
 const Surface_mesh& MeshData::get_mesh(int idx) const {
+  qDebug() << "Returning mesh id" << idx;
   if (idx == 0) {
     return *(history_.at(history_index_).first.get());
   } else {
@@ -22,15 +25,18 @@ const Surface_mesh& MeshData::get_mesh(int idx) const {
 }
 
 void MeshData::load(MeshPairUniquePtrs meshes) {
+  qDebug() << "Mesh pair loaded";
   history_push({std::move(meshes.first), std::move(meshes.second)});
   emit_updated_signal();
 }
 
 bool MeshData::load(const std::string& filename) {
   if (filename.empty()) {
+    qWarning() << "File name empty. Aborting loading.";
     return false;
   }
 
+  qDebug() << "Loading mesh from file:" << QString::fromStdString(filename);
   // create new mesh
   auto mesh = std::unique_ptr<Surface_mesh> {new Surface_mesh};
   bool success = mesh->read(filename);
@@ -45,6 +51,8 @@ void MeshData::triangulate(int idx) {
   auto copy0 = std::unique_ptr<Surface_mesh> {new Surface_mesh(get_mesh(0))};
   auto copy1 = std::unique_ptr<Surface_mesh> {new Surface_mesh(get_mesh(1))};
 
+  qDebug() << "Triangulating mesh" << idx;
+
   if (idx == 0) {
     copy0->triangulate();
   } else {
@@ -57,6 +65,7 @@ void MeshData::triangulate(int idx) {
 
 void MeshData::history_step_back() {
   if (history_can_step_back()) {
+    qDebug() << "Stepping history back";
     history_index_--;
   }
   emit_updated_signal();
@@ -64,6 +73,7 @@ void MeshData::history_step_back() {
 
 void MeshData::history_step_forward() {
   if (history_can_step_forward()) {
+    qDebug() << "Stepping history forward";
     history_index_++;
   }
   emit_updated_signal();
@@ -79,6 +89,7 @@ bool MeshData::history_can_step_forward() {
 
 void MeshData::history_purge() {
   history_index_ = 0;
+  qDebug() << "History purged.";
   // Keep the first empty mesh
   history_.erase(history_.begin() + 1, history_.end());
 }
@@ -97,6 +108,8 @@ void MeshData::history_push(MeshPairUniquePtrs meshes) {
     history_index_--;
   }
 
+  qDebug() << "Added item to history.";
+
   // Store entry at next position
   meshes.first->garbage_collection();
   meshes.second->garbage_collection();
@@ -110,8 +123,11 @@ void MeshData::emit_updated_signal() {
 
 bool MeshData::persist(const std::string& filename) const {
   if (filename.empty()) {
+    qWarning() << "File name empty. Aborting persisting.";
     return false;
   }
+
+  qDebug() << "Persisted mesh.";
 
   return get_mesh(0).write(filename);
 }

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <utility>
 #include <GL/gl.h>
+#include <QtDebug>
 
 #include "view/edit_mesh_mouse_grabber.h"
 
@@ -122,9 +123,9 @@ void EditMeshMouseGrabber::draw_gl() {
   const Vertex* vertex = get_vertex_at_click();
 
   if (vertex != nullptr) {
-    std::cerr << "Vertex " << *vertex;
     Point& point = mesh_->get_vertex_property<Point>("v:point")[*vertex];
-    std::cerr << " @ " << point << std::endl;
+    qDebug("Found vertex @ click (%d, %d): v%d with coordinates: %f %f %f",
+           click_x_, click_y_, vertex->idx(), point[0], point[1], point[2]);
     // TODO get faces around: mesh_->faces(vertex)
   }
 
@@ -133,7 +134,9 @@ void EditMeshMouseGrabber::draw_gl() {
 
 void EditMeshMouseGrabber::mousePressEvent(QMouseEvent* const event,
     qglviewer::Camera* const /*camera*/) {
+  qDebug() << "MousePressEvent received.";
   if (!mesh_) {
+    qDebug() << "No mesh via mesh_updated received. Aborting mouse event handling.";
     return;
   }
 
