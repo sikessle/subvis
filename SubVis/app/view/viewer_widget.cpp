@@ -1,3 +1,5 @@
+#include <QtDebug>
+
 #include "view/viewer_widget.h"
 
 namespace subvis {
@@ -16,6 +18,7 @@ ViewerWidget::ViewerWidget(QWidget* parent, int mesh_id)
 void ViewerWidget::draw() {
   // To keep layout in full size
   updateGeometry();
+  qDebug() << "Redrawing.";
   // Call subclasses draw method
   draw_gl();
 }

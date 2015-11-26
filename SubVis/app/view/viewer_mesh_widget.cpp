@@ -1,5 +1,5 @@
 #include <GL/glut.h>
-#include <QDebug>
+#include <QtDebug>
 #include <QMouseEvent>
 
 #include "view/viewer_mesh_widget.h"
@@ -15,10 +15,12 @@ void ViewerMeshWidget::set_edit(bool edit) {
   edit_ = edit;
   setMouseTracking(edit);
   mouse_grabber_.set_enabled(edit);
+  qDebug() << "Edit set to" << edit;
 }
 
-void ViewerMeshWidget::set_editable(bool editable) {
-  editable_ = editable;
+void ViewerMeshWidget::set_editable_capatability(bool editable) {
+  must_react_to_edit_events_ = editable;
+  qDebug() << "Viewer must react to edit events?" << editable;
 }
 
 void ViewerMeshWidget::mesh_updated(const surface_mesh::Surface_mesh& mesh) {
@@ -30,21 +32,25 @@ void ViewerMeshWidget::mesh_updated(const surface_mesh::Surface_mesh& mesh) {
   updateGL();
 
   // Notify the mouse grabber
-  if (editable_) {
+  if (must_react_to_edit_events_) {
+    qDebug() << "Delegating mesh update event to mouse grabber.";
     mouse_grabber_.mesh_updated(mesh);
   }
 }
 
 void ViewerMeshWidget::init_gl() {
+  qDebug() << "Initializing open gl.";
   // TODO compute the correct scene radius and configure camera.
   setSceneRadius(10.0);
   camera()->setZNearCoefficient(0.0001);
   camera()->setZClippingCoefficient(10.0);
   //glEnable(GL_DEPTH_TEST);
+  qDebug() << "Finished initializing open gl.";
 }
 
 void ViewerMeshWidget::draw_gl() {
   if (edit_) {
+    qDebug() << "Delegating draw_gl to mouse grabber.";
     mouse_grabber_.draw_gl();
   }
   // black background

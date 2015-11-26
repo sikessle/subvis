@@ -15,7 +15,7 @@ class ViewerMeshWidget : public ViewerWidget {
   ViewerMeshWidget(QWidget* parent = 0, int mesh_id = 0);
 
   void set_edit(bool edit);
-  void set_editable(bool editable);
+  void set_editable_capatability(bool editable);
 
  protected:
   void draw_gl() override;
@@ -26,7 +26,7 @@ class ViewerMeshWidget : public ViewerWidget {
   // TODO placeholder, here we should use a custom data structure to hold vertices
   const surface_mesh::Surface_mesh* mesh_ {nullptr};
   bool edit_{false};
-  bool editable_{false};
+  bool must_react_to_edit_events_{false};
   EditMeshMouseGrabber mouse_grabber_;
 
   void draw_mesh();

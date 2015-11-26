@@ -1,3 +1,4 @@
+#include <QtDebug>
 #include <QLabel>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -70,7 +71,7 @@ void MainWindow::setup_status_bar() {
 
 void MainWindow::setup_viewer_tabs() {
   viewer_mesh0_ = new ViewerMeshWidget(ui_->tab_viewer_mesh, 0);
-  viewer_mesh0_->set_editable(true);
+  viewer_mesh0_->set_editable_capatability(true);
   viewer_mesh1_ = new ViewerMeshWidget(ui_->tab_viewer_mesh, 1);
   setup_viewer_tab(ui_->tab_viewer_mesh, viewer_mesh0_, viewer_mesh1_);
 
@@ -233,6 +234,7 @@ void MainWindow::show_load_dialog() {
     if (!mesh_data_.load(filename)) {
       QString msg = "Failed to load file " + fn;
       QMessageBox::warning(this, "Error", msg);
+      qWarning() << qPrintable(msg);
     }
   }
 }
@@ -246,6 +248,7 @@ void MainWindow::show_save_dialog() {
     if (!mesh_data_.persist(filename)) {
       QString msg = "Failed to save to file " + fn;
       QMessageBox::warning(this, "Error", msg);
+      qWarning() << qPrintable(msg);
     }
   }
 }

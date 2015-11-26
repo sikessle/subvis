@@ -1,5 +1,6 @@
 #include <exception>
 #include <QLabel>
+#include <QtDebug>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 
@@ -17,6 +18,7 @@ GuiControls::GuiControls() {
 
 void GuiControls::create(QWidget* parent,
                          std::map<std::pair<int, const QString>, AlgorithmRenderer>& algorithms) {
+  qDebug() << "Creating GUI controls.";
   algorithms_ = &algorithms;
   // Gui creation
   QVBoxLayout* layout = new QVBoxLayout(parent);
@@ -104,6 +106,8 @@ GuiControls::selected_algo_renderer(QComboBox* dropdown, int mesh_id) {
     throw std::logic_error{"no algorithms loaded. ensure that at least one is loaded in the constructor."};
   }
   const QString name = dropdown->currentText();
+
+  qDebug() << "Algorithm" << name << "selected";
 
   return algorithms_->at({mesh_id, name});
 }

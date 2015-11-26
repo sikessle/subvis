@@ -1,4 +1,5 @@
 #include <QtConcurrent/QtConcurrent>
+#include <QtDebug>
 
 #include "plugins/subdivision/debug.h"
 #include "plugins/subdivision/sd_algorithm.h"
@@ -27,13 +28,16 @@ void SdAlgorithm::subdivide_threaded(const Surface_mesh& mesh,
     output_mesh_.reset(new Surface_mesh);
     input_mesh_.reset(new Surface_mesh{mesh});
     callback_ = callback;
-
+    qDebug() << "Starting thread to subdivide.";
     QtConcurrent::run(this, &SdAlgorithm::subdivide_worker, steps);
+  } else {
+    qDebug() << "Thread is already running. Performing NO subdivision.";
   }
 }
 
 void SdAlgorithm::subdivide_worker(int steps) {
   for (int i = 0; i < steps && !stop_subdivide_; i++) {
+    qDebug() << "Subdividing step" << i;
     output_mesh_->clear();
     DEBUG_MESH(*input_mesh_.get(), "input mesh")
     subdivide_input_mesh_write_output_mesh();
@@ -41,6 +45,7 @@ void SdAlgorithm::subdivide_worker(int steps) {
     // input mesh is now the previous result mesh
     input_mesh_.reset(new Surface_mesh{ *output_mesh_.get()});
   }
+  qDebug() << "Subdivision finished.";
   emit subdivide_worker_finished();
 }
 
@@ -52,6 +57,7 @@ void SdAlgorithm::subdivide_worker_cleanup() {
 
 void SdAlgorithm::stop_subdivide_threaded() {
   stop_subdivide_ = true;
+  qDebug() << "Request to stop subdivide worker.";
 }
 
 const Surface_mesh& SdAlgorithm::get_result_mesh() const {
