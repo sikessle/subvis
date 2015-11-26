@@ -18,6 +18,7 @@ void EditMeshMouseGrabber::set_enabled(bool enable) {
   } else {
     removeFromMouseGrabberPool();
   }
+  qDebug() << "Enabled:" << enable;
 }
 
 void EditMeshMouseGrabber::checkIfGrabsMouse(int /*x*/, int /*y*/,
@@ -32,6 +33,7 @@ void EditMeshMouseGrabber::index_to_rgba(const int index,
   for (int i = 0; i < kPixelsBytes; i++) {
     rgba[i] = index_ptr[i];
   }
+  qDebug("Index %d to rgba: %d %d %d", index, rgba[0], rgba[1], rgba[2]);
 }
 
 int EditMeshMouseGrabber::rgba_to_index(const unsigned char rgba[4])
@@ -44,6 +46,8 @@ const {
   for (int i = 0; i < kPixelsBytes; i++) {
     index_ptr[i] = rgba[i];
   }
+
+  qDebug("Rgba %d %d %d to index: %d", rgba[0], rgba[1], rgba[2], index);
 
   return index;
 }
@@ -127,6 +131,8 @@ void EditMeshMouseGrabber::draw_gl() {
     qDebug("Found vertex @ click (%d, %d): v%d with coordinates: %f %f %f",
            click_x_, click_y_, vertex->idx(), point[0], point[1], point[2]);
     // TODO get faces around: mesh_->faces(vertex)
+  } else {
+    qDebug("No vertex found @ click (%d, %d)", click_x_, click_y_);
   }
 
   unhandled_click_ = false;
