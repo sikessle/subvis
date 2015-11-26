@@ -1,6 +1,6 @@
 
-#ifndef SUBVIS_PLUGINS_SUBDIVISION_UTILS_H
-#define SUBVIS_PLUGINS_SUBDIVISION_UTILS_H
+#ifndef SUBVIS_PLUGINS_SUBDIVISION_DEBUG_H
+#define SUBVIS_PLUGINS_SUBDIVISION_DEBUG_H
 
 #include <QString>
 #include "surface_mesh/Surface_mesh.h"
@@ -30,5 +30,5 @@ void debug_point(const surface_mesh::Point point, const QString& title);
 #endif
 
 } // namespace subdivision
-#endif // SUBVIS_PLUGINS_SUBDIVISION_UTILS_H
+#endif // SUBVIS_PLUGINS_SUBDIVISION_DEBUG_H
 
