@@ -53,6 +53,8 @@ void ViewerMeshWidget::draw_gl() {
     qDebug() << "Delegating draw_gl to mouse handler.";
     mouse_handler_.draw_gl();
   }
+  qDebug() << "Drawing mesh.";
+
   // black background
   glClearColor(0, 0, 0, 0);
   glClear(GL_COLOR_BUFFER_BIT);
