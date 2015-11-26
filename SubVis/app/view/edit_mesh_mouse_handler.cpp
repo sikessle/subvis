@@ -3,15 +3,15 @@
 #include <GL/gl.h>
 #include <QtDebug>
 
-#include "view/edit_mesh_mouse_grabber.h"
+#include "view/edit_mesh_mouse_handler.h"
 
 namespace subvis {
 
-EditMeshMouseGrabber::EditMeshMouseGrabber() {
+EditMeshMouseHandler::EditMeshMouseHandler() {
 
 }
 
-void EditMeshMouseGrabber::set_enabled(bool enable) {
+void EditMeshMouseHandler::set_enabled(bool enable) {
   enabled_ = enable;
   if (enabled_) {
     addInMouseGrabberPool();
@@ -21,12 +21,12 @@ void EditMeshMouseGrabber::set_enabled(bool enable) {
   qDebug() << "Enabled:" << enable;
 }
 
-void EditMeshMouseGrabber::checkIfGrabsMouse(int /*x*/, int /*y*/,
+void EditMeshMouseHandler::checkIfGrabsMouse(int /*x*/, int /*y*/,
     const qglviewer::Camera* const /*camera*/) {
   setGrabsMouse(enabled_);
 }
 
-void EditMeshMouseGrabber::index_to_rgba(const int index,
+void EditMeshMouseHandler::index_to_rgba(const int index,
     unsigned char rgba[4]) const {
   const unsigned char* index_ptr = (const unsigned char*) &index;
 
@@ -36,7 +36,7 @@ void EditMeshMouseGrabber::index_to_rgba(const int index,
   qDebug("Index %d to rgba: %d %d %d", index, rgba[0], rgba[1], rgba[2]);
 }
 
-int EditMeshMouseGrabber::rgba_to_index(const unsigned char rgba[4])
+int EditMeshMouseHandler::rgba_to_index(const unsigned char rgba[4])
 const {
   // rebuild index from r, g and b values.
   // inverse function of index_to_rgb.
@@ -52,7 +52,7 @@ const {
   return index;
 }
 
-void EditMeshMouseGrabber::mesh_updated(const surface_mesh::Surface_mesh&
+void EditMeshMouseHandler::mesh_updated(const surface_mesh::Surface_mesh&
                                         mesh) {
   using Vertex = surface_mesh::Surface_mesh::Vertex;
   mesh_ = &mesh;
@@ -63,7 +63,7 @@ void EditMeshMouseGrabber::mesh_updated(const surface_mesh::Surface_mesh&
   }
 }
 
-const surface_mesh::Surface_mesh::Vertex* EditMeshMouseGrabber::get_vertex_at_click() const {
+const surface_mesh::Surface_mesh::Vertex* EditMeshMouseHandler::get_vertex_at_click() const {
   using Point = surface_mesh::Point;
   using Vertex = surface_mesh::Surface_mesh::Vertex;
 
@@ -116,7 +116,7 @@ const surface_mesh::Surface_mesh::Vertex* EditMeshMouseGrabber::get_vertex_at_cl
   return nullptr;
 }
 
-void EditMeshMouseGrabber::draw_gl() {
+void EditMeshMouseHandler::draw_gl() {
   using Point = surface_mesh::Point;
   using Vertex = surface_mesh::Surface_mesh::Vertex;
 
@@ -138,7 +138,7 @@ void EditMeshMouseGrabber::draw_gl() {
   unhandled_click_ = false;
 }
 
-void EditMeshMouseGrabber::mousePressEvent(QMouseEvent* const event,
+void EditMeshMouseHandler::mousePressEvent(QMouseEvent* const event,
     qglviewer::Camera* const /*camera*/) {
   qDebug() << "MousePressEvent received.";
   if (!mesh_) {

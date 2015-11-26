@@ -14,7 +14,7 @@ ViewerMeshWidget::ViewerMeshWidget(QWidget* parent,
 void ViewerMeshWidget::set_edit(bool edit) {
   edit_ = edit;
   setMouseTracking(edit);
-  mouse_grabber_.set_enabled(edit);
+  mouse_handler_.set_enabled(edit);
   qDebug() << "Edit set to" << edit;
 }
 
@@ -33,8 +33,8 @@ void ViewerMeshWidget::mesh_updated(const surface_mesh::Surface_mesh& mesh) {
 
   // Notify the mouse grabber
   if (must_react_to_edit_events_) {
-    qDebug() << "Delegating mesh update event to mouse grabber.";
-    mouse_grabber_.mesh_updated(mesh);
+    qDebug() << "Delegating mesh update event to mouse handler.";
+    mouse_handler_.mesh_updated(mesh);
   }
 }
 
@@ -50,8 +50,8 @@ void ViewerMeshWidget::init_gl() {
 
 void ViewerMeshWidget::draw_gl() {
   if (edit_) {
-    qDebug() << "Delegating draw_gl to mouse grabber.";
-    mouse_grabber_.draw_gl();
+    qDebug() << "Delegating draw_gl to mouse handler.";
+    mouse_handler_.draw_gl();
   }
   // black background
   glClearColor(0, 0, 0, 0);

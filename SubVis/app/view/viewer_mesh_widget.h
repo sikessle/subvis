@@ -3,7 +3,7 @@
 
 #include "surface_mesh/Surface_mesh.h"
 
-#include "view/edit_mesh_mouse_grabber.h"
+#include "view/edit_mesh_mouse_handler.h"
 #include "view/viewer_widget.h"
 
 namespace subvis {
@@ -27,7 +27,7 @@ class ViewerMeshWidget : public ViewerWidget {
   const surface_mesh::Surface_mesh* mesh_ {nullptr};
   bool edit_{false};
   bool must_react_to_edit_events_{false};
-  EditMeshMouseGrabber mouse_grabber_;
+  EditMeshMouseHandler mouse_handler_;
 
   void draw_mesh();
 };

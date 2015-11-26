@@ -63,7 +63,7 @@ HEADERS  += view/mainwindow.h \
     plugins/subdivision/algorithm_renderer.h \
     plugins/subdivision/sd_none.h \
     plugins/subdivision/gl_none_renderer.h \
-    view/edit_mesh_mouse_grabber.h
+    view/edit_mesh_mouse_handler.h
 
 SOURCES += main.cpp \
     view/mainwindow.cpp \
@@ -86,7 +86,7 @@ SOURCES += main.cpp \
     plugins/subdivision/sd_triangle.cpp \
     plugins/subdivision/sd_modbutterfly.cpp \
     plugins/subdivision/gui_controls.cpp \
-    view/edit_mesh_mouse_grabber.cpp
+    view/edit_mesh_mouse_handler.cpp
 
 FORMS    += view/mainwindow.ui
 

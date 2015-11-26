@@ -1,5 +1,5 @@
-#ifndef EDIT_MESH_MOUSE_GRABBER_H
-#define EDIT_MESH_MOUSE_GRABBER_H
+#ifndef SUBVIS_VIEW_EDIT_MESH_MOUSE_HANDLER_H
+#define SUBVIS_VIEW_EDIT_MESH_MOUSE_HANDLER_H
 
 #include <map>
 #include <QMouseEvent>
@@ -8,9 +8,9 @@
 
 namespace subvis {
 
-class EditMeshMouseGrabber : public qglviewer::MouseGrabber {
+class EditMeshMouseHandler : public qglviewer::MouseGrabber {
  public:
-  EditMeshMouseGrabber();
+  EditMeshMouseHandler();
 
   void checkIfGrabsMouse(int x, int y,
                          const qglviewer::Camera* const camera) override;
@@ -40,4 +40,4 @@ class EditMeshMouseGrabber : public qglviewer::MouseGrabber {
 };
 
 } // namespace subvis
-#endif // EDIT_MESH_MOUSE_GRABBER_H
+#endif // SUBVIS_VIEW_EDIT_MESH_MOUSE_HANDLER_H
