@@ -55,17 +55,12 @@ void EditMeshMouseGrabber::mesh_updated(const surface_mesh::Surface_mesh&
 
   for (Vertex vertex : mesh_->vertices()) {
     id_to_vertex_.insert(std::pair<int, Vertex>(vertex.idx(), vertex));
-    //id_to_vertex_[vertex.idx()] = vertex;
   }
 }
 
-void EditMeshMouseGrabber::draw_gl() {
+const surface_mesh::Surface_mesh::Vertex* EditMeshMouseGrabber::get_vertex_at_click() const {
   using Point = surface_mesh::Point;
   using Vertex = surface_mesh::Surface_mesh::Vertex;
-
-  if (id_to_vertex_.empty() || !unhandled_click_) {
-    return;
-  }
 
   glClearColor(255, 255, 255, 255);
   glClear(GL_COLOR_BUFFER_BIT);
@@ -109,9 +104,28 @@ void EditMeshMouseGrabber::draw_gl() {
 
   // Get vertex by id
   if (id_to_vertex_.count(vertex_idx) > 0) {
-    const Vertex& vertex = id_to_vertex_[vertex_idx];
-    // TODO query mesh by mesh_->faces(vertex)
-    std::cerr << "Clicked at vertex: " << vertex << std::endl;
+    const Vertex& vertex = id_to_vertex_.at(vertex_idx);
+    return &vertex;
+  }
+
+  return nullptr;
+}
+
+void EditMeshMouseGrabber::draw_gl() {
+  using Point = surface_mesh::Point;
+  using Vertex = surface_mesh::Surface_mesh::Vertex;
+
+  if (id_to_vertex_.empty() || !unhandled_click_) {
+    return;
+  }
+
+  const Vertex* vertex = get_vertex_at_click();
+
+  if (vertex != nullptr) {
+    std::cerr << "Vertex " << *vertex;
+    Point& point = mesh_->get_vertex_property<Point>("v:point")[*vertex];
+    std::cerr << " @ " << point << std::endl;
+    // TODO get faces around: mesh_->faces(vertex)
   }
 
   unhandled_click_ = false;
@@ -124,6 +138,8 @@ void EditMeshMouseGrabber::mousePressEvent(QMouseEvent* const event,
   }
 
   unhandled_click_ = true;
+
+  // TODO does this trigger the redraw???
 
   click_x_ = event->x();
   click_y_ = event->y();
