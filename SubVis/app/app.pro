@@ -63,7 +63,9 @@ HEADERS  += view/mainwindow.h \
     plugins/subdivision/algorithm_renderer.h \
     plugins/subdivision/sd_none.h \
     plugins/subdivision/gl_none_renderer.h \
-    view/edit_mesh_mouse_handler.h
+    view/edit_mesh_mouse_handler.h \
+    plugins/subdivision/gl_interpolating_renderer.h \
+    plugins/subdivision/gl_boxspline_renderer.h
 
 SOURCES += main.cpp \
     view/mainwindow.cpp \

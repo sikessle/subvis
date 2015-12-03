@@ -1,5 +1,5 @@
-#ifndef GLNONERENDERER_H
-#define GLNONERENDERER_H
+#ifndef SUBVIS_PLUGINS_SUBDIVISION_GL_NONE_RENDERER_H
+#define SUBVIS_PLUGINS_SUBDIVISION_GL_NONE_RENDERER_H
 
 #include "plugins/subdivision/gl_renderer.h"
 
@@ -16,4 +16,4 @@ class GLNoneRenderer : public GLRenderer {
 };
 
 } // namespace subdivision
-#endif // GLNONERENDERER_H
+#endif // SUBVIS_PLUGINS_SUBDIVISION_GL_NONE_RENDERER_H

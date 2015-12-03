@@ -5,6 +5,7 @@
 
 namespace subdivision {
 
+/// render Catmull-Clark and Doo Sabin (convert to bezier surface)
 class GLBSplineRenderer : public GLRenderer {
  protected:
   void render(const surface_mesh::Surface_mesh& mesh) override;

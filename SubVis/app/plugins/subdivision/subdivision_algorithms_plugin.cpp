@@ -2,6 +2,8 @@
 
 #include "plugins/subdivision/gl_none_renderer.h"
 #include "plugins/subdivision/gl_bspline_renderer.h"
+#include "plugins/subdivision/gl_boxspline_renderer.h"
+#include "plugins/subdivision/gl_interpolating_renderer.h"
 
 #include "plugins/subdivision/sd_none.h"
 #include "plugins/subdivision/sd_catmull.h"
@@ -30,16 +32,16 @@ SubdivisionAlgorithmsPlugin::SubdivisionAlgorithmsPlugin() {
   init_algorithm(0, "Doo-Sabin", new SdDooSabin, new GLBSplineRenderer);
   init_algorithm(1, "Doo-Sabin", new SdDooSabin, new GLBSplineRenderer);
 
-  init_algorithm(0, "Loop", new SdLoop, new GLBSplineRenderer);
-  init_algorithm(1, "Loop", new SdLoop, new GLBSplineRenderer);
+  init_algorithm(0, "Loop", new SdLoop, new GLBoxSplineRenderer);
+  init_algorithm(1, "Loop", new SdLoop, new GLBoxSplineRenderer);
 
-  init_algorithm(0, "Butterfly", new SdButterfly, new GLBSplineRenderer);
-  init_algorithm(1, "Butterfly", new SdButterfly, new GLBSplineRenderer);
+  init_algorithm(0, "Butterfly", new SdButterfly, new GLInterpolatingRenderer);
+  init_algorithm(1, "Butterfly", new SdButterfly, new GLInterpolatingRenderer);
 
   init_algorithm(0, "Modified Butterfly", new SdModButterfly,
-                 new GLBSplineRenderer);
+                 new GLInterpolatingRenderer);
   init_algorithm(1, "Modified Butterfly", new SdModButterfly,
-                 new GLBSplineRenderer);
+                 new GLInterpolatingRenderer);
 }
 
 void SubdivisionAlgorithmsPlugin::init_algorithm(int mesh_id,
