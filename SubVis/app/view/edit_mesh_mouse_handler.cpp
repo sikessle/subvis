@@ -130,6 +130,10 @@ void EditMeshMouseHandler::draw_gl() {
     Point& point = mesh_->get_vertex_property<Point>("v:point")[*vertex];
     qDebug("Found vertex @ click (%d, %d): v%d with coordinates: %f %f %f",
            click_x_, click_y_, vertex->idx(), point[0], point[1], point[2]);
+    mf_.setPosition(point[0], point[1], point[2]);
+    // TODO use mf_ to move vertex
+    // TODO MANIPULATED FRAME INSTEAD OF MOUSE GRABBER. TEST WITH 1 Fixed Point.
+
     // TODO get faces around: mesh_->faces(vertex)
   } else {
     qDebug("No vertex found @ click (%d, %d)", click_x_, click_y_);

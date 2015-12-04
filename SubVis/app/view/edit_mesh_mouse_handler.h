@@ -3,6 +3,7 @@
 
 #include <map>
 #include <QMouseEvent>
+#include "QGLViewer/manipulatedFrame.h"
 #include "QGLViewer/mouseGrabber.h"
 #include "surface_mesh/Surface_mesh.h"
 
@@ -29,6 +30,7 @@ class EditMeshMouseHandler : public qglviewer::MouseGrabber {
   bool unhandled_click_ {false};
   int click_x_ {0};
   int click_y_ {0};
+  qglviewer::ManipulatedFrame mf_;
   const int kClickBoxLength {6};
   const int kPixelsBytes {3};
 
