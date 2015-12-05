@@ -4,7 +4,7 @@
 
 namespace subdivision {
 
-void GLBSplineRenderer::render(const surface_mesh::Surface_mesh& /*mesh*/) {
+void GLBSplineRenderer::render() {
   // placeholder demo code:
   const float nbSteps = 200.0;
 

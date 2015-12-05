@@ -8,9 +8,9 @@ namespace subdivision {
 GLRenderer::~GLRenderer() {
 }
 
-void GLRenderer::mesh_updated(const surface_mesh::Surface_mesh& mesh) {
+void GLRenderer::mesh_updated(const Surface_mesh& mesh) {
   // placeholder for custom data structure
-  mesh_ = &mesh;
+  mesh_.reset(new Surface_mesh{mesh});
   // TODO extract vertices in a custom data structure (member variable) to speed up drawing!
   qDebug() << "Extracted vertices to custo data structure.";
 }
@@ -18,7 +18,7 @@ void GLRenderer::mesh_updated(const surface_mesh::Surface_mesh& mesh) {
 void GLRenderer::render_mesh_opengl() {
   // TODO use custom data structure here
   if (mesh_) {
-    render(*mesh_);
+    render();
   }
 }
 
