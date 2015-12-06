@@ -7,7 +7,7 @@
 
 namespace subdivision {
 
-/// render Butterfly - simply interpolate the points
+/// Interpolate the control points of a triangle mesh (Butterfly/modified Butterfly).
 class GLInterpolatingRenderer : public GLRenderer {
  public:
   void mesh_updated(const Surface_mesh& mesh) override;
