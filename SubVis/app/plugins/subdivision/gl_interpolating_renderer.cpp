@@ -23,15 +23,14 @@ void GLInterpolatingRenderer::render() {
     return;
   }
 
+  glVertexPointer(3, GL_FLOAT, 0, points_.data());
+  glNormalPointer(GL_FLOAT, 0, vnormals_.data());
+
   glClearColor(0, 0, 0, 0);
   glEnable(GL_LIGHTING);
   glShadeModel(GL_SMOOTH);
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_NORMAL_ARRAY);
-
-  glVertexPointer(3, GL_FLOAT, 0, points_.data());
-  glNormalPointer(GL_FLOAT, 0, vnormals_.data());
-
   if (triangles_.size()) {
     glDrawElements(GL_TRIANGLES, (GLsizei) triangles_.size(), GL_UNSIGNED_INT,
                    &triangles_[0]);
