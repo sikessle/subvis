@@ -8,7 +8,7 @@ namespace subdivision {
 /// render Loop subdivision (convert to bezier triangle)
 class GLBoxSplineRenderer : public GLRenderer {
  protected:
-  void render(const surface_mesh::Surface_mesh& /*mesh*/) override {}
+  void render() override {}
 };
 
 } // namespace subdivision

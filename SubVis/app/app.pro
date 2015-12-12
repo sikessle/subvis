@@ -88,7 +88,8 @@ SOURCES += main.cpp \
     plugins/subdivision/sd_triangle.cpp \
     plugins/subdivision/sd_modbutterfly.cpp \
     plugins/subdivision/gui_controls.cpp \
-    view/edit_mesh_mouse_handler.cpp
+    view/edit_mesh_mouse_handler.cpp \
+    plugins/subdivision/gl_interpolating_renderer.cpp
 
 FORMS    += view/mainwindow.ui
 

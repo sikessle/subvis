@@ -1,14 +1,24 @@
 #ifndef SUBVIS_PLUGINS_SUBDIVISION_GL_INTERPOLATING_RENDERER_H
 #define SUBVIS_PLUGINS_SUBDIVISION_GL_INTERPOLATING_RENDERER_H
 
+#include <vector>
+
 #include "plugins/subdivision/gl_renderer.h"
 
 namespace subdivision {
 
-/// render Butterfly - simply interpolate the points
+/// Interpolate the control points of a triangle mesh (Butterfly/modified Butterfly).
 class GLInterpolatingRenderer : public GLRenderer {
+ public:
+  void mesh_updated(const Surface_mesh& mesh) override;
+
  protected:
-  void render(const surface_mesh::Surface_mesh& /*mesh*/) override {}
+  void render() override;
+
+ private:
+  std::vector<unsigned int> triangles_;
+  Surface_mesh::Vertex_property<Point>  points_;
+  Surface_mesh::Vertex_property<Point>  vnormals_;
 };
 
 } // namespace subdivision
