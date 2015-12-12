@@ -152,8 +152,6 @@ void EditMeshMouseHandler::mousePressEvent(QMouseEvent* const event,
 
   unhandled_click_ = true;
 
-  // TODO does this trigger the redraw???
-
   click_x_ = event->x();
   click_y_ = event->y();
 }
