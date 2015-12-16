@@ -27,6 +27,7 @@ class ViewerMeshWidget : public ViewerWidget {
   bool edit_{false};
   const int kPixelsBytes {3};
   const int kClickBoxLength {8};
+  const int kEditHandleSize {10};
   std::map<int, const surface_mesh::Surface_mesh::Vertex> id_to_vertex_;
   int click_x_ {0};
   int click_y_ {0};

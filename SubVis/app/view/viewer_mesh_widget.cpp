@@ -178,7 +178,7 @@ void ViewerMeshWidget::draw_edit_handle() {
   drawGrid();
 
   // Draw the vertex edit handle
-  glPointSize(kClickBoxLength);
+  glPointSize(kEditHandleSize);
   glBegin(GL_POINTS);
   glColor4f(1.f, .0f, .0f, 1.0f);
   glVertex3f(0.f, 0.f, 0.f);
