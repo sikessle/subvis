@@ -1,6 +1,7 @@
 #include <GL/glut.h>
 #include <QtDebug>
 #include <QMouseEvent>
+#include "QGLViewer/manipulatedFrame.h"
 
 #include "view/viewer_mesh_widget.h"
 
@@ -34,7 +35,6 @@ void ViewerMeshWidget::mesh_updated(const surface_mesh::Surface_mesh& mesh) {
 bool ViewerMeshWidget::is_edit_event(QMouseEvent* const event) const {
   return edit_
          && event->button() == Qt::LeftButton
-         && event->modifiers().testFlag(Qt::ControlModifier)
          && mesh_;
 }
 
@@ -45,19 +45,18 @@ void ViewerMeshWidget::extract_vertices() {
     return;
   }
 
-  qDebug() << "Extractign vertices and mapping to ids";
+  qDebug() << "Extracting vertices and mapping to ids";
 
   for (Vertex vertex : mesh_->vertices()) {
     id_to_vertex_.insert(std::pair<int, Vertex>(vertex.idx(), vertex));
   }
 }
 
-void ViewerMeshWidget::mousePressEvent(QMouseEvent* const event) {
-  // Delegate roations etc. to default behaviour, if we are not in
-  // edit mode and not the CTRL+Left_Mouseclick is used.
+void ViewerMeshWidget::mouseDoubleClickEvent(QMouseEvent* const event) {
+  // Delegate roations etc. to default behaviour, if we are not in edit mode.
   if (!is_edit_event(event)) {
     qDebug() << "Using default mouse behavior.";
-    ViewerWidget::mousePressEvent(event);
+    ViewerWidget::mouseDoubleClickEvent(event);
     return;
   }
   qDebug() << "Using edit mode mouse behavior.";
@@ -69,35 +68,10 @@ void ViewerMeshWidget::mousePressEvent(QMouseEvent* const event) {
   // This will now trigger a redraw where we handle the click
 }
 
-void ViewerMeshWidget::handle_click() {
-  qDebug() << "Handling last click";
-
-  const Vertex* vertex = get_vertex_at_click();
-
-  if (vertex != nullptr) {
-    Point& point = mesh_->get_vertex_property<Point>("v:point")[*vertex];
-
-    // This works! So we can just use a reference.
-    // BUT: On Edit start: COPY the mesh, then on end STORE BOTH (copy again to 2. instance)
-    // BUT if we are done, we must sync the second mesh as well
-
-    point[0] = 0.0;
-    point[1] = 0.0;
-    point[2] = 0.0;
-
-    qDebug("Found vertex @ click (%d, %d): v%d with coordinates: %f %f %f",
-           click_x_, click_y_, vertex->idx(), point[0], point[1], point[2]);
-  } else {
-    qDebug("No vertex found @ click (%d, %d)", click_x_, click_y_);
-  }
-
-  unhandled_click_ = false;
-}
-
 
 const surface_mesh::Surface_mesh::Vertex*
 ViewerMeshWidget::get_vertex_at_click() const {
-  glClearColor(255, 255, 255, 255);
+  glClearColor(1.f, 1.f, 1.f, 1.f);
   glClear(GL_COLOR_BUFFER_BIT);
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
@@ -134,6 +108,7 @@ ViewerMeshWidget::get_vertex_at_click() const {
   unsigned char pixels[4];
   glReadPixels(click_x_, viewport_height - click_y_, 1, 1, GL_RGBA,
                GL_UNSIGNED_BYTE, pixels);
+
   // Convert color to vertex idx
   const unsigned int vertex_idx = rgba_to_index(pixels);
 
@@ -172,7 +147,53 @@ const {
   return index;
 }
 
+void ViewerMeshWidget::draw_edit_handle() {
+  if (!edit_handle_point_) {
+    return;
+  }
 
+  // in world coordinate system
+  drawAxis();
+
+  // Save the current model view matrix
+  glPushMatrix();
+  // Multiply matrix to get in the frame coordinate system.
+  glMultMatrixd(manipulatedFrame()->matrix());
+  // Draw the vertex edit handle
+  glPointSize(kClickBoxLength);
+  drawAxis();
+  glBegin(GL_POINTS);
+  glColor4f(1.f, .0f, .0f, 1.0f);
+  glVertex3f((*edit_handle_point_)[0], (*edit_handle_point_)[1],
+             (*edit_handle_point_)[2]);
+  glEnd();
+  // Restore the original (world) coordinate system
+  glPopMatrix();
+}
+
+
+void ViewerMeshWidget::handle_click_during_draw() {
+  qDebug() << "Handling last click";
+
+  const Vertex* vertex = get_vertex_at_click();
+
+  if (vertex != nullptr) {
+    edit_handle_point_ = &mesh_->get_vertex_property<Point>("v:point")[*vertex];
+    qDebug("Found vertex @ click (%d, %d): v%d with coordinates: %f %f %f",
+           click_x_, click_y_, vertex->idx(), (*edit_handle_point_)[0], (*edit_handle_point_)[1],
+           (*edit_handle_point_)[2]);
+
+    setManipulatedFrame(new qglviewer::ManipulatedFrame());
+    qDebug() << "Manipulated Frame created";
+
+  } else {
+    qDebug("No vertex found @ click (%d, %d)", click_x_, click_y_);
+    edit_handle_point_ = nullptr;
+    setManipulatedFrame(nullptr);
+  }
+
+  unhandled_click_ = false;
+}
 
 
 
@@ -191,11 +212,15 @@ void ViewerMeshWidget::draw_gl() {
   qDebug() << "Drawing mesh.";
 
   if (unhandled_click_) {
-    handle_click();
+    handle_click_during_draw();
+    // Trigger redraw to hide the color picking leftovers..
+    updateGL();
+    return;
   }
 
+  //-------------------- SLOW MESH DRAWING
   // black background
-  glClearColor(0, 0, 0, 0);
+  glClearColor(0.f, 0.f, 0.f, 1.f);
   glClear(GL_COLOR_BUFFER_BIT);
   // no lighting TODO: shadows etc. would be good..
   glDisable(GL_LIGHTING);
@@ -212,6 +237,12 @@ void ViewerMeshWidget::draw_gl() {
   // blue (SubVis) color
   glColor3f(0.003, 0.615, 0.878);
   draw_mesh();
+  //-------------------- END SLOW MESH DRAWING
+
+  // Draw edit handle
+  if (manipulatedFrame()) {
+    draw_edit_handle();
+  }
 }
 
 // TODO: We should rather pass a VBO to the graphics card to speed things up.

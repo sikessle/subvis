@@ -19,20 +19,23 @@ class ViewerMeshWidget : public ViewerWidget {
   void draw_gl() override;
   void init_gl() override;
   void mesh_updated(const surface_mesh::Surface_mesh& mesh) override;
-  void mousePressEvent(QMouseEvent* const event) override;
+  void mouseDoubleClickEvent(QMouseEvent* const event) override;
 
  private:
   const surface_mesh::Surface_mesh* mesh_ {nullptr};
   bool edit_{false};
   const int kPixelsBytes {3};
-  const int kClickBoxLength {6};
+  const int kClickBoxLength {8};
   std::map<int, const surface_mesh::Surface_mesh::Vertex> id_to_vertex_;
   int click_x_ {0};
   int click_y_ {0};
   bool unhandled_click_ {false};
+  surface_mesh::Point* edit_handle_point_ {nullptr};
 
+
+  void draw_edit_handle();
   void extract_vertices();
-  void handle_click();
+  void handle_click_during_draw();
   bool is_edit_event(QMouseEvent* const event) const;
   const surface_mesh::Surface_mesh::Vertex* get_vertex_at_click() const;
   /// RGBA color values will be stored in rgba array
