@@ -17,6 +17,18 @@ The project consists of the following main folders:
   - **build**: Created on build, binaries, Doxygen doc(created by Make)
   - **test**: Unit tests
   - **objs**: Object files with 3D models to test
+  
+# Usage
+
+## Edit Mode
+
+To edit a mesh point:
+
+1. Activate edit mode.
+2. Double click on any point.
+3. It got selected if it is red
+4. Move around with CTRL+Left Click / CTRL+Both Mouse Buttons
+5. Double click anywhere else to apply changes to mesh
 
 # Documentation
 
