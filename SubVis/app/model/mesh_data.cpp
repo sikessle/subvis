@@ -24,6 +24,17 @@ const Surface_mesh& MeshData::get_mesh(int idx) const {
   }
 }
 
+void MeshData::load_and_duplicate(std::unique_ptr<Surface_mesh> mesh, int idx) {
+  qDebug() << "Loading single mesh and duplicating";
+  auto copy = std::unique_ptr<Surface_mesh> {new Surface_mesh(*mesh)};
+
+  if (idx == 0) {
+     load(MeshPairUniquePtrs{std::move(mesh), std::move(copy)});
+  } else {
+    load(MeshPairUniquePtrs{std::move(copy), std::move(mesh)});
+  }
+}
+
 void MeshData::load(MeshPairUniquePtrs meshes) {
   qDebug() << "Mesh pair loaded";
   history_push({std::move(meshes.first), std::move(meshes.second)});

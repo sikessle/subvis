@@ -28,7 +28,7 @@ void ViewerWidget::init() {
   init_gl();
 }
 
-void ViewerWidget::set_model(const MeshData& mesh_data) {
+void ViewerWidget::set_model(MeshData& mesh_data) {
   mesh_data_ = &mesh_data;
 
   // listen to mesh updates

@@ -45,9 +45,13 @@ void ViewerMeshWidget::extract_vertices() {
     return;
   }
 
+  qDebug() << "Copying mesh to allow for non-destructive editing";
+  editable_mesh_ = std::unique_ptr<surface_mesh::Surface_mesh>
+                   (new surface_mesh::Surface_mesh(*mesh_));
+
   qDebug() << "Extracting vertices and mapping to ids";
 
-  for (Vertex vertex : mesh_->vertices()) {
+  for (Vertex vertex : editable_mesh_->vertices()) {
     id_to_vertex_.insert(std::pair<int, Vertex>(vertex.idx(), vertex));
   }
 }
@@ -61,11 +65,27 @@ void ViewerMeshWidget::mouseDoubleClickEvent(QMouseEvent* const event) {
   }
   qDebug() << "Using edit mode mouse behavior.";
 
-  click_x_ = event->x();
-  click_y_ = event->y();
-  unhandled_click_ = true;
-
-  // This will now trigger a redraw where we handle the click
+  // Save previous modification
+  if (manipulatedFrame()) {
+    qDebug() << "Saving previous modifications to a mesh point";
+    qreal x, y, z;
+    manipulatedFrame()->getPosition(x, y, z);
+    Point& p = *editing_point_;
+    p[0] = x;
+    p[1] = y;
+    p[2] = z;
+    qDebug("New Position: %f %f %f", p[0], p[1], p[2]);
+    qDebug() << "Saving modified mesh";
+    
+    mesh_data_->load_and_duplicate(std::move(editable_mesh_), mesh_id_);
+    setManipulatedFrame(nullptr);
+  } else {
+    qDebug() << "Handling a new click on a mesh point";
+    click_x_ = event->x();
+    click_y_ = event->y();
+    unhandled_click_ = true;
+    // This will now trigger a redraw where we handle the click
+  }
 }
 
 
@@ -96,7 +116,7 @@ ViewerMeshWidget::get_vertex_at_click() const {
     // Set color based on idx
     index_to_rgba(id_vertex.first, rgba);
     const Point& p =
-      mesh_->get_vertex_property<Point>("v:point")[id_vertex.second];
+      editable_mesh_->get_vertex_property<Point>("v:point")[id_vertex.second];
     glColor4f(rgba[0] / 255.0f, rgba[1] / 255.0f, rgba[2] / 255.0f, 1.0f);
     glVertex3f(p[0], p[1], p[2]);
   }
@@ -148,25 +168,23 @@ const {
 }
 
 void ViewerMeshWidget::draw_edit_handle() {
-  if (!edit_handle_point_) {
-    return;
-  }
-
-  // in world coordinate system
-  drawAxis();
 
   // Save the current model view matrix
   glPushMatrix();
   // Multiply matrix to get in the frame coordinate system.
   glMultMatrixd(manipulatedFrame()->matrix());
+
+  glColor3f(102 / 255.f, 0.f, 0.f);
+  drawGrid();
+
   // Draw the vertex edit handle
   glPointSize(kClickBoxLength);
-  drawAxis();
   glBegin(GL_POINTS);
   glColor4f(1.f, .0f, .0f, 1.0f);
-  glVertex3f((*edit_handle_point_)[0], (*edit_handle_point_)[1],
-             (*edit_handle_point_)[2]);
+  glVertex3f(0.f, 0.f, 0.f);
   glEnd();
+
+
   // Restore the original (world) coordinate system
   glPopMatrix();
 }
@@ -178,19 +196,18 @@ void ViewerMeshWidget::handle_click_during_draw() {
   const Vertex* vertex = get_vertex_at_click();
 
   if (vertex != nullptr) {
-    edit_handle_point_ = &mesh_->get_vertex_property<Point>("v:point")[*vertex];
+    Point& handle = editable_mesh_->get_vertex_property<Point>("v:point")[*vertex];
     qDebug("Found vertex @ click (%d, %d): v%d with coordinates: %f %f %f",
-           click_x_, click_y_, vertex->idx(), (*edit_handle_point_)[0],
-           (*edit_handle_point_)[1],
-           (*edit_handle_point_)[2]);
+           click_x_, click_y_, vertex->idx(), handle[0], handle[1], handle[2]);
 
+    editing_point_ = &handle;
     setManipulatedFrame(new qglviewer::ManipulatedFrame());
+    // Set to correct position
+    manipulatedFrame()->setPosition(handle[0], handle[1], handle[2]);
     qDebug() << "Manipulated Frame created";
 
   } else {
     qDebug("No vertex found @ click (%d, %d)", click_x_, click_y_);
-    edit_handle_point_ = nullptr;
-    setManipulatedFrame(nullptr);
   }
 
   unhandled_click_ = false;
@@ -202,7 +219,7 @@ void ViewerMeshWidget::handle_click_during_draw() {
 void ViewerMeshWidget::init_gl() {
   qDebug() << "Initializing open gl.";
   // TODO compute the correct scene radius and configure camera.
-  setSceneRadius(10.0);
+  setSceneRadius(1.0);
   camera()->setZNearCoefficient(0.0001);
   camera()->setZClippingCoefficient(10.0);
   //glEnable(GL_DEPTH_TEST);

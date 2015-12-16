@@ -19,6 +19,7 @@ class MeshData : public QObject {
 
   const Surface_mesh& get_mesh(int idx) const;
   bool load(const std::string& filename);
+  void load_and_duplicate(std::unique_ptr<Surface_mesh> mesh, int idx);
   void load(
     std::pair<std::unique_ptr<Surface_mesh>, std::unique_ptr<Surface_mesh>> meshes);
   void history_step_back();

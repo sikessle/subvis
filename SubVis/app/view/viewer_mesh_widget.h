@@ -23,6 +23,7 @@ class ViewerMeshWidget : public ViewerWidget {
 
  private:
   const surface_mesh::Surface_mesh* mesh_ {nullptr};
+  std::unique_ptr<surface_mesh::Surface_mesh> editable_mesh_ {nullptr};
   bool edit_{false};
   const int kPixelsBytes {3};
   const int kClickBoxLength {8};
@@ -30,7 +31,7 @@ class ViewerMeshWidget : public ViewerWidget {
   int click_x_ {0};
   int click_y_ {0};
   bool unhandled_click_ {false};
-  surface_mesh::Point* edit_handle_point_ {nullptr};
+  surface_mesh::Point* editing_point_ {nullptr};
 
 
   void draw_edit_handle();
