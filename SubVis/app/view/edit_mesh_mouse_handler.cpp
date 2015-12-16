@@ -128,6 +128,15 @@ void EditMeshMouseHandler::draw_gl() {
 
   if (vertex != nullptr) {
     Point& point = mesh_->get_vertex_property<Point>("v:point")[*vertex];
+
+    // This works! So we can just use a reference.
+    // BUT: On Edit start: COPY the mesh, then on end STORE BOTH (copy again to 2. instance)
+    // BUT if we are done, we must sync the second mesh as well
+
+    point[0] = 0.0;
+    point[1] = 0.0;
+    point[2] = 0.0;
+
     qDebug("Found vertex @ click (%d, %d): v%d with coordinates: %f %f %f",
            click_x_, click_y_, vertex->idx(), point[0], point[1], point[2]);
     mf_.setPosition(point[0], point[1], point[2]);
