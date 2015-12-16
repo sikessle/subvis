@@ -76,7 +76,7 @@ void ViewerMeshWidget::mouseDoubleClickEvent(QMouseEvent* const event) {
     p[2] = z;
     qDebug("New Position: %f %f %f", p[0], p[1], p[2]);
     qDebug() << "Saving modified mesh";
-    
+
     mesh_data_->load_and_duplicate(std::move(editable_mesh_), mesh_id_);
     setManipulatedFrame(nullptr);
   } else {
@@ -263,13 +263,11 @@ void ViewerMeshWidget::draw_gl() {
   }
 }
 
-// TODO: We should rather pass a VBO to the graphics card to speed things up.
 // this is just a temporary prototype.
 // This implementation is EXTREMLY SLOW!
 void ViewerMeshWidget::draw_mesh() {
   using Point = surface_mesh::Point;
 
-  // mesh not yet loaded. TODO this can be removed if we use an appropriate container for our custom
   // data structure
   if (!mesh_) {
     return;
