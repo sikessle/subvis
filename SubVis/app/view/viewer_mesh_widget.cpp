@@ -180,7 +180,8 @@ void ViewerMeshWidget::handle_click_during_draw() {
   if (vertex != nullptr) {
     edit_handle_point_ = &mesh_->get_vertex_property<Point>("v:point")[*vertex];
     qDebug("Found vertex @ click (%d, %d): v%d with coordinates: %f %f %f",
-           click_x_, click_y_, vertex->idx(), (*edit_handle_point_)[0], (*edit_handle_point_)[1],
+           click_x_, click_y_, vertex->idx(), (*edit_handle_point_)[0],
+           (*edit_handle_point_)[1],
            (*edit_handle_point_)[2]);
 
     setManipulatedFrame(new qglviewer::ManipulatedFrame());
