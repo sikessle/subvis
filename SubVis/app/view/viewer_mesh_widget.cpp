@@ -16,6 +16,7 @@ ViewerMeshWidget::ViewerMeshWidget(QWidget* parent,
 
 void ViewerMeshWidget::set_edit(bool edit) {
   edit_ = edit;
+  extract_vertices();
   qDebug() << "Edit set to" << edit;
 }
 
@@ -23,11 +24,7 @@ void ViewerMeshWidget::mesh_updated(const surface_mesh::Surface_mesh& mesh) {
   mesh_ = &mesh;
 
   if (edit_) {
-    id_to_vertex_.clear();
-
-    for (Vertex vertex : mesh_->vertices()) {
-      id_to_vertex_.insert(std::pair<int, Vertex>(vertex.idx(), vertex));
-    }
+    extract_vertices();
   }
 
   // force redraw
@@ -41,6 +38,19 @@ bool ViewerMeshWidget::should_react(QMouseEvent* const event) const {
          && mesh_;
 }
 
+void ViewerMeshWidget::extract_vertices() {
+  id_to_vertex_.clear();
+
+  if (!mesh_) {
+    return;
+  }
+
+  qDebug() << "Extractign vertices and mapping to ids";
+
+  for (Vertex vertex : mesh_->vertices()) {
+    id_to_vertex_.insert(std::pair<int, Vertex>(vertex.idx(), vertex));
+  }
+}
 
 void ViewerMeshWidget::mousePressEvent(QMouseEvent* const event) {
   // Delegate roations etc. to default behaviour, if we are not in
@@ -54,8 +64,13 @@ void ViewerMeshWidget::mousePressEvent(QMouseEvent* const event) {
 
   click_x_ = event->x();
   click_y_ = event->y();
+  unhandled_click_ = true;
 
-  // Handle click
+  // This will now trigger a redraw where we handle the click
+}
+
+void ViewerMeshWidget::handle_click() {
+  qDebug() << "Handling last click";
 
   const Vertex* vertex = get_vertex_at_click();
 
@@ -75,6 +90,8 @@ void ViewerMeshWidget::mousePressEvent(QMouseEvent* const event) {
   } else {
     qDebug("No vertex found @ click (%d, %d)", click_x_, click_y_);
   }
+
+  unhandled_click_ = false;
 }
 
 
@@ -122,8 +139,7 @@ ViewerMeshWidget::get_vertex_at_click() const {
 
   // Get vertex by id
   if (id_to_vertex_.count(vertex_idx) > 0) {
-    const Vertex& vertex = id_to_vertex_.at(vertex_idx);
-    return &vertex;
+    return &id_to_vertex_.at(vertex_idx);
   }
 
   return nullptr;
@@ -173,6 +189,10 @@ void ViewerMeshWidget::init_gl() {
 
 void ViewerMeshWidget::draw_gl() {
   qDebug() << "Drawing mesh.";
+
+  if (unhandled_click_) {
+    handle_click();
+  }
 
   // black background
   glClearColor(0, 0, 0, 0);
