@@ -34,20 +34,23 @@ void ViewerMeshWidget::mesh_updated(const surface_mesh::Surface_mesh& mesh) {
   updateGL();
 }
 
+bool ViewerMeshWidget::should_react(QMouseEvent* const event) const {
+  return edit_
+         && event->button() == Qt::LeftButton
+         && event->modifiers().testFlag(Qt::ControlModifier)
+         && mesh_;
+}
+
 
 void ViewerMeshWidget::mousePressEvent(QMouseEvent* const event) {
   // Delegate roations etc. to default behaviour, if we are not in
   // edit mode and not the CTRL+Left_Mouseclick is used.
-  if (!edit_ || event->button() != Qt::LeftButton || !event->modifiers().testFlag(Qt::ControlModifier)) {
+  if (!should_react(event)) {
     qDebug() << "Using default mouse behavior.";
     ViewerWidget::mousePressEvent(event);
     return;
   }
   qDebug() << "Using edit mode mouse behavior.";
-  if (!mesh_) {
-    qDebug() << "No mesh via mesh_updated received. Aborting mouse event handling.";
-    return;
-  }
 
   click_x_ = event->x();
   click_y_ = event->y();
