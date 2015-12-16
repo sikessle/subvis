@@ -31,7 +31,7 @@ void ViewerMeshWidget::mesh_updated(const surface_mesh::Surface_mesh& mesh) {
   updateGL();
 }
 
-bool ViewerMeshWidget::should_react(QMouseEvent* const event) const {
+bool ViewerMeshWidget::is_edit_event(QMouseEvent* const event) const {
   return edit_
          && event->button() == Qt::LeftButton
          && event->modifiers().testFlag(Qt::ControlModifier)
@@ -55,7 +55,7 @@ void ViewerMeshWidget::extract_vertices() {
 void ViewerMeshWidget::mousePressEvent(QMouseEvent* const event) {
   // Delegate roations etc. to default behaviour, if we are not in
   // edit mode and not the CTRL+Left_Mouseclick is used.
-  if (!should_react(event)) {
+  if (!is_edit_event(event)) {
     qDebug() << "Using default mouse behavior.";
     ViewerWidget::mousePressEvent(event);
     return;

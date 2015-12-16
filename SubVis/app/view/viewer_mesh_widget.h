@@ -33,7 +33,7 @@ class ViewerMeshWidget : public ViewerWidget {
 
   void extract_vertices();
   void handle_click();
-  bool should_react(QMouseEvent* const event) const;
+  bool is_edit_event(QMouseEvent* const event) const;
   const surface_mesh::Surface_mesh::Vertex* get_vertex_at_click() const;
   /// RGBA color values will be stored in rgba array
   void index_to_rgba(const int index, unsigned char rgba[4]) const;
