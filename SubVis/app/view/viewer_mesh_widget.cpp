@@ -14,7 +14,8 @@ ViewerMeshWidget::ViewerMeshWidget(QWidget* parent,
                                    int mesh_id) :
   ViewerWidget{parent, mesh_id} {
 
-  setMouseBinding(Qt::ControlModifier, Qt::LeftButton, QGLViewer::FRAME, QGLViewer::TRANSLATE);
+  setMouseBinding(Qt::ControlModifier, Qt::LeftButton, QGLViewer::FRAME,
+                  QGLViewer::TRANSLATE);
 }
 
 void ViewerMeshWidget::set_edit(bool edit) {
@@ -179,17 +180,15 @@ void ViewerMeshWidget::draw_edit_handle() {
   glColor3f(102 / 255.f, 0.f, 0.f);
   drawGrid();
 
+  glDisable(GL_DEPTH_TEST);
   // Draw the vertex edit handle
   glPointSize(kEditHandleSize);
   glBegin(GL_POINTS);
-  glColor4f(1.f, .0f, .0f, 1.0f);
+  glColor3f(1.f, .0f, .0f);
   glVertex3f(0.f, 0.f, 0.f);
   glEnd();
 
-  // TODO: Instead of both Mouse buttons use only left button + control!! (setMousebinding..)
-  // Depth BUffer
-  // Grids
-  // computeNormals?
+  glEnable(GL_DEPTH_TEST);
 
   // Restore the original (world) coordinate system
   glPopMatrix();
@@ -228,7 +227,6 @@ void ViewerMeshWidget::init_gl() {
   setSceneRadius(1.0);
   camera()->setZNearCoefficient(0.0001);
   camera()->setZClippingCoefficient(10.0);
-  //glEnable(GL_DEPTH_TEST);
   qDebug() << "Finished initializing open gl.";
 }
 
@@ -258,6 +256,7 @@ void ViewerMeshWidget::draw_gl() {
 
   // SOLID
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
   // blue (SubVis) color
   glColor3f(0.003, 0.615, 0.878);
   draw_mesh();
