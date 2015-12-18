@@ -4,7 +4,10 @@ namespace subvis {
 
 EditConstraint::EditConstraint() {
   local_constraint_.setTranslationConstraintType(qglviewer::AxisPlaneConstraint::AXIS);
-  //local_constraint_.setTranslationConstraintDirection(qglviewer::Vec(0.0, 0.0, 0.0));
+  // X axis
+  // TODO: Try to use normal of Vertex.
+  local_constraint_.setTranslationConstraintDirection(qglviewer::Vec(1.0, 0.0, 0.0));
+  // SWITCH ON KEY PRESS (x, y and z)
 }
 
 void EditConstraint::constrainTranslation(qglviewer::Vec& translation,
