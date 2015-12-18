@@ -2,6 +2,7 @@
 #include <QtDebug>
 #include <QMouseEvent>
 #include "QGLViewer/manipulatedFrame.h"
+#include <math.h>
 
 #include "view/viewer_mesh_widget.h"
 
@@ -73,15 +74,18 @@ void ViewerMeshWidget::mouseDoubleClickEvent(QMouseEvent* const event) {
     qDebug() << "Saving previous modifications to a mesh point";
     qreal x, y, z;
     manipulatedFrame()->getPosition(x, y, z);
-    Point& p = *editing_point_;
-    p[0] = x;
-    p[1] = y;
-    p[2] = z;
-    qDebug("New Position: %f %f %f", p[0], p[1], p[2]);
-    qDebug() << "Saving modified mesh";
 
-    mesh_data_->load_and_duplicate(std::move(editable_mesh_), mesh_id_);
-    setManipulatedFrame(nullptr);
+    if (!isnan(x) && !isnan(y) && !isnan(z)) {
+      Point& p = *editing_point_;
+      p[0] = x;
+      p[1] = y;
+      p[2] = z;
+      qDebug("New Position: %f %f %f", p[0], p[1], p[2]);
+      qDebug() << "Saving modified mesh";
+
+      mesh_data_->load_and_duplicate(std::move(editable_mesh_), mesh_id_);
+      setManipulatedFrame(nullptr);
+    }
   } else {
     qDebug() << "Handling a new click on a mesh point";
     click_x_ = event->x();
@@ -209,9 +213,10 @@ void ViewerMeshWidget::handle_click_during_draw() {
 
     editing_point_ = &handle;
     setManipulatedFrame(new qglviewer::ManipulatedFrame());
-    manipulatedFrame()->setConstraint(&edit_constraint_);
     // Set to correct position
     manipulatedFrame()->setPosition(handle[0], handle[1], handle[2]);
+    // Constrain translations etc.
+    manipulatedFrame()->setConstraint(&edit_constraint_);
     qDebug() << "Manipulated Frame created";
 
   } else {
