@@ -174,20 +174,22 @@ void ViewerMeshWidget::draw_edit_handle() {
 
   // Save the current model view matrix
   glPushMatrix();
+
   // Multiply matrix to get in the frame coordinate system.
   glMultMatrixd(manipulatedFrame()->matrix());
 
+  // Grid
   glColor3f(102 / 255.f, 0.f, 0.f);
   drawGrid();
+  drawAxis();
 
-  glDisable(GL_DEPTH_TEST);
   // Draw the vertex edit handle
+  glDisable(GL_DEPTH_TEST);
   glPointSize(kEditHandleSize);
   glBegin(GL_POINTS);
   glColor3f(1.f, .0f, .0f);
   glVertex3f(0.f, 0.f, 0.f);
   glEnd();
-
   glEnable(GL_DEPTH_TEST);
 
   // Restore the original (world) coordinate system
@@ -207,6 +209,7 @@ void ViewerMeshWidget::handle_click_during_draw() {
 
     editing_point_ = &handle;
     setManipulatedFrame(new qglviewer::ManipulatedFrame());
+    manipulatedFrame()->setConstraint(&edit_constraint_);
     // Set to correct position
     manipulatedFrame()->setPosition(handle[0], handle[1], handle[2]);
     qDebug() << "Manipulated Frame created";

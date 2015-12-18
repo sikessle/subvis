@@ -64,7 +64,8 @@ HEADERS  += view/mainwindow.h \
     plugins/subdivision/sd_none.h \
     plugins/subdivision/gl_none_renderer.h \
     plugins/subdivision/gl_interpolating_renderer.h \
-    plugins/subdivision/gl_boxspline_renderer.h
+    plugins/subdivision/gl_boxspline_renderer.h \
+    view/edit_constraint.h
 
 SOURCES += main.cpp \
     view/mainwindow.cpp \
@@ -87,7 +88,8 @@ SOURCES += main.cpp \
     plugins/subdivision/sd_triangle.cpp \
     plugins/subdivision/sd_modbutterfly.cpp \
     plugins/subdivision/gui_controls.cpp \
-    plugins/subdivision/gl_interpolating_renderer.cpp
+    plugins/subdivision/gl_interpolating_renderer.cpp \
+    view/edit_constraint.cpp
 
 FORMS    += view/mainwindow.ui
 

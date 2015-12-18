@@ -3,6 +3,7 @@
 
 #include "surface_mesh/Surface_mesh.h"
 
+#include "view/edit_constraint.h"
 #include "view/viewer_widget.h"
 
 namespace subvis {
@@ -33,6 +34,7 @@ class ViewerMeshWidget : public ViewerWidget {
   int click_y_ {0};
   bool unhandled_click_ {false};
   surface_mesh::Point* editing_point_ {nullptr};
+  EditConstraint edit_constraint_;
 
 
   void draw_edit_handle();
