@@ -27,7 +27,7 @@ To edit a mesh point:
 1. Activate edit mode.
 2. Double click on any point.
 3. It got selected if it is red
-4. Move around with CTRL+Left Click / CTRL+Both Mouse Buttons
+4. Move point around with CTRL+Left Click (hold down)
 5. Double click anywhere else to apply changes to mesh
 
 # Documentation

@@ -13,6 +13,8 @@ using Vertex = surface_mesh::Surface_mesh::Vertex;
 ViewerMeshWidget::ViewerMeshWidget(QWidget* parent,
                                    int mesh_id) :
   ViewerWidget{parent, mesh_id} {
+
+  setMouseBinding(Qt::ControlModifier, Qt::LeftButton, QGLViewer::FRAME, QGLViewer::TRANSLATE);
 }
 
 void ViewerMeshWidget::set_edit(bool edit) {
@@ -184,6 +186,10 @@ void ViewerMeshWidget::draw_edit_handle() {
   glVertex3f(0.f, 0.f, 0.f);
   glEnd();
 
+  // TODO: Instead of both Mouse buttons use only left button + control!! (setMousebinding..)
+  // Depth BUffer
+  // Grids
+  // computeNormals?
 
   // Restore the original (world) coordinate system
   glPopMatrix();
