@@ -8,6 +8,8 @@
 
 namespace subvis {
 
+enum EditTranslationType {VERTEX_NORMAL_PLANE, VERTEX_NORMAL_ORTHOGONAL_PLANE};
+
 class ViewerMeshWidget : public ViewerWidget {
   Q_OBJECT
 
@@ -21,6 +23,8 @@ class ViewerMeshWidget : public ViewerWidget {
   void init_gl() override;
   void mesh_updated(const surface_mesh::Surface_mesh& mesh) override;
   void mouseDoubleClickEvent(QMouseEvent* const event) override;
+  void keyPressEvent(QKeyEvent* e) override;
+
 
  private:
   const surface_mesh::Surface_mesh* mesh_ {nullptr};
@@ -36,7 +40,7 @@ class ViewerMeshWidget : public ViewerWidget {
   surface_mesh::Point* editing_point_ {nullptr};
   EditConstraint edit_constraint_;
   surface_mesh::Normal vertex_normal_;
-
+  EditTranslationType translation_type_ = VERTEX_NORMAL_PLANE;
 
   void draw_edit_handle();
   void extract_vertices();

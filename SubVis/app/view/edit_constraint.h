@@ -2,14 +2,14 @@
 #define SUBVIS_VIEW_EDIT_CONSTRAINT_H
 
 #include <QGLViewer/constraint.h>
-#include "surface_mesh/Surface_mesh.h"
 
 namespace subvis {
 
 class EditConstraint : public qglviewer::Constraint {
  public:
   EditConstraint();
-  void set_vertex_normal(const surface_mesh::Normal& normal);
+  void set_vertex_normal(const qglviewer::Vec& normal);
+  void set_plane_orthogonal(bool orthogonal);
 
  protected:
   void constrainTranslation(qglviewer::Vec& translation,
@@ -17,6 +17,8 @@ class EditConstraint : public qglviewer::Constraint {
 
   private:
   qglviewer::LocalConstraint local_constraint_;
+  bool orthogonal_ {false};
+  qglviewer::Vec vertex_normal_;
 };
 
 } // namespace subvis

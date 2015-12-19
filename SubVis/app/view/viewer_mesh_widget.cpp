@@ -180,7 +180,7 @@ void ViewerMeshWidget::draw_edit_handle() {
   // Vertex normal in world coordinate system
   glLineWidth(2.0);
   glBegin(GL_LINES);
-  glColor3f(102 / 255.f, 0.f, 0.f);
+  glColor3f(.9f, .9f, .9f);
   Point& start = *editing_point_;
   glVertex3f(start[0] - vertex_normal_[0],
              start[1] - vertex_normal_[1],
@@ -188,6 +188,14 @@ void ViewerMeshWidget::draw_edit_handle() {
   glVertex3f(start[0] + vertex_normal_[0],
              start[1] + vertex_normal_[1],
              start[2] + vertex_normal_[2]);
+  glEnd();
+
+  // Line between vertex origin and new position
+  glBegin(GL_LINES);
+  glColor3f(102 / 255.f, 0.f, 0.f);
+  qglviewer::Vec mf_pos = manipulatedFrame()->position();
+  glVertex3f(start[0], start[1], start[2]);
+  glVertex3f(mf_pos[0], mf_pos[1], mf_pos[2]);
   glEnd();
 
   // Save the current model view matrix
@@ -207,6 +215,29 @@ void ViewerMeshWidget::draw_edit_handle() {
 
   // Restore the original (world) coordinate system
   glPopMatrix();
+
+  // Draw information about current constraint
+  qglColor(foregroundColor());
+  glDisable(GL_LIGHTING);
+  QString text_type = translation_type_ == VERTEX_NORMAL_PLANE ?
+                      "Plane of vertex normal" : "Orthogonal plane of vertex normal";
+  drawText(10, height() - 10, "Translation type: " + text_type + " (S)");
+}
+
+
+void ViewerMeshWidget::keyPressEvent(QKeyEvent* e) {
+  if (e->key() == Qt::Key_S) {
+    if (translation_type_ == VERTEX_NORMAL_PLANE) {
+      translation_type_ = VERTEX_NORMAL_ORTHOGONAL_PLANE;
+      edit_constraint_.set_plane_orthogonal(true);
+    } else {
+      translation_type_ = VERTEX_NORMAL_PLANE;
+      edit_constraint_.set_plane_orthogonal(false);
+    }
+    updateGL();
+  } else {
+    ViewerWidget::keyPressEvent(e);
+  }
 }
 
 
@@ -227,7 +258,8 @@ void ViewerMeshWidget::handle_click_during_draw() {
     manipulatedFrame()->setPosition(handle[0], handle[1], handle[2]);
     // Constrain translations etc.
     vertex_normal_ = editable_mesh_->compute_vertex_normal(*vertex);
-    edit_constraint_.set_vertex_normal(vertex_normal_);
+    edit_constraint_.set_vertex_normal(qglviewer::Vec(vertex_normal_[0],
+                                       vertex_normal_[1], vertex_normal_[2]));
     manipulatedFrame()->setConstraint(&edit_constraint_);
     qDebug() << "Manipulated Frame created";
 
