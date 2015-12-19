@@ -13,7 +13,7 @@ using Vertex = surface_mesh::Surface_mesh::Vertex;
 MeshEditHandler::MeshEditHandler(int mesh_id) : mesh_id_(mesh_id) {
 }
 
-bool MeshEditHandler::callback_before_main_draw(QGLViewer* viewer) {
+bool MeshEditHandler::callback_handle_previous_click(QGLViewer* viewer) {
   if (!unhandled_click_) {
     return false;
   }

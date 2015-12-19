@@ -21,7 +21,7 @@ class MeshEditHandler {
   bool mouseDoubleClickEvent(QMouseEvent* const event, MeshData& mesh_data,
                              QGLViewer* viewer);
   bool keyPressEvent(QKeyEvent* e);
-  bool callback_before_main_draw(QGLViewer* viewer);
+  bool callback_handle_previous_click(QGLViewer* viewer);
   void draw_edit_handle(QGLViewer* viewer);
   void set_enabled(bool enabled);
   void mesh_updated(const surface_mesh::Surface_mesh& mesh);
@@ -48,7 +48,7 @@ class MeshEditHandler {
   bool edit_in_progress_ {false};
 
   void extract_vertices();
-  void callback_before_main_draw();
+  void callback_handle_previous_click();
   bool is_edit_event(QMouseEvent* const event) const;
   const surface_mesh::Surface_mesh::Vertex* get_vertex_at_click() const;
   /// RGBA color values will be stored in rgba array

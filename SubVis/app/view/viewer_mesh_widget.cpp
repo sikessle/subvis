@@ -1,8 +1,6 @@
 #include <GL/glut.h>
 #include <QtDebug>
 #include <QMouseEvent>
-#include "QGLViewer/manipulatedFrame.h"
-#include <math.h>
 
 #include "view/viewer_mesh_widget.h"
 
@@ -55,7 +53,7 @@ void ViewerMeshWidget::init_gl() {
 void ViewerMeshWidget::draw_gl() {
   qDebug() << "Drawing mesh.";
 
-  if (mesh_edit_handler_.callback_before_main_draw(this)) {
+  if (mesh_edit_handler_.callback_handle_previous_click(this)) {
     updateGL();
     return;
   }
