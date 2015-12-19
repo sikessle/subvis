@@ -77,16 +77,34 @@ class MeshData : public QObject {
   bool history_can_step_forward();
   ///
   /// \brief Persist the mesh with index idx to a file.
-  /// \param filename
-  /// \param idx
-  /// \return
+  /// \param filename The target file
+  /// \param idx The index of the mesh which should be persisted
+  /// \return True if the persistance succeeded, else false.
   ///
   bool persist(const std::string& filename, int idx) const;
+  ///
+  /// \brief Returns the supported file formats which can be used to load from file.
+  /// \return A string with space separated regular expressions describing the
+  /// file formats (i.e. "*.obj *.off")
+  ///
   const std::string& get_load_file_formats() const;
+  ///
+  /// \brief Returns the supported file formats which can be used to persist to file.
+  /// \return A string with space separated regular expressions describing the
+  /// file formats (i.e. "*.obj *.off")
+  ///
   const std::string& get_persist_file_formats() const;
+  ///
+  /// \brief Triangulates the mesh with index idx. This will place a new pair of
+  /// meshes on the history stack.
+  /// \param idx The mesh to triangulate.
+  ///
   void triangulate(int idx);
 
  private:
+  ///
+  /// \brief history_ sdf
+  ///
   std::vector<std::pair<std::unique_ptr<Surface_mesh>, std::unique_ptr<Surface_mesh>>>
   history_;
   unsigned int history_index_{0};
