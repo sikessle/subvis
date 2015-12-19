@@ -9,267 +9,39 @@
 namespace subvis {
 
 using Point = surface_mesh::Point;
-using Vertex = surface_mesh::Surface_mesh::Vertex;
 
 ViewerMeshWidget::ViewerMeshWidget(QWidget* parent,
                                    int mesh_id) :
   ViewerWidget{parent, mesh_id} {
 
-  setMouseBinding(Qt::ControlModifier, Qt::LeftButton, QGLViewer::FRAME,
-                  QGLViewer::TRANSLATE);
+  mesh_edit_handler_.set_mouse_binding(this);
 }
 
 void ViewerMeshWidget::set_edit(bool edit) {
-  edit_ = edit;
-  extract_vertices();
+  mesh_edit_handler_.set_enabled(edit);
   qDebug() << "Edit set to" << edit;
 }
 
 void ViewerMeshWidget::mesh_updated(const surface_mesh::Surface_mesh& mesh) {
   mesh_ = &mesh;
-
-  if (edit_) {
-    extract_vertices();
-  }
-
+  mesh_edit_handler_.mesh_updated(mesh);
   // force redraw
   updateGL();
 }
 
-bool ViewerMeshWidget::is_edit_event(QMouseEvent* const event) const {
-  return edit_
-         && event->button() == Qt::LeftButton
-         && mesh_;
-}
-
-void ViewerMeshWidget::extract_vertices() {
-  id_to_vertex_.clear();
-
-  if (!mesh_) {
-    return;
-  }
-
-  qDebug() << "Copying mesh to allow for non-destructive editing";
-  editable_mesh_ = std::unique_ptr<surface_mesh::Surface_mesh>
-                   (new surface_mesh::Surface_mesh(*mesh_));
-
-  qDebug() << "Extracting vertices and mapping to ids";
-
-  for (Vertex vertex : editable_mesh_->vertices()) {
-    id_to_vertex_.insert(std::pair<int, Vertex>(vertex.idx(), vertex));
-  }
-}
-
 void ViewerMeshWidget::mouseDoubleClickEvent(QMouseEvent* const event) {
-  // Delegate roations etc. to default behaviour, if we are not in edit mode.
-  if (!is_edit_event(event)) {
-    qDebug() << "Using default mouse behavior.";
+  if (!mesh_edit_handler_.mouseDoubleClickEvent(event, *mesh_data_, this)) {;
     ViewerWidget::mouseDoubleClickEvent(event);
-    return;
-  }
-  qDebug() << "Using edit mode mouse behavior.";
-
-  // Save previous modification
-  if (manipulatedFrame()) {
-    qDebug() << "Saving previous modifications to a mesh point";
-    qreal x, y, z;
-    manipulatedFrame()->getPosition(x, y, z);
-
-    if (!isnan(x) && !isnan(y) && !isnan(z)) {
-      Point& p = *editing_point_;
-      p[0] = x;
-      p[1] = y;
-      p[2] = z;
-      qDebug("New Position: %f %f %f", p[0], p[1], p[2]);
-      qDebug() << "Saving modified mesh";
-
-      mesh_data_->load_and_duplicate(std::move(editable_mesh_), mesh_id_);
-      setManipulatedFrame(nullptr);
-    }
-  } else {
-    qDebug() << "Handling a new click on a mesh point";
-    click_x_ = event->x();
-    click_y_ = event->y();
-    unhandled_click_ = true;
-    // This will now trigger a redraw where we handle the click
   }
 }
-
-
-const surface_mesh::Surface_mesh::Vertex*
-ViewerMeshWidget::get_vertex_at_click() const {
-  glClearColor(1.f, 1.f, 1.f, 1.f);
-  glClear(GL_COLOR_BUFFER_BIT);
-  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-  unsigned char rgba[4];
-  GLint viewport[4];
-  glGetIntegerv(GL_VIEWPORT, viewport);
-  const int viewport_height = viewport[3];
-
-  // Limit drawing area to the clicked area around the mouse click coordinates.
-  glScissor(click_x_ - kClickBoxLength / 2,
-            viewport_height - click_y_ - kClickBoxLength / 2,
-            kClickBoxLength,
-            kClickBoxLength);
-
-  // Start rendering the mesh with unique colors per vertex
-  glEnable(GL_SCISSOR_TEST);
-
-  glPointSize(kClickBoxLength);
-
-  glBegin(GL_POINTS);
-  for (const auto& id_vertex : id_to_vertex_) {
-    // Set color based on idx
-    index_to_rgba(id_vertex.first, rgba);
-    const Point& p =
-      editable_mesh_->get_vertex_property<Point>("v:point")[id_vertex.second];
-    glColor4f(rgba[0] / 255.0f, rgba[1] / 255.0f, rgba[2] / 255.0f, 1.0f);
-    glVertex3f(p[0], p[1], p[2]);
-  }
-  glEnd();
-
-  glDisable(GL_SCISSOR_TEST);
-
-  // Get pixel color of mouse click coordinates (1 pixel)
-  unsigned char pixels[4];
-  glReadPixels(click_x_, viewport_height - click_y_, 1, 1, GL_RGBA,
-               GL_UNSIGNED_BYTE, pixels);
-
-  // Convert color to vertex idx
-  const unsigned int vertex_idx = rgba_to_index(pixels);
-
-  // Get vertex by id
-  if (id_to_vertex_.count(vertex_idx) > 0) {
-    return &id_to_vertex_.at(vertex_idx);
-  }
-
-  return nullptr;
-}
-
-
-void ViewerMeshWidget::index_to_rgba(const int index,
-                                     unsigned char rgba[4]) const {
-  const unsigned char* index_ptr = (const unsigned char*) &index;
-
-  for (int i = 0; i < kPixelsBytes; i++) {
-    rgba[i] = index_ptr[i];
-  }
-  qDebug("Index %d to rgba: %d %d %d", index, rgba[0], rgba[1], rgba[2]);
-}
-
-int ViewerMeshWidget::rgba_to_index(const unsigned char rgba[4])
-const {
-  // rebuild index from r, g and b values.
-  // inverse function of index_to_rgb.
-  int index = 0;
-  unsigned char* index_ptr = (unsigned char*) &index;
-
-  for (int i = 0; i < kPixelsBytes; i++) {
-    index_ptr[i] = rgba[i];
-  }
-
-  qDebug("Rgba %d %d %d to index: %d", rgba[0], rgba[1], rgba[2], index);
-
-  return index;
-}
-
-// Draws the edit handle centered at 0,0,0 in the manipulated frame.
-void ViewerMeshWidget::draw_edit_handle() {
-
-  // Vertex normal in world coordinate system
-  glLineWidth(2.0);
-  glBegin(GL_LINES);
-  glColor3f(.9f, .9f, .9f);
-  Point& start = *editing_point_;
-  qglviewer::Vec normal = translation_type_ == VERTEX_NORMAL_PLANE ?
-                          vertex_normal_  : vertex_normal_.orthogonalVec();
-  glVertex3f(start[0] - normal[0], start[1] - normal[1], start[2] - normal[2]);
-  glVertex3f(start[0] + normal[0], start[1] + normal[1], start[2] + normal[2]);
-  glEnd();
-
-  // Line between vertex origin and new position
-  glBegin(GL_LINES);
-  glColor3f(102 / 255.f, 0.f, 0.f);
-  qglviewer::Vec mf_pos = manipulatedFrame()->position();
-  glVertex3f(start[0], start[1], start[2]);
-  glVertex3f(mf_pos[0], mf_pos[1], mf_pos[2]);
-  glEnd();
-
-  // Save the current model view matrix
-  glPushMatrix();
-
-  // Multiply matrix to get in the frame coordinate system.
-  glMultMatrixd(manipulatedFrame()->matrix());
-
-  // Draw the vertex edit handle
-  glDisable(GL_DEPTH_TEST);
-  glPointSize(kEditHandleSize);
-  glBegin(GL_POINTS);
-  glColor3f(1.f, .0f, .0f);
-  glVertex3f(0.f, 0.f, 0.f);
-  glEnd();
-  glEnable(GL_DEPTH_TEST);
-
-  // Restore the original (world) coordinate system
-  glPopMatrix();
-
-  // Draw information about current constraint
-  qglColor(foregroundColor());
-  glDisable(GL_LIGHTING);
-  QString text_type = translation_type_ == VERTEX_NORMAL_PLANE ?
-                      "Plane of vertex normal" : "Orthogonal plane of vertex normal";
-  drawText(10, height() - 10, "Translation type: " + text_type + " (S)");
-}
-
 
 void ViewerMeshWidget::keyPressEvent(QKeyEvent* e) {
-  if (e->key() == Qt::Key_S) {
-    if (translation_type_ == VERTEX_NORMAL_PLANE) {
-      translation_type_ = VERTEX_NORMAL_ORTHOGONAL_PLANE;
-      edit_constraint_.set_plane_orthogonal(true);
-    } else {
-      translation_type_ = VERTEX_NORMAL_PLANE;
-      edit_constraint_.set_plane_orthogonal(false);
-    }
+  if (mesh_edit_handler_.keyPressEvent(e)) {
     updateGL();
   } else {
     ViewerWidget::keyPressEvent(e);
   }
 }
-
-
-void ViewerMeshWidget::handle_click_during_draw() {
-  qDebug() << "Handling last click";
-
-  const Vertex* vertex = get_vertex_at_click();
-
-  if (vertex != nullptr) {
-    editing_point_ =
-      &editable_mesh_->get_vertex_property<Point>("v:point")[*vertex];
-    Point& handle = *editing_point_;
-    qDebug("Found vertex @ click (%d, %d): v%d with coordinates: %f %f %f",
-           click_x_, click_y_, vertex->idx(), handle[0], handle[1], handle[2]);
-
-    setManipulatedFrame(new qglviewer::ManipulatedFrame());
-    // Set to correct position
-    manipulatedFrame()->setPosition(handle[0], handle[1], handle[2]);
-    // Constrain translations etc.
-    auto normal = editable_mesh_->compute_vertex_normal(*vertex);
-    vertex_normal_ = qglviewer::Vec(normal[0], normal[1], normal[2]);
-    edit_constraint_.set_vertex_normal(vertex_normal_);
-    manipulatedFrame()->setConstraint(&edit_constraint_);
-    qDebug() << "Manipulated Frame created";
-
-  } else {
-    qDebug("No vertex found @ click (%d, %d)", click_x_, click_y_);
-  }
-
-  unhandled_click_ = false;
-}
-
-
-
 
 void ViewerMeshWidget::init_gl() {
   qDebug() << "Initializing open gl.";
@@ -283,9 +55,7 @@ void ViewerMeshWidget::init_gl() {
 void ViewerMeshWidget::draw_gl() {
   qDebug() << "Drawing mesh.";
 
-  if (unhandled_click_) {
-    handle_click_during_draw();
-    // Trigger redraw to hide the color picking leftovers..
+  if (mesh_edit_handler_.callback_before_main_draw(this)) {
     updateGL();
     return;
   }
@@ -314,9 +84,7 @@ void ViewerMeshWidget::draw_gl() {
   //-------------------- END SLOW MESH DRAWING
 
   // Draw edit handle
-  if (manipulatedFrame()) {
-    draw_edit_handle();
-  }
+  mesh_edit_handler_.draw_edit_handle(this);
 }
 
 // this is just a temporary prototype.
