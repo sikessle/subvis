@@ -102,14 +102,15 @@ class MeshData : public QObject {
   void triangulate(int idx);
 
  private:
-  ///
-  /// \brief history_ sdf
-  ///
+  // The history stack
   std::vector<std::pair<std::unique_ptr<Surface_mesh>, std::unique_ptr<Surface_mesh>>>
   history_;
+  // Current index in the history stack
   unsigned int history_index_{0};
   const std::string kLoadFileFormats {"*.obj *.off *.stl"};
   const std::string kPersistFileFormats {"*.off"};
+  // Maximum number of entries in history stack, before the oldest ones (except the
+  // first one) will be popped from the stack.
   const unsigned int kHistorySize {15};
 
   void emit_updated_signal();
@@ -117,6 +118,11 @@ class MeshData : public QObject {
     std::pair<std::unique_ptr<Surface_mesh>, std::unique_ptr<Surface_mesh>> mesh);
 
  signals:
+  ///
+  /// \brief Signal is emitted if any changes to the mesh_data has been made or
+  /// a new pair of meshes has been loaded.
+  /// \param meshes The pair of meshes which are the newest meshes.
+  ///
   void updated(
     std::pair<const surface_mesh::Surface_mesh&, const surface_mesh::Surface_mesh&>
     meshes);

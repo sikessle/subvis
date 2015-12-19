@@ -29,7 +29,7 @@ void MeshData::load_and_duplicate(std::unique_ptr<Surface_mesh> mesh, int idx) {
   auto copy = std::unique_ptr<Surface_mesh> {new Surface_mesh(*mesh)};
 
   if (idx == 0) {
-     load(MeshPairUniquePtrs{std::move(mesh), std::move(copy)});
+    load(MeshPairUniquePtrs{std::move(mesh), std::move(copy)});
   } else {
     load(MeshPairUniquePtrs{std::move(copy), std::move(mesh)});
   }
@@ -48,11 +48,11 @@ bool MeshData::load(const std::string& filename) {
   }
 
   qDebug() << "Loading mesh from file:" << QString::fromStdString(filename);
-  // create new mesh
-  auto mesh = std::unique_ptr<Surface_mesh> {new Surface_mesh};
-  bool success = mesh->read(filename);
-  auto copy = std::unique_ptr<Surface_mesh> {new Surface_mesh(*mesh.get())};
-  history_push({std::move(mesh), std::move(copy)});
+  // create new mesh where the file will be loaded into
+  auto mesh_from_file = std::unique_ptr<Surface_mesh> {new Surface_mesh};
+  bool success = mesh_from_file->read(filename);
+  auto copy = std::unique_ptr<Surface_mesh> {new Surface_mesh(*mesh_from_file.get())};
+  history_push({std::move(mesh_from_file), std::move(copy)});
   emit_updated_signal();
 
   return success;
@@ -114,7 +114,8 @@ void MeshData::history_push(MeshPairUniquePtrs meshes) {
   }
   // Case 2: history is full
   else if (history_.size() == kHistorySize) {
-    // Purge the 3rd entry (3rd oldest)
+    // Purge the 3rd entry (3rd oldest) as we want to keep the first entry (empty mesh)
+    // and the second entry (first loaded mesh)
     history_.erase(history_.begin() + 2);
     history_index_--;
   }
@@ -137,7 +138,6 @@ bool MeshData::persist(const std::string& filename, int idx) const {
     qWarning() << "File name empty. Aborting persisting.";
     return false;
   }
-
   qDebug() << "Persisted mesh.";
 
   return get_mesh(idx).write(filename);
