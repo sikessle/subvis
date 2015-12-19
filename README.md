@@ -27,8 +27,11 @@ To edit a mesh point:
 1. Activate edit mode.
 2. Double click on any point.
 3. It got selected if it is red
-4. Move point around with CTRL+Left Click (hold down)
+4. Move point around with CTRL+Left Mouse Button
 5. Double click anywhere else to apply changes to mesh
+
+To switch editing modes press **S**. 
+(Modes: On plane of vertex normal or on plane of orthogonal vertex normal).
 
 # Documentation
 
