@@ -3,7 +3,7 @@
 namespace subvis {
 
 EditConstraint::EditConstraint() {
-  local_constraint_.setTranslationConstraintType(qglviewer::AxisPlaneConstraint::FREE);
+  local_constraint_.setTranslationConstraintType(qglviewer::AxisPlaneConstraint::PLANE);
 }
 
 void EditConstraint::constrainTranslation(qglviewer::Vec& translation,
