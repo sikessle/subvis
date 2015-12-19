@@ -39,7 +39,7 @@ class ViewerMeshWidget : public ViewerWidget {
   bool unhandled_click_ {false};
   surface_mesh::Point* editing_point_ {nullptr};
   EditConstraint edit_constraint_;
-  surface_mesh::Normal vertex_normal_;
+  qglviewer::Vec vertex_normal_;
   EditTranslationType translation_type_ = VERTEX_NORMAL_PLANE;
 
   void draw_edit_handle();

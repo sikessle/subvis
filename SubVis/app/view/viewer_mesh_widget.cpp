@@ -182,13 +182,14 @@ void ViewerMeshWidget::draw_edit_handle() {
   glBegin(GL_LINES);
   glColor3f(.9f, .9f, .9f);
   Point& start = *editing_point_;
-  glVertex3f(start[0] - vertex_normal_[0],
-             start[1] - vertex_normal_[1],
-             start[2] - vertex_normal_[2]);
-  glVertex3f(start[0] + vertex_normal_[0],
-             start[1] + vertex_normal_[1],
-             start[2] + vertex_normal_[2]);
+  qglviewer::Vec normal = translation_type_ == VERTEX_NORMAL_PLANE ?
+                          vertex_normal_  : vertex_normal_.orthogonalVec();
+  glVertex3f(start[0] - normal[0], start[1] - normal[1], start[2] - normal[2]);
+  glVertex3f(start[0] + normal[0], start[1] + normal[1], start[2] + normal[2]);
   glEnd();
+
+  camera()->lookAt(normal);
+
 
   // Line between vertex origin and new position
   glBegin(GL_LINES);
@@ -257,9 +258,9 @@ void ViewerMeshWidget::handle_click_during_draw() {
     // Set to correct position
     manipulatedFrame()->setPosition(handle[0], handle[1], handle[2]);
     // Constrain translations etc.
-    vertex_normal_ = editable_mesh_->compute_vertex_normal(*vertex);
-    edit_constraint_.set_vertex_normal(qglviewer::Vec(vertex_normal_[0],
-                                       vertex_normal_[1], vertex_normal_[2]));
+    auto normal = editable_mesh_->compute_vertex_normal(*vertex);
+    vertex_normal_ = qglviewer::Vec(normal[0], normal[1], normal[2]);
+    edit_constraint_.set_vertex_normal(vertex_normal_);
     manipulatedFrame()->setConstraint(&edit_constraint_);
     qDebug() << "Manipulated Frame created";
 
