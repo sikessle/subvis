@@ -12,14 +12,24 @@
 
 namespace subvis {
 
+///
+/// \brief Wraps the name of a plugin and the plugin itself.
+///
 struct PluginWrapper {
   QString name;
   std::unique_ptr<SubVisPlugin> plugin;
 };
 
+///
+/// \brief Manages the plugins of the application.
+///
 class PluginManager {
  public:
   PluginManager(MeshData& mesh_data);
+  ///
+  /// \brief Registers a new plugin. Ownership is transfered.
+  /// \param plugin The plugin to register
+  ///
   void register_plugin(std::unique_ptr<SubVisPlugin> plugin);
 
   /**
