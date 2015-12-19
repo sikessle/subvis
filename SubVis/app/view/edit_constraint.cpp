@@ -3,16 +3,17 @@
 namespace subvis {
 
 EditConstraint::EditConstraint() {
-  local_constraint_.setTranslationConstraintType(qglviewer::AxisPlaneConstraint::AXIS);
-  // X axis
-  // TODO: Try to use normal of Vertex.
-  local_constraint_.setTranslationConstraintDirection(qglviewer::Vec(1.0, 0.0, 0.0));
-  // SWITCH ON KEY PRESS (x, y and z)
+  local_constraint_.setTranslationConstraintType(qglviewer::AxisPlaneConstraint::FREE);
 }
 
 void EditConstraint::constrainTranslation(qglviewer::Vec& translation,
                                      qglviewer::Frame* const frame) {
   local_constraint_.constrainTranslation(translation, frame);
+}
+
+void EditConstraint::set_vertex_normal(const surface_mesh::Normal &normal) {
+  auto direction = qglviewer::Vec(normal[0], normal[1], normal[2]);
+  local_constraint_.setTranslationConstraintDirection(direction);
 }
 
 } // namespace subvis

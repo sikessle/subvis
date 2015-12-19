@@ -174,18 +174,27 @@ const {
   return index;
 }
 
+// Draws the edit handle centered at 0,0,0 in the manipulated frame.
 void ViewerMeshWidget::draw_edit_handle() {
+
+  // Vertex normal in world coordinate system
+  glLineWidth(2.0);
+  glBegin(GL_LINES);
+  glColor3f(102 / 255.f, 0.f, 0.f);
+  Point& start = *editing_point_;
+  glVertex3f(start[0] - vertex_normal_[0],
+             start[1] - vertex_normal_[1],
+             start[2] - vertex_normal_[2]);
+  glVertex3f(start[0] + vertex_normal_[0],
+             start[1] + vertex_normal_[1],
+             start[2] + vertex_normal_[2]);
+  glEnd();
 
   // Save the current model view matrix
   glPushMatrix();
 
   // Multiply matrix to get in the frame coordinate system.
   glMultMatrixd(manipulatedFrame()->matrix());
-
-  // Grid
-  glColor3f(102 / 255.f, 0.f, 0.f);
-  drawGrid();
-  drawAxis();
 
   // Draw the vertex edit handle
   glDisable(GL_DEPTH_TEST);
@@ -207,15 +216,18 @@ void ViewerMeshWidget::handle_click_during_draw() {
   const Vertex* vertex = get_vertex_at_click();
 
   if (vertex != nullptr) {
-    Point& handle = editable_mesh_->get_vertex_property<Point>("v:point")[*vertex];
+    editing_point_ =
+      &editable_mesh_->get_vertex_property<Point>("v:point")[*vertex];
+    Point& handle = *editing_point_;
     qDebug("Found vertex @ click (%d, %d): v%d with coordinates: %f %f %f",
            click_x_, click_y_, vertex->idx(), handle[0], handle[1], handle[2]);
 
-    editing_point_ = &handle;
     setManipulatedFrame(new qglviewer::ManipulatedFrame());
     // Set to correct position
     manipulatedFrame()->setPosition(handle[0], handle[1], handle[2]);
     // Constrain translations etc.
+    vertex_normal_ = editable_mesh_->compute_vertex_normal(*vertex);
+    edit_constraint_.set_vertex_normal(vertex_normal_);
     manipulatedFrame()->setConstraint(&edit_constraint_);
     qDebug() << "Manipulated Frame created";
 
@@ -255,6 +267,7 @@ void ViewerMeshWidget::draw_gl() {
   // no lighting TODO: shadows etc. would be good..
   glDisable(GL_LIGHTING);
   // WIREFRAME
+  glLineWidth(1.5);
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   // dark blue color
   glColor3f(0, 0.294, 0.419);

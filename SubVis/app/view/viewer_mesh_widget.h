@@ -35,6 +35,7 @@ class ViewerMeshWidget : public ViewerWidget {
   bool unhandled_click_ {false};
   surface_mesh::Point* editing_point_ {nullptr};
   EditConstraint edit_constraint_;
+  surface_mesh::Normal vertex_normal_;
 
 
   void draw_edit_handle();
