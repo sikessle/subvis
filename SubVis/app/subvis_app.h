@@ -11,12 +11,20 @@
 
 namespace subvis {
 
+///
+/// \brief The Subdivision Visualizer
+///
 class SubVisApp : public QApplication {
   Q_OBJECT
 
  public:
   SubVisApp(int& argc, char* argv[]);
+  /// Registers a new plugin. Must be called before calling run()
   void register_plugin(std::unique_ptr<SubVisPlugin> plugin);
+  ///
+  /// \brief Starts this application and runs the main loop.
+  /// @return The exit code
+  ///
   int run();
 
  private:
@@ -29,6 +37,7 @@ class SubVisApp : public QApplication {
   void sleep();
 
  signals:
+  /// Internal use
   void sleep_finished();
 };
 

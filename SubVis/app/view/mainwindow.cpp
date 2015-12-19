@@ -149,8 +149,10 @@ void MainWindow::plugin_tab_changed(int current) {
 void MainWindow::setup_menus() {
   connect(ui_->action_load, &QAction::triggered, this,
           &MainWindow::show_load_dialog);
-  connect(ui_->action_save, &QAction::triggered, this,
-          &MainWindow::show_save_dialog);
+  connect(ui_->action_save_left, &QAction::triggered, this,
+          &MainWindow::show_save_dialog0);
+  connect(ui_->action_save_right, &QAction::triggered, this,
+          &MainWindow::show_save_dialog1);
   connect(ui_->action_snapshot_left, &QAction::triggered, this,
           &MainWindow::save_snapshot0);
   connect(ui_->action_snapshot_right, &QAction::triggered, this,
@@ -238,13 +240,21 @@ void MainWindow::show_load_dialog() {
   }
 }
 
-void MainWindow::show_save_dialog() {
+void MainWindow::show_save_dialog0() {
+  show_save_dialog(0);
+}
+
+void MainWindow::show_save_dialog1() {
+  show_save_dialog(1);
+}
+
+void MainWindow::show_save_dialog(int idx) {
   QString file_filter{QString::fromStdString(mesh_data_.get_persist_file_formats())};
   QString fn{QFileDialog::getSaveFileName(this, kSaveDialogCaption, "", file_filter)};
 
   if (!fn.isNull()) {
     const std::string filename = fn.toStdString();
-    if (!mesh_data_.persist(filename)) {
+    if (!mesh_data_.persist(filename, idx)) {
       QString msg = "Failed to save to file " + fn;
       QMessageBox::warning(this, "Error", msg);
       qWarning() << qPrintable(msg);

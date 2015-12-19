@@ -25,7 +25,9 @@ class MainWindow : public QMainWindow {
   ~MainWindow();
 
   void show_load_dialog();
-  void show_save_dialog();
+  void show_save_dialog(int idx);
+  void show_save_dialog0();
+  void show_save_dialog1();
   void save_snapshot0();
   void save_snapshot1();
   void triangulate_mesh0();

@@ -132,7 +132,7 @@ void MeshData::emit_updated_signal() {
   emit updated({get_mesh(0), get_mesh(1)});
 }
 
-bool MeshData::persist(const std::string& filename) const {
+bool MeshData::persist(const std::string& filename, int idx) const {
   if (filename.empty()) {
     qWarning() << "File name empty. Aborting persisting.";
     return false;
@@ -140,7 +140,7 @@ bool MeshData::persist(const std::string& filename) const {
 
   qDebug() << "Persisted mesh.";
 
-  return get_mesh(0).write(filename);
+  return get_mesh(idx).write(filename);
 }
 
 const std::string& MeshData::get_load_file_formats() const {

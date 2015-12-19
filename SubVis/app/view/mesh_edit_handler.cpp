@@ -219,15 +219,7 @@ void MeshEditHandler::draw_edit_handle(QGLViewer* viewer) {
   }
   draw_vertex_normal();
   draw_origin_line();
-
-  // Save the current model view matrix
-  glPushMatrix();
-  // Multiply matrix to get in the frame coordinate system.
-  glMultMatrixd(manipulated_frame_.matrix());
   draw_edit_vertex();
-  // Restore the original world coordinate system
-  glPopMatrix();
-
   draw_constraint_text(viewer);
 }
 
@@ -256,6 +248,11 @@ void MeshEditHandler::draw_origin_line() {
 }
 
 void MeshEditHandler::draw_edit_vertex() {
+  // Save the current model view matrix
+  glPushMatrix();
+  // Multiply matrix to get in the frame coordinate system.
+  glMultMatrixd(manipulated_frame_.matrix());
+
   // Draw the vertex edit handle
   glDisable(GL_DEPTH_TEST);
   glPointSize(kEditHandleSize);
@@ -264,6 +261,9 @@ void MeshEditHandler::draw_edit_vertex() {
   glVertex3f(0.f, 0.f, 0.f);
   glEnd();
   glEnable(GL_DEPTH_TEST);
+
+  // Restore the original world coordinate system
+  glPopMatrix();
 }
 
 void MeshEditHandler::draw_constraint_text(QGLViewer* viewer) {
