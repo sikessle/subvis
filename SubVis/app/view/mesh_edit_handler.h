@@ -13,8 +13,6 @@
 
 namespace subvis {
 
-enum EditTranslationType {VERTEX_NORMAL_PLANE, VERTEX_NORMAL_ORTHOGONAL_PLANE};
-
 class MeshEditHandler {
  public:
   MeshEditHandler(int mesh_id);
@@ -39,22 +37,25 @@ class MeshEditHandler {
   int click_x_ {0};
   int click_y_ {0};
   bool unhandled_click_ {false};
-  surface_mesh::Point* editing_point_ {nullptr};
-  EditConstraint edit_constraint_;
-  qglviewer::Vec vertex_normal_;
-  EditTranslationType translation_type_ = VERTEX_NORMAL_PLANE;
+  surface_mesh::Point* edited_point_ {nullptr};
+  EditConstraint constraint_;
+  qglviewer::Vec edited_point_normal_;
   bool enabled_ {false};
   qglviewer::ManipulatedFrame manipulated_frame_;
   bool edit_in_progress_ {false};
+  bool use_orthogonal_normal_ {false};
 
   void extract_vertices();
-  void callback_handle_previous_click();
-  bool is_edit_event(QMouseEvent* const event) const;
+  bool doubleclick_is_edit_event(QMouseEvent* const event) const;
   const surface_mesh::Surface_mesh::Vertex* get_vertex_at_click() const;
   /// RGBA color values will be stored in rgba array
   void index_to_rgba(const int index, unsigned char rgba[4]) const;
   /// Allows rgba values
   int rgba_to_index(const unsigned char rgba[4]) const;
+  void draw_vertex_normal();
+  void draw_origin_line();
+  void draw_edit_vertex();
+  void draw_constraint_text(QGLViewer* viewer);
 };
 
 } // namespace subvis

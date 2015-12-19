@@ -11,6 +11,7 @@ using Point = surface_mesh::Point;
 using Vertex = surface_mesh::Surface_mesh::Vertex;
 
 MeshEditHandler::MeshEditHandler(int mesh_id) : mesh_id_(mesh_id) {
+  manipulated_frame_.setConstraint(&constraint_);
 }
 
 bool MeshEditHandler::callback_handle_previous_click(QGLViewer* viewer) {
@@ -26,21 +27,19 @@ bool MeshEditHandler::callback_handle_previous_click(QGLViewer* viewer) {
     qDebug("No vertex found @ click (%d, %d)", click_x_, click_y_);
     return false;
   } else {
-    editing_point_ =
+    edit_in_progress_ = true;
+    edited_point_ =
       &editable_mesh_->get_vertex_property<Point>("v:point")[*vertex];
-    Point& handle = *editing_point_;
+    Point& handle = *edited_point_;
     qDebug("Found vertex @ click (%d, %d): v%d with coordinates: %f %f %f",
            click_x_, click_y_, vertex->idx(), handle[0], handle[1], handle[2]);
-
-    edit_in_progress_ = true;
     viewer->setManipulatedFrame(&manipulated_frame_);
     // Set to correct position
     manipulated_frame_.setPosition(handle[0], handle[1], handle[2]);
     // Constrain translations etc.
     auto normal = editable_mesh_->compute_vertex_normal(*vertex);
-    vertex_normal_ = qglviewer::Vec(normal[0], normal[1], normal[2]);
-    edit_constraint_.set_vertex_normal(vertex_normal_);
-    manipulated_frame_.setConstraint(&edit_constraint_);
+    edited_point_normal_ = qglviewer::Vec(normal[0], normal[1], normal[2]);
+    constraint_.set_vertex_normal(edited_point_normal_);
     qDebug() << "Manipulated Frame created";
 
     return true;
@@ -49,24 +48,21 @@ bool MeshEditHandler::callback_handle_previous_click(QGLViewer* viewer) {
 
 bool MeshEditHandler::keyPressEvent(QKeyEvent* e) {
   if (e->key() != Qt::Key_S) {
+    qDebug() << "Pressed key is not handled by this class";
     return false;
   }
-
-  if (translation_type_ == VERTEX_NORMAL_PLANE) {
-    translation_type_ = VERTEX_NORMAL_ORTHOGONAL_PLANE;
-    edit_constraint_.set_plane_orthogonal(true);
-  } else {
-    translation_type_ = VERTEX_NORMAL_PLANE;
-    edit_constraint_.set_plane_orthogonal(false);
-  }
-
+  use_orthogonal_normal_ = !use_orthogonal_normal_;
+  constraint_.set_plane_orthogonal(use_orthogonal_normal_);
+  qDebug() <<
+           "Constraint type switched. Using plane orthogonal to normal of vertex: "
+           << use_orthogonal_normal_;
   return true;
 }
 
 bool MeshEditHandler::mouseDoubleClickEvent(QMouseEvent* const event,
     MeshData& mesh_data, QGLViewer* viewer) {
   // Delegate roations etc. to default behaviour, if we are not in edit mode.
-  if (!is_edit_event(event)) {
+  if (!doubleclick_is_edit_event(event)) {
     qDebug() << "Using default mouse behavior.";
     return false;
   }
@@ -79,7 +75,7 @@ bool MeshEditHandler::mouseDoubleClickEvent(QMouseEvent* const event,
     manipulated_frame_.getPosition(x, y, z);
 
     if (!isnan(x) && !isnan(y) && !isnan(z)) {
-      Point& p = *editing_point_;
+      Point& p = *edited_point_;
       p[0] = x;
       p[1] = y;
       p[2] = z;
@@ -108,24 +104,20 @@ void MeshEditHandler::set_mouse_binding(QGLViewer* viewer) {
 
 void MeshEditHandler::set_enabled(bool enabled) {
   enabled_ = enabled;
-  if (enabled_) {
-    extract_vertices();
-  }
+  extract_vertices();
 }
 
 void MeshEditHandler::mesh_updated(const surface_mesh::Surface_mesh& mesh) {
   mesh_ = &mesh;
-  if (enabled_) {
-    extract_vertices();
-  }
+  extract_vertices();
 }
 
 void MeshEditHandler::extract_vertices() {
-  id_to_vertex_.clear();
-
-  if (!mesh_) {
+  if (!enabled_ || !mesh_) {
     return;
   }
+
+  id_to_vertex_.clear();
 
   qDebug() << "Copying mesh to allow for non-destructive editing";
   editable_mesh_ = std::unique_ptr<surface_mesh::Surface_mesh>
@@ -138,10 +130,9 @@ void MeshEditHandler::extract_vertices() {
   }
 }
 
-bool MeshEditHandler::is_edit_event(QMouseEvent* const event) const {
-  return enabled_
-         && event->button() == Qt::LeftButton
-         && mesh_;
+bool MeshEditHandler::doubleclick_is_edit_event(QMouseEvent* const event)
+const {
+  return enabled_ && event->button() == Qt::LeftButton && mesh_;
 }
 
 const surface_mesh::Surface_mesh::Vertex*
@@ -223,36 +214,48 @@ int MeshEditHandler::rgba_to_index(const unsigned char rgba[]) const {
 
 // Draws the edit handle centered at 0,0,0 in the manipulated frame.
 void MeshEditHandler::draw_edit_handle(QGLViewer* viewer) {
-
   if (!edit_in_progress_) {
     return;
   }
+  draw_vertex_normal();
+  draw_origin_line();
 
-  // Vertex normal in world coordinate system
+  // Save the current model view matrix
+  glPushMatrix();
+  // Multiply matrix to get in the frame coordinate system.
+  glMultMatrixd(manipulated_frame_.matrix());
+  draw_edit_vertex();
+  // Restore the original world coordinate system
+  glPopMatrix();
+
+  draw_constraint_text(viewer);
+}
+
+void MeshEditHandler::draw_vertex_normal() {
   glLineWidth(2.0);
   glBegin(GL_LINES);
   glColor3f(.9f, .9f, .9f);
-  Point& start = *editing_point_;
-  qglviewer::Vec normal = translation_type_ == VERTEX_NORMAL_PLANE ?
-                          vertex_normal_  : vertex_normal_.orthogonalVec();
+  Point& start = *edited_point_;
+  qglviewer::Vec normal = use_orthogonal_normal_ ?
+                          edited_point_normal_.orthogonalVec()
+                          : edited_point_normal_;
   glVertex3f(start[0] - normal[0], start[1] - normal[1], start[2] - normal[2]);
   glVertex3f(start[0] + normal[0], start[1] + normal[1], start[2] + normal[2]);
   glEnd();
+}
 
+void MeshEditHandler::draw_origin_line() {
   // Line between vertex origin and new position
   glBegin(GL_LINES);
   glColor3f(102 / 255.f, 0.f, 0.f);
   qglviewer::Vec mf_pos = manipulated_frame_.position();
+  Point& start = *edited_point_;
   glVertex3f(start[0], start[1], start[2]);
   glVertex3f(mf_pos[0], mf_pos[1], mf_pos[2]);
   glEnd();
+}
 
-  // Save the current model view matrix
-  glPushMatrix();
-
-  // Multiply matrix to get in the frame coordinate system.
-  glMultMatrixd(manipulated_frame_.matrix());
-
+void MeshEditHandler::draw_edit_vertex() {
   // Draw the vertex edit handle
   glDisable(GL_DEPTH_TEST);
   glPointSize(kEditHandleSize);
@@ -261,15 +264,15 @@ void MeshEditHandler::draw_edit_handle(QGLViewer* viewer) {
   glVertex3f(0.f, 0.f, 0.f);
   glEnd();
   glEnable(GL_DEPTH_TEST);
+}
 
-  // Restore the original (world) coordinate system
-  glPopMatrix();
-
+void MeshEditHandler::draw_constraint_text(QGLViewer* viewer) {
   // Draw information about current constraint
   viewer->qglColor(viewer->foregroundColor());
   glDisable(GL_LIGHTING);
-  QString text_type = translation_type_ == VERTEX_NORMAL_PLANE ?
-                      "Plane of vertex normal" : "Orthogonal plane of vertex normal";
+  QString text_type = use_orthogonal_normal_ ?
+                      "Orthogonal plane of vertex normal"
+                      : "Plane of vertex normal";
   viewer->drawText(10, viewer->height() - 10,
                    "Translation type: " + text_type + " (S)");
 }

@@ -35,6 +35,7 @@ void ViewerMeshWidget::mouseDoubleClickEvent(QMouseEvent* const event) {
 
 void ViewerMeshWidget::keyPressEvent(QKeyEvent* e) {
   if (mesh_edit_handler_.keyPressEvent(e)) {
+    // force redraw
     updateGL();
   } else {
     ViewerWidget::keyPressEvent(e);
