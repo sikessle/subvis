@@ -5,6 +5,9 @@
 
 namespace subdivision {
 
+///
+/// \brief A dummy algorithm which does nothing.
+///
 class SdNone : public SdAlgorithm {
  public:
   using Surface_mesh = surface_mesh::Surface_mesh;

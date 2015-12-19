@@ -95,6 +95,7 @@ void GuiControls::collect_selected_algorithms() {
 
 void GuiControls::dropdown_changed() {
   collect_selected_algorithms();
+  // Pass the meshes to the new selected renderers
   current_algo_render_pair(0).renderer->mesh_updated(mesh_data_->get_mesh(0));
   current_algo_render_pair(1).renderer->mesh_updated(mesh_data_->get_mesh(1));
   emit needs_redraw();
@@ -142,6 +143,8 @@ void GuiControls::subdivide_clicked(bool) {
   const int steps = steps_->value();
   collect_selected_algorithms();
 
+  // Define callbacks which write the result to the appropriate mesh id
+
   auto callback1 = [this] (std::unique_ptr<Surface_mesh> mesh) {
     subdivide_finished(std::move(mesh), result0_);
   };
@@ -162,6 +165,9 @@ void GuiControls::subdivide_finished(std::unique_ptr<Surface_mesh> mesh,
                                      std::unique_ptr<Surface_mesh>& result_target) {
   result_target = std::move(mesh);
 
+  // If one mesh is not yet finished wait.
+  // There is NO race condition here, as we are using signals which are guaranteed
+  // to be run on main thread and therefore in a serial execution order.
   if (result0_ && result1_) {
     mesh_data_->load(MeshPairUniquePtrs{std::move(result0_), std::move(result1_)});
     set_progress_controls_visible(false);

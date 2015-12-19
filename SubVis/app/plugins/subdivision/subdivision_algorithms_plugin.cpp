@@ -21,8 +21,9 @@ SubdivisionAlgorithmsPlugin::SubdivisionAlgorithmsPlugin() {
           &SubdivisionAlgorithmsPlugin::request_redraw);
 
   // Add here all the algorithms and their special renderer
-  // Add them twice for each mesh
+  // Add them twice (for each mesh id)
 
+  // Associate a dummy algorithm and renderer for easier handling.
   init_algorithm(0, "-- None --", new SdNone, new GLNoneRenderer);
   init_algorithm(1, "-- None --", new SdNone, new GLNoneRenderer);
 

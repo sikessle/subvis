@@ -19,6 +19,9 @@
 
 namespace subdivision {
 
+///
+/// \brief Abstract base class for all subdivision algorithms.
+///
 class SdAlgorithm : public QObject {
   Q_OBJECT
  public:
@@ -29,21 +32,21 @@ class SdAlgorithm : public QObject {
   virtual ~SdAlgorithm();
 
   /**
-   * @brief Subdivides the given mesh object in n steps.
-   * @param callback The function which will be called when the computation is done.
+   * \brief Subdivides the given mesh object in n steps.
+   * \param callback The function which will be called when the computation is done.
    * This function will be called in the single GUI thread, so it has not to be thread safe.
-   * @param steps The number of subdivision steps.
+   * \param steps The number of subdivision steps.
    */
   virtual void subdivide_threaded(const Surface_mesh& mesh,
-                          std::function<void(std::unique_ptr<Surface_mesh>)> callback,
-                          const int steps = 1);
+                                  std::function<void(std::unique_ptr<Surface_mesh>)> callback,
+                                  const int steps = 1);
 
   /// Stops after the current subdivision step and executes the callback.
   virtual void stop_subdivide_threaded();
 
   /**
-   * @brief Returns result mesh for testing.
-   * @return A view on the mesh, but ownership stays in this class.
+   * \brief Returns result mesh for testing.
+   * \return A view on the mesh, but ownership stays in this class.
    */
   virtual const Surface_mesh& get_result_mesh() const;
 

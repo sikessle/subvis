@@ -5,6 +5,9 @@
 
 namespace subdivision {
 
+  ///
+  /// \brief A dummy renderer which does nothing.
+  ///
 class GLNoneRenderer : public GLRenderer {
  public:
   void render_mesh_opengl() override {}

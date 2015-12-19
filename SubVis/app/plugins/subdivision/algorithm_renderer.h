@@ -6,9 +6,17 @@
 
 namespace subdivision {
 
+///
+/// \brief A struct to hold an algorithm and its associated renderer
+///
 struct AlgorithmRenderer {
+  ///
+  /// \brief The algorithm
+  ///
   std::unique_ptr<SdAlgorithm> algorithm;
-  /// shared_ptr to allow multiple algorithms to use the same renderer
+  ///
+  /// \brief shared_ptr to allow multiple algorithms to use the same renderer
+  ///
   std::shared_ptr<GLRenderer> renderer;
 };
 

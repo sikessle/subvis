@@ -13,6 +13,9 @@
 
 namespace subdivision {
 
+///
+/// \brief Controls all GUI in this plugin
+///
 class GuiControls : public QObject {
   Q_OBJECT
 
@@ -20,6 +23,11 @@ class GuiControls : public QObject {
   GuiControls();
 
   void set_model(subvis::MeshData& mesh_data);
+  ///
+  /// \brief Creates the GUI
+  /// \param parent The parent to attach the GUI
+  /// \param algorithms The algorithms which will be availabe in dropdowns.
+  ///
   void create(QWidget* parent,
               std::map<std::pair<int, const QString>, AlgorithmRenderer>& algorithms);
   void mesh_updated(const surface_mesh::Surface_mesh& mesh, int mesh_id);
@@ -32,7 +40,9 @@ class GuiControls : public QObject {
   SdAlgorithm* active_algo0_{nullptr};
   SdAlgorithm* active_algo1_{nullptr};
   std::map<std::pair<int, const QString>, AlgorithmRenderer>* algorithms_{nullptr};
+  // Result of algorithm on left side
   std::unique_ptr<surface_mesh::Surface_mesh> result0_{nullptr};
+  // Result of algorithm on right side
   std::unique_ptr<surface_mesh::Surface_mesh> result1_{nullptr};
   // memory managed by Qt's parent-relationship
   QPushButton* subdivide_{nullptr};
@@ -61,6 +71,7 @@ class GuiControls : public QObject {
       QStandardItemModel* model,
       int first_enabled_item);
   void set_progress_controls_visible(bool visible);
+  // Callback which is called if the subdivision is finished
   void subdivide_finished(std::unique_ptr<surface_mesh::Surface_mesh> mesh,
                           std::unique_ptr<surface_mesh::Surface_mesh>& result_target);
 

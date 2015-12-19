@@ -10,6 +10,10 @@
 
 namespace subdivision {
 
+///
+/// \brief A plugin which displays various subdivision plugins and rendering of their
+/// limit surfaces.
+///
 class SubdivisionAlgorithmsPlugin : public subvis::SubVisPlugin {
   Q_OBJECT
 
@@ -24,13 +28,16 @@ class SubdivisionAlgorithmsPlugin : public subvis::SubVisPlugin {
   void init_opengl(int mesh_id) override;
   void draw_opengl(int mesh_id) override;
   void create_gui(QWidget* parent) override;
+  ///
+  /// \brief Triggers the signal needs_redraw()
+  ///
   void request_redraw();
 
  private:
   /// (mesh_id, name)->(algorithm, renderer)
   std::map<std::pair<int, const QString>, AlgorithmRenderer> algorithms_;
   GuiControls gui_;
-
+  // Initializes the algorithm and adds them to the algorithms_ map
   void init_algorithm(int mesh_id, const QString name, SdAlgorithm* algorithm,
                       GLRenderer* renderer);
 };
