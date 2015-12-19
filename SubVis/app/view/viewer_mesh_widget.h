@@ -9,11 +9,23 @@
 
 namespace subvis {
 
+///
+/// \brief Displays a single mesh and allows for editing it.
+///
 class ViewerMeshWidget : public ViewerWidget {
   Q_OBJECT
 
  public:
+  ///
+  /// \brief Constructor.
+  /// \param parent
+  /// \param mesh_id The mesh idx which this viewer should use from the mesh data object.
+  ///
   ViewerMeshWidget(QWidget* parent = 0, int mesh_id = 0);
+  ///
+  /// \brief Enable or disable edit mode.
+  /// \param edit Edit mode
+  ///
   void set_edit(bool edit);
 
  protected:

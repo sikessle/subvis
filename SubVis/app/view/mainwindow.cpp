@@ -140,8 +140,10 @@ void MainWindow::plugin_tab_changed(int current) {
   for (int i = 0; i < current; i++) {
     it++;
   }
+  // Set the plugins on the viewers.
   viewer_plugin0_->set_drawing_plugin(it->second.plugin.get());
   viewer_plugin1_->set_drawing_plugin(it->second.plugin.get());
+  // Update the tab text for the plugin tab
   ui_->tabs_viewer->setTabText(1,
                                it->second.name + ": " + it->second.plugin->viewer_tab_text());
 }
@@ -197,11 +199,15 @@ void MainWindow::toggle_sync_views(bool sync) {
 
 void MainWindow::toggle_edit(bool edit) {
   if (edit) {
+    // Disable the plugin viewer tab
     ui_->tabs_viewer->setCurrentIndex(0);
     ui_->tabs_viewer->setTabEnabled(1, false);
   } else {
+    // Enable the plugin viewer tab
     ui_->tabs_viewer->setTabEnabled(1, true);
   }
+  // Hide or unhide some controls if we are in edit mode to have more space and
+  // let the user focus on the mesh edits.
   ui_->tabs_plugins->setHidden(edit);
   ui_->action_sync_views->setChecked(!edit);
   ui_->action_sync_views->setEnabled(!edit);
@@ -263,6 +269,9 @@ void MainWindow::show_save_dialog(int idx) {
 }
 
 MainWindow::~MainWindow() {
+  // It is important to unsync the views so they are not sharing the same camera
+  // object. Otherwise a segfault will occur, as they try to free the same object
+  // twice.
   toggle_sync_views(false);
   delete ui_;
 }

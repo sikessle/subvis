@@ -27,12 +27,14 @@ bool MeshEditHandler::callback_handle_previous_click(QGLViewer* viewer) {
     qDebug("No vertex found @ click (%d, %d)", click_x_, click_y_);
     return false;
   } else {
+    // A vertex was found. So start an edit operation.
     edit_in_progress_ = true;
     edited_point_ =
       &editable_mesh_->get_vertex_property<Point>("v:point")[*vertex];
     Point& handle = *edited_point_;
     qDebug("Found vertex @ click (%d, %d): v%d with coordinates: %f %f %f",
            click_x_, click_y_, vertex->idx(), handle[0], handle[1], handle[2]);
+    // Set the frame which is used to move the vertex
     viewer->setManipulatedFrame(&manipulated_frame_);
     // Set to correct position
     manipulated_frame_.setPosition(handle[0], handle[1], handle[2]);
@@ -40,17 +42,18 @@ bool MeshEditHandler::callback_handle_previous_click(QGLViewer* viewer) {
     auto normal = editable_mesh_->compute_vertex_normal(*vertex);
     edited_point_normal_ = qglviewer::Vec(normal[0], normal[1], normal[2]);
     constraint_.set_vertex_normal(edited_point_normal_);
-    qDebug() << "Manipulated Frame created";
+    qDebug() << "Manipulated Frame set";
 
     return true;
   }
 }
 
 bool MeshEditHandler::keyPressEvent(QKeyEvent* e) {
-  if (e->key() != Qt::Key_S) {
+  if (e->key() != Qt::Key_S || !enabled_) {
     qDebug() << "Pressed key is not handled by this class";
     return false;
   }
+  // Rotate through the two constraint modes
   use_orthogonal_normal_ = !use_orthogonal_normal_;
   constraint_.set_plane_orthogonal(use_orthogonal_normal_);
   qDebug() <<
@@ -83,6 +86,7 @@ bool MeshEditHandler::mouseDoubleClickEvent(QMouseEvent* const event,
       qDebug() << "Saving modified mesh";
 
       mesh_data.load_and_duplicate(std::move(editable_mesh_), mesh_id_);
+      // Remove frame as the edit operation is completed.
       viewer->setManipulatedFrame(nullptr);
       edit_in_progress_ = false;
     }
@@ -125,7 +129,7 @@ void MeshEditHandler::extract_vertices() {
 
   qDebug() << "Extracting vertices and mapping to ids";
 
-  for (Vertex vertex : editable_mesh_->vertices()) {
+  for (const Vertex vertex : editable_mesh_->vertices()) {
     id_to_vertex_.insert(std::pair<int, Vertex>(vertex.idx(), vertex));
   }
 }
@@ -137,7 +141,8 @@ const {
 
 const surface_mesh::Surface_mesh::Vertex*
 MeshEditHandler::get_vertex_at_click() const {
-
+  // Use a white background to avoid generating valid ids of 0 by clicking
+  // on the background
   glClearColor(1.f, 1.f, 1.f, 1.f);
   glClear(GL_COLOR_BUFFER_BIT);
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);

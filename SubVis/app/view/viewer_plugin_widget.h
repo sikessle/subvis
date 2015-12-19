@@ -6,12 +6,23 @@
 
 namespace subvis {
 
+///
+/// \brief A viewer which delegates most operations to the active plugin.
+///
 class ViewerPluginWidget : public ViewerWidget {
   Q_OBJECT
 
  public:
+  ///
+  /// \brief Constructor.
+  /// \param parent
+  /// \param mesh_id The mesh idx which this viewer should use from the mesh data object.
+  ///
   ViewerPluginWidget(QWidget* parent = 0, int mesh_id = 0);
-
+  ///
+  /// \brief Sets the active plugin which will be used to draw.
+  /// \param plugin The plugin to use. If nullptr is given, no draw operations will happen.
+  ///
   void set_drawing_plugin(SubVisPlugin* plugin);
 
  protected:

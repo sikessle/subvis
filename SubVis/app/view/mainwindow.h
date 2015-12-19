@@ -16,6 +16,9 @@ namespace Ui {
 class MainWindow;
 }
 
+///
+/// \brief The main window which sets up the UI and connects the signals and slots.
+///
 class MainWindow : public QMainWindow {
   Q_OBJECT
 

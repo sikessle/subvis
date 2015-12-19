@@ -11,7 +11,7 @@ using Point = surface_mesh::Point;
 ViewerMeshWidget::ViewerMeshWidget(QWidget* parent,
                                    int mesh_id) :
   ViewerWidget{parent, mesh_id} {
-
+  // Initialize mouse bindings for the edit handling
   mesh_edit_handler_.set_mouse_binding(this);
 }
 
@@ -23,21 +23,22 @@ void ViewerMeshWidget::set_edit(bool edit) {
 void ViewerMeshWidget::mesh_updated(const surface_mesh::Surface_mesh& mesh) {
   mesh_ = &mesh;
   mesh_edit_handler_.mesh_updated(mesh);
-  // force redraw
-  updateGL();
 }
 
 void ViewerMeshWidget::mouseDoubleClickEvent(QMouseEvent* const event) {
+  // Event was not handled by the edit handler.
   if (!mesh_edit_handler_.mouseDoubleClickEvent(event, *mesh_data_, this)) {;
     ViewerWidget::mouseDoubleClickEvent(event);
   }
 }
 
 void ViewerMeshWidget::keyPressEvent(QKeyEvent* e) {
+  // Edit handler changed and display might need to update
   if (mesh_edit_handler_.keyPressEvent(e)) {
-    // force redraw
+    // Trigger redraw.
     updateGL();
   } else {
+    // Propagate to super class.
     ViewerWidget::keyPressEvent(e);
   }
 }
@@ -54,6 +55,8 @@ void ViewerMeshWidget::init_gl() {
 void ViewerMeshWidget::draw_gl() {
   qDebug() << "Drawing mesh.";
 
+  // Edit handler had an unhandled click, redraw to clear any leftovers
+  // from the color picking algorithm.
   if (mesh_edit_handler_.callback_handle_previous_click(this)) {
     updateGL();
     return;
@@ -89,9 +92,6 @@ void ViewerMeshWidget::draw_gl() {
 // this is just a temporary prototype.
 // This implementation is EXTREMLY SLOW!
 void ViewerMeshWidget::draw_mesh() {
-  using Point = surface_mesh::Point;
-
-  // data structure
   if (!mesh_) {
     return;
   }

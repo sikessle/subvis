@@ -11,6 +11,7 @@ ViewerWidget::ViewerWidget(QWidget* parent, int mesh_id)
   : QGLViewer{parent},
     mesh_id_{mesh_id} {
 
+  // Disable double click to center scene.
   setMouseBinding(Qt::KeyboardModifier::NoModifier, Qt::MouseButton::LeftButton,
                   ClickAction::NO_CLICK_ACTION, true);
 }
@@ -41,7 +42,8 @@ void ViewerWidget::mesh_updated_self(MeshPairRef meshes) {
   } else {
     mesh_updated(meshes.second);
   }
-
+  // Trigger redraw.
+  updateGL();
 }
 
 } // namespace subvis
