@@ -188,9 +188,6 @@ void ViewerMeshWidget::draw_edit_handle() {
   glVertex3f(start[0] + normal[0], start[1] + normal[1], start[2] + normal[2]);
   glEnd();
 
-  camera()->lookAt(normal);
-
-
   // Line between vertex origin and new position
   glBegin(GL_LINES);
   glColor3f(102 / 255.f, 0.f, 0.f);
