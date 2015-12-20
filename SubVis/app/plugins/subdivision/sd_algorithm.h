@@ -1,13 +1,3 @@
-/**
- * @class SdAlgorithm "plugins/subdivision/sd_algorithm.h"
- *
- * @brief Base class for all subdivision algorithms.
- *
- * This interface shoulb be implemented by every subdivision class.
- * It provides the basic interface that the plugin is using
- * for subdivision.
- */
-
 #ifndef SUBVIS_PLUGINS_SUBDIVISION_SD_ALGORITHM_H
 #define SUBVIS_PLUGINS_SUBDIVISION_SD_ALGORITHM_H
 

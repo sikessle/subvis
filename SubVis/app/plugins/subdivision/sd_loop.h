@@ -1,6 +1,11 @@
+#ifndef SUBVIS_PLUGINS_SUBDIVISION_SD_LOOP_H
+#define SUBVIS_PLUGINS_SUBDIVISION_SD_LOOP_H
+
+#include "plugins/subdivision/sd_triangle.h"
+
+namespace subdivision {
+
 /**
- * @class SdLoop Loop subdivision "plugins/subdivision/sd_loop.h"
- *
  * @brief Implementation of the Loop subdivision algorithm.
  *
  * The algorithm was devised by Charles Loop.
@@ -10,7 +15,7 @@
  * The control points are approximated.
  *
  * The subdivision scheme:
- *  1. Compute edge points for each edge (these edge points are also called odd vertices).
+ *  1. Compute edge points for each edge (these edge points are also called odd vertices).<pre>
  *           1/8
  *          /  \
  *         /    \
@@ -23,48 +28,40 @@
  *         \    /
  *          \  /
  *           \/
- *           1/8
- *     Boundary case: 1/2----o----1/2
- *  2. Update all vertices of the input mesh (these updated vertex points are also called even vertices)
+ *           1/8</pre>
+ *     <pre>Boundary case: 1/2----o----1/2</pre>
+ *  2. Update all vertices of the input mesh (these updated vertex points are also called even vertices)<pre>
  *      b----------b
  *       \        / \
  *        \      /   \
  *         \    /     \
  *          \  /       \
  *           \/         \
- *           e-----------b    e: /f$even vertex = vertex * (1 - n * beta) + (sum of surrounding vertices) * beta/f$
+ *           e-----------b    e: \f$even vertex = vertex * (1 - n * beta) + (sum\_of\_surrounding\_vertices) * beta\f$
  *          / \          /
  *         /   \        /     n - valence
  *        /     \      /      beta (as proposed by Warren): for n > 3, beta = 3/(8n) and for n = 3, beta = 3/16
- *       /       \    /       beta (original choice of Loop): /f$1/n(5/8-(3/8+1/4cos(2pi/n))^2)/f$
+ *       /       \    /       beta (original choice of Loop): \f$1/n(5/8-(3/8+1/4cos(2\pi/n))^2)\f$
  *      /         \  /
  *                 \/
- *      ------------b
- *      Boundary case: 1/8----e: 3/4----1/8
- *   3. Replace each triangle face by 4 new triangle faces. (e: even vertex, o: odd vertex)
+ *      ------------b</pre>
+ *     <pre>Boundary case: 1/8----e: 3/4----1/8</pre>
+ *  3. Replace each triangle face by 4 new triangle faces. <pre>(e: even vertex, o: odd vertex)
  *      e----o-----e      e----o-----e
  *       \        /        \   /\   /
  *        \      /          \ /  \ /
  *         o    o  -->       o----o
  *          \  /              \  /
  *           \/                \/
- *           e                 e
+ *           e                 e</pre>
  *
  * Sources that helped to implement the algorithm.
- * <a href="https://graphics.stanford.edu/~mdfisher/subdivision.html">Matt's Webcorner</a>
- * <a href="http://www.cs.cmu.edu/afs/cs/academic/class/15462-s14/www/lec_slides/Subdivision.pdf">Subdivision</a>
+ * - <a href="https://graphics.stanford.edu/~mdfisher/subdivision.html">Matt's Webcorner</a>
+ * - <a href="http://www.cs.cmu.edu/afs/cs/academic/class/15462-s14/www/lec_slides/Subdivision.pdf">Subdivision</a>
  *
  * @author Felix Born
  *
  */
-
-#ifndef SUBVIS_PLUGINS_SUBDIVISION_SD_LOOP_H
-#define SUBVIS_PLUGINS_SUBDIVISION_SD_LOOP_H
-
-#include "plugins/subdivision/sd_triangle.h"
-
-namespace subdivision {
-
 class SdLoop : public SdTriangle {
  protected:
   void subdivide_input_mesh_write_output_mesh() override;

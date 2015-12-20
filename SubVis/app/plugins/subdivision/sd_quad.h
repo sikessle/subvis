@@ -1,6 +1,11 @@
+#ifndef SUBVIS_PLUGINS_SUBDIVISION_SD_QUAD_H
+#define SUBVIS_PLUGINS_SUBDIVISION_SD_QUAD_H
+
+#include "plugins/subdivision/sd_algorithm.h"
+
+namespace subdivision {
+
 /**
- * @class SdQuad "plugins/subdivision/sd_quad.h"
- *
  * @brief Base class for all quad subdivision algorithms.
  *
  * This class bunches methods that are used by subdivision algorithms that operate
@@ -10,15 +15,6 @@
  * @author Felix Born
  *
  */
-
-#ifndef SUBVIS_PLUGINS_SUBDIVISION_SD_QUAD_H
-#define SUBVIS_PLUGINS_SUBDIVISION_SD_QUAD_H
-
-#include "plugins/subdivision/sd_algorithm.h"
-
-namespace subdivision {
-
-
 class SdQuad : public SdAlgorithm {
  public:
   bool is_subdividable(const Surface_mesh& mesh) const override;

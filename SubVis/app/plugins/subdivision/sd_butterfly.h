@@ -1,6 +1,11 @@
+#ifndef SUBVIS_PLUGINS_SUBDIVISION_SD_BUTTERFLY_H
+#define SUBVIS_PLUGINS_SUBDIVISION_SD_BUTTERFLY_H
+
+#include "plugins/subdivision/sd_triangle.h"
+
+namespace subdivision {
+
 /**
- * @class SdButterfly Butterfly subdivision "plugins/subdivision/sd_butterfly.h"
- *
  * @brief Implementation of the Butterfly subdivision algorithm.
  *
  * The algorithm was devised by Nira Dyn, David Levine und John A. Gregory.
@@ -11,7 +16,7 @@
  * The subdivision scheme:
  *  1. Compute edge points for each edge. These points are the new interpolated vertices.
  *     The edge point is computed with the following 8 point stencil.
- *     (This is the same as the 10 point stencil with w = 0).
+ *     (This is the same as the 10 point stencil with w = 0).<pre>
  *     c------b------c
  *      \    / \    /
  *       \  /   \  /
@@ -20,34 +25,26 @@
  *        /\     /\
  *       /  \   /  \
  *      /    \ /    \
- *     c------b------c
- *      Boundary case: use 1-dimensional 4 point scheme (-1/16)-----(9/16)--x--(9/16)-----(-1/16)
- *   2. Replace each triangle face by 4 new triangle faces.
+ *     c------b------c</pre>
+ *     Boundary case: <pre>use 1-dimensional 4 point scheme (-1/16)-----(9/16)--x--(9/16)-----(-1/16)</pre>
+ *  2. Replace each triangle face by 4 new triangle faces.<pre>
  *      +----x-----+      +----x-----+
  *       \        /        \   /\   /
  *        \      /          \ /  \ /
  *         x    x  -->       x----x
  *          \  /              \  /
  *           \/                \/
- *           +                 +
+ *           +                 +</pre>
  *
  * Sources that helped to implement the algorithm.
- * <a href="http://www.gamasutra.com/view/feature/131584/implementing_subdivision_surface_.php?print=1">Implementing Subdivision Surface Theory</a>
- * <a href="http://mrl.nyu.edu/~dzorin/papers/zorin1996ism.pdf">Interpolating Subdivision for Meshes with Arbitrary Topology</a>
- * <a href="http://www.multires.caltech.edu/pubs/interpolationTR.pdf">Interpolating Subdivision for Meshes with Arbitrary Topology</a>
- * <a href="http://lgdv.cs.fau.de/get/942">Subdivision Surfaces - Lehrstuhl für Graphische Datenverarbeitung</a>
+ * - <a href="http://www.gamasutra.com/view/feature/131584/implementing_subdivision_surface_.php?print=1">Implementing Subdivision Surface Theory</a>
+ * - <a href="http://mrl.nyu.edu/~dzorin/papers/zorin1996ism.pdf">Interpolating Subdivision for Meshes with Arbitrary Topology</a>
+ * - <a href="http://www.multires.caltech.edu/pubs/interpolationTR.pdf">Interpolating Subdivision for Meshes with Arbitrary Topology</a>
+ * - <a href="http://lgdv.cs.fau.de/get/942">Subdivision Surfaces - Lehrstuhl für Graphische Datenverarbeitung</a>
  *
  * @author Felix Born
  *
  */
-
-#ifndef SUBVIS_PLUGINS_SUBDIVISION_SD_BUTTERFLY_H
-#define SUBVIS_PLUGINS_SUBDIVISION_SD_BUTTERFLY_H
-
-#include "plugins/subdivision/sd_triangle.h"
-
-namespace subdivision {
-
 class SdButterfly : public SdTriangle {
  protected:
   void subdivide_input_mesh_write_output_mesh() override;

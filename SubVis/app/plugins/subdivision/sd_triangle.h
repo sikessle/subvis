@@ -1,6 +1,11 @@
+#ifndef SUBVIS_PLUGINS_SUBDIVISION_SD_TRIANGLE_H
+#define SUBVIS_PLUGINS_SUBDIVISION_SD_TRIANGLE_H
+
+#include "plugins/subdivision/sd_algorithm.h"
+
+namespace subdivision {
+
 /**
- * @class SdTriangle "plugins/subdivision/sd_triangle.h"
- *
  * @brief Base class for all triangle subdivision algorithms.
  *
  * This class bunches methods that are used by subdivision algorithms that operate
@@ -10,16 +15,6 @@
  * @author Felix Born
  *
  */
-
-
-#ifndef SUBVIS_PLUGINS_SUBDIVISION_SD_TRIANGLE_H
-#define SUBVIS_PLUGINS_SUBDIVISION_SD_TRIANGLE_H
-
-#include "plugins/subdivision/sd_algorithm.h"
-
-namespace subdivision {
-
-
 class SdTriangle : public SdAlgorithm {
  public:
   bool is_subdividable(const Surface_mesh& mesh) const override;

@@ -1,6 +1,11 @@
+#ifndef SUBVIS_PLUGINS_SUBDIVISION_SD_CATMULL_H
+#define SUBVIS_PLUGINS_SUBDIVISION_SD_CATMULL_H
+
+#include "plugins/subdivision/sd_quad.h"
+
+namespace subdivision {
+
 /**
- * @class SdCatmull Catmull–Clark subdivision "plugins/subdivision/sd_catmull.h"
- *
  * @brief Implementation of the Catmull–Clark subdivision algorithm.
  *
  * The algorithm was devised by Edwin Catmull and Jim Clark.
@@ -14,45 +19,38 @@
  *  2. Compute edge points for each edge (average of the center of the edge and
  *     the center of face points of the two adjacent faces).
  *     Boundary case: edge point is the middle of the edge
- *  3. Update the coordinates of all vertices: /f$(Q/n) + (2R/n) + (S(n-3)/n)/f$
+ *  3. Update the coordinates of all vertices: \f$(Q/n) + (2R/n) + (S(n-3)/n)\f$
  *    - n: valence
  *    - Q: average of the surrounding face points
  *    - R: average of all surround edge midpoints
  *    - S: old control point
- *      Boundary case: 1/8----3/4----1/8
+ *    <pre>Boundary case: 1/8----3/4----1/8</pre>
  *  4. Replace each face by new faces. Ever face is splitted from the face point
- *    - triangle:
+ *    - triangle:<pre>
  *      +----------+      +----------+
  *       \        /        \   |    /
  *        \      /          \  +   /
  *         \    /  -->       \/ \ /
  *          \  /              +  +
  *           \/                \/
- *           +                  +
- *    - quad:
+ *           +                  +</pre>
+ *    - quad:<pre>
  *      +-------+      +---+---+
  *      |       |      |   |   |
  *      |       | -->  +---+---+
  *      |       |      |   |   |
- *      +-------+      +---+---+
+ *      +-------+      +---+---+</pre>
+ *
  *
  * Sources that helped to implement the algorithm.
- * <a href="http://rosettacode.org/wiki/Catmull%E2%80%93Clark_subdivision_surface">Catmull-Clark Subdivision Surface</a>
- * <a href="http://yoshihitoyagi.com/projects/mesh/subdiv/catmull/">Catmull–Clark subdivision surface</a>
- * <a href="http://www.rorydriscoll.com/2008/08/01/catmull-clark-subdivision-the-basics/">Catmull-Clark Subdivision:
+ * - <a href="http://rosettacode.org/wiki/Catmull%E2%80%93Clark_subdivision_surface">Catmull-Clark Subdivision Surface</a>
+ * - <a href="http://yoshihitoyagi.com/projects/mesh/subdiv/catmull/">Catmull–Clark subdivision surface</a>
+ * - <a href="http://www.rorydriscoll.com/2008/08/01/catmull-clark-subdivision-the-basics/">Catmull-Clark Subdivision:
  * The Basics </a>
  *
  * @author Felix Born
  *
  */
-
-#ifndef SUBVIS_PLUGINS_SUBDIVISION_SD_CATMULL_H
-#define SUBVIS_PLUGINS_SUBDIVISION_SD_CATMULL_H
-
-#include "plugins/subdivision/sd_quad.h"
-
-namespace subdivision {
-
 class SdCatmull : public SdQuad {
  protected:
   void subdivide_input_mesh_write_output_mesh() override;

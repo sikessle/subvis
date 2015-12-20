@@ -7,6 +7,9 @@
 
 namespace subdivision {
 
+///
+/// \brief Abstract base class for all renderer.
+///
 class GLRenderer {
  public:
   using Surface_mesh = surface_mesh::Surface_mesh;

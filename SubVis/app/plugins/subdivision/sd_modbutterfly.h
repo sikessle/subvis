@@ -1,6 +1,11 @@
+#ifndef SUBVIS_PLUGINS_SUBDIVISION_SD_MODBUTTERFLY_H
+#define SUBVIS_PLUGINS_SUBDIVISION_SD_MODBUTTERFLY_H
+
+#include "plugins/subdivision/sd_butterfly.h"
+
+namespace subdivision {
+
 /**
- * @class SdModButterfly Modified Butterfly subdivision "plugins/subdivision/sd_modbutterfly.h"
- *
  * @brief Implementation of the Modified Butterfly subdivision algorithm.
  *
  * The algorithm was devised by Denis Zorin and Peter Schröder.
@@ -13,7 +18,7 @@
  * The subdivision scheme:
  *  1. Compute edge points for each edge.
  *    - both vertices of the edge with valence == 6: use the 8 point stencil of the Butterfly
- *    - one vertex of the edge is extraordinary: use the following stencil
+ *    - one vertex of the edge is extraordinary: use the following stencil <pre>
  *       e3---------e2
  *        \        / \
  *         \      /   \
@@ -27,30 +32,21 @@
  *        /       \    /
  *       /         \  /
  *                  \/
- *       ------------e0
+ *       ------------e0</pre>
  *      - valence == 3: v: 3/4, e0: 5/12, e1: -1/12, e2: -1/12
  *      - valence == 4: v: 3/4, e0: 3/8, e1: 0, e2: -1/8, e3: 0
- *      - valence >= 5: v: 3/4, ej: (1/4 + cos(2 * PI * j/N) + 1/2 * cos(4 * PI * j/N)/N)
+ *      - valence >= 5: v: 3/4, ej: \f$(1/4 + cos(2 * \pi * j/N) + 1/2 * cos(4 * \pi * j/N)/N)\f$
  *    - both vertices of the edge are extraordinary: average the results of using the above extraordinary stencil
  *  2. Replace each triangle face (equal to Butterfly).
  *
  * Sources that helped to implement the algorithm.
- * <a href="http://www.gamasutra.com/view/feature/131584/implementing_subdivision_surface_.php?print=1">Implementing Subdivision Surface Theory</a>
- * <a href="http://mrl.nyu.edu/~dzorin/papers/zorin1996ism.pdf">Interpolating Subdivision for Meshes with Arbitrary Topology</a>
- * <a href="http://www.multires.caltech.edu/pubs/interpolationTR.pdf">Interpolating Subdivision for Meshes with Arbitrary Topology</a>
+ * - <a href="http://www.gamasutra.com/view/feature/131584/implementing_subdivision_surface_.php?print=1">Implementing Subdivision Surface Theory</a>
+ * - <a href="http://mrl.nyu.edu/~dzorin/papers/zorin1996ism.pdf">Interpolating Subdivision for Meshes with Arbitrary Topology</a>
+ * - <a href="http://www.multires.caltech.edu/pubs/interpolationTR.pdf">Interpolating Subdivision for Meshes with Arbitrary Topology</a>
  *
  * @author Felix Born
  *
  */
-
-
-#ifndef SUBVIS_PLUGINS_SUBDIVISION_SD_MODBUTTERFLY_H
-#define SUBVIS_PLUGINS_SUBDIVISION_SD_MODBUTTERFLY_H
-
-#include "plugins/subdivision/sd_butterfly.h"
-
-namespace subdivision {
-
 class SdModButterfly : public SdButterfly {
  protected:
 

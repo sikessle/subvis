@@ -1,6 +1,12 @@
+#ifndef SUBVIS_PLUGINS_SUBDIVISION_SD_DOO_SABIN_H
+#define SUBVIS_PLUGINS_SUBDIVISION_SD_DOO_SABIN_H
+
+#include <map>
+#include "plugins/subdivision/sd_quad.h"
+
+namespace subdivision {
+
 /**
- * @class SdDooSabin Doo Sabin subdivision "plugins/subdivision/sd_doosabin.h"
- *
  * @brief Implementation of the Doo Sabin subdivision algorithm.
  *
  * The algorithm was devised by Daniel Doo and Malcolm Sabin.
@@ -13,21 +19,21 @@
  *  1. Compute face points for each face (average of all vertices of a face).
  *  2. Compute edge points for each edge (midpoint of the edge).
  *  3. Compute the new vertex point (average of face point, two edge points and vertex).
- *     (f: face point, e: edge point, v: vertex point, V: new vertex point, F: new Face)
+ *     <pre>(f: face point, e: edge point, v: vertex point, V: new vertex point, F: new Face)
  *      v-------v      +-------+
  *      |       |      | V   V |
  *      |   f   e -->  |       |
  *      |     V |      | V   V |
- *      v---e---v      +-------+
- *     Boundary case: add 2 vertices for every edge 3/4--V------1/4 and 1/4------V--3/4
+ *      v---e---v      +-------+</pre>
+ *     <pre>Boundary case: add 2 vertices for every edge 3/4--V------1/4 and 1/4------V--3/4</pre>
  *  4. Create the faces with the new vertex points
- *    - for each face:
+ *    - for each face:<pre>
  *      v-------v      +-------+
  *      |       |      | V---V |
  *      |   f   e -->  | | F | |   new face can be arbitrary polygon face
  *      |     V |      | V---V |
- *      v---e---v      +-------+
- *    - for each vertex (if number of surrounding faces > 2):
+ *      v---e---v      +-------+</pre>
+ *    - for each vertex (if number of surrounding faces > 2):<pre>
  *      v-------v-------v     v-------v-------v
  *      |       |       |     |       |       |
  *      |       |       |     |       |       |
@@ -36,32 +42,22 @@
  *      |    V  |  V    |     |    V-----V    |
  *      |       |       |     |       |       |
  *      |       |       |     |       |       |
- *      v-------v-------v     v-------v-------v
- *    - for each edge (if edge is not a boundary edge):
+ *      v-------v-------v     v-------v-------v</pre>
+ *    - for each edge (if edge is not a boundary edge):<pre>
  *      +-------v-------+     +-------+-------+
  *      |    V  | V     |     |     V---V     |
  *      |       |       | --> |     | F |     |  new face is always quad face
  *      |    V  | V     |     |     V---V     |
- *      +-------v-------+     +-------+-------+
+ *      +-------v-------+     +-------+-------+</pre>
  *
  *
  * Sources that helped to implement the algorithm.
- * <a href="http://yoshihitoyagi.com/projects/mesh/subdiv/doo/index.html">Doo-Sabin Subdivision Surface</a>
- * <a href="http://www.idav.ucdavis.edu/education/CAGDNotes/Doo-Sabin/Doo-Sabin.html">DOO-SABIN SURFACES</a>
+ * - <a href="http://yoshihitoyagi.com/projects/mesh/subdiv/doo/index.html">Doo-Sabin Subdivision Surface</a>
+ * - <a href="http://www.idav.ucdavis.edu/education/CAGDNotes/Doo-Sabin/Doo-Sabin.html">DOO-SABIN SURFACES</a>
  *
  * @author Felix Born
  *
  */
-
-#ifndef SUBVIS_PLUGINS_SUBDIVISION_SD_DOO_SABIN_H
-#define SUBVIS_PLUGINS_SUBDIVISION_SD_DOO_SABIN_H
-
-#include <map>
-#include "plugins/subdivision/sd_quad.h"
-
-namespace subdivision {
-
-
 class SdDooSabin : public SdQuad {
  protected:
   void subdivide_input_mesh_write_output_mesh() override;
