@@ -46,7 +46,7 @@ void ViewerMeshWidget::keyPressEvent(QKeyEvent* e) {
 void ViewerMeshWidget::init_gl() {
   qDebug() << "Initializing open gl.";
   // TODO compute the correct scene radius and configure camera.
-  setSceneRadius(1.0);
+  setSceneRadius(10.0);
   camera()->setZNearCoefficient(0.0001);
   camera()->setZClippingCoefficient(10.0);
   qDebug() << "Finished initializing open gl.";
