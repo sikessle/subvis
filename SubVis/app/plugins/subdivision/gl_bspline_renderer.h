@@ -5,10 +5,18 @@
 
 namespace subdivision {
 
-/// render Catmull-Clark and Doo Sabin (convert to bezier surface)
+/// Render Catmull-Clark and Doo Sabin (convert to bezier surface) TODO!
 class GLBSplineRenderer : public GLRenderer {
+ public:
+  void mesh_updated(const Surface_mesh& mesh) override;
+
  protected:
   void render() override;
+
+ private:
+  std::vector<unsigned int> triangles_;
+  Surface_mesh::Vertex_property<Point>  points_;
+  Surface_mesh::Vertex_property<Point>  vnormals_;
 };
 
 } // namespace subdivision

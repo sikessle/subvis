@@ -5,10 +5,18 @@
 
 namespace subdivision {
 
-/// render Loop subdivision (convert to bezier triangle)
+/// Render Loop subdivision (convert to bezier triangle) TODO!
 class GLBoxSplineRenderer : public GLRenderer {
+ public:
+  void mesh_updated(const Surface_mesh& mesh) override;
+
  protected:
-  void render() override {}
+  void render() override;
+
+ private:
+  std::vector<unsigned int> triangles_;
+  Surface_mesh::Vertex_property<Point>  points_;
+  Surface_mesh::Vertex_property<Point>  vnormals_;
 };
 
 } // namespace subdivision

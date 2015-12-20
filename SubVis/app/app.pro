@@ -91,7 +91,8 @@ SOURCES += main.cpp \
     plugins/subdivision/gui_controls.cpp \
     plugins/subdivision/gl_interpolating_renderer.cpp \
     view/edit_constraint.cpp \
-    view/mesh_edit_handler.cpp
+    view/mesh_edit_handler.cpp \
+    plugins/subdivision/gl_boxspline_renderer.cpp
 
 FORMS    += view/mainwindow.ui
 

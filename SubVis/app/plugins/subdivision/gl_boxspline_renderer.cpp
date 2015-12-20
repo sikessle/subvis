@@ -1,9 +1,9 @@
 #include <QtOpenGL>
-#include "plugins/subdivision/gl_bspline_renderer.h"
+#include "plugins/subdivision/gl_boxspline_renderer.h"
 
 namespace subdivision {
 
-void GLBSplineRenderer::mesh_updated(const Surface_mesh& mesh) {
+void GLBoxSplineRenderer::mesh_updated(const Surface_mesh& mesh) {
   /// TODO this is only a dummy code that renders a smooth surface using the vertex normals!
   GLRenderer::mesh_updated(mesh);
   mesh_->triangulate();
@@ -19,7 +19,7 @@ void GLBSplineRenderer::mesh_updated(const Surface_mesh& mesh) {
   vnormals_ = mesh_->vertex_property<Point>("v:normal");
 }
 
-void GLBSplineRenderer::render() {
+void GLBoxSplineRenderer::render() {
   /// TODO this is only a dummy code that renders a smooth surface using the vertex normals!
   if (mesh_->n_faces() < 1) {
     return;

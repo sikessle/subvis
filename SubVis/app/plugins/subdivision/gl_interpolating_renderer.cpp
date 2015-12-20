@@ -1,4 +1,3 @@
-#include <QtDebug>
 #include <QtOpenGL>
 #include "plugins/subdivision/gl_interpolating_renderer.h"
 
