@@ -73,7 +73,7 @@ Lower case with underscore to separate words:check_that_value();
 Ensure in Qt Creator that shadow builds are disabled. 
 Run in dir `SubVis`
 
-1. `qmake SubVis.pro -r -spec linux-g++`
+1. `qmake`
 2. `make doc` for documentation 
 3. `make` for build
 4. `make clean` to cleanup app builds
