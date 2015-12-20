@@ -79,4 +79,8 @@ Run in dir `SubVis`
 4. `make clean` to cleanup app builds
 5. `make distclean` to cleanup app builds and static library files (*.a)
 
+To disable debug output messages remove the `debug` from the CONFIG variable in the 
+file `SubVis/app/app.pro`.
+
+
 
