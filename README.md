@@ -10,12 +10,11 @@ Create a local branch per new feature. If feature is working merge to develop br
 
 The project consists of the following main folders:
 
-- **dev-doc** Software engineering decisions and diagrams, intermediate reports and the final paper of the project.
+- **dev-doc** Software engineering decisions and diagrams, intermediate reports and the final report of the project.
 - **SubVis** The sources (i.e. C++) of the project. Also includes the generated documentation etc. Subdirectories:
   - **app**: Main project
   - **lib**: 3rd party libraries
   - **build**: Created on build, binaries, Doxygen doc(created by Make)
-  - **test**: Unit tests
   - **objs**: Object files with 3D models to test
   
 # Usage
@@ -35,7 +34,7 @@ To switch editing modes press **S**.
 
 # Documentation
 
-Should be inlined with **DoxyGen**.
+Should be inlined with **DoxyGen**. Also see section Build.
 
 # Style Guide
 
@@ -60,14 +59,14 @@ Lower case with underscore to separate words:check_that_value();
 
 # Requirements
 
-- Tested only for Ubuntu 14.04 LTS with:
+- Developed for Ubuntu 14.04 LTS with:
 - Qt 5.4.1
 - OpenGL 
   - mesa-common-dev 10.1.3-0ubuntu0.4
   - libglu1-mesa-dev: 9.0.2-0
-- libQGLViewer 2.6.1
-- surface_mesh 1.0
-- doxygen 1.8.6
+- libQGLViewer 2.6.1 (included in sources, statically linked)
+- surface_mesh 1.0 (included in sources, statically linked)
+- doxygen 1.8.6 (required for make doc target)
 
 # Build
 
@@ -78,3 +77,5 @@ Ensure in Qt Creator that shadow builds are disabled.
 3. `make` for build
 4. `make clean` to cleanup app builds
 5. `make distclean` to cleanup app builds and static library files (*.a)
+
+
