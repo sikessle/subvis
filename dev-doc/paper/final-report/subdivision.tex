@@ -1,0 +1,54 @@
+\documentclass[
+	11pt,
+	a4paper,
+	bibtotocnumbered
+	]{scrreprt}		                                   
+
+\include{preamble}
+
+\begin{document}
+
+
+
+% ============================ FRONT MATTER
+\pagenumbering{Roman}
+\begin{singlespace}
+\include{content/cover}
+\setcounter{page}{1}
+\end{singlespace}
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\include{content/abkuerzungen}
+
+\cleardoublepage
+% ============================ ENDE FRONT MATTER
+
+
+% ============================ HAUPTTEIL
+\pagenumbering{arabic}
+
+
+% ============================ CHAPTERS
+
+\include{content/einleitung}
+\include{content/grundlagen}
+\include{content/bibliotheken}
+\include{content/subvis}
+\include{content/projektverlauf}
+
+% ============================ ENDE HAUPTTEIL
+
+% ============================ LITERATURVERZEICHNIS
+
+\begin{singlespace}
+\printbibliography
+\end{singlespace}
+
+% ============================ ENDE LITERATURVERZEICHNIS
+
+
+
+\end{document}
