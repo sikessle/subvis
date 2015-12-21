@@ -23,6 +23,7 @@ class SdAlgorithm : public QObject {
 
   /**
    * \brief Subdivides the given mesh object in n steps.
+   * \param mesh The mesh which will be subdivided.
    * \param callback The function which will be called when the computation is done.
    * This function will be called in the single GUI thread, so it has not to be thread safe.
    * \param steps The number of subdivision steps.
@@ -86,7 +87,7 @@ class SdAlgorithm : public QObject {
   void compute_new_boundary_vertex_coordinate(Point& new_vertex_point,
       const Surface_mesh::Vertex& vertex) const;
 
-  /// Return the valid @c halfedge of a boundary @edge.
+  /// Return the valid @c halfedge of a boundary edge.
   Surface_mesh::Halfedge get_valid_halfedge_of_boundary_edge(
     const Surface_mesh::Edge& edge) const;
 
