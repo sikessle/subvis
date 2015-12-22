@@ -51,9 +51,9 @@ Jede Kante referenziert also folgende Objekte:
 	\item die nächsten zwei Kanten der Fläche
 \end{itemize}
 
-Halfedge bedeutet nun, dass eine Kante in 2 Halbkanten (Halfedge) aufgeteilt wird. 
+Halfedge bedeutet nun, dass eine Kante in zwei Halbkanten (Halfedge) aufgeteilt wird. 
 Jede Halbkante hat nur eine Richtung.
-Zwei Ecken A und B sind also über 2 Halbkanten (erste Halkante von A nach B und zweite Halbkante von B nach A) miteinander verbunden.
+Zwei Ecken A und B sind also über zwei Halbkanten (erste Halkante von A nach B und zweite Halbkante von B nach A) miteinander verbunden.
 Dies bringt den Vorteil, dass man über die Kanten einer Fläche sehr einfach iterieren kann. Man muss dazu lediglich den Halbkanten folgen.
 
 
@@ -132,7 +132,7 @@ OpenSubdiv ist lizensiert unter der Apache License und darf somit frei für komm
 \end{figure}
 
 \autoref{fig:pixar_opensubdiv} zeigt den Aufbau der OpenSubdiv Bibliothek.
-Sie besteht insgesamt aus den 4 Schichten Sdc, Vtr, Far und Osd \cite{Pixar.27.07.2015}.
+Sie besteht insgesamt aus den vier Schichten Sdc, Vtr, Far und Osd \cite{Pixar.27.07.2015}.
 
 \begin{description}
  \item[Sdc] ist die unterste Schicht in der Architektur und implementiert die Unterteilungsdetails.
