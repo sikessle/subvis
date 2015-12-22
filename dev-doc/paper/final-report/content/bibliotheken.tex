@@ -12,8 +12,8 @@ Zusätzlich muss noch die Beziehung zwischen den Objekten abgespeichert werden.
 
 \subsection{OpenMesh}
 
-OpenMesh wird von der \ac{RWTH} Aachen entwickelt und stellt eine mächtige Datenstruktur für Polygonnetze bereit.
-Es steht unter der \ac{LGPL} v3 Lizenz (\enquote{with exception}) und kann somit problemlos verwendet werden.
+OpenMesh wird von der RWTH Aachen entwickelt und stellt eine mächtige Datenstruktur für Polygonnetze bereit.
+Es steht unter der LGPL v3 Lizenz (\enquote{with exception}) und kann somit problemlos verwendet werden.
 
 OpenMesh implementiert eine Datenstruktur für Polygonnetze.
 Darüber hinaus sind bereits einige Unterteilungsalgorithmen implementiert, die auf der OpenMesh Datenstruktur arbeiten können.
@@ -59,7 +59,7 @@ Dies bringt den Vorteil, dass man über die Kanten einer Fläche sehr einfach it
 
 \subsubsection{OpenFlipper}
 
-Aufbauend auf OpenMesh wurde von der \ac{RWTH} Aachen zusätzlich das flexible Plugin-basierte Framework OpenFlipper enwickelt.
+Aufbauend auf OpenMesh wurde von der RWTH Aachen zusätzlich das flexible Plugin-basierte Framework OpenFlipper enwickelt.
 Damit können geometrische Objekte modelliert und verarbeitet werden. Intern wird auf die Datenstrukur OpenMesh zurückgegriffen.
 Für die grafische Oberfläche wird QT verwendet.
 Mit OpenFlipper kann man über die Oberfläche Netze erstellen und die in OpenMesh implementierten Subdivision Algorithmen anwenden.
@@ -132,16 +132,16 @@ OpenSubdiv ist lizensiert unter der Apache License und darf somit frei für komm
 \end{figure}
 
 \autoref{fig:pixar_opensubdiv} zeigt den Aufbau der OpenSubdiv Bibliothek.
-Sie besteht insgesamt aus den 4 Schichten \ac{Sdc}, \ac{Vtr}, \ac{Far} und \ac{Osd} \cite{Pixar.27.07.2015}.
+Sie besteht insgesamt aus den 4 Schichten Sdc, Vtr, Far und Osd \cite{Pixar.27.07.2015}.
 
 \begin{description}
- \item[\ac{Sdc}] ist die unterste Schicht in der Architektur und implementiert die Unterteilungsdetails.
+ \item[Sdc] ist die unterste Schicht in der Architektur und implementiert die Unterteilungsdetails.
  Dazu gehören Typen, Optionen und Eigenschaften für die konkreten Unterteilungsalgorithmen.
- \item[\ac{Vtr}] beinhaltet Klassen, die das Netz für effiziente Verfeinerung in einer Zwischenrepräsentation darstellen.
+ \item[Vtr] beinhaltet Klassen, die das Netz für effiziente Verfeinerung in einer Zwischenrepräsentation darstellen.
  Diese Schicht ist nur für den internen Gebrauch gedacht.
- \item[\ac{Far}] ist die zentrale Schnittstelle, um Polygonnetze mit Unterteilungsalgorithmen zu verarbeiten.
- \item[\ac{Osd}] beinhaltet geräteabhängigen Code, um Objekte aus der Schicht \ac{Far} auch in unterschiedlichen Backends wie
- \ac{CUDA} oder OpenCL ausführbar zu machen.
+ \item[Far] ist die zentrale Schnittstelle, um Polygonnetze mit Unterteilungsalgorithmen zu verarbeiten.
+ \item[Osd] beinhaltet geräteabhängigen Code, um Objekte aus der Schicht Far auch in unterschiedlichen Backends wie
+  CUDA oder OpenCL ausführbar zu machen.
 \end{description}
 
 Von OpenSubdiv werden die Unterteilungsalgorithmen \emph{Catmull-Clark}, \emph{Loop} und \emph{Bilinear} unterstützt \cite{Pixar.27.07.2015}. 
@@ -156,18 +156,18 @@ All diese Strukturen lassen sich jedoch auf Combinatorial Maps zurückführen.
 Diesen allgemeineren Ansatz geht CGoGN.
 CGoGN implementiert bereits den Unterteilungsalgorithmus Catmull-Clark \cite{CGoGN.27.07.2015}. 
 
-\subsection{CGAL}
+\subsection{Computational Geometry Algorithms Library (CGAL)}
 
-\ac{CGAL} ist ein mächtiges Softwareprojekt mit einer Vielzahl an Datenstrukturen und Algorithmen.
+CGAL ist ein mächtiges Softwareprojekt mit einer Vielzahl an Datenstrukturen und Algorithmen.
 Neben Unterteilungsalgorithmen werden auch eine Reihe anderer Themengebiete abgedeckt (Voronoi Diagramme, Convex Hull Algorithms, Spatial Searching ...).
-Für die Repräsentation von Netzen gibt es bei \ac{CGAL} mehrere Möglichkeiten.
+Für die Repräsentation von Netzen gibt es bei CGAL mehrere Möglichkeiten.
 
 \begin{description}
- \item[Surface\_mesh] Zum einen implementiert \ac{CGAL} die bereits vorgestellte Datenstruktur Surface\_mesh.
- \item[3D Polyhedral Surface] Neben Surface\_mesh kann auch die von \ac{CGAL} entwickelte Halfedge Datenstruktur Polyhedral verwendet werden.
+ \item[Surface\_mesh] Zum einen implementiert CGAL die bereits vorgestellte Datenstruktur Surface\_mesh.
+ \item[3D Polyhedral Surface] Neben Surface\_mesh kann auch die von CGAL entwickelte Halfedge Datenstruktur Polyhedral verwendet werden.
 \end{description}
 
-\ac{CGAL} ist sehr mächtig und komplex. Die Bibliothek ist sogar in den meisten Paketquellen der Linux Distributionen enthalten (z. B. Ubuntu)
+CGAL ist sehr mächtig und komplex. Die Bibliothek ist sogar in den meisten Paketquellen der Linux Distributionen enthalten (z. B. Ubuntu)
 und kann darüber sehr leicht installiert werden.
 Es sind auch bereits die Unterteilungsalgorithmen \emph{Catmull-Clark}, \emph{Doo-Sabin}, \emph{Loop} und \emph{Sqrt3} implementiert \cite{CGAL.27.07.2015}.
 
@@ -186,7 +186,7 @@ Es sind auch bereits die Unterteilungsalgorithmen \emph{Catmull-Clark}, \emph{Do
 \textbf{Surface\_mesh} & Halfedge & keine\\
 \textbf{OpenSubdiv} & Halfedge & Catmull-Clark, Loop\\
 \textbf{CGoGN} & combinatorial maps & Catmull-Clark\\
-\textbf{\ac{CGAL}} & Halfedge & Catmull-Clark, Loop, Doo-Sabin\\
+\textbf{CGAL} & Halfedge & Catmull-Clark, Loop, Doo-Sabin\\
 \end{tabular}
 \label{tab:sd_bib}
 \end{table}
@@ -206,7 +206,7 @@ In dem Diagramm werden die Zeiten relativ zu Surface\_mesh angegeben.
   \label{fig:surface_mesh_cmp}
 \end{figure}
 
-Man erkennt deutlich, dass die Datenstrukturen von \ac{CGAL} und OpenMesh vergleichsweise langsam sind.
+Man erkennt deutlich, dass die Datenstrukturen von CGAL und OpenMesh vergleichsweise langsam sind.
 Da Surface\_mesh sehr kompakt ist (es besteht nur aus sehr wenigen C++ und H-Dateien) und in dem Benchmark auch sehr gute Ergebnisse liefert, fällt die Wahl auf Surface\_mesh.
 
 
@@ -256,8 +256,8 @@ Eine Besonderheit von Qt ist das Signals-Slots Konzept (vgl. \autoref{fig:qt_sig
 Dieses kann als eine Art Beobachter-Entwurfsmuster betrachtet werden.
 Dabei entspricht ein Signal einem \emph{notify} und ein Slot einem \emph{Beobachter}. 
 Mittels einer \emph{connect} Funktion wird die Verbindung zwischen den Komponenten (n:m) hergestellt.
-Zur Definition von Signalen und Slots werden Makros verwendet, die vom \ac{moc} in standardkonformen C++ Code umgewandelt werden.
-Qt wird unter der \ac{LGPL} verteilt.
+Zur Definition von Signalen und Slots werden Makros verwendet, die vom Meta-Object-Compiler \emph{moc} in standardkonformen C++ Code umgewandelt werden.
+Qt wird unter der LGPL verteilt.
 
 \subsection{libQGLViewer} % im finalen Bericht (2. Semester) noch ausbauen!
 
@@ -274,7 +274,7 @@ Sie bietet unter anderem folgende Funktionen bzw. erleichtert deren Erstellung:
 \item Tastaturkürzel und Maus-Bindings
 \end{itemize}
 
-Die Software ist unter der \ac{GPL} frei verfügbar.
+Die Software ist unter der GPL frei verfügbar.
 
 \section{IDE} % im finalen Bericht (2. Semester) noch ausbauen!
 
@@ -293,4 +293,4 @@ Prinzipiell ähnelt es JavaDoc, in dem Quellcode direkt mittels spezielle annoti
 Diese Annotationen werden dann mittels Transformation in ein Ausgabeformat (z. B. HTML oder PDF) überführt.
 Der Vorteil liegt darin, dass so die Dokumentation sehr nahe und eng mit dem Quellcode verbunden ist, was die Aktualität der Dokumentation begünstigt.
 Qt Creator bietet Syntaxhervorhebung für die speziellen Kommentare und erleichtert so die Verwendung.
-Doxygen steht unter der \ac{GPL}.
+Doxygen steht unter der GPL.
