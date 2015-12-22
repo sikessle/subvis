@@ -1,9 +1,34 @@
 \chapter{Projektverlauf}
 
-In den folgenden Abschnitten wird der Projektverlauf beschrieben und ein Rückblick und Ausblick gegeben.
-Es wird dabei auf die erreichten und geplanten Ergebnisse eingegangen, sowie der bisherige Ablauf des Projekts bewertet.
+In den folgenden Abschnitten wird der Projektverlauf beschrieben und 
+dabei auf die erreichten und geplanten Ergebnisse eingegangen, sowie der bisherige Ablauf des Projekts bewertet. Außerdem wird auf die Arbeitsteilung eingegangen.
 
-\section{Rückblick}
+\section{Aufgabenverteilung}
+
+Für die Entwicklung werden die Themen und Aufgaben unter den Teammitgliedern in drei Arbeitspakete aufgeteilt.
+
+\begin{description}
+\item[Architektur, Oberfläche, IDE, Editiermodus] Hierzu gehört die Oberfläche, Bedienung, Architektur inkl. Plugin-System und die Spezifikation einer Entwicklungsumgebung. Des Weiteren die Implementierung des Editiermodus.
+\item[Rendering und Darstellung] Berechnung und Darstellung der Kontrollnetze und deren Limesfläche mit OpenGL.
+\item[Unterteilungsalgorithmen] Umfasst die Implementierung der ausgewählten Unterteilungsalgorithmen.
+\end{description}
+
+\begin{table}[h]
+\center
+\caption{Aufgabenverteilung unter den Teammitgliedern}
+\begin{tabular}{c|c}
+Arbeitspaket & Teammitglied\\
+\hline
+Architektur, Oberfläche, IDE, Editiermodus & Simon Kessler \\
+Rendering und Darstellung & Tobias Keh \\
+Unterteilungsalgorithmen & Felix Born \\
+\end{tabular}
+\label{tab:aufgabenverteilung}
+\end{table}
+
+\autoref{tab:aufgabenverteilung} zeigt die vorgenommene Aufgabenverteilung des letzten Semesters.
+
+\section{Verlauf der beiden Semester}
 
 Im ersten Semester lag der Schwerpunkt darin, einen Überblick über die theoretischen Grundlagen zu erhalten. 
 Hierzu gehören die Unterteilungsalgorithmen und die Darstellung der Kontrollnetze.
@@ -25,54 +50,19 @@ Während des Semesters wurden lediglich für sehr kurze Zeiträume und eng einge
 Dadurch wurde sichergestellt, dass eine gemeinsame Wissensbasis entsteht, um späteren Missverständnissen vorzubeugen.
 Dies hat sich als hilfreich erwiesen und ermöglicht es nun an verschiedenen Teilmodulen der Anwendung parallel zu arbeiten.
 
-\section{Ausblick}
+Im zweiten Semester wurde das Programm SubVis implementiert. 
+Dabei wurden kleinere Änderungen an der Architektur gegenüber der Spezifizierung im ersten Semester vorgenommen.
+Zuerst wurde eine GUI und Model-Schicht entwickelt. 
+Diese dienten als Plattform, um die weiteren Komponenten zu implementieren.
+Danach wurden die einzelnen Algorithmen, Renderingverfahren und der Editiermodus ergänzt.
+In Anlehnung an agile Entwicklungsmodelle wurden zweiwöchige Meetings mit den Betreuern Prof. Dr. Georg Umlauf und Pascal Laube durchgeführt. 
+Dort wurde auch der aktuelle Stand der Software präsentiert oder Fragen geklärt.
+So konnte frühzeitig auf Änderungs- und Funktionswünsche eingegangen werden.
 
-Im kommenden Semester liegt der Fokus auf der Implementierung der einzelnen Komponenten des Programms.
-Das Ergebnis umfasst das spezifizierte Programm \emph{SubVis} und eine schriftliche Ausarbeitung, die den Aufbau und die Umsetzung beschreibt und begründet.
-Diese enthält zusätzlich eine Dokumentation die eine Top-Down-Ansicht liefert. 
-Implementierungsdetails werden im Quellcode mittels Doxygen dokumentiert.
+Schlussendlich kann das Projekt als erfolgreich bezeichnet werden, da alle vorgesehenen Funktionen und darüber hinaus noch weitere implementiert wurden.
+Für alle beteiligten Studenten war dies ein überaus lehrreiches Projekt mit einigen neuen Programmiersprachen und Anwendungsdomänen.
 
-\subsection{Aufgabenverteilung}
 
-\begin{table}
-\center
-\caption{Aufgabenverteilung unter den Teammitgliedern}
-\begin{tabular}{c|c}
-Arbeitspaket & Teammitglied\\
-\hline
-Architektur, Oberfläche, Entwicklungsumgebung & Simon Kessler \\
-Rendering und Darstellung & Tobias Keh \\
-Unterteilungsalgorithmen & Felix Born \\
-\end{tabular}
-\label{tab:aufgabenverteilung}
-\end{table}
 
-Für die Entwicklung werden die Themen und Aufgaben unter den Teammitgliedern in drei Arbeitspakete aufgeteilt.
 
-\begin{description}
-\item[Architektur, Oberfläche, Entwicklungsumgebung] Hierzu gehört die Oberfläche, Bedienung, Architektur inkl. Plugin-System und die Spezifikation einer Entwicklungsumgebung.
-\item[Rendering und Darstellung] In diesem Arbeitspaket soll die Berechnung und Darstellung der Kontrollnetze und deren Limesfläche implementiert werden.
-\item[Unterteilungsalgorithmen] Umfasst die Implementierung der vorgegebenen Unterteilungsalgorithmen.
-\end{description}
-
-\autoref{tab:aufgabenverteilung} zeigt die geplante Aufgabenverteilung für kommendes Semester.
-Die Zuteilung der Arbeitspakete stellt lediglich einen Startzustand dar. 
-Um jedem Teammitglied Einblicke in alle Aspekte zu ermöglichen und so auch den größten Lerneffekt zu erzielen, werden Teilaufgaben der Arbeitspakete ausgetauscht.
-Der unterschiedliche Arbeitsaufwand wird kompensiert, in dem nach Fertigstellung eines Arbeitspaketes die entsprechende Person bei den anderen Arbeitspaketen weiter entwickelt.
-
-\subsection{Zeitplan}
-
-In den verbleibenden Semesterferien sollen die folgenden Arbeitsschritte durchgeführt werden.
-Dabei wird nicht eine endgültige Implementierung angestrebt, sondern eine funktionsfähige prototypische Implementierung, die im kommenden Semester weiter optimiert und ergänzt wird.
-
-\begin{itemize}
-\item Architektur und Komponenten
-\item GUI
-\item IO-Funktionalität
-\item Plugin-System
-\item Affine Transformationen
-\item Unterteilungsalgorithmen
-\item Rendering des Kontrollnetzes
-\item Beleuchtungsmodi des Rendering
-\end{itemize}
 
