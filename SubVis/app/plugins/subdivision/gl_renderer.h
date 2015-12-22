@@ -25,11 +25,8 @@ class GLRenderer {
   virtual void mesh_updated(const Surface_mesh& mesh);
 
  protected:
-  // TODO placeholder, here we should use a custom data structure to hold vertices
   std::unique_ptr<Surface_mesh> mesh_ {nullptr};
-//const surface_mesh::Surface_mesh* mesh_ {nullptr};
 
-  /// Called with the custom data structure TODO!
   virtual void render() = 0;
 };
 
