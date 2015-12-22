@@ -36,7 +36,7 @@ class SubVisPlugin : public QObject {
   /// \brief Will be called to set the model
   /// \param mesh_data The model
   ///
-  virtual void set_model(MeshData& mesh_data) = 0;
+  virtual void init(MeshData& mesh_data) = 0;
   ///
   /// \brief Will be called every time the mesh was updated.
   /// \param mesh The updated mesh
