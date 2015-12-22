@@ -6,7 +6,7 @@
 namespace subvis {
 
 ///
-/// \brief A constraint which can be used to constraint a manipulated frame
+/// \brief A constraint which can be used to constrain a manipulated frame
 /// during edits. Supports the constraint of the translations of a frame
 /// to a plane which is characterized by a normal.
 ///
