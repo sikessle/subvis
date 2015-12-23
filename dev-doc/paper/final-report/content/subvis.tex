@@ -97,7 +97,7 @@ Das Projekt teilt sich in zwei Verzeichnisse auf: \emph{SubVis} und \emph{dev-do
 \emph{dev-doc} dient der weiterführenden Dokumentation.
 Das Verzeichnis enthält z. B. Diagramme, diesen Bericht und andere hilfreiche Dokumente zur Entwicklung.
 
-\section{Grafische Oberfläche}
+\section{Grafische Oberfläche} \label{sec:gui}
 
 \begin{figure}
   \centering
@@ -274,42 +274,211 @@ Diese Klasse ist im Prinzip lediglich ein dünner Wrapper um ein Plugin und dele
 
 \subsubsection{ViewerMeshWidget}
 
+Die Klasse handhabt das Rendering des Kontrollnetzes und ermöglicht die Editieroperationen.
+Alle Editieroperationen und damit zusammenhängende Events werden an die Klasse \emph{MeshEditHandler} delegiert.
 
 
-\subsection{Plugins}
-
-Manager etc. DIAGRAMM
+----TOBI: RENDERING HIER ERGÄNZEN----
 
 
+\subsubsection{MeshEditHandler}
+
+Der Handler reagiert auf die entsprechenden Maus und Tastenevents.
+So löst ein Doppelklick entweder den Selektions- oder den Speichermechanismus aus.
+Die Taste S steuert die Art des Constraints der Translation des bewegten Vertex.
+
+Mittels \emph{Color Picking} wird versucht den Vertex unter dem Mauszeiger zu bestimmen.
+Dazu wird zuerst das ein Mapping zwischen eindeutiger ID und dem Vertex selber hergestellt.
+Zuerst wird die Fläche gelöscht und mit weißer Farbe überzeichnet.
+Weiß wurde ausgewählt, da aufgrund der Zuordnung ein schwarzer Hintergrund die ID 0 bekommen würde, was eine gültige Vertex ID ist.
+Zur Erhöhung der Performance wird mittels \emph{glScissor} der Zeichenbereich auf ein kleines 10x10 Pixel Feld um den Mausklick herum eingegrenzt.
+Danach wird jeder Vertex in diesem Feld durch einen Punkt mit der Größe 10 Pixel gerendert.
+Entscheidend ist hierbei die Farbe, diese muss für jeden Vertex eindeutig sein.
+Zur Berechnung der Farbe wird die Vertex ID byteweise auf ein RGB-Array gemappt.
+Das höchstwertigste Byte wird nicht genutzt, da das Color-Picking mit Alpha-Kanal nicht funktionierte.
+Die Funktion ist in \autoref{lst:index_to_rgb} exemplarisch dargestellt.
+Dadurch resultiert die Höchstanzahl an Vertices für eine zuverlässige Selektion von $2^{24} = 16777216$ Vertices.
+
+\begin{lstlisting}[style=myCppStyle, caption={Umrechnung Index nach Farbwert}, label=lst:index_to_rgb]
+const unsigned char* index_ptr = &index;
+for (int i = 0; i < 3; i++) {
+	rgb[i] = index_ptr[i];
+}
+\end{lstlisting}
+
+Nach dem Rendern der Vertices wird mittels \emph{glReadPixels} die Farbe unter dem Mauszeiger ausgelesen.
+Mittels der inversen Funktion in \autoref{lst:rgb_to_index} wird der Farbwert wieder in einen RGB-Wert umgerechnet.
+
+\begin{lstlisting}[style=myCppStyle, caption={Inverse Funktion Farbwert nach Index}, label=lst:rgb_to_index]
+int index = 0;
+unsigned char* index_ptr = (unsigned char*) &index;
+for (int i = 0; i < 3; i++) {
+	index_ptr[i] = rgb[i];
+}
+\end{lstlisting}
+
+Wenn ein Vertex gefunden wurde, wird dieser in einem \emph{ManipulatedFrame} an der Position (0, 0, 0) mit einem roten Punkt gezeichnet. 
+Dieser Frame kann nun mit der Maus bewegt werden und die aktuelle Position mittels \emph{getPosition} wieder ausgelesen werden.
+Der Frame ist in der Bewegung jedoch eingeschränkt durch die Klasse \emph{EditConstraint}, welche die Translationen auf die Ebene der Vertex-Normalen oder eine dazu orthogonale Ebene einschränkt.
+Die Berechnung der Normale ist in Surface\_mesh schon implementiert und folgt dabei dem gängigen Schema:
+Zuerst werden die Normalen der umgebenen Flächen berechnet und aufaddiert, dann wird der entstandene Vektor normalisiert. 
+Dieser ergibt nun die Vertex-Normale.
+
+\subsubsection{EditConstraint}
+
+Diese Klasse beinhaltet ein \emph{LocalConstraint} Objekt, welches ermöglicht Translationen und Rotationen eines Frame einzuschränken.
+Sie erlaubt es, einen Vektor anzugeben der als Normale einer Ebene interpretiert wird und die Translationen auf diese Ebene einschränkt.
+Zusätzlich kann durch ein Flag eine orthogonale Ebene als Einschränkung definiert werden. 
+Diese wird dadurch charakterisiert, dass ein orthogonaler Vektor berechnet wird der als Ebenen-Normale interpretiert wird.
+
+
+\subsection{Plugin}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{content/media/subvis_architektur_plugin.png}
+  \caption{Architektur der Plugin-Komponente von SubVis}
+  \label{fig:subvis_architektur_plugin}
+\end{figure}
+
+Die Plugin-Komponente besteht aus einem \emph{PluginManager} (siehe \autoref{fig:subvis_architektur_plugin}) und der Plugin-Schnittstelle.
+Alle Plugins werden vor Programmstart am PluginManager registriert.
+Dieser ruft dann die \emph{init} Methode der Plugins auf und übergibt eine Referenz auf die Model-Komponente.
 
 
 \section{Erstellung eines Plugins}
 
+Zur Erstellung eines Plugins ist es lediglich notwendig von der Klasse \emph{SubVisPlugin} abzuleiten und alle Methoden zu implementieren (pure virtual).
+Das Plugin und alle Dateien sollten in ein Unterverzeichnis von \emph{app/plugins/} gelegt werden und in der \emph{app.pro} Datei notiert werden.
+Danach muss das Plugin registriert werden, was in der Datei \emph{main.cpp} geschieht (siehe \autoref{lst:plugin_register}).
+
+\begin{lstlisting}[style=myCppStyle, caption={Registrierung eines Plugins}, label=lst:plugin_register]
+// Register your plugins here:
+subvis_app.register_plugin(std::move(PluginPtr {new SubdivPlugin}));
+// end registering plugins
+\end{lstlisting}
+
+Ein erneutes Übersetzen des Programms beendet den Vorgang und das Plugin ist lauffähig und auswählbar.
+
 \section{Dokumentation}
 
-Die Dokumentation besteht aus diesem Bericht sowie der finalen schriftlichen Ausarbeitung am Ende des 2. Semesters.
-Diese Ausarbeitung soll die theoretischen Hintergründe erklären, sowie auf die Entwicklungsprozesse inkl. Vergleich und Entscheidungen für spezifische Technologien eingehen.
-Ziel ist es, dem Leser eine Top-Down-Ansicht auf das Projekt zu verschaffen.
-Es wird bewusst auf eine detaillierte Quellcodedokumentation in der Ausarbeitung verzichtet, um die Dokumentation nahe am Quellcode und aktuell zu halten.
-
+Die Dokumentation besteht aus diesem Bericht sowie den Quellcodekommentaren und einer README.md Datei.
 Durch Quellcodedokumentierung sollen Entwickler befähigt werden schnell in das Projekt einsteigen zu können und das Programm weiter zu entwickeln bzw. durch Plugins zu erweitern.
-Insbesondere bei den Plugins soll ein kurzes Tutorial erstellt werden, welches an die Plugin-Entwicklung heranführt. 
-Des Weiteren soll ein kleines, gut dokumentiertes Plugin entstehen, um den prinzipiellen Aufbau zu veranschaulichen.
-Wenn zu viel dokumentiert wird, veraltet diese schneller.
-Deswegen soll \emph{sinnvoll} und \emph{angemessen} dokumentiert werden.
-Dies bedeutet öffentliche APIs, wenn notwendig, detailliert und ausführlich zu dokumentieren und selbsterklärende Funktionen etc. nicht unnötig zu dokumentieren.
-Grundsätzlich soll der Quellcode selbst schon als Dokumentation dienen können.
-Zusätzlich finden sich beim Quellcode README-Dateien, die genaue Details über die verwendeten Funktionen, Build-Anleitungen und die Projektstruktur erläutern.
+
+Das Programm ist durchgängig mit Doxygen-Kommentaren versehen, welche mittels eines einfachen \emph{make doc} in HTML überführt werden.
+Zusätzlich ist eine README.md Datei vorhanden, welche einen kurzen Überblick über das Projekt gibt und eine Art \enquote{getting started} darstellt.
+
+Zusätzlich wurde das Programm mit vielen Debug-Nachrichten versehen, um eine schnelle Fehlersuche bzw. ein einfacheres Verständnis der Abläufe zu ermöglichen.
 
 \section{Buildprozess}
 
-Linken der Bibliotheken
+Der Build wird mittels \emph{qmake} durchgeführt.
+Dazu wird, wie in Qt-Projekten üblich eine \emph{.pro} Datei definiert, die alle Quellen enthält. 
+Diese wird ausgelesen und übliches Makefile erstellt, welches ausgeführt werden kann.
+Einige Bibliotheken werden dynamisch, andere statisch gelinkt. 
+Die statischen Bibliotheken sind in den Quellen des Projekts enthalten (Ordner libs).
+Die genaue Auflistung ist in \autoref{tab:linking} ersichtlich.
+
+\begin{table}[h]
+\center
+\caption{Linking der Bibliotheken}
+\label{tab:linking}
+\begin{tabular}{c|c}
+Bibliothek & Linking\\
+\hline
+Surface\_mesh & statisch\\
+libQGLViewer & statisch\\
+Qt & dynamisch\\
+OpenGL & dynamisch\\
+GLM & dynamisch\\
+\end{tabular}
+\end{table}
+
+Um das Projekt bauen zu können, sind folgende Schritte notwendig:
+
+\begin{enumerate}
+\item Sicherstellen, dass alle dynamischen, benötigten Bibliotheken installiert sind (siehe \autoref{tab:versionen} und \autoref{tab:linking})
+\item Im Hauptverzeichnis \emph{SubVis} \emph{qmake} ausführen
+\item \emph{make}
+\item \emph{make doc} für die Dokumentation
+\item \emph{make clean} für die Bereinigung der app-Builds
+\item \emph{make distclean} um die app-Builds und libs-Builds zu bereinigen
+\end{enumerate}
+
+Sollen die Debug-Nachrichten ausgeschaltet werden, muss in der Datei \emph{app.pro} der Wert \emph{debug} von der \emph{CONFIG} Variable entfernt werden.
 
 \section{Installation}
 
+Es sind lediglich die Laufzeitabhängigkeiten (siehe \autoref{tab:linking}) zu installieren. 
+Alle statischen Abhängigkeiten sind im Programm enthalten.
+Zur Ausführung muss lediglich die Datei \emph{SubVis} gestartet werden.
+
 \section{Benutzerhandbuch}
 
+Dies soll eine kurze Übersicht über die Funktionen und deren Verwendung sein.
 
+\subsection{Generelle Oberfläche}
+
+\autoref{sec:gui} beschreibt die Oberfläche. 
+Das Fenster kann beliebig vergrößert werden und bietet die Möglichkeit die rechte Seitenleiste in der Größe zu verändern. 
+Dazu muss lediglich der Rand zwischen Seitenleiste und Viewer mit der Maus verschoben werden.
+Wird der Rand fast ganz nach rechts gezogen, verschwindet die Seitenleiste.
+Durch ein erneutes nach links ziehen des rechten Randes erscheint sie wieder.
+Alle Aktionen der Werkzeugleiste können auch über die Menüleiste benutzt werden.
+Wenn eine Aktionen aktiv ist, wird diese optisch eingedrückt dargestellt.
+Jede Aktionen hat ein zugewiesenes Tastaturkürzel, welches neben dem Menüeintrag dargestellt wird.
+Da sich viele Aktionen auf ein spezifisches Polygonnetz beziehen (linke Seite bzw. rechte Seite), bieten die Tastaturkürzel meist die Möglichkeit mittels nachgelagerten Drücken der Taste 1 oder 2 die linke bzw. rechte Seite auszuwählen.
+
+\subsection{Rückgängig/Wiederherstellen}
+
+Jede Veränderung am Polygonnetz (z. B. Anwendung eines Algorithmus, Verschieben eines Vertex) führt zu einem neuen Historieneintrag. 
+Um eine Aktion rückgängig zu machen werden die Pfeile oben rechts benutzt.
+Wenn kein weiterer Schritt zurück oder nach vorne möglich ist, wird der jeweilige Pfeil ausgegraut.
+Es wird nur eine bestimmte Anzahl von Schritten abgespeichert.
+Wird diese Höchstgrenze überschritten, werden die ältesten Modifikationen aus der Historie entfernt.
+
+\subsection{Laden/Speichern}
+
+Über das Menü \emph{File} können Dateien geladen und gespeichert werden.
+Beim Laden werden beide Polygonnetze ersetzt.
+Über die Historie ist stets das unveränderte zuletzt geladene Polygonnetz erreichbar.
+Beim Speichern ist darauf zu achten, die korrekte Dateiendung anzugeben, andernfalls wird eine Fehlermeldung angezeigt.
+
+\subsection{Screenshots}
+
+Ein Screenshot kann im Menü \emph{File} angefertigt werden. 
+Es lässt sich das Dateiformat und der Speicherort festlegen.
+
+\subsection{Triangulieren}
+
+Für manche Algorithmen kann es notwendig sein, dass das Polygonnetz zuvor trianguliert wurde.
+Dies lässt sich leicht über das Menü \emph{Edit} erledigen.
+Dabei kann ausgewählt werden, welches Polygonnetz bearbeitet werden soll.
+
+\subsection{Ansichten synchronisieren}
+
+Standardmäßig sind beide Ansichten der Polygonnetze synchronisiert.
+Das heißt, die Bewegung der Kamera in einer Ansicht bewegt die andere in gleichem Maße.
+Dies kann im Menü \emph{View} umgeschaltet werden.
+
+\subsection{Splitscreen umschalten}
+
+Sollte nur ein einzelnes Polygonnetz von Interesse sein, so lässt sich die rechte Ansicht über das Menü \emph{View} ausblenden.
+Die Daten bleiben erhalten, lediglich die Ansicht wird nicht dargestellt bzw. gerendert.
+
+\subsection{Editieren}
+
+Um einen Vertex zu verschieben, muss der Editiermodus aktiviert werden. 
+Dies erfolgt im Menü \emph{Edit}.
+Gleichzeitg wird die rechte Ansicht und die Seitenleiste ausgeblendet.
+Ein Doppeklick auf einen Vertex färbt diesen rot und stellt ihn als größeres Viereck dar (siehe \autoref{fig:subvis_edit}).
+Nun kann der Vertex auf der Ebene bewegt werden. 
+Dazu muss die Tastenkombination STRG+linke Maustaste benutzt werden.
+Hilfreich ist es dabei, sich vorzustellen, dass der Vertex an einem Faden (rote Linie) hängt und dabei nur um die weiße Linie schwingt.
+Die Richtung der Linie kann mittels der Taste \emph{S} orthogonal umgeschaltet werden. 
+Somit sind alle Punkte im Raum erreichbar.
+Soll der Vertex an seiner neuen Position bleiben, muss lediglich ein erneuter Doppelklick ausgeführt werden (an beliebiger Stelle).
+Der Vertex wurde nun erfolgreich verschoben.
 
 
 
