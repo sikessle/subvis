@@ -8,8 +8,8 @@ Außerdem wird auf die konkrete Implementierung, Tools, Bibliotheken und Dokumen
 \begin{itemize}
  \item Architektur
  \begin{itemize}
- 	\item Erweiterbarkeit durch andere Algorithmen und Visualisierungen mittels Plugins.
- 	\item Plugins können eigene GUI-Elemente in dafür vorgesehenen Bereichen zeichnen.
+ 	\item Erweiterbarkeit durch andere Algorithmen und Visualisierungen mittels Plugins
+ 	\item Plugins können eigene GUI-Elemente in dafür vorgesehenen Bereichen zeichnen
  	  \item Anwendung von verschiedenen Algorithmen auf den jeweiligen Polygonnetzen
  	  \item Rückgängig/Wiederherstellen von Operationen
  \end{itemize}
@@ -20,8 +20,7 @@ Außerdem wird auf die konkrete Implementierung, Tools, Bibliotheken und Dokumen
  	\item Rotation des Objektes
  	\item Translation des Objektes
  	\item Skalierung des Objektes
- 	\item Beleuchtung der Oberfläche des Netzes, um Glattheit bewerten zu können
- 	\item Edit-Modus: Verschieben eines Punktes anhand seiner Flächennormalen
+ 	\item Editiermodus: Verschieben eines Vertex anhand seiner Normalen
  	\item Abbrechen von langlaufenden Unterteilungsschritten
     \item Statistik des Polygonnetzes anzeigen
     \item Splitscreen zur Darstellung von zwei Polygonnetzen
@@ -76,12 +75,11 @@ Dies betrifft einerseits die Bibliotheken und Tools aus \autoref{tab:versionen}.
 Andererseits auch das Betriebssystem, Versionsverwaltung, IDE und Programmiersprachenstandard.
 
 Als Betriebssystem wird Ubuntu 14.04 LTS verwendet. 
-Zum Projektabschluss wird jedoch eine plattformunabhängige Anwendung angestrebt.
 Die Sprachfeatures von C++ sollen maximal dem C++11 Standard entsprechen.
 Als Versionsverwaltung wird Git in Verbindung mit dem Git-Server des IOS an der HTWG eingesetzt. 
 
 Die Entwicklung findet auf dem \emph{develop}-Branch und eventuellen Feature-Branches statt.
-Dabei sollte ein Branch pro Feature erstellt werden und erst dann in den develop-Branch gemergt werden, wenn das Feature funktioniert.
+Dabei wird ein Branch pro Feature erstellt werden und erst dann in den develop-Branch gemergt werden, wenn das Feature funktioniert.
 Als IDE wird der vorgestellte Qt Creator verwendet.
 
 Zur Formatierung des Quellcodes wird astyle verwendet. 
@@ -110,17 +108,17 @@ Die grafische Oberfläche bietet eine aufgeräumte Ansicht der wichtigsten Eleme
 Im oberen Bereich findet sich die Menüleiste mit Dateioperatoren, Editierwerkzeugen und Optionen zur Steuerung der Ansicht.
 Darunter befindet sich eine Toolbar, welche häufig verwendete Aktionen enthält.
 Am unteren Ende des Fensters ist eine Statusleiste integriert, welche Informationen über das Polygonnetz anzeigt (Anzahl an Knoten etc.).
-Der Hauptbereich der Anwendung ist die Darstellung von zwei Viewern, welche separat bedient werden können und verschiedene Zustände der Polygonnetze darstellen können.
+Der Hauptbereich der Anwendung ist die Darstellung von zwei Ansichten, welche separat bedient werden können und verschiedene Zustände der Polygonnetze darstellen können.
 Diese unterstützen Rotation, Zoom und Translation.
 Über die Tabs darüber kann zwischen der generischen Polygonnetzansicht und Plugin-spezifischen Ansichten umgeschaltet werden.
 Geladene Plugins werden auf der rechten Seite in Form von Tabs angezeigt.
 Diese besitzen eine jeweils individuelle GUI.
 
 Die Anwendung bietet eine Rückgängig/Wiederherstellen Funktion in Form von zwei Pfeilen. Durch diese können Modifikationen an den Polygonnetzen rückgängig gemacht werden.
-Manchmal ist es von Vorteil, wenn die beiden getrennten Viewer sich synchronisieren.
+Manchmal ist es von Vorteil, wenn die beiden getrennten Ansichten sich synchronisieren.
 Dies kann über die Funktion \enquote{Synchronize Views} erreicht werden. 
-Nach der Aktivierung bewegen sich die Kameras der beiden Viewer absolut synchron.
-Eine Art \enquote{ablenkungsfreier Modus} lässt sich erreichen, in dem der zweite, rechte Viewer ausgeblendet wird. 
+Nach der Aktivierung bewegen sich die Kameras der beiden Ansichten  absolut synchron.
+Eine Art \enquote{ablenkungsfreier Modus} lässt sich erreichen, in dem die zweite, rechte Ansicht ausgeblendet wird. 
 Zusätzlich kann die rechte Tableiste der Plugins ausgeblendet oder verkleinert werden.
 
 Alle Menü- und Toolbar-Elemente lassen sich auch über Tastenkürzel erreichen.
@@ -156,13 +154,13 @@ Dadurch wird ein gewisser Grad an Immutabilität erreicht, welcher die Robusthei
 
 Die View-Komponente ist für die Darstellung/Editieroperationen verantwortlich.
 Diese verbindet auch die Signale der anderen Komponenten mit den Slots der Plugins bzw. Model-Komponente.
-Zusammengesetzt aus den Komponenten \emph{tabs\_plugins} (GUI-Elemente der einzelnen Plugins), \emph{toolbar} (Werkzeugleiste), \emph{tabs\_viewer} (generischer Polygonnetz-Viewer und Plugin-spezifischer Viewer) und \emph{menu\_bar} (Menüleiste) bildet die View-Komponente alle grundlegenden Darstellungsoperationen ab.
-Die Komponente \emph{tabs\_viewer} enhält einerseits einen generischen Viewer, der das Polygonnetz rendert und einen Editiermodus bereitstellt. 
-Andererseits einen Viewer, dessen Darstellung durch das aktive Plugin gesteuert wird.
+Zusammengesetzt aus den Komponenten \emph{tabs\_plugins} (GUI-Elemente der einzelnen Plugins), \emph{toolbar} (Werkzeugleiste), \emph{tabs\_viewer} (generische Polygonnetz-Ansicht und Plugin-spezifische Ansicht) und \emph{menu\_bar} (Menüleiste) bildet die View-Komponente alle grundlegenden Darstellungsoperationen ab.
+Die Komponente \emph{tabs\_viewer} enhält einerseits eine generische Ansicht, der das Polygonnetz rendert und einen Editiermodus bereitstellt. 
+Andererseits eine Ansicht, dessen Darstellung durch das aktive Plugin gesteuert wird.
 Dies erlaubt den Plugins maximale Freiheit bezüglich der Darstellung, da so das Polygonnetz gerendert werden kann aber auch eine völlig unabhängige Darstellung erfolgen kann.
 Durch Verbindung mit den Signalen der Model-Komponente, wird auf Veränderungen im Polygonnetz reagiert.
 
-Plugins werden von einem \emph{PluginManager} verwaltet, bei welchem sich die Plugins zuvor registriert werden müssen.
+Plugins werden von einem \emph{PluginManager} verwaltet, bei welchem die Plugins zuvor registriert werden müssen.
 Dieser erlaubt die Verwendung von mehreren Plugins, wovon jedoch nur eines zu einem Zeitpunkt aktiv sein kann (durch Auswahl des jeweiligen Tabs in der GUI).
 Plugins werden auch über Veränderungen in der Model-Komponente benachrichtigt.
 Sie können auch ein Signal aussenden, um anzuzeigen, dass sie ein erneutes Rendering durchführen möchten.
@@ -190,7 +188,10 @@ Dadurch kann der Ownership auf mehrere Instanzen verteilt werden, die alle gleic
 SubVis benutzt ausschließlich diese beiden Typen zur Speicherverwaltung.
 Ausnahmen sind lediglich Container-Typen, die eine ähnliche Semantik haben und Ressourcen die von Qt verwaltet werden.
 Die von Qt verwalteten Ressourcen werden automatisch bei Beendigung des Programms freigegeben, da diese eine Parent-Child-Beziehung besitzen und mit Zerstörung des Hauptfensters von Qt entsprechend behandelt werden.
-Die durchgehende Verwendung von unique\_ptr und der Move-Semantik in C++11 wird jederzeit deutlich, welches Objekt Besitzer einer Ressource ist.
+Die durchgehende Verwendung von unique\_ptr und der Move-Semantik in C++11 macht jederzeit deutlich, welches Objekt Besitzer einer Ressource ist.
+Zusätzlich wird wo immer möglich auf Referenzen zurückgegriffen.
+Diese zeigen an, dass kein Ownership-Wechsel stattfindet und lediglich ein vorübergehender Zugriff auf die Variable gewährt wird.
+Referenzen haben gegenüber Zeigern den Vorteil, dass sie stets gültig sind und nie NULL sein können.
 
 \subsection{Model}
 
@@ -207,7 +208,7 @@ Als Datenstruktur zur Verwaltung der Polygonnetze wird Surface\_mesh verwendet.
 Diese wird auch als Ein- und Ausgabetyp der Model-Komponente benutzt.
 
 Grundsätzlich verwaltet die Komponente stets zwei Instanzen der Datenstruktur.
-Diese werden über die Nummerierung 0 und 1 (als index bezeichnet) identifiziert.
+Diese werden über die Nummerierung 0 und 1 (als \emph{Index} bezeichnet) identifiziert.
 Jede Anfrage nach der Datenstruktur wird mit einem Paar (std::pair) dieser beiden Instanzen beantwortet. 
 Dabei handelt es sich um einen lediglich lesenden Zugriff (const).
 Diese Entscheidung wurde zugunsten eines besser nachvollziehbaren Programmflusses getroffen, da Immutabilität Software einfacher und robuster macht.
@@ -237,7 +238,7 @@ Im Fall c) ist nichts zu machen, außer das Paar hinzuzufügen und den Index zu 
 Im Fall a) müssen alle Einträge ab dem Index bis zum aktuellsten Element entfernt werden. 
 Dadurch ist auch garantiert, dass auf jeden Fall ein Element Platz hat.
 Bei Fall b) müssen Elemente entfernt werden. 
-Dabei werden alle Elemente gelöscht, bis auf das erste Element (leere Polygonnetze) und das zweite Element (zuletzt geladende, unveränderte Polygonnetze).
+Dabei werden alle Elemente gelöscht, bis auf das erste Element (leere Polygonnetze) und das zweite Element (zuletzt geladene, unveränderte Polygonnetze).
  
 
 \subsection{View}
@@ -256,8 +257,8 @@ MainWindow besteht aus den UI-Klassen für Menü-, Werkzeug- und Statusleiste.
 Des Weiteren aus zwei QTabWidget.
 Eines davon wird als Container für die Plugin-GUIs benutzt (pro Plugin ein Tab).
 Das andere ist der Container für die beiden Viewer-Tabs \emph{Kontrollnetz-Rendering} und \emph{Plugin-spezifisches Rendering}.
-Der aktuell aktive Plugin-Tab wird automatisch dem Plugin-spezifischen Viewer-Tab zugeordnet und kann eine eigene Beschriftung setzen.
-Für die Realisierung von zwei simultan aktiven Viewern pro Tab wird ein QSplitter eingesetzt, welcher die verfügbare Fläche in zwei gleiche Teile unterteilt.
+Der aktuell aktive Plugin-Tab wird automatisch dem Plugin-spezifischen Ansicht-Tab zugeordnet und kann eine eigene Beschriftung setzen.
+Für die Realisierung von zwei simultan aktiven Ansichten pro Tab wird ein QSplitter eingesetzt, welcher die verfügbare Fläche in zwei gleiche Teile unterteilt.
 
 \subsubsection{ViewerWidget}
 
@@ -374,9 +375,9 @@ Zusätzlich wurde das Programm mit vielen Debug-Nachrichten versehen, um eine sc
 
 Der Build wird mittels \emph{qmake} durchgeführt.
 Dazu wird, wie in Qt-Projekten üblich eine \emph{.pro} Datei definiert, die alle Quellen enthält. 
-Diese wird ausgelesen und übliches Makefile erstellt, welches ausgeführt werden kann.
+Diese wird ausgelesen und ein übliches Makefile erstellt, welches ausgeführt werden kann.
 Einige Bibliotheken werden dynamisch, andere statisch gelinkt. 
-Die statischen Bibliotheken sind in den Quellen des Projekts enthalten (Ordner libs).
+Die statischen Bibliotheken sind in den Quellen des Projekts enthalten (Verzeichnis lib).
 Die genaue Auflistung ist in \autoref{tab:linking} ersichtlich.
 
 \begin{table}[h]
@@ -398,7 +399,7 @@ Um das Projekt bauen zu können, sind folgende Schritte notwendig:
 
 \begin{enumerate}
 \item Sicherstellen, dass alle dynamischen, benötigten Bibliotheken installiert sind (siehe \autoref{tab:versionen} und \autoref{tab:linking})
-\item Im Hauptverzeichnis \emph{SubVis} \emph{qmake} ausführen
+\item Im Hauptverzeichnis SubVis \emph{qmake} ausführen
 \item \emph{make}
 \item \emph{make doc} für die Dokumentation
 \item \emph{make clean} für die Bereinigung der app-Builds
@@ -427,7 +428,7 @@ Durch ein erneutes nach links ziehen des rechten Randes erscheint sie wieder.
 Alle Aktionen der Werkzeugleiste können auch über die Menüleiste benutzt werden.
 Wenn eine Aktionen aktiv ist, wird diese optisch eingedrückt dargestellt.
 Jede Aktionen hat ein zugewiesenes Tastaturkürzel, welches neben dem Menüeintrag dargestellt wird.
-Da sich viele Aktionen auf ein spezifisches Polygonnetz beziehen (linke Seite bzw. rechte Seite), bieten die Tastaturkürzel meist die Möglichkeit mittels nachgelagerten Drücken der Taste 1 oder 2 die linke bzw. rechte Seite auszuwählen.
+Da sich viele Aktionen auf ein spezifisches Polygonnetz beziehen (linke Seite bzw. rechte Seite), bieten die Tastaturkürzel meist die Möglichkeit mittels nachgelagertem Drücken der Taste 1 oder 2 die linke bzw. rechte Seite auszuwählen.
 
 \subsection{Rückgängig/Wiederherstellen}
 
@@ -441,7 +442,7 @@ Wird diese Höchstgrenze überschritten, werden die ältesten Modifikationen aus
 
 Über das Menü \emph{File} können Dateien geladen und gespeichert werden.
 Beim Laden werden beide Polygonnetze ersetzt.
-Über die Historie ist stets das unveränderte zuletzt geladene Polygonnetz erreichbar.
+Über die Historie ist stets das unveränderte, zuletzt geladene Polygonnetz erreichbar.
 Beim Speichern ist darauf zu achten, die korrekte Dateiendung anzugeben, andernfalls wird eine Fehlermeldung angezeigt.
 
 \subsection{Screenshots}
