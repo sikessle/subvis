@@ -226,8 +226,9 @@ Diese Effizienz zeigt sich beispielsweise auch bei Standardoperationen wie dem D
 
 Ein weiterer Vorteil von OpenGL ist die Lizenzfreiheit für Anwendungsentwickler.
 
-
 \subsection{BezierView}
+
+NOCH GÜLTIG?
 
 BezierView (kurz bview) ist ein einfaches Programm zum Rendern von Bézier Patches, rationalen Bézier Patches und Polygonnetzen 
 \\\cite{Peters.bview.27.07.2015}.
@@ -241,7 +242,7 @@ Das Programm wurde von Saleh Dindar, Xiaobin Wu, Jorg Peters (University of Flor
 
 In diesem Abschnitt werden die Bibliotheken, die für die Darstellung nötig sind, vorgestellt.
 
-\subsection{Qt} % im finalen Bericht (2. Semester) noch ausbauen!
+\subsection{Qt} 
 
 \begin{figure}[hp]
   \centering
@@ -257,26 +258,55 @@ Dieses kann als eine Art Beobachter-Entwurfsmuster betrachtet werden.
 Dabei entspricht ein Signal einem \emph{notify} und ein Slot einem \emph{Beobachter}. 
 Mittels einer \emph{connect} Funktion wird die Verbindung zwischen den Komponenten (n:m) hergestellt.
 Zur Definition von Signalen und Slots werden Makros verwendet, die vom Meta-Object-Compiler \emph{moc} in standardkonformen C++ Code umgewandelt werden.
+
+Es gibt die Möglichkeit das alte String-basierte Konzept oder das neue Zeiger-basierte Konzept (ab Qt 5) zu nutzen (siehe \autoref{lst:alt_signal_slots} und \autoref{lst:neu_signal_slots}).
+
+\begin{lstlisting}[style=myCppStyle, caption={Altes Signal-Slots Konzept} \cite{QtWiki}, label=lst:alt_signal_slots]
+connect(sender, SIGNAL (valueChanged(QString,QString)), 
+	receiver, SLOT (updateValue(QString)));
+\end{lstlisting}
+
+\begin{lstlisting}[style=myCppStyle, caption={Neues Signal-Slots Konzept} \cite{QtWiki}, label=lst:neu_signal_slots]
+connect(sender, &Sender::valueChanged, 
+	receiver, &Receiver::updateValue);
+\end{lstlisting}
+
+Die neue Syntax ist eindeutiger, besitzt eine bessere Typprüfung zur Übersetzungszeit und erlaubt das Verbinden von Funktionen unabhängig davon, ob diese als Slot definiert wurden.
+
 Qt wird unter der LGPL verteilt.
 
-\subsection{libQGLViewer} % im finalen Bericht (2. Semester) noch ausbauen!
+\subsection{libQGLViewer} 
 
 Die Bibliothek bietet einige grundlegende Funktionen zur Erstellung von 3D OpenGL Betrachtern mit C++ \cite{libQGLViewer}.
 Sie bietet unter anderem folgende Funktionen bzw. erleichtert deren Erstellung:
 
 \begin{itemize}
-\item Mit der Maus verschiebbare Kamera
+\item Kamera ist im Raum frei positionierbar 
 \item Weltkoordinatensystem
 \item Verschiebung von Koordinatensystem und Objekten
-\item Frame-Animation
 \item Objektselektion mit der Maus
 \item Screenshots
 \item Tastaturkürzel und Maus-Bindings
 \end{itemize}
 
+Insbesondere das Konzept des \emph{Manipulated Frames} ist von besonderem Interesse für den Editiermodus. 
+Es erlaubt, einen Frame dem Viewer zuzuordnen und auf diesem mit der Maus affine Abbildungen auszuführen.
+Über die Methoden \emph{getPosition()} und \emph{setPosition(..)} kann die aktuelle Position im Raum abgefragt bzw. gesetzt werden.
+Zu beachten ist allerdings, dass zu einem Zeitpunkt nur jeweils ein Frame pro Viewer gesetzt werden kann.
+Somit muss bei mehreren beweglichen Objekten und damit Frames in der Anwendung manuell zwischen den Frames umgeschaltet werden.
+
+Maus- und Tastaturtasten können beliebig neu belegt werden und somit vorhandene Funktionen eingeschränkt oder auf andere Tasten gelegt werden.
+Dies ermöglicht eine optimale Konfigurierbarkeit auf den jeweiligen Verwendungszweck.
+
+Um einen eigenen Viewer basierend auf der Bibliothek zu realisieren, muss lediglich die Klasse \emph{QGLViewer} erweitert werden.
+Durch überschreiben der Methoden \emph{init()} und \emph{draw()} werden die anwendungsspezifischen OpenGL-Draw-Calls umgesetzt.
+
+Gegenüber dem OpenGL Konzept einer festen Kamera \cite{OpenGLCamera} besitzt ein QGLViewer eine frei positionierbare Kamera, was intuitiver ist.
+Das Kamera-Objekt kann ausgelesen und modifiziert werden, um die Kamera im Raum zu verschieben.
+
 Die Software ist unter der GPL frei verfügbar.
 
-\section{IDE} % im finalen Bericht (2. Semester) noch ausbauen!
+\section{IDE} 
 
 In Bezug auf Qt und C++ bietet sich die IDE \emph{Qt Creator} \cite{QtCreator} an. 
 Diese bietet alle gewohnten Funktionen einer IDE wie Syntaxhervorhebung, Autovervollständigung, GUI-Designer, Debugger und Git-Integration.
@@ -286,11 +316,22 @@ Projekte werden in sog. \emph{.pro} Dateien konfiguriert.
 Diese Datei ist plattformunabhängig und relativ schlank gehalten. 
 Erst bei Ausführung durch qmake wird ein plattformspezifisches Makefile generiert, welches dann mittels Make ausgeführt werden kann.
 
-\section{Dokumentation} % im finalen Bericht (2. Semester) noch ausbauen!
+In der IDE können auch verschiedene sogenannte \emph{Beautifier} verwendet werden, welche den Quellcode formatieren.
+
+\section{Quellcodeformatierung}
+
+Ein weit verbreitetes Tool, um Quellcode zu formatieren ist \emph{Artistic Style (astyle)} \cite{astyle}.
+Insbesondere in einem Projekt mit mehreren Entwicklern ist es sinnvoll, ein solches Tool zu benutzen, um einen einheitlichen Stil bezüglich der Formatierung zu erhalten.
+Astyle bietet diverser vorgefertigte Stile an, erlaubt aber auch die feingranulare Definition von eigenen Stilen.
+Die Konfiguration erfolgt entweder über Kommandozeilenparameter oder eine Options-Datei, welche eine bessere Übersicht bietet.
+Astyle lässt sich im QtCreator über ein Plugin nutzen und einem Tastaturkürzel zuweisen.
+
+\section{Dokumentation} 
 
 Im Bereich C++ ist Doxygen \cite{Doxygen} eine weit verbreitete Quellcodedokumentationslösung.
 Prinzipiell ähnelt es JavaDoc, in dem Quellcode direkt mittels spezielle annotierten Kommentaren versehen wird.
 Diese Annotationen werden dann mittels Transformation in ein Ausgabeformat (z. B. HTML oder PDF) überführt.
 Der Vorteil liegt darin, dass so die Dokumentation sehr nahe und eng mit dem Quellcode verbunden ist, was die Aktualität der Dokumentation begünstigt.
 Qt Creator bietet Syntaxhervorhebung für die speziellen Kommentare und erleichtert so die Verwendung.
+
 Doxygen steht unter der GPL.
