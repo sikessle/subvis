@@ -60,7 +60,7 @@ S:\ priginal\ point
 \subsubsection*{Face Split}
 Nun sind alle notwendigen Punkte berechnet.
 Die Punkte müssen durch Kanten zu gültigen Quads zusammengesetz werden.
-Ein Quad besteht aus den 4 Ecken:
+Ein Quad besteht aus den vier Ecken:
 \begin{itemize}
  \item Original Point
  \item Edge Point 1
@@ -79,11 +79,11 @@ Für jedes Polygon mit n Ecken entstehen n Quads.
 \cite{rorydriscoll.23.12.2015}
 \cite{yoshihitoyagi.23.12.2015}
 
-\subsection{Boundary}
+\subsection{Randregel}
 
-Für boundary cases können die Koeffizienten für kubische Splines verwendet werden.
+Für Ränder (boundary cases) können die Koeffizienten für kubische Splines verwendet werden.
 Diese führen zu akzeptablen Ergebnissen, garantieren formal jedoch keine \(C^1\) Stetigkeit mehr. \cite[S. 75f]{Zorin.subdivcourse}
-\autoref{fig:sd_catmull_boundary} zeigt die Gewichtung für Boundaries.
+\autoref{fig:sd_catmull_boundary} zeigt die Gewichtung für Ränder.
 Der edge point wird durch den Mittelwert der Ecken berechnet.
 Um den neuen original point zu berechnen, wird die rechte Maske aus \autoref{fig:sd_catmull_boundary}
 verwendet.

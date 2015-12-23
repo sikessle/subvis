@@ -5,18 +5,22 @@
 Charles Loop hat 1987 einen Unterteilungsalgorithmus für Dreiecksnetze entwickelt.
 Der Loop Algorithmus basiert auf quartischen Box Splines und approximiert die Kontrollpunkte.
 An extraordinären Stellen mit Valence ungleich sechs erzeugt Loop \(C^1\) stetige Flächen,
-im regulären Fall ansonsten \(C^2\).
+im regulären Fall \(C^2\).
 \cite[S. 70f]{Zorin.subdivcourse} \cite[S. 56f]{Standford.24.07.2015}
 
-\subsection{Unterteilungsregel}
+\subsection{Unterteilungs- und Randregel}
 
 Die Unterteilung erfolgt in drei Schritten.
 \begin{enumerate}
 \item Berechne für jede Kante einen edge point. Dieser wird auch als odd Vertex bezeichnet.
 \item Berechne für jeden Vertex eine neue Position. Dieser wird auch als even Vertex bezeichnet.
-\item Ersetze jede Dreieck durch vier neue Dreiecke.
+\item Ersetze jedes Dreieck durch vier neue Dreiecke.
 \end{enumerate}
 
+\autoref{fig:sd_loop_mask} zeigt die Masken für die Unterteilung
+und für Randfälle.
+Entlang des Randes (boundary/crease) wird eine kubische Spline Kurve erzeugt.
+\cite[S. 70]{Zorin.subdivcourse}
 \begin{figure}
 \centering
 \includegraphics[width=1.0\textwidth]{content/media/sd_loop_mask.jpg}
@@ -25,11 +29,41 @@ Die Unterteilung erfolgt in drei Schritten.
 \end{figure}
 
 \subsubsection*{Odd Vertex}
+Die odd Vertices werden nach der linken Maske aus \autoref{fig:sd_loop_mask} berechnet.
+Für Ränder wird der Mittelwert genommen.
 
 \subsubsection*{Even Vertex}
 
+Bei even Vertices muss für die Berechnung ein Faktor \(\beta\) bestimmt werden.
+\autoref{fig:sd_loop_mask} veranschaulicht die Struktur.
+Ist \(\beta\) bekannt, kann der Vertex wie folgt berechnet werden:\\
+\(
+even\_vertex = old\_vertex * (1 - k * beta) + (sum\_of\_surrounding\_vertices) * beta\\
+k:\ Valence
+\)
+\\
+Für die Bestimmung von \(\beta\) gibt es mehrere Möglichkeiten:
+\begin{description}
+\item[Original nach Loop]  \(\beta=\frac{1}{k}(\frac{5}{8}-(\frac{3}{8}+\frac{1}{4}cos(\frac{2\pi}{k}))^2)\)
+\item[Variation nach Warren] \mbox{}
+	\begin{itemize}
+		\item für \(k > 3, \beta = \frac{3}{8k}\)
+		\item für \(k = 3, \beta = \frac{3}{16}\)	
+	\end{itemize}
+\end{description}
+Die Variation nach Warran hat den Vorteil, dass diese einfacher berechnet werden kann
+und somit eine perfomantere Implementierung möglich ist.
+Die Variante nach Warren ist auch in Subvis implementiert.
+\cite{Carnegie}
+\cite{Standford.Loop}
+\cite[S. 70f]{Zorin.subdivcourse}
+
+Für Ränder muss \(\beta\) nicht bestimmt werden.
+Hier kann das einfache Schema aus \autoref{fig:sd_loop_mask} angewendet werden.
+
 \subsubsection*{Face Split}
 
+Jedes Dreieck wird schließlich, wie in \autoref{fig:sd_loop_split} gezeigt, in vier neue Dreiecke aufgeteilt.
 
 \begin{figure}
 \centering
@@ -37,6 +71,4 @@ Die Unterteilung erfolgt in drei Schritten.
 \caption{Loop face split \cite[S. 56f]{Standford.24.07.2015}}
 \label{fig:sd_loop_split}
 \end{figure}
-
-\subsection{Boundary}
 
