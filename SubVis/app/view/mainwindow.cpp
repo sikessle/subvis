@@ -180,11 +180,11 @@ void MainWindow::setup_menus() {
 }
 
 void MainWindow::save_snapshot0() {
-  viewer_mesh0_->saveSnapshot();
+  viewer_mesh0_->saveSnapshot(false);
 }
 
 void MainWindow::save_snapshot1() {
-  viewer_mesh1_->saveSnapshot();
+  viewer_mesh1_->saveSnapshot(false);
 }
 
 void MainWindow::toggle_sync_views(bool sync) {
