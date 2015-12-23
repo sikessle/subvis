@@ -8,8 +8,10 @@ Außerdem wird auf die konkrete Implementierung, Tools, Bibliotheken und Dokumen
 \begin{itemize}
  \item Architektur
  \begin{itemize}
- 	\item Erweiterbarkeit durch andere Algorithmen mittels Plugins.
+ 	\item Erweiterbarkeit durch andere Algorithmen und Visualisierungen mittels Plugins.
  	\item Plugins können eigene GUI-Elemente in dafür vorgesehenen Bereichen zeichnen.
+ 	  \item Anwendung von verschiedenen Algorithmen auf den jeweiligen Polygonnetzen
+ 	  \item Rückgängig/Wiederherstellen von Operationen
  \end{itemize}
  \item GUI
   \begin{itemize}
@@ -18,9 +20,11 @@ Außerdem wird auf die konkrete Implementierung, Tools, Bibliotheken und Dokumen
  	\item Rotation des Objektes
  	\item Translation des Objektes
  	\item Skalierung des Objektes
- 	\item Beleuchtung der Oberfläche des Netzes, um Glattheit bewerten zu können.
- 	\item Edit-Modus: Verschieben eines Punktes anhand seiner Flächennormalen.
-
+ 	\item Beleuchtung der Oberfläche des Netzes, um Glattheit bewerten zu können
+ 	\item Edit-Modus: Verschieben eines Punktes anhand seiner Flächennormalen
+ 	\item Abbrechen von langlaufenden Unterteilungsschritten
+    \item Statistik des Polygonnetzes anzeigen
+    \item Splitscreen zur Darstellung von zwei Polygonnetzen
  \end{itemize}
  \item Dateiformate / IO
  \begin{itemize}
@@ -33,21 +37,20 @@ Außerdem wird auf die konkrete Implementierung, Tools, Bibliotheken und Dokumen
  	\item Loop
  	\item Doo-Sabin
  	\item Butterfly
+ 	\item Modified Butterfly
  \end{itemize}
  \item Funktionen
  \begin{itemize}
   \item Variable Anzahl von Unterteilungsschritten
   \item Beleuchtungsmodus wählbar
+
  \end{itemize}
 \end{itemize}
 
 \section{Tools und Bibliotheken}
 
-\emph{SubVis} greift auf die Bibliotheken Qt, libQGLViewer, Surface\_mesh, OpenGL und Doxygen zurück.
+\emph{SubVis} greift auf die Bibliotheken Qt, libQGLViewer, OpenGL Mathematics, astyle, Surface\_mesh, OpenGL und Doxygen zurück.
 Die verwendeten Versionen sind in \autoref{tab:versionen} ersichtlich.
-
-Die genannten Versionen beziehen sich auf den jetzigen Zustand. 
-Während der laufenden Entwicklung wird unter Umständen auf eine jeweils höhere Version aktualisiert.
 
 \begin{table}[h]
 \center
@@ -61,12 +64,12 @@ libQGLViewer & 2.6.1\\
 Surface\_mesh & 1.0\\
 OpenGL & 10.1.3-0ubuntu0.4\footnote{Ubuntu Paket mesa-common-dev}\\
 Doxygen & 1.8.6\\
+GLM & libglm-dev 0.9.5.1-1\\
+Astyle & 2.03\\
 \end{tabular}
 \end{table}
 
 \section{Entwicklungsprozess}
-
-Styleguide?
 
 Um eine gemeinsame Entwicklungsumgebung zu schaffen, wurden gewisse Bibliotheken, Tools und Plattformen spezifiziert.
 Dies betrifft einerseits die Bibliotheken und Tools aus \autoref{tab:versionen}.
@@ -77,9 +80,11 @@ Zum Projektabschluss wird jedoch eine plattformunabhängige Anwendung angestrebt
 Die Sprachfeatures von C++ sollen maximal dem C++11 Standard entsprechen.
 Als Versionsverwaltung wird Git in Verbindung mit dem Git-Server des IOS an der HTWG eingesetzt. 
 
-Die Entwicklung findet auf dem \emph{develop}-Branch und eventuellen  Feature-Branches statt.
+Die Entwicklung findet auf dem \emph{develop}-Branch und eventuellen Feature-Branches statt.
 Dabei sollte ein Branch pro Feature erstellt werden und erst dann in den develop-Branch gemergt werden, wenn das Feature funktioniert.
 Als IDE wird der vorgestellte Qt Creator verwendet.
+
+Zur Formatierung 
 
 Das Projekt teilt sich in zwei Verzeichnisse auf: \emph{SubVis} und \emph{dev-doc}.
 \emph{SubVis} enthält die gleichlautende Anwendung als Qt-Projekt und unterteilt sich noch in die Ordner \emph{app}, \emph{lib} und \emph{objs}.
