@@ -37,7 +37,7 @@ namespace subdivision {
  *         \    /     \
  *          \  /       \
  *           \/         \
- *           e-----------b    e: \f$even vertex = vertex * (1 - n * beta) + (sum\_of\_surrounding\_vertices) * beta\f$
+ *           e-----------b    e: \f$even\_vertex = vertex * (1 - n * beta) + (sum\_of\_surrounding\_vertices) * beta\f$
  *          / \          /
  *         /   \        /     n - valence
  *        /     \      /      beta (as proposed by Warren): for n > 3, beta = 3/(8n) and for n = 3, beta = 3/16
