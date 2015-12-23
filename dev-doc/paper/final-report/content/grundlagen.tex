@@ -16,9 +16,9 @@ Nach mehrfacher Anwendung der Unterteilung konvergiert die Kurve oder Fläche ge
   \label{fig:sd}
 \end{figure}
 
-Unterteilungsalgorithmen kann man anhand ihrer Eigenschaften Kategorisieren.
+Unterteilungsalgorithmen kann man anhand ihrer Eigenschaften kategorisieren.
 Ein Unterscheidungskriterium betrifft die Art und Weiße, wie unterteilt wird.
-Man unterscheidet dabei zwischen \emph{Primal} und \emph{Dual}.
+Man unterscheidet dabei zwischen \emph{primal} und \emph{dual}.
 
 \begin{description}
  \item[Primal] Bei dieser Strategie wird die Oberfläche unterteilt (\enquote{face split}).
@@ -43,29 +43,45 @@ Man unterscheidet dabei zwischen \emph{Primal} und \emph{Dual}.
 
 Ein weiteres wesentliches Merkmal ist, ob Kontrollpunkte interpoliert werden oder nicht. 
 \begin{description}
- \item[Approximierung] Kontrollpunkte werden nicht interpoliert.
- \item[Interpolierung] Kontrollpunkte werden interpoliert.
+ \item[Approximation] Kontrollpunkte werden nicht interpoliert.
+ \item[Interpolation] Kontrollpunkte werden interpoliert.
 \end{description}
 
-\autoref{tab:sd_comp} listet die bekanntesten Unterteilungsalgorithmen auf und ordnet diese den Kategorien zu.
+\autoref{tab:sd_comp_primal} und \autoref{tab:sd_comp_dual} listet die bekanntesten Unterteilungsalgorithmen auf und ordnet diese den Kategorien zu.
 Zu jedem Algorithmus ist zusätzlich die \enquote{Glattheit} der Oberfläche angegeben (C-Stetigkeit).
-Dies kann auch als Maß über die Qualität des Unterteilungsalgorithmus fungieren.
+Die Unterteilungsalgorithmen erzeugen auf beliebig angeordnete Netze \(C^1\) stetige Flächen.
+In den \autoref{tab:sd_comp_primal} und \autoref{tab:sd_comp_dual} wird die Stetigkeit für den
+\emph{regulären} Fall angegeben.
+Die C-Stetigkeit kann auch als Maß über die Qualität des Unterteilungsalgorithmus fungieren.
 \begin{table}
 \center
-\caption{Unterteilungsalgorithmen Übersicht}
-\label{tab:sd_comp}
-\begin{tabular}{l|c|c|c}
-& \multicolumn{2}{c|}{\textbf{Primal}} & \textbf{Dual}\\
+\caption{Unterteilungsalgorithmen Übersicht primal \cite[S. 65]{Zorin.subdivcourse}}
+\label{tab:sd_comp_primal}
+\begin{tabular}{l|c|c|}
+& \multicolumn{2}{c|}{\textbf{Primal}}\\
 \hline
-& \textbf{Dreiecksnetz} & \textbf{Vierecksnetz} & \\
+& \textbf{Dreiecksnetz} & \textbf{Vierecksnetz}\\
 \hline
-\textbf{Approximierung} & Loop \((C^2)\) & Catmull-Clark \((C^2)\) & Doo-Sabin \((C^1)\) \\
-\textbf{Interpolierung} & Butterfly \((C^1)\) & Kobbelt \((C^1)\) & Biquartic \((C^2)\) \\
+\textbf{Approximierung} & Loop \((C^2)\) & Catmull-Clark \((C^2)\)\\
+\textbf{Interpolierung} & Butterfly \((C^1)\) & Kobbelt \((C^1)\)\\
 \end{tabular}
 \end{table}
-\autoref{fig:sd_comp} Vergleicht die vier unterschiedlichen Unterteilungsalgorithmen Catmull-Clark, Loop, Doo-Sabin und Butterfly.
+\begin{table}
+\center
+\caption{Unterteilungsalgorithmen Übersicht dual \cite[S. 65]{Zorin.subdivcourse}}
+\label{tab:sd_comp_dual}
+\begin{tabular}{c}
+\\
+\hline
+\textbf{Dual}\\
+\hline
+Doo-Sabin \((C^1)\) \\
+Biquartic \((C^2)\) \\
+\end{tabular}
+\end{table}
+\autoref{fig:sd_comp} vergleicht die vier unterschiedlichen Unterteilungsalgorithmen Catmull-Clark, Loop, Doo-Sabin und Butterfly.
 Man erkennt deutlich den interpolierenden Unterteilungsalgorithmus (Butterfly),
-da dieser durch die harten Interpolationsbedingungen im Vergleich zu den approximierenden Algorithmen viel \enquote{welliger} ist.
+da dieser durch die harten Interpolationsbedingungen im Vergleich zu den approximierenden Algorithmen viel \enquote{welliger} ist. \cite{Zorin.subdivcourse}
 \begin{figure}
   \centering
   \includegraphics[width=0.9\textwidth]{content/media/sd_overview.png}
@@ -84,5 +100,9 @@ Für das Projekt sollen folgende Algorithmen implementiert werden:
 \end{itemize}
 Dies sind die wichtigsten Vertreter für Dreiecks- und Vierecksnetze.
 Prinzipiell sind jedoch noch weitere Algorithmen denkbar.
+\cite[S. 65ff]{Zorin.subdivcourse} \cite{Standford.24.07.2015}
 
-
+\input{content/grundlagen_catmull}
+\input{content/grundlagen_loop}
+\input{content/grundlagen_butterfly}
+\input{content/grundlagen_doosabin}
