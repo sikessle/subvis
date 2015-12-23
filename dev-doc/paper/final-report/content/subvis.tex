@@ -249,9 +249,38 @@ Dabei werden alle Elemente gelöscht, bis auf das erste Element (leere Polygonne
   \label{fig:subvis_architektur_view}
 \end{figure}
 
-Sync etc.
+Die View-Komponente setzt wo möglich auf vorhandene Qt-Klassen oder erweitert diese (siehe \autoref{fig:subvis_architektur_view}).
+Die zentrale Klasse ist \emph{MainWindow}. 
+Sie wird zum Teil von Qt aus einer Formulardatei generiert (in einem ui\_mainwindow.h Header) und zum Teil manuell implementiert.
+MainWindow besteht aus den UI-Klassen für Menü-, Werkzeug- und Statusleiste.
+Des Weiteren aus zwei QTabWidget.
+Eines davon wird als Container für die Plugin-GUIs benutzt (pro Plugin ein Tab).
+Das andere ist der Container für die beiden Viewer-Tabs \emph{Kontrollnetz-Rendering} und \emph{Plugin-spezifisches Rendering}.
+Der aktuell aktive Plugin-Tab wird automatisch dem Plugin-spezifischen Viewer-Tab zugeordnet und kann eine eigene Beschriftung setzen.
+Für die Realisierung von zwei simultan aktiven Viewern pro Tab wird ein QSplitter eingesetzt, welcher die verfügbare Fläche in zwei gleiche Teile unterteilt.
+
+\subsubsection{ViewerWidget}
+
+Die Oberklasse ViewerWidget stellt einen generischen Viewer für SubVis dar.
+Sie erweitert QGLViewer und verbindet sich mit dem updated Signal der Model-Komponente.
+Mittels des Template-Patters können die Unterklassen von ViewerWidget ihre OpenGL Draw-Calls ausführen.
+ViewerWidget initialisiert zuvor einige Maus-Bindings, kümmert sich um das Layout und reicht das konkrete Polygonnetz an die Unterklasse weiter.
+Ein Viewer wird stets mit einer ID instanziert, die den Index des Polygonnetzes (vgl. Model-Komponente) spezifiziert.
+Somit müssen die Unterklassen lediglich ein einzelnes Polygonnetz verwalten und nicht zwischen beiden unterscheiden.
+
+\subsubsection{ViewerPluginWidget}
+
+Diese Klasse ist im Prinzip lediglich ein dünner Wrapper um ein Plugin und delegiert alle nötigen Aufrufe an das Plugin weiter.
+
+\subsubsection{ViewerMeshWidget}
+
+
 
 \subsection{Plugins}
+
+Manager etc. DIAGRAMM
+
+
 
 
 \section{Erstellung eines Plugins}
