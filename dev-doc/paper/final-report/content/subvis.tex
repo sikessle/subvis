@@ -144,36 +144,110 @@ Durch erneutes Doppelklicken (an einer beliebigen Stelle) wird der Editiervorgan
 
 In diesem Kapitel wird auf die konkrete Architektur, Implementierung und detaillierte Entwicklungsentscheidungen eingegangen.
 
-\subsection{Architektur}
+\subsection{Gesamtarchitektur}
 
-Linken der Bibliotheken, Signal Slots
+Die grundlegende Architektur ist in \autoref{fig:subvis_architektur} als UML-Komponentendiagramm dargestellt. 
+Grundsätzlich wird auf eine Model-View Architektur gesetzt.
 
-Es wurde bisher die grundlegende Grob-Architektur festgelegt, welche definiert, welche Komponenten bestehen und wie diese miteinander kommunizieren.
-In \autoref{fig:subvis_architektur} ist diese als UML-Komponentendiagramm dargestellt.
+Die Model-Komponente kapselt eine Datenstruktur, die das Polygonnetz enthält und bietet grundlegende Polygonnetzoperationen und Import bzw. Persistenzoperationen.
+Sie sendet außerdem bei Modifikation eines Polygonnetzes ein Signal an alle Listener aus.
+Der Zugriff auf das Polygonnetz ist nur lesend möglich, jeder schreibende Zugriff muss zuerst eine Kopie erstellen und diese nach der Modifikation wieder in die Model-Komponente laden.
+Dadurch wird ein gewisser Grad an Immutabilität erreicht, welcher die Robustheit der Anwendung erhöht.
 
-Grundsätzlich wird auf eine MVC Architektur gesetzt.
-Die Model-Komponente soll die Datenstruktur mit dem Polygonnetz beinhalten und Import bzw. Persistenzoperationen anbieten.
-Das Delegieren der Ereignisse aus der View-Komponente wird von der Controller-Komponente übernommen. 
-Dort sollen auch die entsprechende Signale und Slots definiert werden.
-Insbesondere die Editieroperationen werden an die MeshEdit-Komponente übergeben, welche dann die MeshData-Komponente ansteuert.
-In der View-Komponente wird die GUI erstellt und gerendert. 
-Deren Schnittstelle muss Operationen zum Erweitern der GUI und zum Beeinflussen des Renderings des Hauptfensters bereitstellen.
-Auf diese Schnittstelle greifen dann die Plugins zu, die entsprechend eigene GUI-Elemente zeichnen und Plugin-spezifische Renderingmodi anbieten.
+Die View-Komponente ist für die Darstellung/Editieroperationen verantwortlich.
+Diese verbindet auch die Signale der anderen Komponenten mit den Slots der Plugins bzw. Model-Komponente.
+Zusammengesetzt aus den Komponenten \emph{tabs\_plugins} (GUI-Elemente der einzelnen Plugins), \emph{toolbar} (Werkzeugleiste), \emph{tabs\_viewer} (generischer Polygonnetz-Viewer und Plugin-spezifischer Viewer) und \emph{menu\_bar} (Menüleiste) bildet die View-Komponente alle grundlegenden Darstellungsoperationen ab.
+Die Komponente \emph{tabs\_viewer} enhält einerseits einen generischen Viewer, der das Polygonnetz rendert und einen Editiermodus bereitstellt. 
+Andererseits einen Viewer, dessen Darstellung durch das aktive Plugin gesteuert wird.
+Dies erlaubt den Plugins maximale Freiheit bezüglich der Darstellung, da so das Polygonnetz gerendert werden kann aber auch eine völlig unabhängige Darstellung erfolgen kann.
+Durch Verbindung mit den Signalen der Model-Komponente, wird auf Veränderungen im Polygonnetz reagiert.
+
+Plugins werden von einem \emph{PluginManager} verwaltet, bei welchem sich die Plugins zuvor registriert werden müssen.
+Dieser erlaubt die Verwendung von mehreren Plugins, wovon jedoch nur eines zu einem Zeitpunkt aktiv sein kann (durch Auswahl des jeweiligen Tabs in der GUI).
+Plugins werden auch über Veränderungen in der Model-Komponente benachrichtigt.
+Sie können auch ein Signal aussenden, um anzuzeigen, dass sie ein erneutes Rendering durchführen möchten.
+Dieses Signal wird von der View-Komponente erkannt und in einen Aufruf der draw-Methode des Plugins umgesetzt.
+Die Plugins erhalten die Möglichkeit eine eigene GUI zu erstellen und ein spezifisches Rendering durchzuführen.
 
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{content/media/subvis_architektur.png}
-  \caption{Geplante Architektur von SubVis}
+  \caption{Gesamtarchitektur von SubVis}
   \label{fig:subvis_architektur}
 \end{figure}
 
+
 \subsection{Speicherverwaltung}
 
+In C++ Programmen muss eine Auseinandersetzung mit den Themen Speicherverwaltung und Ownership erfolgen.
+Der C++11 Standard bietet die Möglichkeit mit den Typen \emph{unique\_ptr} und \emph{shared\_ptr} die Speicherverwaltung automatisch und explizit zu machen.
+Im Gegensatz zu einer manuellen Speicherverwaltung werden somit mehrfache oder fehlende \emph{free} Aufrufe verhindert, was die Stabilität des Systems erhöht.
+Der Typ unique\_ptr kapselt einen Zeiger und gibt dessen Speicher frei, sobald die Variable ihren Gültigkeitsbereich verlässt oder neu zugewiesen wird \cite{C++Ref}. 
+Somit wird das Konzept des eindeutigen Ownerships einer Ressource umgesetzt.
+Dahingegen erlaubt der Typ shared\_ptr mehrere Besitzer und gibt den Speicher der Ressource erst frei, sobald die Variable durch keinen Besitzer mehr erreichbar ist.
+Dadurch kann der Ownership auf mehrere Instanzen verteilt werden, die alle gleichberechtigte Besitzer sind.
+
+SubVis benutzt ausschließlich diese beiden Typen zur Speicherverwaltung.
+Ausnahmen sind lediglich Container-Typen, die eine ähnliche Semantik haben und Ressourcen die von Qt verwaltet werden.
+Die von Qt verwalteten Ressourcen werden automatisch bei Beendigung des Programms freigegeben, da diese eine Parent-Child-Beziehung besitzen und mit Zerstörung des Hauptfensters von Qt entsprechend behandelt werden.
+Die durchgehende Verwendung von unique\_ptr und der Move-Semantik in C++11 wird jederzeit deutlich, welches Objekt Besitzer einer Ressource ist.
 
 \subsection{Model}
-Undo/
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{content/media/subvis_architektur_model.png}
+  \caption{Architektur der Model-Komponente von SubVis}
+  \label{fig:subvis_architektur_model}
+\end{figure}
+
+\autoref{fig:subvis_architektur_model} zeigt die Klassen der Model-Komponente.
+Die Schnittstelle ist in der Abbildung in mehrere Teilschnittstellen aufgegliedert, um die Komponenten verständlicher darzustellen.
+Als Datenstruktur zur Verwaltung der Polygonnetze wird Surface\_mesh verwendet.
+Diese wird auch als Ein- und Ausgabetyp der Model-Komponente benutzt.
+
+Grundsätzlich verwaltet die Komponente stets zwei Instanzen der Datenstruktur.
+Diese werden über die Nummerierung 0 und 1 (als index bezeichnet) identifiziert.
+Jede Anfrage nach der Datenstruktur wird mit einem Paar (std::pair) dieser beiden Instanzen beantwortet. 
+Dabei handelt es sich um einen lediglich lesenden Zugriff (const).
+Diese Entscheidung wurde zugunsten eines besser nachvollziehbaren Programmflusses getroffen, da Immutabilität Software einfacher und robuster macht.
+Wenn ein Polygonnetz bzw. eine Kopie davon verändert wurde, dann kann dieses in die Model-Komponente mit der IO-Schnittstelle geladen werden.
+Dies muss immer als Paar erfolgen. 
+Jedoch wird aus Komfort eine Methode angeboten, eine einzelne Instanz zu laden, wobei diese einfach dupliziert wird.
+Des Weiteren können Dateien im Format obj, off und stl geladen bzw. im Format off gespeichert werden.
+
+Über Veränderungen der Datenstruktur werden andere Komponente informiert, in dem das Signal \emph{updated} ausgesendet wird. 
+Diese enthält als Parameter beide aktuellen Datenstrukturinstanzen.
+
+Die Komponente realisiert darüber hinaus eine Historie der Instanzen.
+Es wird eine festgelegte Anzahl an Paaren von Instanzen im Hauptspeicher gehalten.
+Mit den entsprechenden Methoden kann in dieser Historie beliebig vor und zurück gesprungen werden.
+Dies ermöglicht die einfache Realisierung einer Rückgängig/Wiederherstellen Funktion.
+Die Implementierung nutzt einen std::vector und einen Index, um in diesem Array vor und zurück zu springen.
+Bei jedem neuen Historieeintrag wird der Speicher der Datenstrukturen optimiert durch Aufruf einer Garbage-Collection Funktion.
+Beim Hinzufügen von neuen Paaren in die Historie können sich zwei Fälle ergeben:
+
+\begin{itemize}
+\item[a)] Der Index zeigt auf ein Element vor der neuesten Historie (zuvor wurde zurück gesprungen).
+\item[b)] Die Historie hat die maximale Kapazität erreicht.
+\item[c)] Der Index zeigt auf das aktuellste Element und die Historie hat noch Kapazität.
+\end{itemize}
+
+Im Fall c) ist nichts zu machen, außer das Paar hinzuzufügen und den Index zu erhöhen.
+Im Fall a) müssen alle Einträge ab dem Index bis zum aktuellsten Element entfernt werden. 
+Dadurch ist auch garantiert, dass auf jeden Fall ein Element Platz hat.
+Bei Fall b) müssen Elemente entfernt werden. 
+Dabei werden alle Elemente gelöscht, bis auf das erste Element (leere Polygonnetze) und das zweite Element (zuletzt geladende, unveränderte Polygonnetze).
+ 
 
 \subsection{View}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{content/media/subvis_architektur_view.png}
+  \caption{Architektur der View-Komponente von SubVis}
+  \label{fig:subvis_architektur_view}
+\end{figure}
 
 Sync etc.
 
@@ -199,6 +273,8 @@ Grundsätzlich soll der Quellcode selbst schon als Dokumentation dienen können.
 Zusätzlich finden sich beim Quellcode README-Dateien, die genaue Details über die verwendeten Funktionen, Build-Anleitungen und die Projektstruktur erläutern.
 
 \section{Buildprozess}
+
+Linken der Bibliotheken
 
 \section{Installation}
 
