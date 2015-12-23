@@ -51,7 +51,7 @@ Lower case with underscore to separate words: my_member_variable
 
 ## Classes
 
-Capitalize first letter, separate with underscore: Subdivison_algorithm.
+Camelcase.
 
 ## Functions
 
