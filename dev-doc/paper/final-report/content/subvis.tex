@@ -84,7 +84,11 @@ Die Entwicklung findet auf dem \emph{develop}-Branch und eventuellen Feature-Bra
 Dabei sollte ein Branch pro Feature erstellt werden und erst dann in den develop-Branch gemergt werden, wenn das Feature funktioniert.
 Als IDE wird der vorgestellte Qt Creator verwendet.
 
-Zur Formatierung 
+Zur Formatierung des Quellcodes wird astyle verwendet. 
+Die Options-Datei style.astylerc definiert für das Projekt die Formatierungsregeln. 
+
+Als Style Guide für den Programmierstil wird der Google C++ Style Guide verwendet \cite{GsgC++}.
+Abweichungen sind jedoch in begründeten Fällen erlaubt und werden dokumentiert.
 
 Das Projekt teilt sich in zwei Verzeichnisse auf: \emph{SubVis} und \emph{dev-doc}.
 \emph{SubVis} enthält die gleichlautende Anwendung als Qt-Projekt und unterteilt sich noch in die Ordner \emph{app}, \emph{lib} und \emph{objs}.
@@ -93,10 +97,52 @@ Das Projekt teilt sich in zwei Verzeichnisse auf: \emph{SubVis} und \emph{dev-do
 \emph{dev-doc} dient der weiterführenden Dokumentation.
 Das Verzeichnis enthält z. B. Diagramme, diesen Bericht und andere hilfreiche Dokumente zur Entwicklung.
 
-
 \section{Grafische Oberfläche}
 
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{content/media/subvis_mesh.png}
+  \caption{Kontrollnetz in SubVis}
+  \label{fig:subvis_mesh}
+\end{figure}
+
+Die grafische Oberfläche bietet eine aufgeräumte Ansicht der wichtigsten Elemente (siehe \autoref{fig:subvis_mesh}). 
+Im oberen Bereich findet sich die Menüleiste mit Dateioperatoren, Editierwerkzeugen und Optionen zur Steuerung der Ansicht.
+Darunter befindet sich eine Toolbar, welche häufig verwendete Aktionen enthält.
+Am unteren Ende des Fensters ist eine Statusleiste integriert, welche Informationen über das Polygonnetz anzeigt (Anzahl an Knoten etc.).
+Der Hauptbereich der Anwendung ist die Darstellung von zwei Viewern, welche separat bedient werden können und verschiedene Zustände der Polygonnetze darstellen können.
+Diese unterstützen Rotation, Zoom und Translation.
+Über die Tabs darüber kann zwischen der generischen Polygonnetzansicht und Plugin-spezifischen Ansichten umgeschaltet werden.
+Geladene Plugins werden auf der rechten Seite in Form von Tabs angezeigt.
+Diese besitzen eine jeweils individuelle GUI.
+
+Die Anwendung bietet eine Rückgängig/Wiederherstellen Funktion in Form von zwei Pfeilen. Durch diese können Modifikationen an den Polygonnetzen rückgängig gemacht werden.
+Manchmal ist es von Vorteil, wenn die beiden getrennten Viewer sich synchronisieren.
+Dies kann über die Funktion \enquote{Synchronize Views} erreicht werden. 
+Nach der Aktivierung bewegen sich die Kameras der beiden Viewer absolut synchron.
+Eine Art \enquote{ablenkungsfreier Modus} lässt sich erreichen, in dem der zweite, rechte Viewer ausgeblendet wird. 
+Zusätzlich kann die rechte Tableiste der Plugins ausgeblendet oder verkleinert werden.
+
+Alle Menü- und Toolbar-Elemente lassen sich auch über Tastenkürzel erreichen.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{content/media/subvis_edit.png}
+  \caption{1) Selektion eines Vertex 2) Translation 3) Resultierendes Polygonnetz}
+  \label{fig:subvis_edit}
+\end{figure}
+
+Durch Aktiveren des Editiermodus (siehe \autoref{fig:subvis_edit}) wird in den ablenkungsfreien Modus geschaltet.
+Nach Doppelklick auf einen Vertex oder dessen unmittelbare Umgebung wird dieser selektiert, vergrößert in rot dargestellt und dessen Normale in weiß eingezeichnet (siehe Schritt 1 von \autoref{fig:subvis_edit}).
+Während der Vertex mittels STRG+linke Maustaste im Raum bewegt wird, wird zusätzlich eine rote Linie zwischen der Ursprungsposition und der neuen Position angezeigt (siehe Schritt 2 von \autoref{fig:subvis_edit}).
+Dabei bewegt sich der Vertex lediglich auf der Ebene, die durch die Normale des Vertex definiert wird.
+Damit eine beliebige Positionierung im Raum möglich ist, kann zwischen der Ebene der Normale und einer Ebene, die orthogonal zur dieser steht mit der Taste S umgeschaltet werden.
+Durch erneutes Doppelklicken (an einer beliebigen Stelle) wird der Editiervorgang beendet und das veränderte Polygonnetz dargestellt (siehe Schritt 3 von \autoref{fig:subvis_edit}).
+
+
 \section{Implementierung}
+
+In diesem Kapitel wird auf die konkrete Architektur, Implementierung und detaillierte Entwicklungsentscheidungen eingegangen.
 
 \subsection{Architektur}
 
@@ -125,8 +171,11 @@ Auf diese Schnittstelle greifen dann die Plugins zu, die entsprechend eigene GUI
 
 
 \subsection{Model}
+Undo/
 
 \subsection{View}
+
+Sync etc.
 
 \subsection{Plugins}
 
