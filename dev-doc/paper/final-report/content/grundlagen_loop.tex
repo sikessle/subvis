@@ -1,19 +1,19 @@
-\section{Loop}
+\section{Loop} \label{sec:loop}
 
 \subsection{Allgemein}
 
 Charles Loop hat 1987 einen Unterteilungsalgorithmus für Dreiecksnetze entwickelt.
 Der Loop Algorithmus basiert auf quartischen Box Splines und approximiert die Kontrollpunkte.
-An extraordinären Stellen mit Valence ungleich sechs erzeugt Loop \(C^1\) stetige Flächen,
+An extraordinären Stellen mit Valenz ungleich sechs erzeugt Loop \(C^1\) stetige Flächen,
 im regulären Fall \(C^2\).
 \cite[S. 70f]{Zorin.subdivcourse} \cite[S. 56f]{Standford.24.07.2015}
 
-\subsection{Unterteilungs- und Randregel}
+\subsection{Unterteilungs- und Randregeln}
 
 Die Unterteilung erfolgt in drei Schritten.
 \begin{enumerate}
-\item Berechne für jede Kante einen edge point. Dieser wird auch als odd Vertex bezeichnet.
-\item Berechne für jeden Vertex eine neue Position. Dieser wird auch als even Vertex bezeichnet.
+\item Berechne für jede Kante einen Edge Point. Dieser wird auch als Odd Vertex bezeichnet.
+\item Berechne für jeden Vertex eine neue Position. Dieser wird auch als Even Vertex bezeichnet.
 \item Ersetze jedes Dreieck durch vier neue Dreiecke.
 \end{enumerate}
 
@@ -29,17 +29,17 @@ Entlang des Randes (boundary/crease) wird eine kubische Spline Kurve erzeugt.
 \end{figure}
 
 \subsubsection*{Odd Vertex}
-Die odd Vertices werden nach der linken Maske aus \autoref{fig:sd_loop_mask} berechnet.
+Die Odd Vertices werden nach der linken Maske aus \autoref{fig:sd_loop_mask} berechnet.
 Für Ränder wird der Mittelwert genommen.
 
 \subsubsection*{Even Vertex}
 
-Bei even Vertices muss für die Berechnung ein Faktor \(\beta\) bestimmt werden.
+Bei Even Vertices muss für die Berechnung ein Faktor \(\beta\) bestimmt werden.
 \autoref{fig:sd_loop_mask} veranschaulicht die Struktur.
 Ist \(\beta\) bekannt, kann der Vertex wie folgt berechnet werden:\\
 \(
 even\_vertex = old\_vertex * (1 - k * beta) + (sum\_of\_surrounding\_vertices) * beta\\
-k:\ Valence
+k:\ Valenz
 \)
 \\
 Für die Bestimmung von \(\beta\) gibt es mehrere Möglichkeiten:
@@ -68,7 +68,7 @@ Jedes Dreieck wird schließlich, wie in \autoref{fig:sd_loop_split} gezeigt, in 
 \begin{figure}
 \centering
 \includegraphics[width=0.3\textwidth]{content/media/sd_loop_split.png}
-\caption{Loop face split \cite[S. 56f]{Standford.24.07.2015}}
+\caption{Loop Face Split \cite[S. 56f]{Standford.24.07.2015}}
 \label{fig:sd_loop_split}
 \end{figure}
 
