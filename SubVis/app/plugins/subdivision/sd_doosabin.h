@@ -33,7 +33,7 @@ namespace subdivision {
  *      |   f   e -->  | | F | |   new face can be arbitrary polygon face
  *      |     V |      | V---V |
  *      v---e---v      +-------+</pre>
- *    - for each vertex (if number of surrounding faces > 2):<pre>
+ *    - for each vertex:<pre>
  *      v-------v-------v     v-------v-------v
  *      |       |       |     |       |       |
  *      |       |       |     |       |       |

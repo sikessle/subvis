@@ -8,7 +8,7 @@ namespace subdivision {
 /**
  * @brief Implementation of the Modified Butterfly subdivision algorithm.
  *
- * The algorithm was devised by Denis Zorin and Peter Schröder.
+ * The algorithm was devised by Denis Zorin, Peter Schröder and Wim Sweldens.
  * It is related to the Butterfly subdivision.
  * If there is a vertex with valence == 6 the Modified Butterfly behaves equal to the Butterfly.
  * The difference is if there are vertices with valence != 6 (extraordinary).
@@ -33,9 +33,9 @@ namespace subdivision {
  *       /         \  /
  *                  \/
  *       ------------e0</pre>
- *      - valence == 3: v: 3/4, e0: 5/12, e1: -1/12, e2: -1/12
- *      - valence == 4: v: 3/4, e0: 3/8, e1: 0, e2: -1/8, e3: 0
- *      - valence >= 5: v: 3/4, ej: \f$(1/4 + cos(2 * \pi * j/N) + 1/2 * cos(4 * \pi * j/N)/N)\f$
+ *      - valence == 3: \f$v: 3/4,\ e_0: 5/12,\ e_1: -1/12,\ e_2: -1/12\f$
+ *      - valence == 4: \f$v: 3/4,\ e_0: 3/8,\ e_1: 0,\ e_2: -1/8,\ e_3: 0\f$
+ *      - valence >= 5: \f$v: 3/4,\ e_j = (\frac{1}{4}+ cos(2 * \pi * \frac{j}{N}) + \frac{1}{2} * cos(4 * \pi * \frac{j}{N}))/N\f$
  *    - both vertices of the edge are extraordinary: average the results of using the above extraordinary stencil
  *  2. Replace each triangle face (equal to Butterfly).
  *

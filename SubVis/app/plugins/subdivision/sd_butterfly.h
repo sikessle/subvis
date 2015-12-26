@@ -8,7 +8,7 @@ namespace subdivision {
 /**
  * @brief Implementation of the Butterfly subdivision algorithm.
  *
- * The algorithm was devised by Nira Dyn, David Levine und John A. Gregory.
+ * The algorithm was devised by Nira Dyn, David Levine and John A. Gregory.
  * Butterfly subdivision operates on triangular meshes.
  * The subdivided output mesh contains always triangle faces.
  * The control points are interpolated.
