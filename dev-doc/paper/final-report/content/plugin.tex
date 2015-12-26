@@ -158,7 +158,7 @@ und unterstützt die gezeigten Randregeln.
 \subsection{Butterfly}
 
 Der Butterfly Algorithmus ist nach \autoref{sec:butterfly}
-in der Klasse \emph{SdButterfly} implementiert.
+inklusive Randregel in der Klasse \emph{SdButterfly} implementiert.
 \emph{SdButterfly} erbt von \emph{SdTrianlge}.
 \autoref{fig:sd_butterfly_screenshot} zeigt einen Unterteilungsschritt.
 
@@ -177,6 +177,10 @@ sondern direkt von \emph{SdButterfly}, da dieser bis auf Ausnahmeregeln
 identisch mit dem Butterfly Algorithmus ist. In \emph{SdButterfly}
 muss für eine korrekte Implementierung somit nur noch die Methode
 \emph{compute\_edge\_point} überschrieben werden.
+Der Modified Butterfly Algorithmus ist mit der Standard Randregel
+implementiert.
+Die erweiterten Randregeln, die im letzten Unterabschnitt von \autoref{sec:modbutterfly}
+kurz erwähnt werden, sind nicht umgesetzt.
 \autoref{fig:sd_modbutterfly_screenshot} zeigt einen Unterteilungsschritt.
 
 \begin{figure}
