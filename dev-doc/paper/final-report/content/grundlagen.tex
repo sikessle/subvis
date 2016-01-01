@@ -48,48 +48,55 @@ Ein weiteres wesentliches Merkmal ist, ob Kontrollpunkte interpoliert werden ode
 \end{description}
 
 \autoref{tab:sd_comp_primal} und \autoref{tab:sd_comp_dual} listet die bekanntesten Unterteilungsalgorithmen auf und ordnet diese den Kategorien zu.
-Zu jedem Algorithmus ist zusätzlich die \enquote{Glattheit} der Oberfläche angegeben (C-Stetigkeit).
-Die Unterteilungsalgorithmen erzeugen auf beliebig angeordnete Netze \(C^1\) stetige Flächen.
+Zu jedem Algorithmus ist die \enquote{Glattheit} der Oberfläche angegeben (C-Stetigkeit).
+Die Unterteilungsalgorithmen erzeugen auf beliebig angeordnete Netze \(C^k\) stetige Flächen.
 In den \autoref{tab:sd_comp_primal} und \autoref{tab:sd_comp_dual} wird die Stetigkeit für den
-\emph{regulären} Fall angegeben.
+\emph{irregulären} und den \emph{regulären} Fall angegeben.
 Die C-Stetigkeit kann auch als Maß über die Qualität des Unterteilungsalgorithmus fungieren.
+\cite{Zorin.subdivcourse}
+
 \begin{table}
 \center
-\caption{Unterteilungsalgorithmen Übersicht primal \cite[S. 65]{Zorin.subdivcourse}}
+\caption{Unterteilungsalgorithmen primal \cite[S. 65]{Zorin.subdivcourse}
+\cite{Standford.24.07.2015} \cite{Kobbelt3} \cite{Velho:2001:SUB:2246196.2246206}
+\cite{Peters:1997:SSS:263834.263851} \cite{Inter3Subdiv} \cite{Sqrt5}}
 \label{tab:sd_comp_primal}
-\begin{tabular}{l|c|c|}
-& \multicolumn{2}{c|}{\textbf{Primal}}\\
+\begin{tabular}{p{1.5cm}|p{4cm}|p{4cm}|p{3cm}|}
+& \multicolumn{3}{c|}{\textbf{Primal}}\\
 \hline
-& \textbf{Dreiecksnetz} & \textbf{Vierecksnetz}\\
+& \textbf{Dreiecksnetz} & \textbf{Vierecksnetz} & \textbf{Polygonnetz}\\
 \hline
-\textbf{Approximation} & Loop \((C^2)\) & Catmull-Clark \((C^2)\)\\
-\textbf{Interpolation} & Butterfly \((C^1)\) & Kobbelt \((C^1)\)\\
+\multirow{2}{1.5cm}{\textbf{Appro-ximation}} & Loop \([C^1/C^2]\) & Catmull-Clark \([C^1/C^2]\) & Simplest \([C^1/C^1]\)\\
+ & \(\sqrt3\)-Subdivision \([C^1/C^2]\) & \(\sqrt5\)-Subdivision & 4-8 Subdivision \([C^1/C^4]\)\\
+\hline
+\multirow{3}{1.5cm}{\textbf{Inter-polation}} & Butterfly \([C^0/C^1]\) & Kobbelt \([C^1/C^1]\) & \\
+ & Mod. Butterfly \([C^1/C^1]\) & &\\
+ &Interp. \(\sqrt3\)-Subdivision \([C^1/C^1]\) & &\\
 \end{tabular}
 \end{table}
+
 \begin{table}
 \center
-\caption{Unterteilungsalgorithmen Übersicht dual \cite[S. 65]{Zorin.subdivcourse}}
+\caption{Unterteilungsalgorithmen dual \cite[S. 65]{Zorin.subdivcourse} \cite{Standford.24.07.2015}}
 \label{tab:sd_comp_dual}
 \begin{tabular}{c}
 \\
 \hline
 \textbf{Dual}\\
 \hline
-Doo-Sabin \((C^1)\) \\
+Doo-Sabin \((C^0/C^1)\) \\
 Biquartic \((C^2)\) \\
 \end{tabular}
 \end{table}
-\autoref{fig:sd_comp} vergleicht die vier unterschiedlichen Unterteilungsalgorithmen Catmull-Clark, Loop, Doo-Sabin und Butterfly.
-Man erkennt deutlich den interpolierenden Unterteilungsalgorithmus (Butterfly),
-da dieser durch die harten Interpolationsbedingungen im Vergleich zu den approximierenden Algorithmen viel \enquote{welliger} ist. \cite{Zorin.subdivcourse}
+
+\section{Auswahl von Unterteilungsalgorithmen}
+
 \begin{figure}
   \centering
   \includegraphics[width=0.9\textwidth]{content/media/sd_overview.png}
   \caption{Vergleich der Unterteilungsalgorithmen \cite{Standford.24.07.2015}}
   \label{fig:sd_comp}
 \end{figure}
-
-\section{Auswahl von Unterteilungsalgorithmen}
 
 Für das Projekt sollen folgende Algorithmen implementiert werden:
 \begin{itemize}
@@ -98,9 +105,16 @@ Für das Projekt sollen folgende Algorithmen implementiert werden:
 	\item Doo-Sabin
 	\item Butterfly
 \end{itemize}
-Dies sind die wichtigsten Vertreter für Dreiecks- und Vierecksnetze.
+Dies sind die wichtigsten Vertreter für Dreiecks- und Vierecksnetze
+(siehe \cite[S. 65ff]{Zorin.subdivcourse} \cite{Standford.24.07.2015}).
 Prinzipiell sind jedoch noch weitere Algorithmen denkbar.
-\cite[S. 65ff]{Zorin.subdivcourse} \cite{Standford.24.07.2015}
+
+\autoref{fig:sd_comp} vergleicht die vier ausgewählten
+unterschiedlichen Unterteilungsalgorithmen Catmull-Clark, Loop, Doo-Sabin und Butterfly.
+Man erkennt deutlich den interpolierenden Unterteilungsalgorithmus (Butterfly),
+da dieser durch die harten Interpolationsbedingungen im
+Vergleich zu den approximierenden Algorithmen viel \enquote{welliger} ist.
+\cite{Zorin.subdivcourse}
 
 \input{content/grundlagen_catmull}
 \input{content/grundlagen_loop}
