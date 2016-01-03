@@ -1,6 +1,27 @@
 #ifndef SUBVIS_SUBVIS_APP_H
 #define SUBVIS_SUBVIS_APP_H
 
+/**
+ * \mainpage SubVis - A Tool to visualize subdivision algorithms
+ *
+ * SubVis is an easy to use Software to load and to display arbitrary meshes.
+ * Addicted to the topology the user can apply subdivision algorithms on the mesh.
+ *
+ * The following algorithms are supported:
+ *  - Catmull-Clark
+ *  - Doo-Sabin
+ *  - Loop
+ *  - Butterfly
+ *  - Modified Butterfly
+ *
+ * Furthermore SubVis has an edit mode, in which the user can modify the mesh.
+ *
+ * SubVis was developed in the Team-Project (2015/16) of the HTWG Konstanz
+ * by Tobias Keh, Simon Kessler and Felix Born.
+ * The project was subervised by Prof. Dr. Georg Umlauf und Pascal Laube.
+ *
+ */
+
 #include <memory>
 #include <QSplashScreen>
 #include <QApplication>
