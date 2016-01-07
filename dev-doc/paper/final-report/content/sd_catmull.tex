@@ -1,6 +1,6 @@
-\section{Catmull-Clark} \label{sec:catmull}
+\subsection{Catmull-Clark} \label{subsec:catmull}
 
-\subsection{Allgemein}
+\subsubsection*{Allgemein}
 
 Der Catmull-Clark Algorithmus wurde 1978 von Edwin Catmull und James Clark entwickelt.
 Er basiert auf bi-kubischen uniformen B-Spline Flächen.
@@ -16,7 +16,7 @@ nur \(C^1\).
 \cite[S. 75ff]{Zorin.subdivcourse} \cite[S. 52ff]{Standford.24.07.2015}
 
 
-\subsection{Unterteilungs- und Randregeln}
+\subsubsection*{Unterteilungs- und Randregeln}
 
 Um ein Kontrollnetz nach Catmull-Clark zu unterteilen sind vier Schritte notwendig.
 \begin{enumerate}
@@ -36,17 +36,17 @@ Im folgenden wird der allgemeinere Fall für beliebige Polygone beschrieben.
 \label{fig:sd_catmull_mask}
 \end{figure}
 
-\subsubsection*{Face Point}
+\paragraph*{Face Point}
 Der Face Point berechnet sich als Mittelwert der Kontrollpunkte des Polygons.
 Bei einem Viereck wie in \autoref{fig:sd_catmull_mask} hat somit jeder Kontrollpunkt
 ein Gewicht von 1/4.
 
-\subsubsection*{Edge Point}
+\paragraph*{Edge Point}
 Der Edge Point wird von den anliegenden Polygonen beeinflusst.
 Dieser errechnet sich aus dem Durchschnitt der zwei benachbarten Face Points und den
 beiden Kontrollpunkten der Kante.
 
-\subsubsection*{Original Point}
+\paragraph*{Original Point}
 Jeder Original Point wird aktualisiert.
 Die Berechnung wird folgendermaßen durchgeführt:\\
 \(
@@ -57,7 +57,7 @@ R:\ Durchschnitt\ aller\ umliegenden\ Mittelpunkte\ der\ Ecken\ (\neq Edge\ Poin
 S:\ Original\ Point
 \)
 
-\subsubsection*{Face Split}
+\paragraph*{Face Split}
 Nun sind alle notwendigen Punkte berechnet.
 Die Punkte müssen durch Kanten zu gültigen Quads zusammengesetz werden.
 Ein Quad besteht aus den vier Ecken:
@@ -79,7 +79,7 @@ Für jedes Polygon mit n Ecken entstehen n Quads.
 \cite{rorydriscoll.23.12.2015}
 \cite{yoshihitoyagi.23.12.2015}
 
-\subsubsection*{Randregeln}
+\paragraph*{Randregeln}
 
 Für Ränder (boundary cases) können die Koeffizienten für kubische Splines verwendet werden.
 Diese führen zu akzeptablen Ergebnissen, garantieren formal jedoch keine \(C^1\) Stetigkeit mehr. \cite[S. 75f]{Zorin.subdivcourse}

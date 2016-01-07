@@ -1,6 +1,6 @@
-\section{Loop} \label{sec:loop}
+\subsection{Loop} \label{subsec:loop}
 
-\subsection{Allgemein}
+\subsubsection*{Allgemein}
 
 Charles Loop hat 1987 einen Unterteilungsalgorithmus für Dreiecksnetze entwickelt.
 Der Loop Algorithmus basiert auf quartischen Box Splines und approximiert die Kontrollpunkte.
@@ -8,7 +8,7 @@ An extraordinären Stellen mit Valenz ungleich sechs erzeugt Loop \(C^1\) stetig
 im regulären Fall \(C^2\).
 \cite[S. 70f]{Zorin.subdivcourse} \cite[S. 56f]{Standford.24.07.2015}
 
-\subsection{Unterteilungs- und Randregeln}
+\subsubsection*{Unterteilungs- und Randregeln}
 
 Die Unterteilung erfolgt in drei Schritten.
 \begin{enumerate}
@@ -28,11 +28,11 @@ Entlang des Randes (boundary/crease) wird eine kubische Spline Kurve erzeugt.
 \label{fig:sd_loop_mask}
 \end{figure}
 
-\subsubsection*{Odd Vertex}
+\paragraph*{Odd Vertex}
 Die Odd Vertices werden nach der linken Maske aus \autoref{fig:sd_loop_mask} berechnet.
 Für Ränder wird der Mittelwert errechnet.
 
-\subsubsection*{Even Vertex}
+\paragraph*{Even Vertex}
 
 Bei Even Vertices muss für die Berechnung der Faktor \(\beta\) bestimmt werden.
 \autoref{fig:sd_loop_mask} veranschaulicht auf der rechten Seite die Berechnung.
@@ -61,7 +61,7 @@ Hier kann das einfache Schema aus \autoref{fig:sd_loop_mask} angewendet werden.
 \cite{Standford.Loop}
 \cite[S. 70f]{Zorin.subdivcourse}
 
-\subsubsection*{Face Split}
+\paragraph*{Face Split}
 
 Jedes Dreieck wird schließlich, wie in \autoref{fig:sd_loop_split} gezeigt, in vier neue Dreiecke aufgeteilt.
 

@@ -1,6 +1,6 @@
-\section{Doo-Sabin} \label{sec:doosabin}
+\subsection{Doo-Sabin} \label{subsec:doosabin}
 
-\subsection{Allgemein}
+\subsubsection*{Allgemein}
 
 Der Algorithmus Doo-Sabin wurde 1978 von Daniel Doo and Malcolm Sabin entwickelt.
 Doo-Sabin ist eine Verallgemeinerung von bi-quadratischen uniformen B-Spline Flächen
@@ -11,7 +11,7 @@ Die Kontrollpunkte werden approximiert.
 Doo-Sabin erzeugt eine \(C^1\) stetige Fläche.
 \cite[S. 79f]{Zorin.subdivcourse}
 
-\subsection{Unterteilungs- und Randregeln}
+\subsubsection*{Unterteilungs- und Randregeln}
 
 Ein Unterteilungsschritt lässt sich bei Doo-Sabin in vier Punkte gliedern:
 \begin{enumerate}
@@ -29,18 +29,18 @@ Ein Unterteilungsschritt lässt sich bei Doo-Sabin in vier Punkte gliedern:
 \end{figure}
 \autoref{fig:sd_doosabin_mask} veranschaulicht den Zusammenhang.
 
-\subsubsection*{Face Point}
+\paragraph*{Face Point}
 Der Face Point wird analog zu Catmull-Clark als Mittelwert der Kontrollpunkte des Polygons
 berechnet.
 
-\subsubsection*{Edge Point}
+\paragraph*{Edge Point}
 Der Edge Point errechnet sich aus dem Mittelwert der beiden Ecken einer Kante.
 
-\subsubsection*{New Point}
+\paragraph*{New Point}
 Der New Point ist der Mittelwert aus Face Point, den beiden Edge Points und dem alten Vertex
 (siehe \autoref{fig:sd_doosabin_mask}). Das unterteilte Netz besteht nur noch aus diesen New Points.
 
-\subsubsection*{Vertex Split}
+\paragraph*{Vertex Split}
 Im Gegensatz zu den bisher vorgestellten Algorithmen handelt es sich bei Doo-Sabin nicht um einen
 Unterteilungsalgorithmus mit Face Split, sondern mit Vertex Split.
 Das bedeutet, dass nicht eine Seite in mehrere Seiten aufgeteilt wird, sondern
@@ -65,7 +65,7 @@ die in \autoref{fig:sd_doosabin_faces} markiert sind.
 \end{figure}
 
 
-\subsubsection*{Randregeln}
+\paragraph*{Randregeln}
 
 Die Randregel ist in \autoref{fig:sd_doosabin_boundary} abgebildet.
 Es wird jede Randkante durch zwei Vertices ersetzt.

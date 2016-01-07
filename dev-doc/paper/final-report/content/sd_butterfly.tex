@@ -1,6 +1,6 @@
-\section{Butterfly} \label{sec:butterfly}
+\subsection{Butterfly} \label{subsec:butterfly}
 
-\subsection{Allgemein}
+\subsubsection*{Allgemein}
 
 Der Butterfly Algorithmus ist ein interpolierender Unterteilungsalgorithmus,
 der von Nira Dyn, David Levine und John A. Gregory entwickelt wurde.
@@ -13,7 +13,7 @@ Butterfly arbeitet auf Dreiecksnetzen und erzeugt an regulären Stellen
 \cite{Sharp}
 \cite{Zorin:1996:ISM:237170.237254}
 
-\subsection{Unterteilungs- und Randregeln}
+\subsubsection*{Unterteilungs- und Randregeln}
 
 Der Algorithmus besteht aus zwei Schritten:
 \begin{enumerate}
@@ -28,7 +28,7 @@ Der Algorithmus besteht aus zwei Schritten:
 \label{fig:sd_butterfly_mask}
 \end{figure}
 
-\subsubsection*{Edge Point}
+\paragraph*{Edge Point}
 Die Berechnung des Edge Points wird mit dem sogenannten Eight-Point Stencil
 aus \autoref{fig:sd_butterfly_mask} durchgeführt.
 Die Regel für den Randfall ist daneben abgebildet.
@@ -37,7 +37,7 @@ Die Regel für den Randfall ist daneben abgebildet.
 Da die Punkte beim Butterfly interpoliert werden, müssen die alten Vertices
 (wie bisher bei approximierenden Algorithmen) nicht neu berechnet werden. 
 
-\subsubsection*{Face Split}
+\paragraph*{Face Split}
 Der Face Split ist identisch zum Loop Face Split.
 Jedes Dreieck wird in vier neue Dreiecke aufgeteilt (\autoref{fig:sd_loop_split}).
 \cite[S. 64ff]{Standford.24.07.2015} \cite[S. 72ff]{Zorin.subdivcourse}

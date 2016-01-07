@@ -1,0 +1,121 @@
+\section{Unterteilungsalgorithmen}
+
+Unterteilungsalgorithmen erzeugen aus einem Ausgangspolygonnetz eine glatte Fläche.
+Die glatte Zielfläche ist dabei der Grenzwert eines unendlichen, rekursiven Verfeinerungsschemas.
+\autoref{fig:sd} visualisiert die Anwendung eines Unterteilungsalgorithmus auf eine Kurve und auf eine Fläche.
+Nach mehrfacher Anwendung der Unterteilung konvergiert die Kurve oder Fläche gegen die glatte Zielkurve bzw. Zielfläche.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{content/media/sd.png}
+  \caption{Unterteilungsalgorithmus - Kurve und Fläche \cite{Standford.24.07.2015}}
+  \label{fig:sd}
+\end{figure}
+
+Unterteilungsalgorithmen kann man anhand ihrer Eigenschaften kategorisieren.
+Ein Unterscheidungskriterium betrifft die Art und Weiße, wie unterteilt wird.
+Man unterscheidet dabei zwischen \emph{primal} und \emph{dual}.
+
+\begin{description}
+ \item[Primal] Bei dieser Strategie wird die Oberfläche unterteilt (\enquote{face split}).
+\autoref{fig:sd_primal} stellt diese Methode für ein Dreicksnetz und ein Vierecksnetz dar.
+ \item[Dual] Auf der anderen Seite ist es möglich Eckpunkte in mehrere Eckpunkte aufzusplitten (\enquote{vertex split}).
+ Diese Methode ist in \autoref{fig:sd_dual} abgebildet.
+
+\end{description}
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{content/media/sd_primal}
+  \caption{Primal (face split) \cite{Standford.24.07.2015}}
+  \label{fig:sd_primal}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{content/media/sd_dual}
+  \caption{Dual (vertex split) \cite{Standford.24.07.2015}}
+  \label{fig:sd_dual}
+\end{figure}
+
+Ein weiteres wesentliches Merkmal ist, ob Kontrollpunkte interpoliert werden oder nicht. 
+\begin{description}
+ \item[Approximation] Kontrollpunkte werden nicht interpoliert.
+ \item[Interpolation] Kontrollpunkte werden interpoliert.
+\end{description}
+
+\autoref{tab:sd_comp_primal} und \autoref{tab:sd_comp_dual} listet die bekanntesten Unterteilungsalgorithmen auf und ordnet diese den Kategorien zu.
+Zu jedem Algorithmus ist die \enquote{Glattheit} der Oberfläche angegeben (C-Stetigkeit).
+Die Unterteilungsalgorithmen erzeugen auf beliebig angeordnete Netze \(C^k\) stetige Flächen.
+In den \autoref{tab:sd_comp_primal} und \autoref{tab:sd_comp_dual} wird die Stetigkeit für den
+\emph{irregulären} und den \emph{regulären} Fall angegeben.
+Die C-Stetigkeit kann auch als Maß über die Qualität des Unterteilungsalgorithmus fungieren.
+\cite{Zorin.subdivcourse}
+
+\begin{table}
+\center
+\caption{Unterteilungsalgorithmen primal \cite[S. 65]{Zorin.subdivcourse}
+\cite{Standford.24.07.2015} \cite{Kobbelt3} \cite{Velho:2001:SUB:2246196.2246206}
+\cite{Peters:1997:SSS:263834.263851} \cite{Inter3Subdiv} \cite{Sqrt5}}
+\label{tab:sd_comp_primal}
+\begin{tabular}{p{1.5cm}|p{4cm}|p{4cm}|p{3cm}|}
+& \multicolumn{3}{c|}{\textbf{Primal}}\\
+\hline
+& \textbf{Dreiecksnetz} & \textbf{Vierecksnetz} & \textbf{Polygonnetz}\\
+\hline
+\multirow{2}{1.5cm}{\textbf{Appro-ximation}} & Loop \([C^1/C^2]\) & Catmull-Clark \([C^1/C^2]\) & Simplest \([C^1/C^1]\)\\
+ & \(\sqrt3\)-Subdivision \([C^1/C^2]\) & \(\sqrt5\)-Subdivision & 4-8 Subdivision \([C^1/C^4]\)\\
+\hline
+\multirow{3}{1.5cm}{\textbf{Inter-polation}} & Butterfly \([C^0/C^1]\) & Kobbelt \([C^1/C^1]\) & \\
+ & Mod. Butterfly \([C^1/C^1]\) & &\\
+ &Interp. \(\sqrt3\)-Subdivision \([C^1/C^1]\) & &\\
+\end{tabular}
+\end{table}
+
+\begin{table}
+\center
+\caption{Unterteilungsalgorithmen dual \cite[S. 65]{Zorin.subdivcourse}}
+\label{tab:sd_comp_dual}
+\begin{tabular}{c}
+\\
+\hline
+\textbf{Dual}\\
+\hline
+Doo-Sabin \([C^1]\) \\
+Midedge \([C^1]\) \\
+Biquartic \([C^2]\) \\
+\end{tabular}
+\end{table}
+
+\subsection{Auswahl von Unterteilungsalgorithmen}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.9\textwidth]{content/media/sd_overview.png}
+  \caption{Vergleich der Unterteilungsalgorithmen \cite{Standford.24.07.2015}}
+  \label{fig:sd_comp}
+\end{figure}
+
+Für das Projekt sollen folgende Algorithmen implementiert werden:
+\begin{itemize}
+	\item Catmull-Clark
+	\item Loop
+	\item Doo-Sabin
+	\item Butterfly
+	\item Modified Butterfly
+\end{itemize}
+Dies sind die wichtigsten Vertreter für Dreiecks- und Vierecksnetze
+(siehe \cite[S. 65ff]{Zorin.subdivcourse} \cite{Zorin01aunified}).
+Prinzipiell sind jedoch noch weitere Algorithmen denkbar.
+
+\autoref{fig:sd_comp} vergleicht die vier ausgewählten
+Unterteilungsalgorithmen Catmull-Clark, Loop, Doo-Sabin und Butterfly.
+Man erkennt deutlich den interpolierenden Unterteilungsalgorithmus (Butterfly),
+da dieser durch die harten Interpolationsbedingungen im
+Vergleich zu den approximierenden Algorithmen \enquote{welliger} ist.
+\cite{Zorin.subdivcourse}
+
+\input{content/sd_catmull}
+\input{content/sd_doosabin}
+\input{content/sd_loop}
+\input{content/sd_butterfly}
+\input{content/sd_modbutterfly}

@@ -113,7 +113,7 @@ Durch diese Architektur wird redundanter Code vermieden.
 
 \subsection{Catmull-Clark}
 
-Die Implementierung von Catmull-Clark ist wie in \autoref{sec:catmull}
+Die Implementierung von Catmull-Clark ist wie in \autoref{subsec:catmull}
 beschrieben durchgeführt. \emph{SdCatmull} erbt von \emph{SdQuad}.
 Der Algorithmus kann mit einem beliebigen Polygonnetz umgehen.
 Die Randregeln sind vollständig implementiert.
@@ -130,7 +130,7 @@ einer Unterteilung.
 
 \subsection{Doo-Sabin}
 
-Der Doo-Sabin Algorithmus ist inklusive Randregel wie in \autoref{sec:doosabin}
+Der Doo-Sabin Algorithmus ist inklusive Randregel wie in \autoref{subsec:doosabin}
 beschrieben umgesetzt. Die Klasse \emph{SdDooSabin} erbt von \emph{SdQuad}.
 \autoref{fig:sd_catmull_screenshot} zeigt einen Unterteilungsschritt eines Würfels.
 
@@ -144,7 +144,7 @@ beschrieben umgesetzt. Die Klasse \emph{SdDooSabin} erbt von \emph{SdQuad}.
 \subsection{Loop}
 
 Loop ist in der Klasse \emph{SdLoop} implementiert und erbt von \emph{SdTrianlge}.
-Die Implementierung erfolgt wie in \autoref{sec:loop} beschrieben
+Die Implementierung erfolgt wie in \autoref{subsec:loop} beschrieben
 und unterstützt die beschriebenen Randregeln.
 Die Berechnung der Even Vertices erfolgt dabei nach der Variation nach Warren.
 \autoref{fig:sd_loop_screenshot} zeigt die Unterteilung eines Icosahedrons.
@@ -158,7 +158,7 @@ Die Berechnung der Even Vertices erfolgt dabei nach der Variation nach Warren.
 
 \subsection{Butterfly}
 
-Der Butterfly Algorithmus ist nach \autoref{sec:butterfly}
+Der Butterfly Algorithmus ist nach \autoref{subsec:butterfly}
 inklusive Randregel in der Klasse \emph{SdButterfly} implementiert.
 Für die Unterteilung wird das klassische Eight-Point Stencil verwendet.
 \emph{SdButterfly} erbt von \emph{SdTrianlge}.
@@ -173,7 +173,7 @@ Für die Unterteilung wird das klassische Eight-Point Stencil verwendet.
 
 \subsection{Modified Butterfly}
 
-Der Modified Butterfly Algorithmus ist nach \autoref{sec:modbutterfly} implementiert.
+Der Modified Butterfly Algorithmus ist nach \autoref{subsec:modbutterfly} implementiert.
 Die Klasse \emph{SdButterfly} erbt jedoch nicht von \emph{SdTriangle},
 sondern von \emph{SdButterfly}, da die Unterteilung
 beim Modified Butterfly im regulären Fall bis auf Ausnahmeregeln
@@ -186,7 +186,7 @@ Die Implementierung verwendet das klassische Eight-Point Stencil
 
 Der Modified Butterfly Algorithmus ist mit der Standard Randregel
 implementiert.
-Die erweiterten Randregeln, die im letzten Unterabschnitt von \autoref{sec:modbutterfly}
+Die erweiterten Randregeln, die am Ende von \autoref{subsec:modbutterfly}
 erwähnt werden, sind nicht umgesetzt.
 \autoref{fig:sd_modbutterfly_screenshot} zeigt einen Unterteilungsschritt.
 
