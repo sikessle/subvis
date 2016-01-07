@@ -37,10 +37,10 @@ namespace subdivision {
  *         \    /     \
  *          \  /       \
  *           \/         \
- *           e-----------b    e: \f$even\_vertex = vertex * (1 - n * beta) + (sum\_of\_surrounding\_vertices) * beta\f$
+ *           e-----------b    e: \f$even\_vertex = old\_vertex * (1 - n * \beta) + sum\_of\_surrounding\_vertices * \beta\f$
  *          / \          /
  *         /   \        /     n - valence
- *        /     \      /      beta (as proposed by Warren): for n > 3, beta = 3/(8n) and for n = 3, beta = 3/16
+ *        /     \      /      beta (as proposed by Warren): \f$n > 3,\ \beta = 3/(8n)\f$ and for \f$n = 3,\ \beta = 3/16\f$
  *       /       \    /       beta (original choice of Loop): \f$1/n(5/8-(3/8+1/4cos(2\pi/n))^2)\f$
  *      /         \  /
  *                 \/
