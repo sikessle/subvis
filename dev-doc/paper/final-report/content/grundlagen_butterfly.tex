@@ -31,14 +31,14 @@ Der Algorithmus besteht aus zwei Schritten:
 \subsubsection*{Edge Point}
 Die Berechnung des Edge Points wird mit dem sogenannten Eight-Point Stencil
 aus \autoref{fig:sd_butterfly_mask} durchgeführt.
-Die Regel für den Randfall ist dort auch dargestellt.
+Die Regel für den Randfall ist daneben abgebildet.
 
 
 Da die Punkte beim Butterfly interpoliert werden, müssen die alten Vertices
 (wie bisher bei approximierenden Algorithmen) nicht neu berechnet werden. 
 
 \subsubsection*{Face Split}
-Der Face Split ist identisch wie bei Loop.
+Der Face Split ist identisch zum Loop Face Split.
 Jedes Dreieck wird in vier neue Dreiecke aufgeteilt (\autoref{fig:sd_loop_split}).
 \cite[S. 64ff]{Standford.24.07.2015} \cite[S. 72ff]{Zorin.subdivcourse}
 \cite{Seeger01asub-atomic}

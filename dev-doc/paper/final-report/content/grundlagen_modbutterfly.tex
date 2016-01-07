@@ -12,7 +12,7 @@ für beliebige Dreiecksnetze.
 
 \subsection{Unterteilungs- und Randregeln}
 
-Der Modified Butterfly besteht wie der Butterfly aus nur zwei Schritten:
+Der Modified Butterfly kann wie auch schon der Butterfly in zwei Schritten zusammengefasst werden:
 \begin{enumerate}
 \item Berechne für jede Kante einen Edge Point.
 \item Ersetze jedes Dreieck durch vier neue Dreiecke.
@@ -44,7 +44,7 @@ In diesem Fall ist das Ten-Point Stencil identisch mit dem original
 Butterfly Eight-Point Stencil.
 \item[Kante verbindet K-Vertex \((Valenz \neq 6)\) und Sechs-Vertex \((Valenz = 6)\):]
 In diesem Fall wird das rechte Schema aus \autoref{fig:sd_modbutterfly_mask} verwendet.
-Abhängig von der Valenz \(K\) werden die Gewichte verschieden gewählt.\\
+Die Gewichte werden abhängig von der Valenz \(K\) verschieden gewählt.\\
 \(j = 0, \ldots, K - 1\ und\ q = 3/4\)
 \begin{itemize}
  \item \(K = 3\): \(s_0 = 5/12,\ s_{1,2} = -1/12\)
@@ -54,9 +54,10 @@ Abhängig von der Valenz \(K\) werden die Gewichte verschieden gewählt.\\
 \item[Kante verbindet zwei extraordinäre Vertices:]
 Es wird nach dem obigen Schema jeweils für beide Vertices ein Edge Point bestimmt und
 davon der Durchschnitt errechnet.
-\item[Randkante:] Die Randregel ist identisch zur Butterfly Randregel
-(\autoref{fig:sd_butterfly_mask}) mit den Gewichten
+\item[Randkante:] Die Randregel ist mit den Gewichten
 \(s_{-1} = -1/16,\ s_0 = 9/16,\ s_1 = 9/16,\ s_2 = -1/16\).
+identisch zur Butterfly Randregel
+(\autoref{fig:sd_butterfly_mask}).
 \end{description}
 \cite{Zorin:1996:ISM:237170.237254}
 \cite[S. 72ff]{Zorin.subdivcourse}
@@ -65,7 +66,7 @@ davon der Durchschnitt errechnet.
 
 
 \subsubsection*{Face Split}
-Der Face Split ist identisch wie beim Butterfly Algorithmus.
+Der Face Split ist identisch mit dem Butterfly Face Split.
 \cite{Zorin:1996:ISM:237170.237254}
 \cite[S. 72ff]{Zorin.subdivcourse}
 

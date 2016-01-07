@@ -30,15 +30,15 @@ Entlang des Randes (boundary/crease) wird eine kubische Spline Kurve erzeugt.
 
 \subsubsection*{Odd Vertex}
 Die Odd Vertices werden nach der linken Maske aus \autoref{fig:sd_loop_mask} berechnet.
-Für Ränder wird der Mittelwert genommen.
+Für Ränder wird der Mittelwert errechnet.
 
 \subsubsection*{Even Vertex}
 
-Bei Even Vertices muss für die Berechnung ein Faktor \(\beta\) bestimmt werden.
-\autoref{fig:sd_loop_mask} veranschaulicht die Struktur.
-Ist \(\beta\) bekannt, kann der Vertex wie folgt berechnet werden:\\
+Bei Even Vertices muss für die Berechnung der Faktor \(\beta\) bestimmt werden.
+\autoref{fig:sd_loop_mask} veranschaulicht auf der rechten Seite die Berechnung.
+Der Even Vertex wird nach der Bestimmung von \(\beta\) wie folgt berechnet werden:\\
 \(
-even\_vertex = old\_vertex * (1 - k * beta) + (sum\_of\_surrounding\_vertices) * beta\\
+even\_vertex = old\_vertex * (1 - k * \beta) + sum\_of\_surrounding\_vertices * \beta\\
 k:\ Valenz
 \)
 \\
@@ -47,8 +47,8 @@ Für die Bestimmung von \(\beta\) gibt es mehrere Möglichkeiten:
 \item[Original nach Loop]  \(\beta=\frac{1}{k}(\frac{5}{8}-(\frac{3}{8}+\frac{1}{4}cos(\frac{2\pi}{k}))^2)\)
 \item[Variation nach Warren] \mbox{}
 	\begin{itemize}
-		\item für \(k > 3, \beta = \frac{3}{8k}\)
-		\item für \(k = 3, \beta = \frac{3}{16}\)	
+		\item für \(k > 3,\ \beta = \frac{3}{8k}\)
+		\item für \(k = 3,\ \beta = \frac{3}{16}\)	
 	\end{itemize}
 \end{description}
 Die Variation nach Warran hat den Vorteil, dass diese einfacher berechnet werden kann

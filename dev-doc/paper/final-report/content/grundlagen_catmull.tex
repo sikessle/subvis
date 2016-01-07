@@ -42,7 +42,7 @@ Bei einem Viereck wie in \autoref{fig:sd_catmull_mask} hat somit jeder Kontrollp
 ein Gewicht von 1/4.
 
 \subsubsection*{Edge Point}
-Der Edge Point wird von den anliegenden Polygone beeinflusst.
+Der Edge Point wird von den anliegenden Polygonen beeinflusst.
 Dieser errechnet sich aus dem Durchschnitt der zwei benachbarten Face Points und den
 beiden Kontrollpunkten der Kante.
 
@@ -50,10 +50,10 @@ beiden Kontrollpunkten der Kante.
 Jeder Original Point wird aktualisiert.
 Die Berechnung wird folgendermaßen durchgeführt:\\
 \(
-new\_point=(Q/n) + (2R/n) + (S*(n-3)/n)\\
+original\_point=(Q/n) + (2R/n) + (S*(n-3)/n)\\
 n:\ Valenz\\
 Q:\ Durchschnitt\ der\ umliegenden\ Face\ Points\\
-R:\ Durchschnitt\ aller\ umliegenden\ Mittelpunkte\ der\ Ecken\ (!=\ edge\ point)\\
+R:\ Durchschnitt\ aller\ umliegenden\ Mittelpunkte\ der\ Ecken\ (\neq Edge\ Point)\\
 S:\ Original\ Point
 \)
 
@@ -68,7 +68,7 @@ Ein Quad besteht aus den vier Ecken:
  \item Edge Point 2
 \end{itemize}
 Für jedes Polygon mit n Ecken entstehen n Quads.
-\autoref{fig:sd_catmull_split} zeigt das Schema für ein Viereck.
+\autoref{fig:sd_catmull_split} zeigt das Split-Schema für ein Viereck.
 \begin{figure}
 \centering
 \includegraphics[width=0.3\textwidth]{content/media/sd_catmull_split.png}
@@ -85,7 +85,7 @@ Für Ränder (boundary cases) können die Koeffizienten für kubische Splines ve
 Diese führen zu akzeptablen Ergebnissen, garantieren formal jedoch keine \(C^1\) Stetigkeit mehr. \cite[S. 75f]{Zorin.subdivcourse}
 \autoref{fig:sd_catmull_boundary} zeigt die Gewichtung für Ränder.
 Der Edge Point wird durch den Mittelwert der Ecken berechnet.
-Um den neuen original point zu berechnen, wird die rechte Maske aus \autoref{fig:sd_catmull_boundary}
+Um den neuen Original Point zu berechnen, wird die rechte Maske aus \autoref{fig:sd_catmull_boundary}
 verwendet.
 
 \begin{figure}

@@ -92,10 +92,10 @@ Als konkreter Callback wird eine Funktion verwendet, die bei Beendigung das Erge
 \subsection{Vererbungshierarchie}
 
 \emph{SdAlgorithm} ist die Klasse, von der alle Unterteilungsalgorithmen abgeleitet werden.
-Diese Klasse implementiert wie bereits beschrieben alle Basisfunktionen.
+Die Klasse implementiert wie bereits beschrieben alle Basisfunktionen.
 Die Algorithmen Catmull-Clark, Doo-Sabin, Loop, Butterfly und Modified Butterfly lassen sich aber
 noch weiter klassifizieren und zusammenfassen.
-Daher wurden die beiden Unterflassen \emph{SdQuad} und \emph{SdTriangle} eingeführt,
+Daher werden die beiden Unterklassen \emph{SdQuad} und \emph{SdTriangle} eingeführt,
 die von \emph{SdAlgorithm} erben.
 
 \emph{SdQuad} vereinigt gemeinsame Funktionen von Catmull-Clark und Doo-Sabin.
@@ -108,15 +108,15 @@ und benötigen ähnlichen Properties.
 
 Die konkreten Implementierungen der Unterteilungsalgorithmen erben schließlich
 von \emph{SdQuad} oder \emph{SdTriangle}.
-Durch diese Architektur kann redundanter Code vermieden werden.
+Durch diese Architektur wird redundanter Code vermieden.
 
 
 \subsection{Catmull-Clark}
 
-Die Implementierung des Unterteilungsalgorithmus ist wie in \autoref{sec:catmull}
-beschrieben. \emph{SdCatmull} erbt von \emph{SdQuad}.
+Die Implementierung von Catmull-Clark ist wie in \autoref{sec:catmull}
+beschrieben durchgeführt. \emph{SdCatmull} erbt von \emph{SdQuad}.
 Der Algorithmus kann mit einem beliebigen Polygonnetz umgehen.
-Die Randregeln sind vollständig umgesetzt.
+Die Randregeln sind vollständig implementiert.
 \autoref{fig:sd_catmull_screenshot} zeigt einen Würfel und das Netz nach
 einer Unterteilung.
 
@@ -130,8 +130,8 @@ einer Unterteilung.
 
 \subsection{Doo-Sabin}
 
-Doo-Sabin ist inklusive Randregel wie in \autoref{sec:doosabin}
-gezeigt umgesetzt. Die Klasse \emph{SdDooSabin} erbt von \emph{SdQuad}.
+Der Doo-Sabin Algorithmus ist inklusive Randregel wie in \autoref{sec:doosabin}
+beschrieben umgesetzt. Die Klasse \emph{SdDooSabin} erbt von \emph{SdQuad}.
 \autoref{fig:sd_catmull_screenshot} zeigt einen Unterteilungsschritt eines Würfels.
 
 \begin{figure}
@@ -145,7 +145,8 @@ gezeigt umgesetzt. Die Klasse \emph{SdDooSabin} erbt von \emph{SdQuad}.
 
 Loop ist in der Klasse \emph{SdLoop} implementiert und erbt von \emph{SdTrianlge}.
 Die Implementierung erfolgt wie in \autoref{sec:loop} beschrieben
-und unterstützt die gezeigten Randregeln.
+und unterstützt die beschriebenen Randregeln.
+Die Berechnung der Even Vertices erfolgt dabei nach der Variation nach Warren.
 \autoref{fig:sd_loop_screenshot} zeigt die Unterteilung eines Icosahedrons.
 
 \begin{figure}
@@ -159,6 +160,7 @@ und unterstützt die gezeigten Randregeln.
 
 Der Butterfly Algorithmus ist nach \autoref{sec:butterfly}
 inklusive Randregel in der Klasse \emph{SdButterfly} implementiert.
+Für die Unterteilung wird das klassische Eight-Point Stencil verwendet.
 \emph{SdButterfly} erbt von \emph{SdTrianlge}.
 \autoref{fig:sd_butterfly_screenshot} zeigt einen Unterteilungsschritt.
 
@@ -171,16 +173,21 @@ inklusive Randregel in der Klasse \emph{SdButterfly} implementiert.
 
 \subsection{Modified Butterfly}
 
-Der Modified Butterfly ist nach \autoref{sec:modbutterfly} implementiert.
+Der Modified Butterfly Algorithmus ist nach \autoref{sec:modbutterfly} implementiert.
 Die Klasse \emph{SdButterfly} erbt jedoch nicht von \emph{SdTriangle},
-sondern direkt von \emph{SdButterfly}, da dieser bis auf Ausnahmeregeln
+sondern von \emph{SdButterfly}, da die Unterteilung
+beim Modified Butterfly im regulären Fall bis auf Ausnahmeregeln
 identisch mit dem Butterfly Algorithmus ist. In \emph{SdButterfly}
 muss für eine korrekte Implementierung somit nur noch die Methode
-\emph{compute\_edge\_point} überschrieben werden.
+\emph{compute\_edge\_point} überschrieben werden, die
+die Sonderfälle behandelt.
+Die Implementierung verwendet das klassische Eight-Point Stencil
+(bzw. Ten-Point Stencil mit \(w = 0\)).
+
 Der Modified Butterfly Algorithmus ist mit der Standard Randregel
 implementiert.
 Die erweiterten Randregeln, die im letzten Unterabschnitt von \autoref{sec:modbutterfly}
-kurz erwähnt werden, sind nicht umgesetzt.
+erwähnt werden, sind nicht umgesetzt.
 \autoref{fig:sd_modbutterfly_screenshot} zeigt einen Unterteilungsschritt.
 
 \begin{figure}
