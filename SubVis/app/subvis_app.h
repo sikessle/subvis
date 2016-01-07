@@ -18,7 +18,7 @@
  *
  * SubVis was developed in the Team-Project (2015/16) of the HTWG Konstanz
  * by Tobias Keh, Simon Kessler and Felix Born.
- * The project was subervised by Prof. Dr. Georg Umlauf und Pascal Laube.
+ * The project was subervised by Prof. Dr. Georg Umlauf and Pascal Laube.
  *
  */
 
