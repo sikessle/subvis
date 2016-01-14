@@ -2,6 +2,13 @@
 
 \subsubsection*{Allgemein}
 
+\begin{figure}
+\centering
+\includegraphics[width=0.8\textwidth]{content/media/cc5_edge_catmull.jpg}
+\caption{Drei Unterteilungsschritte mit dem Catmul-Clark Algorithmus}
+\label{fig:sd_catmull_cc5}
+\end{figure}
+
 Der Catmull-Clark Algorithmus wurde 1978 von Edwin Catmull und James Clark entwickelt.
 Er basiert auf bi-kubischen uniformen B-Spline Flächen.
 Der ursprüngliche Algorithmus war nur für Vierecksnetze definiert.
@@ -13,6 +20,7 @@ Die Kontrollpunkte des Netzes werden durch Unterteilung approximiert.
 Catmull-Clark erzeugt im Normalfall \(C^2\) Flächen,
 an extraordinären Stellen mit Valenz ungleich vier jedoch
 nur \(C^1\).
+In \autoref{fig:sd_catmull_cc5} sind 3 Unterteilungsschritte dargestellt.
 \cite[S. 75 ff.]{Zorin.subdivcourse} \cite[S. 52 ff.]{Standford.24.07.2015}
 
 
