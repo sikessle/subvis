@@ -7,10 +7,10 @@
 namespace subdivision {
 
 /**
- * @brief Implementation of the Doo Sabin subdivision algorithm.
+ * @brief Implementation of the Doo-Sabin subdivision algorithm.
  *
  * The algorithm was devised by Daniel Doo and Malcolm Sabin.
- * Doo Sabin subdivision is a generalization of bi-quadratic uniform B-spline surfaces and
+ * Doo-Sabin subdivision is a generalization of bi-quadratic uniform B-spline surfaces and
  * operates on meshes with arbitrary topology.
  * The subdivided output mesh contains mainly quad faces and polygons in special cases.
  * The control points are approximated.
