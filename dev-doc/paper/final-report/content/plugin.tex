@@ -68,7 +68,7 @@ Dann wird nichts dargestellt.
 \section{Algorithmen}
 
 Die Algorithmen werden über die abstrakte Klasse \emph{SdAlgorithm} zusammengefasst. 
-Diese ermöglicht es, der GUI abzufragen, ob ein bestimmtes Polygonnetz von diesem Algorithmus unterteilt werden kann oder nicht, was sich in der Auswahlmöglichkeit der GUI niederschlägt.
+Diese ermöglicht es der GUI, abzufragen, ob ein bestimmtes Polygonnetz von diesem Algorithmus unterteilt werden kann oder nicht, was sich in der Auswahlmöglichkeit der GUI niederschlägt.
 Außerdem implementiert die Klasse die Verwaltung der Polygonnetze und ein Thread-basiertes unterteilen. 
 Somit müssen die konkreten Klassen der Algorithmen lediglich eine Methode überschreiben und sich nur auf die korrekte Implementierung fokussieren.
 Es werden vor jedem Aufruf der Unterklasse die Variablen \emph{input\_mesh} und \emph{output\_mesh} entsprechend initialisiert.
@@ -87,11 +87,11 @@ Dieses wiederum wird von der Klasse empfangen und in einen Aufruf der Callback-F
 Durch Verwendung des Signal-Slot Konzepts ist garantiert, dass der Slot und somit der Callback auf dem UI-Thread ausgeführt wird.
 Der implementierte Callback-Mechanismus macht somit das Threading wesentlich einfacher und benötigt keine Synchronisierungsmechanismen.
 
-Als konkreter Callback wird eine Funktion verwendet, die bei Beendigung das Ergebnis in die Model-Komponente lädt (was ein Neuzeichnen des Polygonnetzes zur Folge hat).
+Als konkreter Callback wird eine Funktion verwendet, die bei Beendigung das Ergebnis in die Model-Komponente lädt (was ein erneutes Zeichnen des Polygonnetzes zur Folge hat).
 
 \subsection{Vererbungshierarchie}
 
-\emph{SdAlgorithm} ist die Klasse, von der alle Unterteilungsalgorithmen abgeleitet werden.
+\emph{SdAlgorithm} ist die Klasse von der alle Unterteilungsalgorithmen abgeleitet werden.
 Die Klasse implementiert wie bereits beschrieben alle Basisfunktionen.
 Die Algorithmen Catmull-Clark, Doo-Sabin, Loop, Butterfly und Modified Butterfly lassen sich aber
 noch weiter klassifizieren und zusammenfassen.

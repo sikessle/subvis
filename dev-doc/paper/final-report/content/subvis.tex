@@ -147,7 +147,7 @@ In diesem Kapitel wird auf die konkrete Architektur, Implementierung und detaill
 Die grundlegende Architektur ist in \autoref{fig:subvis_architektur} als UML-Komponentendiagramm dargestellt. 
 Grundsätzlich wird auf eine Model-View Architektur gesetzt.
 
-Die Model-Komponente kapselt eine Datenstruktur, die das Polygonnetz enthält und bietet grundlegende Polygonnetzoperationen und Import bzw. Persistenzoperationen.
+Die Model-Komponente kapselt eine Datenstruktur, die das Polygonnetz enthält und bietet grundlegende Polygonnetzoperationen und Import- bzw. Persistenzoperationen.
 Sie sendet außerdem bei Modifikation eines Polygonnetzes ein Signal an alle Listener aus.
 Der Zugriff auf das Polygonnetz ist nur lesend möglich, jeder schreibende Zugriff muss zuerst eine Kopie erstellen und diese nach der Modifikation wieder in die Model-Komponente laden.
 Dadurch wird ein gewisser Grad an Immutabilität erreicht, welcher die Robustheit der Anwendung erhöht.
@@ -155,7 +155,7 @@ Dadurch wird ein gewisser Grad an Immutabilität erreicht, welcher die Robusthei
 Die View-Komponente ist für die Darstellung/Editieroperationen verantwortlich.
 Diese verbindet auch die Signale der anderen Komponenten mit den Slots der Plugins bzw. Model-Komponente.
 Zusammengesetzt aus den Komponenten \emph{tabs\_plugins} (GUI-Elemente der einzelnen Plugins), \emph{toolbar} (Werkzeugleiste), \emph{tabs\_viewer} (generische Polygonnetz-Ansicht und Plugin-spezifische Ansicht) und \emph{menu\_bar} (Menüleiste) bildet die View-Komponente alle grundlegenden Darstellungsoperationen ab.
-Die Komponente \emph{tabs\_viewer} enhält einerseits eine generische Ansicht, der das Polygonnetz rendert und einen Editiermodus bereitstellt. 
+Die Komponente \emph{tabs\_viewer} enhält einerseits eine generische Ansicht, die das Polygonnetz rendert und einen Editiermodus bereitstellt. 
 Andererseits eine Ansicht, dessen Darstellung durch das aktive Plugin gesteuert wird.
 Dies erlaubt den Plugins maximale Freiheit bezüglich der Darstellung, da so das Polygonnetz gerendert werden kann aber auch eine völlig unabhängige Darstellung erfolgen kann.
 Durch Verbindung mit den Signalen der Model-Komponente, wird auf Veränderungen im Polygonnetz reagiert.
@@ -226,7 +226,7 @@ Mit den entsprechenden Methoden kann in dieser Historie beliebig vor und zurück
 Dies ermöglicht die einfache Realisierung einer Rückgängig/Wiederherstellen Funktion.
 Die Implementierung nutzt einen std::vector und einen Index, um in diesem Array vor und zurück zu springen.
 Bei jedem neuen Historieeintrag wird der Speicher der Datenstrukturen optimiert durch Aufruf einer Garbage-Collection Funktion.
-Beim Hinzufügen von neuen Paaren in die Historie können sich zwei Fälle ergeben:
+Beim Hinzufügen von neuen Paaren in die Historie können sich drei Fälle ergeben:
 
 \begin{itemize}
 \item[a)] Der Index zeigt auf ein Element vor der neuesten Historie (zuvor wurde zurück gesprungen).
@@ -263,8 +263,8 @@ Für die Realisierung von zwei simultan aktiven Ansichten pro Tab wird ein QSpli
 \subsubsection{ViewerWidget}
 
 Die Oberklasse ViewerWidget stellt einen generischen Viewer für SubVis dar.
-Sie erweitert QGLViewer und verbindet sich mit dem updated Signal der Model-Komponente.
-Mittels des Template-Patters können die Unterklassen von ViewerWidget ihre OpenGL Draw-Calls ausführen.
+Sie erweitert QGLViewer und verbindet sich mit dem \emph{updated} Signal der Model-Komponente.
+Mittels des Template-Patterns können die Unterklassen von ViewerWidget ihre OpenGL Draw-Calls ausführen.
 ViewerWidget initialisiert zuvor einige Maus-Bindings, kümmert sich um das Layout und reicht das konkrete Polygonnetz an die Unterklasse weiter.
 Ein Viewer wird stets mit einer ID instanziert, die den Index des Polygonnetzes (vgl. Model-Komponente) spezifiziert.
 Somit müssen die Unterklassen lediglich ein einzelnes Polygonnetz verwalten und nicht zwischen beiden unterscheiden.
@@ -302,20 +302,18 @@ Dadurch resultiert die Höchstanzahl an Vertices für eine zuverlässige Selekti
 
 \begin{lstlisting}[style=myCppStyle, caption={Umrechnung Index nach Farbwert}, label=lst:index_to_rgb]
 const unsigned char* index_ptr = &index;
-for (int i = 0; i < 3; i++) {
+for (int i = 0; i < 3; i++)
 	rgb[i] = index_ptr[i];
-}
 \end{lstlisting}
 
 Nach dem Rendern der Vertices wird mittels \emph{glReadPixels} die Farbe unter dem Mauszeiger ausgelesen.
 Mittels der inversen Funktion in \autoref{lst:rgb_to_index} wird der Farbwert wieder in einen RGB-Wert umgerechnet.
 
-\begin{lstlisting}[style=myCppStyle, caption={Inverse Funktion Farbwert nach Index}, label=lst:rgb_to_index]
+\begin{lstlisting}[style=myCppStyle, caption={Inverse Funktion: Farbwert nach Index}, label=lst:rgb_to_index]
 int index = 0;
 unsigned char* index_ptr = (unsigned char*) &index;
-for (int i = 0; i < 3; i++) {
+for (int i = 0; i < 3; i++)
 	index_ptr[i] = rgb[i];
-}
 \end{lstlisting}
 
 Wenn ein Vertex gefunden wurde, wird dieser in einem \emph{ManipulatedFrame} an der Position (0, 0, 0) mit einem roten Punkt gezeichnet. 
@@ -427,7 +425,7 @@ Wird der Rand fast ganz nach rechts gezogen, verschwindet die Seitenleiste.
 Durch ein erneutes nach links ziehen des rechten Randes erscheint sie wieder.
 Alle Aktionen der Werkzeugleiste können auch über die Menüleiste benutzt werden.
 Wenn eine Aktionen aktiv ist, wird diese optisch eingedrückt dargestellt.
-Jede Aktionen hat ein zugewiesenes Tastaturkürzel, welches neben dem Menüeintrag dargestellt wird.
+Jede Aktion hat ein zugewiesenes Tastaturkürzel, welches neben dem Menüeintrag dargestellt wird.
 Da sich viele Aktionen auf ein spezifisches Polygonnetz beziehen (linke Seite bzw. rechte Seite), bieten die Tastaturkürzel meist die Möglichkeit mittels nachgelagertem Drücken der Taste 1 oder 2 die linke bzw. rechte Seite auszuwählen.
 
 \subsection{Rückgängig/Wiederherstellen}

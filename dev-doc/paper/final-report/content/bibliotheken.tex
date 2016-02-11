@@ -92,7 +92,7 @@ Die Verbindungsinformation der Kanten werden also in einem Paar aus zwei gericht
 
 Da Surface\_mesh auch als Halfedge Datenstruktur implementiert ist, kann ähnlich effizient zu OpenMesh über die Kanten iteriert werden.
 \autoref{lst:sm_iterate} zeigt einige Basisoperationen die möglich sind.
-Die Operationen aus Listing~\ref{lst:sm_iterate} sind zum besseren Verständnis in \autoref{fig:sm_halfedge} gekennzeichnet. 
+Die Operationen aus Listing~\ref{lst:sm_iterate} sind zum besseren Verständnis in \autoref{fig:sm_halfedge} dargestellt. 
 
 \begin{lstlisting}[style=myCppStyle, caption=Surface\_mesh - Basisoperationen, label=lst:sm_iterate]
 Surface_mesh::Halfedge h;
@@ -160,7 +160,7 @@ CGoGN implementiert bereits den Unterteilungsalgorithmus Catmull-Clark \cite{CGo
 \subsection{Computational Geometry Algorithms Library (CGAL)}
 
 CGAL ist ein mächtiges Softwareprojekt mit einer Vielzahl an Datenstrukturen und Algorithmen.
-Neben Unterteilungsalgorithmen werden auch eine Reihe anderer Themengebiete abgedeckt (Voronoi Diagramme, Convex Hull Algorithms, Spatial Searching ...).
+Neben Unterteilungsalgorithmen werden auch eine Reihe anderer Themengebiete abgedeckt (Voronoi Diagramme, Konvexe Hülle Algorithmen, Räumliche Suche, etc.).
 Für die Repräsentation von Netzen gibt es bei CGAL mehrere Möglichkeiten.
 
 \begin{description}
@@ -177,7 +177,7 @@ Es sind auch bereits die Unterteilungsalgorithmen \emph{Catmull-Clark}, \emph{Do
 \autoref{tab:sd_bib} gibt einen Überblick über die vorgestellten Bibliotheken und listet auf, welche der ausgewählten Unterteilungsalgorithmen
 (Catmull-Clark, Loop, Butterfly und Doo-Sabin) bereits implementiert sind.
 
-\begin{table}
+\begin{table}[hp]
 \center
 \caption{Vergleich der Unterteilungsalgorithmus Bibliotheken}
 \begin{tabular}{l|c|c}
@@ -192,6 +192,13 @@ Es sind auch bereits die Unterteilungsalgorithmen \emph{Catmull-Clark}, \emph{Do
 \label{tab:sd_bib}
 \end{table}
 
+\begin{figure}[hp]
+  \centering
+  \includegraphics[width=1.0\textwidth]{content/media/surface_mesh_cmp}
+   \caption{Benchmarks mit Surface\_mesh \cite{Sieger.}}
+  \label{fig:surface_mesh_cmp}
+\end{figure}
+
 Mit Ausnahme von Surface\_mesh, das wirklich nur die Polygonnetz-Datenstruktur mit elementaren Algorithmen implementiert, sind bei den anderen Bibliotheken bereits
 einige Unterteilungsalgorithmen implementiert.
 Bei Verwendung von OpenMesh oder CGAL könnte man sich viel Arbeit sparen, da dort schon fast alle gewünschten Algorithmen implementiert sind.
@@ -200,12 +207,7 @@ Surface\_mesh selbst besteht nur aus wenigen Dateien und ist die schlankeste Bib
 \autoref{fig:surface_mesh_cmp} zeigt die Ergebnisse eines Benchmark-Vergleichs für die unterschiedlichen Datenstrukturen.
 In dem Diagramm werden die Zeiten relativ zu Surface\_mesh angegeben.
 
-\begin{figure}
-  \centering
-  \includegraphics[width=1.0\textwidth]{content/media/surface_mesh_cmp}
-   \caption{Benchmarks mit Surface\_mesh \cite{Sieger.}}
-  \label{fig:surface_mesh_cmp}
-\end{figure}
+
 
 Man erkennt deutlich, dass die Datenstrukturen von CGAL und OpenMesh vergleichsweise langsam sind.
 Da Surface\_mesh sehr kompakt ist (es besteht nur aus sehr wenigen C++ und H-Dateien) und in dem Benchmark auch sehr gute Ergebnisse liefert, fällt die Wahl auf Surface\_mesh.
@@ -215,7 +217,7 @@ Da Surface\_mesh sehr kompakt ist (es besteht nur aus sehr wenigen C++ und H-Dat
 
 Im folgenden Unterkapitel werden Bibliotheken und bereits bestehende Software untersucht, mittels derer das Rendering von Polygonnetzen und Limesflächen realisiert werden kann.
 
-Im Gegensatz zur großen Auswahl an unterschiedlichen Möglichkeiten wie beispielsweise bei den Datenstrukturen, beschränkt sich diese hier auf nur wenige Möglichkeiten. Die Wahl ist auf OpenGL wegen seinem großen Funktionsumfang und seiner weiten Verbreitung und auf BezierView auf Grund sehr guter funktionaler Überschneidungen gefallen.
+Im Gegensatz zur großen Auswahl an unterschiedlichen Möglichkeiten wie beispielsweise bei den Datenstrukturen, beschränkt sich diese hier auf nur wenige Möglichkeiten. Die Wahl ist auf OpenGL wegen seinem großen Funktionsumfang und seiner weiten Verbreitung gefallen.
 
 
 \subsection{OpenGL}
