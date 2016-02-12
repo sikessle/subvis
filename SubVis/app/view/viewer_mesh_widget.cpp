@@ -14,6 +14,8 @@ ViewerMeshWidget::ViewerMeshWidget(QWidget* parent,
   ViewerWidget{parent, mesh_id} {
   // Initialize mouse bindings for the edit handling
   mesh_edit_handler_.set_mouse_binding(this);
+
+  // Initialize drawing, shading, coloring and lighting values
   drawing_type_ = GL_LINES;
   shading_type_ = GL_FLAT;
   coloring_active_ = true;
@@ -26,51 +28,51 @@ void ViewerMeshWidget::set_edit(bool edit) {
 }
 
 void ViewerMeshWidget::set_drawing_type(GLenum type) {
-    drawing_type_ = type;
+  drawing_type_ = type;
 
-    // Update mesh (necessary because of triangulation when drawing faces)
-    mesh_updated(*mesh_);
+  // Update mesh (necessary because of triangulation when drawing faces)
+  mesh_updated(*mesh_);
 
-    // Trigger redrawing to update meshes
-    updateGL();
+  // Trigger redrawing to update meshes
+  updateGL();
 
-    qDebug() << "Drawing type changed";
+  qDebug() << "Drawing type changed";
 }
 
 void ViewerMeshWidget::set_shading_type(GLenum type) {
-    shading_type_ = type;
+  shading_type_ = type;
 
-    // Draw mesh to update shading
-    draw_mesh();
+  // Draw mesh to update shading
+  draw_mesh();
 
-    // Trigger redrawing to update meshes
-    updateGL();
+  // Trigger redrawing to update meshes
+  updateGL();
 
-    qDebug() << "Shading type changed";
+  qDebug() << "Shading type changed";
 }
 
 void ViewerMeshWidget::set_coloring(bool active) {
-    coloring_active_ = active;
+  coloring_active_ = active;
 
-    // Draw mesh to update shading
-    draw_mesh();
+  // Draw mesh to update shading
+  draw_mesh();
 
-    // Trigger redrawing to update meshes
-    updateGL();
+  // Trigger redrawing to update meshes
+  updateGL();
 
-    qDebug() << "Coloring active: " << active;
+  qDebug() << "Coloring active: " << active;
 }
 
 void ViewerMeshWidget::set_lighting(bool active) {
-    lighting_active_ = active;
+  lighting_active_ = active;
 
-    // Draw mesh to update shading
-    draw_mesh();
+  // Draw mesh to update shading
+  draw_mesh();
 
-    // Trigger redrawing to update meshes
-    updateGL();
+  // Trigger redrawing to update meshes
+  updateGL();
 
-    qDebug() << "Lighting active: " << active;
+  qDebug() << "Lighting active: " << active;
 }
 
 void ViewerMeshWidget::mesh_updated(const surface_mesh::Surface_mesh& mesh) {
@@ -87,7 +89,7 @@ void ViewerMeshWidget::mesh_updated(const surface_mesh::Surface_mesh& mesh) {
 
   // Triangulate mesh if faces are drawn (draw OpenGL triangles)
   if (drawing_type_ == GL_TRIANGLES) {
-      editable_mesh_->triangulate();
+    editable_mesh_->triangulate();
   }
 
   // Vertex index vector

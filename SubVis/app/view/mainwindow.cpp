@@ -173,16 +173,26 @@ void MainWindow::setup_menus() {
   connect(ui_->action_undo,  &QAction::triggered, this, &MainWindow::undo);
   connect(ui_->action_redo,  &QAction::triggered, this, &MainWindow::redo);
   connect(ui_->action_edit,  &QAction::toggled, this, &MainWindow::toggle_edit);
-  connect(ui_->action_edit,  &QAction::toggled, viewer_mesh0_, &ViewerMeshWidget::set_edit);
-  connect(ui_->action_draw_edges, &QAction::triggered, this, &MainWindow::set_drawing_type_edges);
-  connect(ui_->action_draw_vertices, &QAction::triggered, this, &MainWindow::set_drawing_type_vertices);
-  connect(ui_->action_draw_faces, &QAction::triggered, this, &MainWindow::set_drawing_type_faces);
-  connect(ui_->action_shading_flat, &QAction::triggered, this, &MainWindow::set_shading_type_flat);
-  connect(ui_->action_shading_smooth, &QAction::triggered, this, &MainWindow::set_shading_type_smooth);
-  connect(ui_->action_coloring_on, &QAction::triggered, this, &MainWindow::set_coloring_active);
-  connect(ui_->action_coloring_off, &QAction::triggered, this, &MainWindow::set_coloring_not_active);
-  connect(ui_->action_lighting_on, &QAction::triggered, this, &MainWindow::set_lighting_active);
-  connect(ui_->action_lighting_off, &QAction::triggered, this, &MainWindow::set_lighting_not_active);
+  connect(ui_->action_edit,  &QAction::toggled, viewer_mesh0_,
+          &ViewerMeshWidget::set_edit);
+  connect(ui_->action_draw_edges, &QAction::triggered, this,
+          &MainWindow::set_drawing_type_edges);
+  connect(ui_->action_draw_vertices, &QAction::triggered, this,
+          &MainWindow::set_drawing_type_vertices);
+  connect(ui_->action_draw_faces, &QAction::triggered, this,
+          &MainWindow::set_drawing_type_faces);
+  connect(ui_->action_shading_flat, &QAction::triggered, this,
+          &MainWindow::set_shading_type_flat);
+  connect(ui_->action_shading_smooth, &QAction::triggered, this,
+          &MainWindow::set_shading_type_smooth);
+  connect(ui_->action_coloring_on, &QAction::triggered, this,
+          &MainWindow::set_coloring_active);
+  connect(ui_->action_coloring_off, &QAction::triggered, this,
+          &MainWindow::set_coloring_not_active);
+  connect(ui_->action_lighting_on, &QAction::triggered, this,
+          &MainWindow::set_lighting_active);
+  connect(ui_->action_lighting_off, &QAction::triggered, this,
+          &MainWindow::set_lighting_not_active);
 
   // On startup redo/undo is not available
   ui_->action_redo->setEnabled(false);
@@ -330,29 +340,29 @@ void MainWindow::set_shading_type(GLenum type) {
 }
 
 void MainWindow::set_coloring_active() {
-    set_coloring(true);
+  set_coloring(true);
 }
 
 void MainWindow::set_coloring_not_active() {
-    set_coloring(false);
+  set_coloring(false);
 }
 
 void MainWindow::set_coloring(bool active) {
-    viewer_mesh0_->set_coloring(active);
-    viewer_mesh1_->set_coloring(active);
+  viewer_mesh0_->set_coloring(active);
+  viewer_mesh1_->set_coloring(active);
 }
 
 void MainWindow::set_lighting_active() {
-    set_lighting(true);
+  set_lighting(true);
 }
 
 void MainWindow::set_lighting_not_active() {
-    set_lighting(false);
+  set_lighting(false);
 }
 
 void MainWindow::set_lighting(bool active) {
-    viewer_mesh0_->set_lighting(active);
-    viewer_mesh1_->set_lighting(active);
+  viewer_mesh0_->set_lighting(active);
+  viewer_mesh1_->set_lighting(active);
 }
 
 MainWindow::~MainWindow() {
