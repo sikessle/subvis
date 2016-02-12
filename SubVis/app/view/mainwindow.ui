@@ -170,9 +170,42 @@
     <addaction name="action_sync_views"/>
     <addaction name="action_toggle_splitscreen"/>
    </widget>
+   <widget class="QMenu" name="menuDraw">
+    <property name="title">
+     <string>Drawing</string>
+    </property>
+    <addaction name="action_draw_edges"/>
+    <addaction name="action_draw_vertices"/>
+    <addaction name="action_draw_faces"/>
+   </widget>
+   <widget class="QMenu" name="menuShading">
+    <property name="title">
+     <string>Shading</string>
+    </property>
+    <addaction name="action_shading_flat"/>
+    <addaction name="action_shading_smooth"/>
+   </widget>
+   <widget class="QMenu" name="menuColoring">
+    <property name="title">
+     <string>Coloring</string>
+    </property>
+    <addaction name="action_coloring_on"/>
+    <addaction name="action_coloring_off"/>
+   </widget>
+   <widget class="QMenu" name="menuLighting">
+    <property name="title">
+     <string>Lighting</string>
+    </property>
+    <addaction name="action_lighting_on"/>
+    <addaction name="action_lighting_off"/>
+   </widget>
    <addaction name="menu_file"/>
    <addaction name="menu_edit"/>
    <addaction name="menuView"/>
+   <addaction name="menuDraw"/>
+   <addaction name="menuShading"/>
+   <addaction name="menuColoring"/>
+   <addaction name="menuLighting"/>
   </widget>
   <action name="action_load">
    <property name="icon">
@@ -377,6 +410,90 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+S, 2</string>
+   </property>
+  </action>
+  <action name="action_draw_edges">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Edges</string>
+   </property>
+  </action>
+  <action name="action_draw_vertices">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Vertices</string>
+   </property>
+  </action>
+  <action name="action_draw_faces">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Faces</string>
+   </property>
+  </action>
+  <action name="action_shading_flat">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Flat</string>
+   </property>
+  </action>
+  <action name="action_shading_smooth">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Smooth</string>
+   </property>
+  </action>
+  <action name="action_coloring_on">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>On</string>
+   </property>
+  </action>
+  <action name="action_coloring_off">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Off</string>
+   </property>
+  </action>
+  <action name="action_lighting_on">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>On</string>
+   </property>
+  </action>
+  <action name="action_lighting_off">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Off</string>
    </property>
   </action>
  </widget>
