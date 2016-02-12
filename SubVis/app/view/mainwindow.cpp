@@ -3,6 +3,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QSplitter>
+#include <QActionGroup>
 
 #include "ui_mainwindow.h"
 #include "view/mainwindow.h"
@@ -173,10 +174,40 @@ void MainWindow::setup_menus() {
   connect(ui_->action_redo,  &QAction::triggered, this, &MainWindow::redo);
   connect(ui_->action_edit,  &QAction::toggled, this, &MainWindow::toggle_edit);
   connect(ui_->action_edit,  &QAction::toggled, viewer_mesh0_, &ViewerMeshWidget::set_edit);
+  connect(ui_->action_draw_edges, &QAction::triggered, this, &MainWindow::set_drawing_type_edges);
+  connect(ui_->action_draw_vertices, &QAction::triggered, this, &MainWindow::set_drawing_type_vertices);
+  connect(ui_->action_draw_faces, &QAction::triggered, this, &MainWindow::set_drawing_type_faces);
+  connect(ui_->action_shading_flat, &QAction::triggered, this, &MainWindow::set_shading_type_flat);
+  connect(ui_->action_shading_smooth, &QAction::triggered, this, &MainWindow::set_shading_type_smooth);
+  connect(ui_->action_coloring_on, &QAction::triggered, this, &MainWindow::set_coloring_active);
+  connect(ui_->action_coloring_off, &QAction::triggered, this, &MainWindow::set_coloring_not_active);
+  connect(ui_->action_lighting_on, &QAction::triggered, this, &MainWindow::set_lighting_active);
+  connect(ui_->action_lighting_off, &QAction::triggered, this, &MainWindow::set_lighting_not_active);
 
   // On startup redo/undo is not available
   ui_->action_redo->setEnabled(false);
   ui_->action_undo->setEnabled(false);
+
+  // Group drawing actions (mutually exclusive selection)
+  QActionGroup *drawing_group = new QActionGroup(this);
+  drawing_group->addAction(ui_->action_draw_edges);
+  drawing_group->addAction(ui_->action_draw_vertices);
+  drawing_group->addAction(ui_->action_draw_faces);
+
+  // Group shading actions (mutually exclusive selection)
+  QActionGroup *shading_group = new QActionGroup(this);
+  shading_group->addAction(ui_->action_shading_flat);
+  shading_group->addAction(ui_->action_shading_smooth);
+
+  // Group coloring actions (mutually exclusive selection)
+  QActionGroup *coloring_group = new QActionGroup(this);
+  coloring_group->addAction(ui_->action_coloring_on);
+  coloring_group->addAction(ui_->action_coloring_off);
+
+  // Group lighting actions (mutually exclusive selection)
+  QActionGroup *lighting_group = new QActionGroup(this);
+  lighting_group->addAction(ui_->action_lighting_on);
+  lighting_group->addAction(ui_->action_lighting_off);
 }
 
 void MainWindow::save_snapshot0() {
@@ -266,6 +297,62 @@ void MainWindow::show_save_dialog(int idx) {
       qWarning() << qPrintable(msg);
     }
   }
+}
+
+void MainWindow::set_drawing_type_edges() {
+  set_drawing_type(GL_LINES);
+}
+
+void MainWindow::set_drawing_type_vertices() {
+  set_drawing_type(GL_POINTS);
+}
+
+void MainWindow::set_drawing_type_faces() {
+  set_drawing_type(GL_TRIANGLES);
+}
+
+void MainWindow::set_drawing_type(GLenum type) {
+  viewer_mesh0_->set_drawing_type(type);
+  viewer_mesh1_->set_drawing_type(type);
+}
+
+void MainWindow::set_shading_type_flat() {
+  set_shading_type(GL_FLAT);
+}
+
+void MainWindow::set_shading_type_smooth() {
+  set_shading_type(GL_SMOOTH);
+}
+
+void MainWindow::set_shading_type(GLenum type) {
+  viewer_mesh0_->set_shading_type(type);
+  viewer_mesh1_->set_shading_type(type);
+}
+
+void MainWindow::set_coloring_active() {
+    set_coloring(true);
+}
+
+void MainWindow::set_coloring_not_active() {
+    set_coloring(false);
+}
+
+void MainWindow::set_coloring(bool active) {
+    viewer_mesh0_->set_coloring(active);
+    viewer_mesh1_->set_coloring(active);
+}
+
+void MainWindow::set_lighting_active() {
+    set_lighting(true);
+}
+
+void MainWindow::set_lighting_not_active() {
+    set_lighting(false);
+}
+
+void MainWindow::set_lighting(bool active) {
+    viewer_mesh0_->set_lighting(active);
+    viewer_mesh1_->set_lighting(active);
 }
 
 MainWindow::~MainWindow() {

@@ -44,6 +44,19 @@ class MainWindow : public QMainWindow {
   void mesh_updated(
     std::pair<const surface_mesh::Surface_mesh&, const surface_mesh::Surface_mesh&>
     meshes);
+  void set_drawing_type(GLenum type);
+  void set_drawing_type_edges();
+  void set_drawing_type_vertices();
+  void set_drawing_type_faces();
+  void set_shading_type(GLenum type);
+  void set_shading_type_flat();
+  void set_shading_type_smooth();
+  void set_coloring(bool active);
+  void set_coloring_active();
+  void set_coloring_not_active();
+  void set_lighting(bool active);
+  void set_lighting_active();
+  void set_lighting_not_active();
 
  private:
   Ui::MainWindow* ui_;
