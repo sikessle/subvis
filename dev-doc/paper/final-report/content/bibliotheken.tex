@@ -215,46 +215,20 @@ Da Surface\_mesh sehr kompakt ist (es besteht nur aus sehr wenigen C++ und H-Dat
 
 \section{Rendering}
 
-Im folgenden Unterkapitel werden Bibliotheken und bereits bestehende Software untersucht, mittels derer das Rendering von Polygonnetzen und Limesflächen realisiert werden kann.
+Im folgenden Unterkapitel werden Bibliotheken untersucht, mittels derer das Rendering von Polygonnetzen und Limesflächen realisiert werden kann.
 
 Im Gegensatz zur großen Auswahl an unterschiedlichen Möglichkeiten wie beispielsweise bei den Datenstrukturen, beschränkt sich diese hier auf nur wenige Möglichkeiten. Die Wahl ist auf OpenGL wegen seinem großen Funktionsumfang und seiner weiten Verbreitung gefallen.
 
-
 \subsection{OpenGL}
 
-Bei OpenGL handelt es sich um eine sehr weit verbreitete cross-platform Bibliothek für 2-D und 3-D Rendering.
+Bei OpenGL handelt es sich um eine sehr weit verbreitete cross-platform Bibliothek, die für 2-D und 3-D Rendering geeignet ist.
 Die API-Spezifikation von OpenGL beinhaltet eine Vielzahl von Befehlen, welche sowohl softwarebasiertes, als auch Hardware beschleunigtes Rendering auf der Grafikkarte ermöglichen. Das ermöglicht eine effiziente Umsetzung des Renderings von Polygonnetzen und Flächen.
+Das Rendering von Polygonnetzen erfolgt über eine Pipeline aus Vertex und Fragment Shadern. Diese Pipeline rendert die Ecken (Vertices), Kanten (Edges), oder Flächen (Faces), färbt und setzt die Helligkeit den Einstellungen entsprechend. 
+Das Rendern von Flächen ist mit OpenGL mittels Evaluators und dem zugehörigen GLU NURBS Interface möglich. Evaluators erzeugen Kurven und Flächen mit einer Bezier (oder Bernstein) Basis. Zum Rendering von Kurven und Flächen anderer Basen muss die Basis entsprechend transformiert werden. Bei der Benutzung von Evaluators ist zudem zu beachten, dass die Granularität der Auswertung dem Einsatzzweck entsprechend gewählt wird. Hierbei muss ein Kompromiss zwischen einer hohen Qualität und einer kurzen Dauer der Auswertung gefunden werden. Das GLU NURBS Interface ist eine High-Level Bibliothek, die auf Evaluators aufbaut und ein deren Benutzung vereinfacht, indem beispielsweise häufig auftretende Kombinationen von Aufrufen zusammengefasst werden.
 
-Diese Effizienz zeigt sich beispielsweise auch bei Standardoperationen wie dem Draw-Call. Bedingt durch die Verwendung eines internen Zustandsautomaten muss der Befehl lediglich mit den veränderten Parametern aufgerufen werden. OpenGL-Befehle folgen einem konsistenten, sprachunabhängigen Namensschema, welches Informationen zum Aufruf und zur Funktionalität des Befehls enthält. So bezeichnet beispielsweise glVertex3fv() einen OpenGL-Befehl (gl), der einen Eckpunkt definiert (Vertex) und drei (3) float (f) Argumente als Zeiger (v) bekommt.
+OpenGL bietet außerdem Optionen, um das Rendering zu optimieren. Beim Rendern des Netzes werden die Koordinaten der Ecken (Vertices) aller Flächen (Faces) an die Grafikkarte übertragen. Da die meisten Ecken Teil mehrerer Flächen sind, kommt es zu mehrfacher Übertragung von Koordinaten. Um die Menge an übertragenen Daten zu minimieren, besteht die Möglichkeit Ecken (Vertices) getrennt von den zugehörigen Koordinaten zu übertragen. Hierbei werden die Koordinaten in einer mathematischen Menge gespeichert und den Ecken (Vertices) werden jeweils Indizes zu den zugehörigen Koordinaten in der Menge zugeordnet. So kann sichergestellt werden, dass keine Duplikate von Koordinaten übertragen werden. Diese Optimierung wird als \glqq Indizierung\grqq bezeichnet.
 
-Ein weiterer Vorteil von OpenGL ist die Lizenzfreiheit für Anwendungsentwickler.
-
-//TODO Tobi ====================
-OpenGl bietet mit Evaluators die Möglichkeit Flächen auf Basis vom Bernsteinpolynom zu zeichnen.
-
-Also Bezier usw.... das sollte hier noch kurz beschrieben werden.
-So könnte man die Limesfläche für Catmull-Clark und Doo-Sabin implementieren
-
-Quellen:
-\url{https://www.opengl.org/archives/resources/faq/technical/evaluators.htm}
-\url{http://www.glprogramming.com/red/chapter12.html}
-\url{http://people.cs.vt.edu/yongcao/teaching/cs4204/fall2008/materials/documents/Evaluator_opengl.html}
-\url{http://stackoverflow.com/questions/13500458/opengl-nurbs-surface}
-\url{https://www.cs.unm.edu/~angel/CS534/LECTURES/CS534_09.pdf}
-
-\subsection{BezierView}
-
-// TODO Tobi
-
-NOCH GÜLTIG?
-
-BezierView (kurz bview) ist ein einfaches Programm zum Rendern von Bézier Patches, rationalen Bézier Patches und Polygonnetzen 
-\\\cite{Peters.bview.27.07.2015}.
-
-Das Programm wurde von Saleh Dindar, Xiaobin Wu, Jorg Peters (University of Florida) entwickelt und ist für Forschungs- und Lehrzwecke als Open Source Projekt frei verfügbar. BezierView ist ebenso wie SubVis in C++ implementiert und verwendet OpenGL für das Rendering.
-
-Überschneidungen ergeben sich besonders beim Rendern der Polygonnetze und der Limesflächen. Die Implementierung von BezierView kann als Grundlage für die konkrete Umsetzung von SubVis verwendet werden.
-
+Eine weitere Option zur Optimierung ist das \glqq Depth Testing\grqq. Es besteht darin, das Rendering von Ecken (Vertices), Kanten (Edges) und Flächen (Faces) nur auf die für die Kamera sichtbaren Bereiche zu beschränken. Hierzu werden die Entfernungen von Elementen zur Kamera vor dem Rendering verglichen. Nur die Elemente, deren Entfernung zur Kamera am geringsten sind, werden tatsächlich gerendert.
 
 \section{Grafische Oberfläche}
 
