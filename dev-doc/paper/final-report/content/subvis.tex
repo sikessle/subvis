@@ -105,7 +105,7 @@ Das Verzeichnis enthält z. B. Diagramme, diesen Bericht und andere hilfreiche D
 \end{figure}
 
 Die grafische Oberfläche bietet eine aufgeräumte Ansicht der wichtigsten Elemente (siehe \autoref{fig:subvis_mesh}). 
-Im oberen Bereich findet sich die Menüleiste mit Dateioperatoren, Editierwerkzeugen und Optionen zur Steuerung der Ansicht.
+Im oberen Bereich findet sich die Menüleiste mit Dateioperatoren, Editierwerkzeugen, Optionen zur Steuerung der Ansicht und Optionen zur Steuerung des Renderings.
 Darunter befindet sich eine Toolbar, welche häufig verwendete Aktionen enthält.
 Am unteren Ende des Fensters ist eine Statusleiste integriert, welche Informationen über das Polygonnetz anzeigt (Anzahl an Knoten etc.).
 Der Hauptbereich der Anwendung ist die Darstellung von zwei Ansichten, welche separat bedient werden können und verschiedene Zustände der Polygonnetze darstellen können.
@@ -136,6 +136,8 @@ Während der Vertex mittels STRG+linke Maustaste im Raum bewegt wird, wird zusä
 Dabei bewegt sich der Vertex lediglich auf der Ebene, die durch die Normale des Vertex definiert wird.
 Damit eine beliebige Positionierung im Raum möglich ist, kann zwischen der Ebene der Normale und einer Ebene, die orthogonal zur dieser steht mit der Taste S umgeschaltet werden.
 Durch erneutes Doppelklicken (an einer beliebigen Stelle) wird der Editiervorgang beendet und das veränderte Polygonnetz dargestellt (siehe Schritt 3 von \autoref{fig:subvis_edit}).
+
+Die Menüpunkte \enquote{Drawing}, \enquote{Shading}, \enquote{Coloring} und \enquote{Lighting} bieten die Möglichkeit, das Rendering des Objekts anzupassen. Im \enquote{Drawing} Menü kann zwischen dem Zeichnen von Ecken (Vertices), Kanten (Edges) und Flächen (Faces) gewählt werden. Der Menüpunkt \enquote{Shading} ermöglicht es den Shading Modus zu wählen. Hierbei kann zwischen \enquote{Flat} und \enquote{Smooth} gewählt werden. Bei der Auswahl von \enquote{Flat} werden alle Elemente mit den ihnen zugeordneten Farbwerten gezeichnet. Bei der Auswahl von \enquote{Smooth} werden sowohl die den Elementen zugeordneten Farbwerte als auch die der benachbarten Elemente berücksichtigt. Dadurch ergibt sich eine Interpolation der Farbwerte in den Zwischenräumen, ein Gradient mit den jeweiligen Farbwerten als Start- und Endwert. Färbung und Beleuchtung können über \enquote{Coloring} beziehungsweise \enquote{Lighting} aktiviert oder deaktiviert werden. Die Färbung wird im Quellcode berechnet und kann dort entsprechend angepasst werden.
 
 
 \section{Implementierung}
@@ -278,8 +280,15 @@ Diese Klasse ist im Prinzip lediglich ein dünner Wrapper um ein Plugin und dele
 Die Klasse handhabt das Rendering des Kontrollnetzes und ermöglicht die Editieroperationen.
 Alle Editieroperationen und damit zusammenhängende Events werden an die Klasse \emph{MeshEditHandler} delegiert.
 
+Als Grundlage für das Rendering des Kontrollnetzes dienen die Flächen (Faces). Aus diesen können Daten sowohl für das Rendering der Ecken (Vertices), Kanten (Edges) und Flächen (Faces) gewonnen werden. Dazu wird über alle Flächen des Kontrollnetzes iteriert und die Indizes jeweiligen Eckpunkte in einer temporären Datenstruktur gespeichert. Dabei handelt es sich um einen Vektor mit einer sehr geringen Zugriffszeit. Dieses Iterieren erfolgt jeweils nach dem Wechsel des Rendering Modus, oder einem Update des Kontrollnetzes. Dies tritt auf bei der Anwendung eines Algorithmus auf das Kontrollnetz, oder beim Laden eines neuen Kontrollnetzes. Beim Rendering der Kanten ist noch ein weiterer Schritt notwendig. Da alle Kanten einzeln gerendert werden, müssen die Eckpunkte der Flächen jeweils doppelt berücksichtigt werden. Diese liegen bei beispielsweise vier Eckpunkten nach dem Iterieren in folgender Form vor: 1, 1, 2, 2, 3, 3, 4, 4. Im nächsten Schritt wird der erste Eintrag des Vektors an dessen Ende verschoben: 1, 2, 2, 3, 3, 4, 4, 1. Nun können die Ecken jeweils aufeinanderfolgend verbunden werden und es ergeben sich die Kanten der Fläche.
 
-----TOBI: RENDERING HIER ERGÄNZEN----
+Beim Rendering des Kontrollnetzes wird in einem ersten Schritt die Optimierung des \enquote{Depth Testing} aktiviert. Dies sorgt dafür, dass nur die für die Kamera sichtbaren Elemente gerendert werden. Abhängig von den vom Benutzer gewählten Einstellungen werden im nächsten Schritt Beleuchtung und Färbung aktiviert beziehungsweise deaktiviert. Die Färbung wird im Quellcode erstellt und kann dort entsprechend in der Funktion \enquote{create\_color\_values()} definiert werden. Die Farbwerte müssen als Vektor von RGB Werten vorliegen. Zu Demonstrationszwecken werden die Absolutwerte der X-, Y- und Z-Koordinaten der Ecken als RGB Farbwerte interpretiert. Daraufhin wird der vom Benutzer gewählte Shading Modus aktiviert. Im Anschluss daran erfolgt das tatsächliche Rendering im entsprechenden Modus (Ecken, Kanten, Flächen). Abschließend wird die OpenGL wieder in den ursprünglichen Zustand zurückversetzt.
+
+Das Rendering der Limesfläche erfolgt mittels dreier unterschiedlicher Renderer. Zur Verfügung stehen ein interpolierender Renderer, der die Fläche basierend auf einer Subdivision Berechnung der Stufe vier rendert. Zusätzlich wird ein interpolierendes Shading angewendet, wodurch die Fläche keine erkennbaren Flächen aufweist, sondern für den Benutzer wie die tatsächliche Limesfläche erscheint.
+
+Der B-Spline Renderer rendert die Fläche mit Hilfe von OpenGL Evaluators. Hierbei werden die Punkte des Kontrollnetzes als Kontrollpunkte interpretiert und eine Bezier Fläche gerendert. Die Berechnung und das anschließende Rendering der Bezier Fläche wird über das OpenGL NURB Interface durchgeführt.
+
+Der Box-Spline Renderer wandelt zuerst die Basis des Kontrollnetzes in eine Bezier Basis. Daraufhin wird das Rendering des B-Spline Renderers verwendet.
 
 
 \subsubsection{MeshEditHandler}
