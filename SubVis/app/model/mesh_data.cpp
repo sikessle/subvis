@@ -24,6 +24,11 @@ const Surface_mesh& MeshData::get_mesh(int idx) const {
   }
 }
 
+const Surface_mesh& MeshData::get_original_mesh(int idx) const {
+  qDebug() << "Returning original mesh id" << idx;
+  return *(original_mesh_.get());
+}
+
 void MeshData::load_and_duplicate(std::unique_ptr<Surface_mesh> mesh, int idx) {
   qDebug() << "Loading single mesh and duplicating";
   auto copy = std::unique_ptr<Surface_mesh> {new Surface_mesh(*mesh)};
@@ -52,6 +57,7 @@ bool MeshData::load(const std::string& filename) {
   auto mesh_from_file = std::unique_ptr<Surface_mesh> {new Surface_mesh};
   bool success = mesh_from_file->read(filename);
   auto copy = std::unique_ptr<Surface_mesh> {new Surface_mesh(*mesh_from_file.get())};
+  original_mesh_ = std::unique_ptr<Surface_mesh> {new Surface_mesh(*mesh_from_file.get())};
   history_push({std::move(mesh_from_file), std::move(copy)});
   emit_updated_signal();
 

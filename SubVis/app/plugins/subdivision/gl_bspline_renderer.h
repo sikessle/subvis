@@ -1,6 +1,8 @@
 #ifndef SUBVIS_PLUGINS_SUBDIVISION_GL_BSPLINE_RENDERER_H
 #define SUBVIS_PLUGINS_SUBDIVISION_GL_BSPLINE_RENDERER_H
 
+#include <QtOpenGL>
+
 #include "plugins/subdivision/gl_renderer.h"
 
 namespace subdivision {
@@ -17,6 +19,8 @@ class GLBSplineRenderer : public GLRenderer {
   std::vector<unsigned int> triangles_;
   Surface_mesh::Vertex_property<Point>  points_;
   Surface_mesh::Vertex_property<Point>  vnormals_;
+
+  void create_mock(void);
 };
 
 } // namespace subdivision

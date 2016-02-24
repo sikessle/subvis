@@ -29,6 +29,12 @@ class MeshData : public QObject {
   ///
   const Surface_mesh& get_mesh(int idx) const;
   ///
+  /// \brief Returns the original mesh for the index.
+  /// \param idx The mesh index to retrieve.
+  /// \return The the first mesh if idx is 0, else the second mesh.
+  ///
+  const Surface_mesh& get_original_mesh(int idx) const;
+  ///
   /// \brief Tries to load a mesh from the filename (path) and replaces the current
   /// meshes with the loaded one. Creates a new history entry.
   /// \param filename The path to load the file from.
@@ -102,6 +108,8 @@ class MeshData : public QObject {
   void triangulate(int idx);
 
  private:
+  // Original mesh
+  std::unique_ptr<Surface_mesh> original_mesh_;
   // The history stack
   std::vector<std::pair<std::unique_ptr<Surface_mesh>, std::unique_ptr<Surface_mesh>>>
   history_;

@@ -4,23 +4,32 @@
 namespace subdivision {
 
 void GLBSplineRenderer::mesh_updated(const Surface_mesh& mesh) {
-  /// TODO this is only a dummy code that renders a smooth surface using the vertex normals!
+
   GLRenderer::mesh_updated(mesh);
+
+  mesh_.reset(new surface_mesh::Surface_mesh{mesh});
   mesh_->triangulate();
   mesh_->update_face_normals();
   mesh_->update_vertex_normals();
+
   triangles_.clear();
+
   for (const auto& face : mesh_->faces()) {
+
     for (const auto& vertex : mesh_->vertices(face)) {
       triangles_.push_back(vertex.idx());
     }
   }
+
   points_ = mesh_->vertex_property<Point>("v:point");
   vnormals_ = mesh_->vertex_property<Point>("v:normal");
 }
 
 void GLBSplineRenderer::render() {
-  /// TODO this is only a dummy code that renders a smooth surface using the vertex normals!
+  create_mock();
+}
+
+void GLBSplineRenderer::create_mock() {
   if (mesh_->n_faces() < 1) {
     return;
   }

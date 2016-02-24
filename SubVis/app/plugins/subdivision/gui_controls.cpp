@@ -95,9 +95,8 @@ void GuiControls::collect_selected_algorithms() {
 
 void GuiControls::dropdown_changed() {
   collect_selected_algorithms();
-  // Pass the meshes to the new selected renderers
-  current_algo_render_pair(0).renderer->mesh_updated(mesh_data_->get_mesh(0));
-  current_algo_render_pair(1).renderer->mesh_updated(mesh_data_->get_mesh(1));
+  subdivide_original_mesh();
+
   emit needs_redraw();
 }
 
@@ -127,8 +126,17 @@ void GuiControls::set_model(subvis::MeshData& mesh_data) {
 }
 
 void GuiControls::mesh_updated(const Surface_mesh& mesh, int mesh_id) {
-  current_algo_render_pair(mesh_id).renderer->mesh_updated(mesh);
+  subdivide_original_mesh();
+
   update_valid_dropdown_items(mesh, mesh_id);
+}
+
+void GuiControls::update_others(int mesh_id) {
+  if (mesh_id == 0) {
+    current_algo_render_pair(mesh_id).renderer->mesh_updated(*result_lim_0_);
+  } else if (mesh_id == 1) {
+    current_algo_render_pair(mesh_id).renderer->mesh_updated(*result_lim_1_);
+  }
 }
 
 void GuiControls::init_opengl(int mesh_id) {
@@ -137,6 +145,26 @@ void GuiControls::init_opengl(int mesh_id) {
 
 void GuiControls::draw_opengl(int mesh_id) {
   current_algo_render_pair(mesh_id).renderer->render_mesh_opengl();
+}
+
+void GuiControls::subdivide_original_mesh(void) {
+  const int steps = 3;
+  collect_selected_algorithms();
+
+  auto callback1 = [this] (std::unique_ptr<Surface_mesh> mesh) {
+    subdivide_finished(std::move(mesh), result_lim_0_);
+  };
+  auto callback2 = [this] (std::unique_ptr<Surface_mesh> mesh) {
+    subdivide_finished(std::move(mesh), result_lim_1_);
+  };
+
+  set_progress_controls_visible(true);
+
+  result0_ = nullptr;
+  result1_ = nullptr;
+
+  active_algo0_->subdivide_threaded(mesh_data_->get_original_mesh(0), callback1, steps);
+  active_algo1_->subdivide_threaded(mesh_data_->get_original_mesh(1), callback2, steps);
 }
 
 void GuiControls::subdivide_clicked(bool) {
@@ -170,6 +198,12 @@ void GuiControls::subdivide_finished(std::unique_ptr<Surface_mesh> mesh,
   // to be run on main thread and therefore in a serial execution order.
   if (result0_ && result1_) {
     mesh_data_->load(MeshPairUniquePtrs{std::move(result0_), std::move(result1_)});
+    set_progress_controls_visible(false);
+  }
+
+  if (result_lim_0_ && result_lim_1_) {
+    update_others(0);
+    update_others(1);
     set_progress_controls_visible(false);
   }
 }
