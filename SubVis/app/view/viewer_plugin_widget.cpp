@@ -19,6 +19,9 @@ void ViewerPluginWidget::mesh_updated(
 void ViewerPluginWidget::init_gl() {
   if (drawing_plugin_) {
     qDebug() << "Delegating init_gl to plugin.";
+    setSceneRadius(10.0);
+    camera()->setZNearCoefficient(0.0001);
+    camera()->setZClippingCoefficient(10.0);
     drawing_plugin_->init_opengl(mesh_id_);
   }
 }

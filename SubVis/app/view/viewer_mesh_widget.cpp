@@ -164,7 +164,7 @@ void ViewerMeshWidget::keyPressEvent(QKeyEvent* e) {
 
 void ViewerMeshWidget::init_gl() {
   qDebug() << "Initializing open gl.";
-  // TODO compute the correct scene radius and configure camera.
+
   setSceneRadius(10.0);
   camera()->setZNearCoefficient(0.0001);
   camera()->setZClippingCoefficient(10.0);
@@ -190,6 +190,10 @@ void ViewerMeshWidget::draw_gl() {
 
 void ViewerMeshWidget::draw_mesh() {
 
+  if (!editable_mesh_ || (editable_mesh_->n_faces() < 1)) {
+    return;
+  }
+
   if (lighting_active_) {
     glEnable(GL_LIGHTING);
   }
@@ -209,10 +213,6 @@ void ViewerMeshWidget::draw_mesh() {
   // Save the current model view matrix
   glPushMatrix();
 
-  if (!editable_mesh_ || (editable_mesh_->n_faces() < 1)) {
-    return;
-  }
-
   // Set vertex pointer
   glVertexPointer(3, GL_FLOAT, 0, points_.data());
 
@@ -222,6 +222,8 @@ void ViewerMeshWidget::draw_mesh() {
   if (coloring_active_) {
     // Set color pointer (coordinates as RGB colors for testing purposes)
       glColorPointer(4, GL_FLOAT, 0, &color_values_[0]);
+  } else {
+      glColor3f(1.0, 1.0, 1.0);
   }
 
   // Set OpenGL state
