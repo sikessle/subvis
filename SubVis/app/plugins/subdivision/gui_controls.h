@@ -75,9 +75,9 @@ class GuiControls : public QObject {
   void subdivide_finished(std::unique_ptr<surface_mesh::Surface_mesh> mesh,
                           std::unique_ptr<surface_mesh::Surface_mesh>& result_target);
 
-  // surface mock
+  // limit surface mock
   void subdivide_original_mesh(void);
-  void update_others(int mesh_id);
+  void update_limit_surfaces(int mesh_id);
   std::unique_ptr<surface_mesh::Surface_mesh> result_lim_0_{nullptr};
   std::unique_ptr<surface_mesh::Surface_mesh> result_lim_1_{nullptr};
 

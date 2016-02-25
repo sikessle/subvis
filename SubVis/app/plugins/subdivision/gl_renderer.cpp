@@ -19,7 +19,7 @@ void GLRenderer::render_mesh_opengl() {
 }
 
 void GLRenderer::init_opengl() {
-  // basic init
+  qDebug() << "Initializing open gl.";
 }
 
 } // namespace subdivision

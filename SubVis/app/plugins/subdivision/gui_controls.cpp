@@ -131,7 +131,8 @@ void GuiControls::mesh_updated(const Surface_mesh& mesh, int mesh_id) {
   update_valid_dropdown_items(mesh, mesh_id);
 }
 
-void GuiControls::update_others(int mesh_id) {
+// Update limit surface mocks
+void GuiControls::update_limit_surfaces(int mesh_id) {
   if (mesh_id == 0) {
     current_algo_render_pair(mesh_id).renderer->mesh_updated(*result_lim_0_);
   } else if (mesh_id == 1) {
@@ -147,6 +148,7 @@ void GuiControls::draw_opengl(int mesh_id) {
   current_algo_render_pair(mesh_id).renderer->render_mesh_opengl();
 }
 
+// Subdivide original meshes three times to mock limit surfaces
 void GuiControls::subdivide_original_mesh(void) {
   const int steps = 3;
   collect_selected_algorithms();
@@ -201,9 +203,11 @@ void GuiControls::subdivide_finished(std::unique_ptr<Surface_mesh> mesh,
     set_progress_controls_visible(false);
   }
 
+  // Update limit surfaces
+  // Only called when mesh is updated and when algorithms were applied
   if (result_lim_0_ && result_lim_1_) {
-    update_others(0);
-    update_others(1);
+    update_limit_surfaces(0);
+    update_limit_surfaces(1);
     set_progress_controls_visible(false);
   }
 }
