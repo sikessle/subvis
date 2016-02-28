@@ -1,5 +1,5 @@
 \section{Rendering} \label{sec:rendering}
-Die Evaluation der Limesflächen erfolgt für die Unterteilungsalgorithmen Butterfly, Modified Butterfly und Loop mit Hilfe eines interpolierenden Renderers.
+Die Evaluation der Limesfläche erfolgt für die Unterteilungsalgorithmen Butterfly, Modified Butterfly und Loop mit Hilfe eines interpolierenden Renderers.
 Die Evaluation der Limesfläche der Unterteilungsalgorithmen Catmull-Clark und Doo-Sabin hingegen mittels des GLU NURBS Interfaces.
 Die Kontrollnetze dieser beiden Unterteilungsalgorithmen basieren auf nichtuniformen B-Splines.
 
@@ -15,7 +15,7 @@ B-Splines kommen hauptsächlich in der computergestützten Konstruktion \textit{
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.7\textwidth]{content/media/b-spline_curve.png}
-  \caption{B-Spline Kurve}
+  \caption{B-Spline Kurve \cite{b-spline:2016}}
   \label{fig:b-spline}
 \end{figure}
 
@@ -62,7 +62,7 @@ b_{j, 1}(t) := \frac{t_{j + 2} - t}{t_{j + 2} - t_{j + 1}} b_{j + 1, 0} (t).
 
 Im Gegensatz zu Bezierkurven kann der Grad vorgeschrieben werden und beliebig viele Kontrollpunkte entlang des Splines definiert werden.
 Dafür muss lediglich ein Kontrollvektor zur Verfügung gestellt werden, der die Summe aus gefordertem Grad und Anzahl an Kontrollpunkten um mindestens eins übersteigt.
-Zudem ist der B-Spline nicht auf dem gesamten Intervall $[t_{0}, t_{m}[$, sondern nur auf $[t_{n}, t_{m - n}[$. \cite{kroemker:2008}
+Zudem ist der B-Spline nicht auf dem gesamten Intervall definiert $[t_{0}, t_{m}[$, sondern nur auf $[t_{n}, t_{m - n}[$. \cite{kroemker:2008}
 
 B-Splines werden als uniform bezeichnet, wenn die Knoten das Intervall zur Parametrisierung der Kurve äquidistant unterteilen.
 Andernfalls werden sie als nichtuniform bezeichnet. \cite{kroemker:2008}
