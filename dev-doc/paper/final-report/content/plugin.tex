@@ -26,7 +26,7 @@ Die GUI, das Rendering und die Algorithmen wurden in jeweils eigene Klassen ausg
 Die GUI besteht aus zwei Auswahllisten für den Algorithmus pro Polygonnetz, einer Einstellung für die Anzahl an Unterteilungsschritten und einem Start bzw. Stop Button (siehe \autoref{fig:subivs_plugin_gui}).
 
 \section{Rendering}
-
+Das Rendering der Limesfläche erfolgt mittels dreier unterschiedlicher Renderer. Zur Verfügung stehen ein interpolierender Renderer, ein B-Spline Renderer und ein Box-Spline Renderer.
 Jeder Renderer erweitert die abstrakte Klasse \emph{GLRenderer}. 
 Diese ruft mittels Template-Pattern eine Methode \emph{render} ihrer Unterklasse auf, um den Rendervorgang zu starten.
 Bei Veränderungen der Model-Komponente wird das Polygonnetz kopiert, damit Unterklassen das Polygonnetz verändern können.
@@ -35,35 +35,36 @@ Abhängig vom angewendeten Unterteilungsalgorithmus wird die
 Limesfläche unterschiedlich berechnet.
 
 \subsection{Interpolating Renderer}
-Bei dem Modified Butterfly und dem Butterfly Algorithmus handelt es sich um
-interpolierende Unterteilungsalgorithmen.
-Hier geht die Limesfäche durch das Kontrollnetz und es wird ein
-interpolierender Renderer benötigt.
-Die Kontrollpunkte werden interpoliert und die
-Oberflächenbeläuchtung anhand der Vertex Normalen berechnet,
-sodass die Oberfläche glatt erscheint.
-
+Für die Unterteilungsalgorithmen Butterfly und Modified Butterfly ist es nicht möglich eine Limesfläche zu berechnen.
+Bei diesen Algorithmen handelt es sich um interpolierende Algorithmen, bei denen die Kontrollpunkte Teil der Limesfläche sind.
+Daher kommt hierbei ein interpolierender Renderer zum Einsatz.
+Der interpolierende Renderer wendet den gewählten Subdivision Algorithmus dreifach an, wodurch sich eine für den Benutzer glatte Oberfläche ergibt. 
+Zusätzlich wird das OpenGL \enquote{Smooth Shading Model} verwendet, wodurch die Flächen (Faces) noch weniger gut sichtbar sind und die Oberfläche für den Benutzer noch glatter erscheint.
 
 \subsection{B-Spline Renderer}
-Catmull-Clark und Doo-Sabin sind Unterteilungsalgorithmen auf Basis von
-kubischen und quadratischen B-Splines.
-Für ein Rendering kann die B-Spline Tensorproduktfläche nach Bezier gewandelt werden.
-Die Kontrollpunkte können dann als Bezier Tensorproduktfläche interpretiert werden.
-Aktuell ist an dieser Stelle noch der \emph{Interpolating Renderer} implementiert.
-
-//TODO Tobi
+Die Algorithmen Catmull-Clark und Doo-Sabin sind Unterteilungsalgorithmen auf Basis von kubischen und quadratischen B-Splines.
+Der B-Spline Renderer rendert die Fläche unter Verwendung des GLU NURBS Interfaces.
+Hierbei werden die Punkte des Kontrollnetzes als Kontrollpunkte interpretiert und die Limesfläche evaluiert und gerendert.
+Dieser Renderer ist in der aktuellen Version durch das \enquote{Mock Rendering} ersetzt, wird aber in der nächsten Version korrekt umgesetzt.
 
 \subsection{Box-Spline Renderer}
-Der Unterteilungsalgorithmus Loop basiert auf Box-Splines.
-Die Fläche kann zum Rendern in ein Bezier-Dreiecksnetz gewandelt werden.
-Aktuell ist an dieser Stelle noch der \emph{Interpolating Renderer} implementiert.
-
-//TODO Tobi
+Das Rendering der Limesfläche des Loop Unterteilungsalgorithmus erfolgt mit einem interpolierenden Renderer.
+Dazu wird der Loop Unterteilungsalgorithmus dreifach angewendet und die so entstandene Fläche analog zum \enquote{Interpolating Renderer} gerendert.
+Da der Loop Unterteilungsalgorithmus auf Box-Splines basiert, kann eine Bezier Repräsentation des Kontrollnetzes berechnet werden \cite{prautzsch:2012} und das so entstandene Kontrollnetz mit OpenGL Evaluators evaluiert und gerendert werden.
+Alternativ dazu kann die Limesfläche auch mit der von Jos Stam beschriebenen Methode \cite{JosStam.24.07.2015} evaluiert und gerendert werden.
 
 \subsection{None Renderer}
-Der None Renderer ist eine Dummy Implementierung für den Fall,
-dass kein Unterteilungsalgorithmus ausgewählt ist.
-Dann wird nichts dargestellt.
+Der None Renderer ist eine Dummy Implementierung für den Fall, dass kein Unterteilungsalgorithmus ausgewählt ist.
+Dieser ist lediglich auf Grund der Implementierung von SubVis notwendig. In diesem Fall wird kein Rendering ausgeführt.
+
+\subsection{Optimierung}
+OpenGL bietet außerdem Optionen, um das Rendering zu optimieren. Beim Rendern des Netzes werden die Koordinaten der Ecken (Vertices) aller Flächen (Faces) an die Grafikkarte übertragen. Da die meisten Ecken Teil mehrerer Flächen sind, kommt es zu mehrfacher Übertragung von Koordinaten. Um die Menge an übertragenen Daten zu minimieren, besteht die Möglichkeit Ecken (Vertices) getrennt von den zugehörigen Koordinaten zu übertragen. Hierbei werden die Koordinaten in einer mathematischen Menge gespeichert und den Ecken (Vertices) werden jeweils Indizes zu den zugehörigen Koordinaten in der Menge zugeordnet. So kann sichergestellt werden, dass keine Duplikate von Koordinaten übertragen werden. Diese Optimierung wird als \glqq Indizierung\grqq bezeichnet.
+
+Eine weitere Option zur Optimierung ist das \glqq Depth Testing\grqq. Es besteht darin, das Rendering von Ecken (Vertices), Kanten (Edges) und Flächen (Faces) nur auf die für die Kamera sichtbaren Bereiche zu beschränken. Hierzu werden die Entfernungen von Elementen zur Kamera vor dem Rendering verglichen. Nur die Elemente, deren Entfernung zur Kamera am geringsten sind, werden tatsächlich gerendert.
+
+\subsection{Mock Rendering}
+Dieses Rendering dient als temporäre Umsetzung des Renderings der Limesflächen der Unterteilungsalgorithmen Catmull-Clark und Doo-Sabin.
+Der Renderer basiert auf dem \enquote{Interpolating Renderer} und wird mit der nächsten Version von SubVis durch den B-Spline Renderer ersetzt.
 
 \section{Algorithmen}
 
