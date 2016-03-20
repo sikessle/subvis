@@ -12,6 +12,7 @@
 *.bbl
 *.blg
 subdivision.bcf
+subdivision.pdf
 subdivision.run.xml
 *.bak
 

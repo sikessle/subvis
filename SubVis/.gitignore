@@ -1,6 +1,5 @@
 # Build path
 build/*
-!build/SubVis
 
 # System specific pro file
 *.pro.user*
