@@ -2,6 +2,8 @@
 
 This file provides some information about the workflow, environment requirements and the build process.
 
+Contributors: Felix, Tobias, Simon.
+
 # Branching/Git-Workflow
 
 Create a local branch per new feature. If feature is working merge to develop branch. Master branch contains only released versions, like beta, vX.Y etc.
